@@ -73,6 +73,47 @@ class Tools implements Renderable
     }
 
     /**
+     * Custom disable create button.
+     *
+     * @return $this
+     */
+    public function disableCreateButtonCustom()
+    {
+        unset($this->tools['right'][1]);
+
+        return $this;
+    }
+
+    /**
+     * Custom disable button in the right.
+     *
+     * @return $this
+     */
+    public function disableButtonInRight()
+    {
+        unset($this->tools['right'][0]);
+        unset($this->tools['right'][1]);
+        unset($this->tools['right'][2]);
+        unset($this->tools['right'][3]);
+
+        return $this;
+    }
+
+    /**
+     * Custom disable button in the left.
+     *
+     * @return $this
+     */
+    public function disableButtonInLeft()
+    {
+        unset($this->tools['left'][0]);
+        unset($this->tools['left'][1]);
+        unset($this->tools['left'][2]);
+
+        return $this;
+    }
+
+    /**
      * Prepend a tool.
      *
      * @param AbstractTool|string $tool
