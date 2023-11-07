@@ -45,4 +45,8 @@ EOT;
 
         return $this;
     }
+
+    public function append($script){
+        $this->filterScript = $script;
+    }
 }

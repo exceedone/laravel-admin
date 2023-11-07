@@ -301,6 +301,11 @@ abstract class AbstractFilter
         return $this->setPresenter(new MultipleSelect($options));
     }
 
+    public function customMultipleSelect($multipleSelect)
+    { 
+        return $this->setPresenter($multipleSelect);
+    }
+
     /**
      * @param array|\Illuminate\Support\Collection $options
      *

@@ -27,6 +27,11 @@ class Select extends Presenter
     protected $script = '';
 
     /**
+     * @var string
+     */
+    protected $filterScript = '';
+
+    /**
      * Select constructor.
      *
      * @param mixed $options
@@ -94,6 +99,7 @@ class Select extends Presenter
 })(jQuery);
 
 SCRIPT;
+$this->script .= $this->filterScript;
         }
 
         Admin::script($this->script);

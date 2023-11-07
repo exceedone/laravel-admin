@@ -172,7 +172,11 @@ class File extends Field
      */
     protected function preview()
     {
-        return $this->objectUrl($this->value);
+        $url = $this->objectUrl($this->value);
+        if (str_contains($url, '/files/')) {
+            $url .= '?preview=true';
+        }
+        return $url;
     }
 
     /**
