@@ -10,11 +10,10 @@ abstract class Presenter
      * @var AbstractFilter
      */
     protected $filter;
-    
+
     /**
      * Get filter.
-     *
-     * @param AbstractFilter $filter
+     * @return AbstractFilter
      */
     public function getFilter()
     {

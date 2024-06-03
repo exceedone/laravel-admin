@@ -14,6 +14,7 @@ class Download extends AbstractDisplayer
         }
 
         return collect((array) $this->value)->filter()->map(function ($value) use ($server) {
+            /** @phpstan-ignore-next-line Maybe always exists and is not falsy */
             if (empty($value)) {
                 return '';
             }

@@ -30,8 +30,6 @@ class Between extends AbstractFilter
      * Format two field names of this filter.
      *
      * @param string $column
-     *
-     * @return array
      */
     protected function formatName($column)
     {
@@ -88,8 +86,6 @@ class Between extends AbstractFilter
 
     /**
      * @param array $options
-     *
-     * @return $this
      */
     public function datetime($options = [])
     {

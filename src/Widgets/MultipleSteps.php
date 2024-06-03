@@ -4,6 +4,9 @@ namespace Encore\Admin\Widgets;
 
 use Illuminate\Contracts\Support\Renderable;
 
+/**
+ * @phpstan-consistent-constructor
+ */
 class MultipleSteps implements Renderable
 {
     /**
@@ -63,7 +66,7 @@ class MultipleSteps implements Renderable
     }
 
     /**
-     * @return string|null
+     * @return string|null|void
      */
     public function render()
     {

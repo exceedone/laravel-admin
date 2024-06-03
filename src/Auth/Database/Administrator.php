@@ -5,6 +5,7 @@ namespace Encore\Admin\Auth\Database;
 use Encore\Admin\Traits\AdminBuilder;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
@@ -12,7 +13,8 @@ use Illuminate\Support\Facades\Storage;
 /**
  * Class Administrator.
  *
- * @property Role[] $roles
+ * @property Collection $roles
+ * @phpstan-consistent-constructor
  */
 class Administrator extends Model implements AuthenticatableContract
 {

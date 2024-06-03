@@ -2,10 +2,14 @@
 
 namespace Tests\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Tests\Factories\UserFactory;
 
 class User extends Model
 {
+    use HasFactory;
+
     protected $table = 'test_users';
 
     protected $appends = ['full_name', 'position'];
@@ -28,5 +32,10 @@ class User extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'test_user_tags', 'user_id', 'tag_id');
+    }
+
+    protected static function newFactory()
+    {
+        return new UserFactory();
     }
 }

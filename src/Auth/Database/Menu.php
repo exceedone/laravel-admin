@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\DB;
  * Class Menu.
  *
  * @property int $id
- *
  * @method where($parent_id, $id)
+ * @phpstan-consistent-constructor
  */
 class Menu extends Model
 {
@@ -23,8 +23,6 @@ class Menu extends Model
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array
      */
     protected $fillable = ['parent_id', 'order', 'title', 'icon', 'uri', 'permission'];
 

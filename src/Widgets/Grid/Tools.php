@@ -25,8 +25,6 @@ class Tools implements Renderable
 
     /**
      * Collection of tools.
-     *
-     * @var Collection
      */
     protected $tools;
 
@@ -108,11 +106,7 @@ class Tools implements Renderable
     public function disableFilterButton(bool $disable = true)
     {
         foreach(static::POSITIONS as $position){
-            $this->tools[$position] = $this->tools[$position]->map(function ($tool) use ($disable) {
-                // if ($tool instanceof FilterButton) {
-                //     return $tool->disable($disable);
-                // }
-    
+            $this->tools[$position] = $this->tools[$position]->map(function ($tool) {
                 return $tool;
             });
         }

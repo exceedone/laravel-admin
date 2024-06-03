@@ -11,8 +11,6 @@ class Select extends Presenter
 {
     /**
      * Options of select.
-     *
-     * @var array
      */
     protected $options = [];
 
@@ -147,8 +145,6 @@ SCRIPT;
      * @param string $url
      * @param array  $parameters
      * @param array  $options
-     *
-     * @return $this
      */
     protected function loadRemoteOptions($url, $parameters = [], $options = [])
     {
@@ -304,10 +300,8 @@ EOT;
 
     /**
      * Get form element class.
-     *
      * @param string $target
-     *
-     * @return mixed
+     * @return string
      */
     protected function getClass($target) : string
     {

@@ -50,8 +50,7 @@ trait HasQuickSearch
     }
 
     /**
-     * @param array|string|\Closure
-     *
+     * @param array|string|\Closure|null $search
      * @return $this
      */
     public function quickSearch($search = null)

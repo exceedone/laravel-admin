@@ -8,9 +8,6 @@ use Illuminate\Support\Collection;
 
 class Group extends AbstractFilter
 {
-    /**
-     * @var \Closure|null
-     */
     protected $builder;
 
     /**
@@ -28,8 +25,8 @@ class Group extends AbstractFilter
     /**
      * Group constructor.
      *
-     * @param string        $column
-     * @param string        $label
+     * @param string $column
+     * @param string $label
      * @param \Closure|null $builder
      */
     public function __construct($column, $label = '', \Closure $builder = null)

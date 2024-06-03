@@ -5,6 +5,9 @@ namespace Encore\Admin\Auth\Database;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @method static mixed create(array $attributes)
+ */
 class OperationLog extends Model
 {
     protected $fillable = ['user_id', 'path', 'method', 'ip', 'input'];

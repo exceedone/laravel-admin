@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Request;
 
 class Paginator extends AbstractTool
 {
-    /**
-     * @var \Illuminate\Pagination\LengthAwarePaginator
-     */
+
     protected $paginator = null;
 
     /**
@@ -41,8 +39,6 @@ class Paginator extends AbstractTool
 
     /**
      * Get Pagination links.
-     *
-     * @return string
      */
     protected function paginationLinks()
     {

@@ -125,8 +125,6 @@ class Column
 
     /**
      * Relation name.
-     *
-     * @var bool
      */
     protected $relation = false;
 
@@ -145,7 +143,7 @@ class Column
     protected static $originalGridModels;
 
     /**
-     * @var []Closure
+     * @var Closure[]
      */
     protected $displayCallbacks = [];
 
@@ -329,7 +327,7 @@ class Column
     /**
      * Set the min-width of column.
      *
-     * @param int $width
+     * @param int|null $width
      *
      * @return $this
      */
@@ -345,7 +343,7 @@ class Column
     /**
      * Set the max-width of column.
      *
-     * @param int $width
+     * @param int|null $width
      *
      * @return $this
      */
@@ -392,8 +390,6 @@ class Column
 
     /**
      * Get header classes of this column.
-     *
-     * @return mixed
      */
     public function getHeaderAttributes()
     {
@@ -408,7 +404,8 @@ class Column
     /**
      * Set header classes.
      *
-     * @param array $classes
+     * @param array $style
+     * @return $this
      */
     public function setHeaderStyle(array $style)
     {
@@ -507,11 +504,9 @@ class Column
     }
 
     /**
-     * Get sort coolumn name.
+     * Get sort column name.
      *
-     * @param string $sortName
-     *
-     * @return $this
+     * @return string
      */
     public function getSortName()
     {
@@ -564,8 +559,6 @@ class Column
 
     /**
      * Get sort callback.
-     *
-     * @return $this
      */
     public function getSortCallback()
     {

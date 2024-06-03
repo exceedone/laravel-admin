@@ -132,8 +132,6 @@ class Tools implements Renderable
 
     /**
      * Set request path for resource list Expressly.
-     *
-     * @return string
      */
     public function setListPath($listPath)
     {
@@ -318,9 +316,6 @@ HTML;
 
     /**
      * Disable back button.
-     *
-     * @return $this
-     *
      * @deprecated
      */
     public function disableBackButton()
@@ -342,7 +337,7 @@ HTML;
     /**
      * Render custom tools.
      *
-     * @param Collection $tools
+     * @param Collection|null $tools
      *
      * @return mixed
      */

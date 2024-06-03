@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\MessageBag;
 use Symfony\Component\DomCrawler\Crawler;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
 
 class Pjax
 {
@@ -16,8 +16,6 @@ class Pjax
      *
      * @param Request $request
      * @param Closure $next
-     *
-     * @return Response
      */
     public function handle($request, Closure $next)
     {
@@ -51,6 +49,7 @@ class Pjax
             return $response;
         };
 
+        /** @phpstan-ignore-next-line https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static */
         (new static())->handle(Request::capture(), $next)->send();
 
         exit;

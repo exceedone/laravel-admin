@@ -10,6 +10,12 @@ class Captcha extends Text
 
     protected $view = 'admin::form.captcha';
 
+    /**
+     * @param $column
+     * @param $arguments
+     * @throws \Exception
+     * @phpstan-ignore-next-line
+     */
     public function __construct($column, $arguments = [])
     {
         if (!class_exists(\Mews\Captcha\Captcha::class)) {

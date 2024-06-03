@@ -9,9 +9,6 @@ use Illuminate\Support\Str;
 
 class Permission extends Model
 {
-    /**
-     * @var array
-     */
     protected $fillable = ['name', 'slug', 'http_method', 'http_path'];
 
     /**

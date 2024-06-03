@@ -118,7 +118,7 @@ class File extends Field
      *
      * @param UploadedFile|array|string $file
      *
-     * @return mixed|string
+     * @return mixed|string|void
      */
     public function prepare($file)
     {
@@ -128,7 +128,8 @@ class File extends Field
         }
 
         if (request()->has(static::FILE_DELETE_FLAG)) {
-            return $this->destroy();
+            $this->destroy();
+            return;
         }
 
         $this->name = $this->getStoreName($file);
@@ -206,9 +207,8 @@ class File extends Field
     /**
      * Initialize the index.
      *
-     * @param array $caption
-     *
-     * @return string
+     * @param $file
+     * @return int|mixed
      */
     protected function initialFileIndex($file)
     {
@@ -310,8 +310,6 @@ EOT;
 
     /**
      * Render file upload field.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function render()
     {
@@ -327,11 +325,11 @@ EOT;
             $this->setupPreviewOptions();
 
             $this->attribute('data-initial-preview', $this->preview());
-            $this->attribute('data-initial-caption', array_get($this->options, 'initialPreviewConfig.0.caption'));
+            $this->attribute('data-initial-caption', Arr::get($this->options, 'initialPreviewConfig.0.caption'));
 
             $previewType = $this->guessPreviewType($this->value);
-            $this->attribute('data-initial-type', array_get($previewType, 'type'));
-            $this->attribute('data-initial-download-url', array_get($previewType, 'downloadUrl'));
+            $this->attribute('data-initial-type', Arr::get($previewType, 'type'));
+            $this->attribute('data-initial-download-url', Arr::get($previewType, 'downloadUrl'));
             /*
              * If has original value, means the form is in edit mode,
              * then remove required rule from rules.

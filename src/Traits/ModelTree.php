@@ -2,6 +2,7 @@
 
 namespace Encore\Admin\Traits;
 
+use Encore\Admin\Auth\Database\Menu;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -133,9 +134,7 @@ trait ModelTree
 
     /**
      * Set get callback to model.
-     *
-     * @param \Closure|null $query
-     *
+     * @param \Closure|null $get
      * @return $this
      */
     public function getCallback(\Closure $get = null)
@@ -324,7 +323,9 @@ trait ModelTree
         parent::boot();
 
         static::saving(function (Model $branch) {
-            $parentColumn = $branch->getParentColumn();
+            /** @var Menu $menu */
+            $menu = $branch;
+            $parentColumn = $menu->getParentColumn();
 
             if (Request::has($parentColumn) && Request::input($parentColumn) == $branch->getKey()) {
                 throw new \Exception(trans('admin.parent_select_error'));

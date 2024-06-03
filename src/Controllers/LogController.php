@@ -66,9 +66,8 @@ class LogController extends AdminController
     }
 
     /**
-     * @param mixed $id
-     *
-     * @return \Illuminate\Http\JsonResponse
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function destroy($id)
     {

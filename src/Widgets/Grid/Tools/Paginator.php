@@ -42,8 +42,6 @@ class Paginator extends AbstractTool
 
     /**
      * Get Pagination links.
-     *
-     * @return string
      */
     protected function paginationLinks()
     {

@@ -7,6 +7,10 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Illuminate\Support\Str;
 
+/**
+ * @property mixed $http_method
+ */
+#[\AllowDynamicProperties]
 class PermissionController extends AdminController
 {
     /**

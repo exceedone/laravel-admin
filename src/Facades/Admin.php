@@ -2,6 +2,8 @@
 
 namespace Encore\Admin\Facades;
 
+use Encore\Admin\Auth\Database\Administrator;
+use Encore\Admin\Auth\Database\HasPermissions;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -17,7 +19,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void headerJs($js = null)
  * @method static \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void script($script = '')
  * @method static \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void style($style = '')
- * @method static \Illuminate\Contracts\Auth\Authenticatable|null user()
+ * @method static Administrator|null user()
  * @method static string title()
  * @method static void navbar(\Closure $builder = null)
  * @method static void registerAuthRoutes()

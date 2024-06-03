@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class Permission
 {
+
     /**
      * Check permission.
      *
      * @param $permission
-     *
-     * @return true
+     * @return true|void
      */
     public static function check($permission)
     {
@@ -38,8 +38,7 @@ class Permission
      * Roles allowed to access.
      *
      * @param $roles
-     *
-     * @return true
+     * @return true|void
      */
     public static function allow($roles)
     {
@@ -47,6 +46,7 @@ class Permission
             return true;
         }
 
+        // @phpstan-ignore-next-line inRoles undefined
         if (!Auth::guard('admin')->user()->inRoles($roles)) {
             static::error();
         }
@@ -66,8 +66,7 @@ class Permission
      * Roles denied to access.
      *
      * @param $roles
-     *
-     * @return true
+     * @return true|void
      */
     public static function deny($roles)
     {
@@ -75,6 +74,7 @@ class Permission
             return true;
         }
 
+        // @phpstan-ignore-next-line inRoles undefined
         if (Auth::guard('admin')->user()->inRoles($roles)) {
             static::error();
         }
@@ -108,6 +108,7 @@ class Permission
      */
     public static function isAdministrator()
     {
+        // @phpstan-ignore-next-line isRole undefined
         return Auth::guard('admin')->user()->isRole('administrator');
     }
 }

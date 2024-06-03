@@ -25,8 +25,6 @@ class Tools implements Renderable
 
     /**
      * Collection of tools.
-     *
-     * @var Collection
      */
     protected $tools;
 

@@ -33,10 +33,9 @@ trait HasHooks
     /**
      * Call hooks by giving name.
      *
-     * @param string $name
-     * @param array  $parameters
-     *
-     * @return Response
+     * @param $name
+     * @param $parameters
+     * @return Response|void
      */
     protected function callHooks($name, $parameters = [])
     {

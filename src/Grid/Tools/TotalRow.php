@@ -56,8 +56,6 @@ class TotalRow extends AbstractTool
 
     /**
      * Render total-row.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function render()
     {

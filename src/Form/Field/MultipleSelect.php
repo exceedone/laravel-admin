@@ -110,8 +110,6 @@ class MultipleSelect extends Select
 
     /**
      * Get field validation rules.
-     *
-     * @return string
      */
     protected function getRules()
     {

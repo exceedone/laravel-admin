@@ -80,8 +80,7 @@ class Content implements Renderable
     /**
      * Set header icon of content.
      *
-     * @param string $header
-     *
+     * @param string|null $headericon
      * @return $this
      */
     public function headericon($headericon = null)

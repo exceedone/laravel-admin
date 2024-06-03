@@ -169,10 +169,7 @@ class NestedForm
 
     /**
      * Get index for hasMany.
-     *
-     * @param mixed $key
-     *
-     * @return $this
+     * @return int
      */
     public function getIndex()
     {
@@ -181,9 +178,7 @@ class NestedForm
 
     /**
      * Set index for hasMany.
-     *
-     * @param mixed $key
-     *
+     * @param mixed $index
      * @return $this
      */
     public function setIndex($index)
@@ -428,7 +423,7 @@ class NestedForm
      * Fill data to all fields in form.
      *
      * @param array $data
-     *
+     * @param $index
      * @return $this
      */
     public function fill(array $data, $index)
@@ -458,6 +453,7 @@ class NestedForm
             $html .= $field->render();
 
             $field_scripts = $field->getScript();
+            // @phpstan-ignore-next-line Function is_nullorempty not found.
             if (!is_nullorempty($field_scripts)) {
                 if (!is_array($field_scripts)) {
                     $field_scripts = [$field_scripts];

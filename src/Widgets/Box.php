@@ -191,8 +191,6 @@ SCRIPT;
 
     /**
      * Add `box-solid` class to box.
-     *
-     * @return $this
      */
     public function solid()
     {

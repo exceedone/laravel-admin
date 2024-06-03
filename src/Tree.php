@@ -3,6 +3,7 @@
 namespace Encore\Admin;
 
 use Closure;
+use Encore\Admin\Auth\Database\Menu;
 use Encore\Admin\Tree\Tools;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
@@ -24,9 +25,6 @@ class Tree implements Renderable
      */
     protected $elementId = 'tree-';
 
-    /**
-     * @var Model
-     */
     protected $model;
 
     /**
@@ -42,7 +40,7 @@ class Tree implements Renderable
     /**
      * View of tree to render.
      *
-     * @var string
+     * @var array
      */
     protected $view = [
         'tree'   => 'admin::tree',
@@ -55,7 +53,7 @@ class Tree implements Renderable
     protected $callback;
 
     /**
-     * @var null
+     * @var \Closure|null
      */
     protected $branchCallback = null;
 
@@ -100,6 +98,11 @@ class Tree implements Renderable
      * @var Tools
      */
     public $tools;
+
+    /**
+     * @var string
+     */
+    public $path;
 
     /**
      * Menu constructor.
@@ -163,8 +166,6 @@ class Tree implements Renderable
 
     /**
      * Set query callback this tree.
-     *
-     * @return Model
      */
     public function query(\Closure $callback)
     {
@@ -175,9 +176,7 @@ class Tree implements Renderable
 
     /**
      * Set get callback to model.
-     *
-     * @param \Closure|null $query
-     *
+     * @param Closure|null $get
      * @return $this
      */
     public function getCallback(\Closure $get = null)
@@ -392,7 +391,7 @@ SCRIPT;
     /**
      * Set view of tree.
      *
-     * @param string $view
+     * @param array $view
      */
     public function setView($view)
     {
@@ -401,8 +400,7 @@ SCRIPT;
 
     /**
      * Return all items of the tree.
-     *
-     * @param array $items
+     * @return mixed
      */
     public function getItems()
     {

@@ -91,8 +91,8 @@ class MultipleFile extends Field
         }
 
         $attributes[$this->column] = $this->label;
-
-        list($rules, $input) = $this->hydrateFiles(Arr::get($input, $this->column) ?? []);
+        $fileNames = Arr::get($input, $this->column);
+        list($rules, $input) = $this->hydrateFiles($fileNames ? (is_array($fileNames) ? $fileNames : $fileNames->toArray()) : []);
 
         return \validator($input, $rules, $this->getValidationMessages(), $attributes);
     }
@@ -255,9 +255,9 @@ class MultipleFile extends Field
     /**
      * Initialize the index.
      *
-     * @param array $caption
-     *
-     * @return string
+     * @param $index
+     * @param $file
+     * @return mixed
      */
     protected function initialFileIndex($index, $file)
     {
@@ -394,8 +394,6 @@ EOT;
 
     /**
      * Render file upload field.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function render()
     {

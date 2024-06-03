@@ -89,8 +89,6 @@ class Row implements Buildable, Renderable
 
     /**
      * Get field attributes.
-     *
-     * @return string
      */
     public function getAttributes()
     {

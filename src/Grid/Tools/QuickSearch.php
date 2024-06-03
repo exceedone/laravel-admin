@@ -12,9 +12,6 @@ class QuickSearch extends AbstractTool
      */
     protected $view = 'admin::grid.quick-search';
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function render()
     {
         $query = request()->query();

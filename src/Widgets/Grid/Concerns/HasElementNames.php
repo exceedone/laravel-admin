@@ -2,6 +2,8 @@
 
 namespace Encore\Admin\Widgets\Grid\Concerns;
 
+use Encore\Admin\Grid\Concerns\HasFilter;
+
 trait HasElementNames
 {
     /**
@@ -38,6 +40,10 @@ trait HasElementNames
 
         $this->model()->setPerPageName("{$name}_{$this->model()->getPerPageName()}");
 
+        /**
+         * @phpstan-ignore-next-line
+         * @var $this HasFilter
+         */
         $this->getFilter()->setName($name);
 
         return $this;

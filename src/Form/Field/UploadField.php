@@ -3,6 +3,7 @@
 namespace Encore\Admin\Form\Field;
 
 use Encore\Admin\Form;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -18,22 +19,16 @@ trait UploadField
 
     /**
      * File name.
-     *
-     * @var null
      */
     protected $name = null;
 
     /**
      * callable name.
-     *
-     * @var null
      */
     protected $callableName = null;
 
     /**
      * Storage instance.
-     *
-     * @var \Illuminate\Filesystem\Filesystem
      */
     protected $storage = '';
 
@@ -121,8 +116,6 @@ trait UploadField
 
     /**
      * Set filetype
-     *
-     * @return void.
      */
     public function filetype($filetype)
     {
@@ -213,6 +206,7 @@ trait UploadField
      */
     protected function guessPreviewType($file)
     {
+        $ext = '';
         if(!is_null($this->filetype)){
             $filetype = $this->filetype;
         }
@@ -374,8 +368,7 @@ trait UploadField
     /**
      * Set callable name.
      *
-     * @param callable $name
-     *
+     * @param callable $callableName
      * @return $this
      */
     public function callableName($callableName)
@@ -414,9 +407,9 @@ trait UploadField
     /**
      * Get store name of upload file.
      *
-     * @param UploadedFile $file
+     * @param UploadedFile|null $file
      *
-     * @return string
+     * @return string|null
      */
     protected function getStoreName(?UploadedFile $file)
     {

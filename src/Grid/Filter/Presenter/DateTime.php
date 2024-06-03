@@ -30,7 +30,7 @@ class DateTime extends Presenter
     /**
      * @param array $options
      *
-     * @return mixed
+     * @return array
      */
     protected function getOptions(array  $options) : array
     {

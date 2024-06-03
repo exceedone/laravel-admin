@@ -9,9 +9,6 @@ use Illuminate\Database\Query\Builder;
 
 class Footer extends AbstractTool
 {
-    /**
-     * @var Builder
-     */
     protected $queryBuilder;
 
     /**
@@ -26,8 +23,6 @@ class Footer extends AbstractTool
 
     /**
      * Get model query builder.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function queryBuilder()
     {

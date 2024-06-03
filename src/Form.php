@@ -27,6 +27,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class Form.
  *
+ * @property string $password
  * @method Field\Text           text($column, $label = '')
  * @method Field\Checkbox       checkbox($column, $label = '')
  * @method Field\Radio          radio($column, $label = '')
@@ -188,15 +189,13 @@ class Form implements Renderable
 
     /**
      * redirect callback to list.
-     *
-     * @var []Closure
      */
     protected $redirectList = true;
 
     /**
      * Initialization closure array.
      *
-     * @var []Closure
+     * @var Closure[]
      */
     protected static $initCallbacks;
 
@@ -211,7 +210,7 @@ class Form implements Renderable
     /**
      * Set relation models
      *
-     * @var arrar|null
+     * @var array|null
      */
     protected $relationModels;
 
@@ -282,9 +281,6 @@ class Form implements Renderable
         return $this->model;
     }
 
-    /**
-     * @return Model
-     */
     public function setModel($model)
     {
         $this->model = $model;
@@ -377,6 +373,7 @@ class Form implements Renderable
             }
 
             collect(explode(',', $id))->filter()->each(function ($id) {
+                /** @var SoftDeletableModel $builder */
                 $builder = $this->model()->newQuery();
 
                 if ($this->isSoftDeletes) {
@@ -441,8 +438,6 @@ class Form implements Renderable
 
     /**
      * Store a new record.
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\Http\JsonResponse
      */
     public function store($data = null)
     {
@@ -601,7 +596,7 @@ class Form implements Renderable
             return $data;
         }
 
-        /* @var Model $this->model */
+        /** @var SoftDeletableModel $builder */
         $builder = $this->model();
 
         if ($this->isSoftDeletes) {
@@ -703,7 +698,7 @@ class Form implements Renderable
             return $data;
         }
 
-        /* @var Model $this->model */
+        /** @var SoftDeletableModel $builder */
         $builder = $this->model();
 
         if ($this->isSoftDeletes) {
@@ -778,7 +773,7 @@ class Form implements Renderable
             return $data;
         }
 
-        /* @var Model $this->model */
+        /** @var SoftDeletableModel $builder */
         $builder = $this->model();
 
         if ($this->isSoftDeletes) {
@@ -970,6 +965,7 @@ class Form implements Renderable
     protected function handleOrderable($id, array $input = [])
     {
         if (array_key_exists('_orderable', $input)) {
+            /** @var SortableModel $model */
             $model = $this->model->find($id);
 
             if ($model instanceof Sortable) {
@@ -1072,7 +1068,7 @@ class Form implements Renderable
                 case $relation instanceof Relations\MorphMany:
 
                     foreach ($prepared[$name] as $related) {
-                        /** @var Relations\Relation $relation */
+                        /** @var Relations\Relation|\Illuminate\Database\Eloquent\Builder $relation */
                         $relation = $this->model()->$name();
 
                         $keyName = $relation->getRelated()->getKeyName();
@@ -1348,6 +1344,7 @@ class Form implements Renderable
     {
         $relations = $this->getRelations();
 
+        /** @var SoftDeletableModel $builder */
         $builder = $this->model();
 
         if ($this->isSoftDeletes) {
@@ -1381,7 +1378,6 @@ class Form implements Renderable
      * Get model by inputs
      * 
      * @param Model|null $model if set base model, set args
-     * @return Model
      */
     public function getModelByInputs(array $data = null, ?Model $model = null)
     {
@@ -1409,12 +1405,11 @@ class Form implements Renderable
         return $this->model;
     }
 
-    
     /**
      * Get relation models
      *
-     * @param array $relationInputs
-     * @return voidarray
+     * @param array|null $inputs
+     * @return array|null
      */
     public function getRelationModelByInputs(array $inputs = null)
     {
@@ -1450,11 +1445,11 @@ class Form implements Renderable
                 if(is_null($v)){
                     continue;
                 }
-                if (array_get($v, Form::REMOVE_FLAG_NAME) == 1) {
+                if (Arr::get($v, Form::REMOVE_FLAG_NAME) == 1) {
                     continue;
                 }
 
-                $prepared = $this->prepareConfirm([$column => $value], false);
+                $prepared = $this->prepareConfirm([$column => $value]);
 
                 $model = clone $relation->getRelated();
                 $model->fill($v);
@@ -1743,7 +1738,7 @@ class Form implements Renderable
     /**
      * @param Closure|null $callback
      *
-     * @return Form\Tools
+     * @return Form\Tools|void
      */
     public function header(Closure $callback = null)
     {
@@ -2151,11 +2146,10 @@ class Form implements Renderable
      *
      * @param string $name
      * @param mixed  $value
-     *
-     * @return array
      */
     public function __set($name, $value)
     {
+        /** @phpstan-ignore-next-line should delete return */
         return Arr::set($this->inputs, $name, $value);
     }
 

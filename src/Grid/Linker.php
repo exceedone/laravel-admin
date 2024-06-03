@@ -10,42 +10,42 @@ class Linker
     /**
      * Link icon
      *
-     * @var
+     * @var mixed
      */
     protected $icon;
 
     /**
      * tooltip text
      *
-     * @var
+     * @var mixed
      */
     protected $tooltip;
 
     /**
      * link url
      *
-     * @var
+     * @var mixed
      */
     protected $url;
 
     /**
      * script. if true, as script
      *
-     * @var
+     * @var mixed
      */
     protected $script = false;
 
     /**
      * link attributes
      *
-     * @var
+     * @var mixed
      */
     protected $linkattributes = [];
 
     /**
      * icon attributes
      *
-     * @var
+     * @var mixed
      */
     protected $iconattributes = [];
 
@@ -121,8 +121,7 @@ class Linker
 
     /**
      * render html
-     *
-     * @return string html
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function render()
     {

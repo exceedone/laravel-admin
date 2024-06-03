@@ -6,6 +6,9 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @phpstan-consistent-constructor
+ */
 abstract class Extension
 {
     /**
@@ -87,6 +90,7 @@ abstract class Extension
         $class = get_called_class();
 
         if (!isset(self::$instance[$class]) || !self::$instance[$class] instanceof $class) {
+            /** @phpstan-ignore-next-line https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static */
             self::$instance[$class] = new static();
         }
 
@@ -233,6 +237,9 @@ abstract class Extension
 
         if ($menu = $extension->menu()) {
             if ($extension->validateMenu($menu)) {
+                $title = null;
+                $path = null;
+                $icon = null;
                 extract($menu);
                 static::createMenu($title, $path, $icon);
             }
@@ -240,6 +247,9 @@ abstract class Extension
 
         if ($permission = $extension->permission()) {
             if ($extension->validatePermission($permission)) {
+                $name = null;
+                $slug = null;
+                $path = null;
                 extract($permission);
                 static::createPermission($name, $slug, $path);
             }

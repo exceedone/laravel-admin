@@ -94,8 +94,6 @@ class Field implements Renderable
 
     /**
      * Form element name.
-     *
-     * @var string
      */
     protected $elementName = [];
 
@@ -115,8 +113,6 @@ class Field implements Renderable
 
     /**
      * Options for specify elements.
-     *
-     * @var array
      */
     protected $options = [];
 
@@ -130,7 +126,7 @@ class Field implements Renderable
     /**
      * Validation rules.
      *
-     * @var array|\Closure
+     * @var string|array|\Closure
      */
     protected $rules = [];
 
@@ -204,15 +200,11 @@ class Field implements Renderable
 
     /**
      * Help Icon.
-     *
-     * @var string
      */
     protected $helpIcon;
 
     /**
      * Help Text.
-     *
-     * @var string
      */
     protected $helpText;
 
@@ -632,7 +624,7 @@ class Field implements Renderable
 
         if ($this instanceof Form\Field\MultipleFile
             || $this instanceof Form\Field\File
-            || get_class($this) == Form\Field\Checbox::class) {
+            || get_class($this) == Form\Field\Checkbox::class) {
             return;
         }
 
@@ -751,8 +743,6 @@ class Field implements Renderable
      * Remove validation rule
      *
      * @param array|callable|string $rules
-     * @param array                 $messages
-     *
      * @return $this
      */
     public function removeRules($rules)
@@ -827,8 +817,6 @@ class Field implements Renderable
 
     /**
      * Get field validation rules.
-     *
-     * @return string
      */
     protected function getRules()
     {
@@ -1026,10 +1014,7 @@ class Field implements Renderable
     /**
      * Get help Text
      *
-     * @param string $text
-     * @param string $icon
-     *
-     * @return $this
+     * @return string
      */
     public function getHelpText()
     {
@@ -1195,8 +1180,6 @@ class Field implements Renderable
 
     /**
      * Get field attributes.
-     *
-     * @return string
      */
     public function getAttributes()
     {
@@ -1207,8 +1190,6 @@ class Field implements Renderable
      * Specifies a regular expression against which to validate the value of the input.
      *
      * @param string $regexp
-     *
-     * @return Field
      */
     public function pattern($regexp)
     {
@@ -1234,14 +1215,11 @@ class Field implements Renderable
         return $this->attribute('required', true);
     }
 
-
     /**
      * set the input filed required rule.
      * Set asterisk, set validation browser, and set rule
      *
-     * @param bool $isLabelAsterisked
-     *
-     * @return Field
+     * @return $this
      */
     public function requiredRule()
     {
@@ -1328,8 +1306,6 @@ class Field implements Renderable
 
     /**
      * Get old function result. Contains value.
-     *
-     * @return string
      */
     public function getOld()
     {
@@ -1339,10 +1315,10 @@ class Field implements Renderable
             $olds = [];
             foreach($this->column as $key => $c){
                 $elementNames = $this->getElementName();
-                $elementName = is_array($elementNames) ? array_get($elementNames, $key) : $elementNames;
+                $elementName = is_array($elementNames) ? Arr::get($elementNames, $key) : $elementNames;
 
                 $keyname = static::getDotName($elementName);
-                $v = array_get((is_null($value) ? [] : (array)$value), $key);
+                $v = Arr::get((is_null($value) ? [] : (array)$value), $key);
 
                 if(!is_null($old = old($c, $v))){
                     $olds[$key] = $old;
@@ -1896,8 +1872,6 @@ class Field implements Renderable
 
     /**
      * Render this filed.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
      */
     public function render()
     {
@@ -1920,9 +1894,6 @@ class Field implements Renderable
         return view($this->getView(), $this->variables());
     }
 
-    /**
-     * @return string
-     */
     public function __toString()
     {
         return $this->render()->render();

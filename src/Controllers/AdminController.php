@@ -5,6 +5,11 @@ namespace Encore\Admin\Controllers;
 use Encore\Admin\Layout\Content;
 use Illuminate\Routing\Controller;
 
+/**
+ * @method mixed grid()
+ * @method mixed detail($id)
+ * @method mixed form()
+ */
 class AdminController extends Controller
 {
     use HasResourceActions;

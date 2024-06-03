@@ -28,17 +28,17 @@ class Builder
     protected $id;
 
     /**
-     * @var Form
+     * @var Form|null
      */
     protected $form;
 
     /**
-     * @var
+     * @var mixed
      */
     protected $action;
 
     /**
-     * @var Collection
+     * @var Collection|null
      */
     protected $fields;
 
@@ -107,7 +107,7 @@ class Builder
     /**
      * Whether disable pjax
      *
-     * @var disable pjax
+     * @var bool
      */
     protected $disablePjax = false;
 
@@ -217,8 +217,7 @@ class Builder
      * Set resource Id.
      *
      * @param $id
-     *
-     * @return void
+     * @return $this
      */
     public function setResourceId($id)
     {

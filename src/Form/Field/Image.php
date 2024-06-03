@@ -22,8 +22,6 @@ class Image extends File
 
     /**
      * @param array|UploadedFile|null $image
-     *
-     * @return string
      */
     public function prepare($image)
     {
@@ -33,7 +31,8 @@ class Image extends File
         }
 
         if (request()->has(static::FILE_DELETE_FLAG)) {
-            return $this->destroy();
+            $this->destroy();
+            return;
         }
 
         if(is_null($image)){
@@ -53,8 +52,6 @@ class Image extends File
     
     /**
      * Render file upload field.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function render()
     {

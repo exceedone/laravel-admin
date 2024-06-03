@@ -351,7 +351,7 @@ class Form implements Renderable
     public function defaultCheck($key)
     {
         foreach($this->submitRedirects as &$submitRedirect){
-            if(array_get($submitRedirect, 'key') == $key){
+            if(Arr::get($submitRedirect, 'key') == $key){
                 $submitRedirect['default'] = true;
             }
         }
@@ -448,8 +448,6 @@ class Form implements Renderable
 
     /**
      * Get form's script
-     *
-     * @return void
      */
     public function getScript()
     {
@@ -542,8 +540,8 @@ class Form implements Renderable
         }
 
         foreach ($this->submitRedirects as $submitRedirect) {
-            if(boolval(array_get($submitRedirect, 'default'))){
-                return array_get($submitRedirect, 'value');
+            if(boolval(Arr::get($submitRedirect, 'default'))){
+                return Arr::get($submitRedirect, 'value');
             }
         }
 

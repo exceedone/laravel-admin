@@ -16,15 +16,14 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 
 /**
- * @method mixed orderBy()
- * @method mixed where()
+ * @method orderBy($column, $direction = 'asc');
+ * @method where()
+ * @method whereIn($column, $values, $boolean = 'and', $not = false)
  */
 class Model
 {
     /**
      * Eloquent model instance of the grid model.
-     *
-     * @var EloquentModel
      */
     protected $model;
 
@@ -229,9 +228,7 @@ class Model
 
     /**
      * Set per-page arguments.
-     *
-     * @param array $arg arguments
-     *
+     * @param array $arguments
      * @return $this
      */
     public function setPerPageArguments($arguments)
@@ -434,8 +431,6 @@ class Model
 
     /**
      * @throws \Exception
-     *
-     * @return Collection
      */
     protected function get()
     {
@@ -624,7 +619,7 @@ class Model
         }
 
         $relationSort = false;
-        if(boolval(array_get($this->sort, 'direct'))){
+        if(boolval(Arr::get($this->sort, 'direct'))){
         }
         elseif (Str::contains($this->sort['column'], '.')) {
             $relationSort = true;
@@ -714,10 +709,7 @@ class Model
 
     /**
      * Set callback sort.
-     *
-     * @param string $column
-     *
-     * @return void
+     * @return false|void
      */
     protected function setCallbackSort()
     {

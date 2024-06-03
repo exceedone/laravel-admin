@@ -29,8 +29,6 @@ class Text extends Field
 
     /**
      * Render this filed.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function render()
     {

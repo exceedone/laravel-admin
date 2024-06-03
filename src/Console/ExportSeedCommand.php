@@ -112,8 +112,6 @@ class ExportSeedCommand extends Command
      *
      * @param $var
      * @param string $indent
-     *
-     * @return string
      */
     protected function varExport($var, $indent = '')
     {

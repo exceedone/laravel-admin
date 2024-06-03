@@ -2,6 +2,7 @@
 
 namespace Encore\Admin\Console;
 
+use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Illuminate\Database\Eloquent\Model;
 
 class ResourceGenerator
@@ -220,7 +221,10 @@ class ResourceGenerator
         }
 
         $table = $this->model->getConnection()->getTablePrefix().$this->model->getTable();
-        /** @var \Doctrine\DBAL\Schema\MySqlSchemaManager $schema */
+        /**
+         * @var AbstractSchemaManager $schema
+         * @phpstan-ignore-next-line Maybe not use $table argument
+         */
         $schema = $this->model->getConnection()->getDoctrineSchemaManager($table);
 
         // custom mapping the types that doctrine/dbal does not support

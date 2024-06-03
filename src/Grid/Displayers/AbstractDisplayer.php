@@ -18,7 +18,7 @@ abstract class AbstractDisplayer
     protected $column;
 
     /**
-     * @var \stdClass
+     * @var mixed
      */
     public $row;
 
@@ -33,7 +33,7 @@ abstract class AbstractDisplayer
      * @param mixed     $value
      * @param Grid      $grid
      * @param Column    $column
-     * @param \stdClass $row
+     * @param mixed $row
      */
     public function __construct($value, Grid $grid, Column $column, $row)
     {

@@ -1,0 +1,15 @@
+parameters:
+    paths:
+        - src
+    level: 3
+    ignoreErrors:
+        - '#Call to static method transaction\(\) on an unknown class ExmentDB.#'
+        - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$id.#'
+        - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$password.#'
+        - '#Call to an undefined method Encore\\Admin\\Grid\\Column::pluck\(\).#'
+        - '#Cannot call method with\(\) on string.#'
+        - '#Cannot call method render\(\) on string.#'
+        - '#Return type \(Illuminate\\Contracts\\View\\Factory\|Illuminate\\View\\View\) of method Encore\\Admin\\Widgets\\Grid\\Tools\\QuickSearch::render\(\) should be compatible with return type \(string\) of method Encore\\Admin\\Widgets\\Grid\\Tools\\AbstractTool::render\(\)#'
+        - '#Return type \(Illuminate\\Contracts\\View\\Factory\|Illuminate\\View\\View\) of method Encore\\Admin\\Widgets\\Grid\\Tools\\QuickSearch::render\(\) should be compatible with return type \(string\) of method Illuminate\\Contracts\\Support\\Renderable::render\(\)#'
+includes:
+    - vendor/nunomaduro/larastan/extension.neon

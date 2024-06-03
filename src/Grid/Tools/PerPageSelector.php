@@ -4,11 +4,12 @@ namespace Encore\Admin\Grid\Tools;
 
 use Encore\Admin\Admin;
 use Encore\Admin\Grid;
+use Illuminate\Support\Collection;
 
 class PerPageSelector extends AbstractTool
 {
     /**
-     * @var string
+     * @var int
      */
     protected $perPage;
 
@@ -47,7 +48,7 @@ class PerPageSelector extends AbstractTool
     /**
      * Get options for selector.
      *
-     * @return static
+     * @return Collection
      */
     public function getOptions()
     {

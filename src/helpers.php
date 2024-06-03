@@ -57,7 +57,7 @@ if (!function_exists('admin_base_path')) {
     /**
      * Get admin url.
      *
-     * @param string $path
+     * @param string|null $path
      *
      * @return string
      */
@@ -451,9 +451,8 @@ if (!function_exists('json_encode_options')) {
          * Wrapper for explode that throws when an error occurs.
          *
          * @param string $separator Delimited string
-         * @param ?string $string   Input string
-         * @param ?int    $limit    Number of elements in the return array
-         *
+         * @param string|null $string Input string
+         * @param int $limit Number of elements in the return array
          * @return array
          */
         function explode_ex(string $separator, ?string $string, int $limit = PHP_INT_MAX): array
@@ -468,10 +467,9 @@ if (!function_exists('json_encode_options')) {
         /**
          * Wrapper for parse_url that throws when an error occurs.
          *
-         * @param ?string $string    parse target URL
-         * @param ?int    $component get only a specific URL component
-         *
-         * @return int|string|array|null|false
+         * @param string|null $url parse target URL
+         * @param int $component get only a specific URL component
+         * @return int|string|array|false|null
          */
         function parse_url_ex(?string $url, int $component = -1): int|string|array|null|false
         {
@@ -535,11 +533,10 @@ if (!function_exists('json_encode_options')) {
         /**
          * Wrapper for str_replace that throws when an error occurs.
          *
-         * @param array|string   $string  search string or array
-         * @param ?string|?array $replace replace string or array
-         * @param ?string|?array $subject string or array to be searched / replaced.
-         * @param int $count The number of matched and replaced locations is stored here.
-         *
+         * @param array|string $search search string or array
+         * @param array|string|null $replace replace string or array
+         * @param string|array|null $subject string or array to be searched / replaced.
+         * @param int|null $count The number of matched and replaced locations is stored here.
          * @return string|array
          */
         function str_replace_ex(

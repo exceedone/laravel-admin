@@ -7,3 +7,5 @@ composer.lock
 .idea/
 .php_cs.cache
 .vscode/
+.php-cs-fixer.cache
+.phpunit.result.cache

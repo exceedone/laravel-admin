@@ -152,6 +152,7 @@ class Embeds extends Field
      */
     public function hasFile()
     {
+        /** @phpstan-ignore-next-line maybe not reference */
         foreach ($this->fields() as $field) {
             if ($field instanceof Field\File || $field instanceof Field\MultipleFile) {
                 return true;
@@ -278,8 +279,6 @@ class Embeds extends Field
 
     /**
      * Render the form.
-     *
-     * @return \Illuminate\View\View
      */
     public function render()
     {

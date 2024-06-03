@@ -75,13 +75,14 @@ class Relation extends Field
     /**
      * Get null renderable instance.
      *
-     * @return Renderable|__anonymous@1539
+     * @return Renderable
      */
     protected function getNullRenderable()
     {
         return new class() implements Renderable {
             public function render()
             {
+                return '';
             }
         };
     }

@@ -2,6 +2,7 @@
 
 namespace Encore\Admin\Widgets\Grid\Concerns;
 
+use Encore\Admin\Grid\Model;
 use Encore\Admin\Widgets\Grid\Column;
 use Encore\Admin\Widgets\Grid\Tools;
 use Illuminate\Support\Collection;
@@ -13,7 +14,7 @@ use Illuminate\Support\Str;
  * @property Collection $columns
  * @property Tools      $tools
  *
- * @method  Model model()
+ * @method Model model()
  */
 trait HasQuickSearch
 {
@@ -49,8 +50,7 @@ trait HasQuickSearch
     }
 
     /**
-     * @param array|string|\Closure
-     *
+     * @param array|string|\Closure $search
      * @return $this
      */
     public function quickSearch($search = null)

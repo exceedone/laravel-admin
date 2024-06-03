@@ -2,6 +2,7 @@
 
 namespace Encore\Admin\Widgets\Grid\Displayers;
 
+use Illuminate\Support\Arr;
 use Encore\Admin\Admin;
 use Encore\Admin\Grid\Linker;
 
@@ -64,7 +65,7 @@ class Actions extends AbstractDisplayer
      */
     public function getRouteKey()
     {
-        return array_get((array)$this->row, $this->grid->getKeyName());
+        return Arr::get((array)$this->row, $this->grid->getKeyName());
     }
 
     /**

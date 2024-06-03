@@ -12,14 +12,13 @@ use Encore\Admin\Grid\Exporters\AbstractExporter;
 use Encore\Admin\Grid\Model;
 use Encore\Admin\Grid\Row;
 use Encore\Admin\Grid\Tools;
-use Encore\Admin\Traits;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Relations;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
-use Jenssegers\Mongodb\Eloquent\Model as MongodbModel;
+//use MongoDB\Laravel\Eloquent\Model as MongodbModel;
 
 class Grid
 {
@@ -94,7 +93,7 @@ class Grid
     /**
      * Resource path of the grid.
      *
-     * @var
+     * @var mixed
      */
     protected $resourcePath;
 
@@ -178,21 +177,21 @@ class Grid
     /**
      * Initialization closure array.
      *
-     * @var []Closure
+     * @var Closure[]
      */
     protected static $initCallbacks = [];
 
     /**
      * Get data closure array.
      *
-     * @var []Closure
+     * @var Closure[]
      */
     protected static $getDataCallbacks = [];
 
     /**
      * Value after getting from database.
      *
-     * @var
+     * @var mixed
      */
     protected $originalCollection;
 
@@ -384,7 +383,7 @@ class Grid
      *
      * @param array $columns
      *
-     * @return Collection|null
+     * @return Collection|null|void
      */
     public function columns($columns = [])
     {
@@ -428,8 +427,7 @@ class Grid
      *
      * @param string $name
      * @param string $label
-     *
-     * @return $this|bool|Column
+     * @return $this|Column
      */
     protected function addRelationColumn($name, $label = '')
     {
@@ -850,8 +848,6 @@ class Grid
      * Get current resource uri.
      *
      * @param string $path
-     *
-     * @return string
      */
     public function resource($path = null)
     {
@@ -943,9 +939,9 @@ class Grid
 
         $label = $arguments[0] ?? null;
 
-        if ($this->model()->eloquent() instanceof MongodbModel) {
-            return $this->addColumn($method, $label);
-        }
+//        if ($this->model()->eloquent() instanceof MongodbModel) {
+//            return $this->addColumn($method, $label);
+//        }
 
         if ($column = $this->handleGetMutatorColumn($method, $label)) {
             return $column;

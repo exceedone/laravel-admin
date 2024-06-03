@@ -3,6 +3,7 @@
 namespace Encore\Admin\Form\Field;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Arr;
 
 class Checkbox extends MultipleSelect
 {
@@ -100,7 +101,7 @@ class Checkbox extends MultipleSelect
     public function render()
     {
         // remove required rule
-        array_forget($this->attributes, 'required');
+        Arr::forget($this->attributes, 'required');
         $this->removeRules(['required']);
 
         $this->script = "$('{$this->getElementClassSelector()}').iCheck({checkboxClass:'icheckbox_minimal-blue'});";

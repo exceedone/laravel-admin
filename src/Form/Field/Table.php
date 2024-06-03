@@ -47,7 +47,7 @@ class Table extends HasMany
                 if ($data[NestedForm::REMOVE_FLAG_NAME] == 1) {
                     continue;
                 }
-
+                /** @phpstan-ignore-next-line fill method require 2 parameters. */
                 $forms[$key] = $this->buildNestedForm($this->column, $this->builder, $key)->fill($data);
             }
         } else {
@@ -55,6 +55,7 @@ class Table extends HasMany
                 if (isset($data['pivot'])) {
                     $data = array_merge($data, $data['pivot']);
                 }
+                /** @phpstan-ignore-next-line fill method require 2 parameters. */
                 $forms[$key] = $this->buildNestedForm($this->column, $this->builder, $key)->fill($data);
             }
         }

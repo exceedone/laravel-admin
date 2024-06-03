@@ -118,8 +118,6 @@ class Column
 
     /**
      * Relation name.
-     *
-     * @var bool
      */
     protected $relation = false;
 
@@ -138,7 +136,7 @@ class Column
     protected static $originalGridModels;
 
     /**
-     * @var []Closure
+     * @var Closure[]
      */
     protected $displayCallbacks = [];
 
@@ -303,7 +301,7 @@ class Column
     /**
      * Set the min-width of column.
      *
-     * @param int $width
+     * @param int|null $width
      *
      * @return $this
      */
@@ -319,7 +317,7 @@ class Column
     /**
      * Set the max-width of column.
      *
-     * @param int $width
+     * @param int|null $width
      *
      * @return $this
      */
@@ -397,8 +395,6 @@ class Column
      *
      * @param string $relation
      * @param string $relationColumn
-     *
-     * @return $this
      */
     public function setRelation($relation, $relationColumn = null)
     {
@@ -447,11 +443,8 @@ class Column
     }
 
     /**
-     * Get sort coolumn name.
-     *
-     * @param string $sortName
-     *
-     * @return $this
+     * Get sort column name.
+     * @return string
      */
     public function getSortName()
     {
@@ -494,8 +487,6 @@ class Column
 
     /**
      * Get sort callback.
-     *
-     * @return $this
      */
     public function getSortCallback()
     {
@@ -626,6 +617,7 @@ class Column
      */
     public function totalRow($display = null)
     {
+        /** @phpstan-ignore-next-line use magic method */
         $this->grid->addTotalRow($this->name, $display);
 
         return $this;

@@ -363,8 +363,6 @@ class HasMany extends Field
 
     /**
      * Get the HasMany relation key name.
-     *
-     * @return string
      */
     protected function getKeyName()
     {
@@ -693,8 +691,6 @@ EOT;
      * Render the `HasMany` field.
      *
      * @throws \Exception
-     *
-     * @return \Illuminate\View\View
      */
     public function render()
     {
@@ -722,8 +718,6 @@ EOT;
      * Render the `HasMany` field for table style.
      *
      * @throws \Exception
-     *
-     * @return mixed
      */
     protected function renderTable()
     {

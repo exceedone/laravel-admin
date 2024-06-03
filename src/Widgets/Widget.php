@@ -4,6 +4,21 @@ namespace Encore\Admin\Widgets;
 
 use Illuminate\Support\Fluent;
 
+/**
+ * @method $this class(array|string $class)
+ * @method $this id(mixed $id)
+ * @method $this style(string $styles)
+ * @method $this addRelationColumn(string $name, string $label)
+ * @method $this addJsonColumn(string $name, string $label)
+ * @property mixed $id
+ * @property mixed $width
+ * @property mixed $height
+ * @property mixed $variables
+ * @property mixed $originalCollection
+ * @property mixed $paginator
+ * @method width(mixed $width)
+ * @method height(mixed $height)
+ */
 abstract class Widget extends Fluent
 {
     /**

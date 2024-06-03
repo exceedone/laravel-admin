@@ -111,10 +111,9 @@ class Exporter
     /**
      * Format query for export url.
      *
-     * @param int  $scope
+     * @param string $scope
      * @param null $args
-     *
-     * @return array
+     * @return string[]
      */
     public static function formatExportQuery($scope = '', $args = null)
     {

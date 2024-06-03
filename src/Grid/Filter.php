@@ -371,9 +371,9 @@ class Filter implements Renderable
     }
 
     /**
-     * @param $inputs
+     * @param array $inputs
      *
-     * @return array
+     * @return array|void
      */
     protected function sanitizeInputs(&$inputs)
     {
@@ -672,9 +672,8 @@ class Filter implements Renderable
 
     /**
      * @param string $abstract
-     * @param array  $arguments
-     *
-     * @return AbstractFilter
+     * @param array $arguments
+     * @return mixed|void
      */
     public function resolveFilter($abstract, $arguments)
     {

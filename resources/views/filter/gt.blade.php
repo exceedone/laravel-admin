@@ -5,7 +5,7 @@
     </div>
     @if ($nullcheck)
     <div class="col-sm-2" style="padding-top:3px;">
-        <input type="checkbox" class="isnull-{{$column}}" name="isnull-{{$column}}" value="1" class="minimal"  {{$isnull}} />&nbsp;{{ trans('admin.empty') }}&nbsp;&nbsp;
+        <input type="checkbox" class="isnull-{{$column}}" name="isnull-{{$column}}" value="1" {{$isnull}} />&nbsp;{{ trans('admin.empty') }}&nbsp;&nbsp;
     </div>
     @endif
 </div>

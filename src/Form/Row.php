@@ -76,8 +76,6 @@ class Row implements Renderable
 
     /**
      * Render the row.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function render()
     {

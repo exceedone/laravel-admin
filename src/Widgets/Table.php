@@ -119,9 +119,7 @@ class Table extends Widget implements Renderable
 
     /**
      * Set table column classes.
-     *
-     * @param array $style
-     *
+     * @param array $classes
      * @return $this
      */
     public function setColumnClasses($classes = [])
