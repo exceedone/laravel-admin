@@ -116,7 +116,7 @@ class EmbeddedForm
     /**
      * Set original values for fields.
      *
-     * @param array $data
+     * @param array|string $data
      *
      * @return $this
      */
@@ -174,7 +174,7 @@ class EmbeddedForm
      * Do prepare work for each field.
      *
      * @param string $key
-     * @param string $record
+     * @param string|null $record
      *
      * @return mixed
      */

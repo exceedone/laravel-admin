@@ -33,14 +33,14 @@ class MultipleFile extends Field
     /**
      * Caption.
      *
-     * @var \Closure
+     * @var \Closure|null
      */
     protected $caption = null;
 
     /**
      * file Index.
      *
-     * @var \Closure
+     * @var \Closure|null
      */
     protected $fileIndex = null;
 

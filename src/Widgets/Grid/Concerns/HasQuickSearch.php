@@ -24,7 +24,7 @@ trait HasQuickSearch
     protected static $searchKey = '__search__';
 
     /**
-     * @var array|string|\Closure
+     * @var array|string|\Closure|mixed|null
      */
     protected $search;
 

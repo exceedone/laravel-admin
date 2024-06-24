@@ -88,7 +88,7 @@ class Form implements Renderable
     /**
      * Eloquent model of the form.
      *
-     * @var Model
+     * @var Model|null
      */
     protected $model;
 
@@ -100,14 +100,14 @@ class Form implements Renderable
     /**
      * Validation closure.
      *
-     * @var Closure
+     * @var Closure|null
      */
     protected $validatorSavingCallback;
 
     /**
      * prepare callback
      *
-     * @var Closure
+     * @var Closure|null
      */
     protected $prepareCallback;
 
@@ -166,7 +166,7 @@ class Form implements Renderable
     protected static $collectedAssets = [];
 
     /**
-     * @var Form\Tab
+     * @var Form\Tab|null
      */
     protected $tab = null;
 
@@ -202,7 +202,7 @@ class Form implements Renderable
     /**
      * If set, not call default renderException, and \Closure.
      *
-     * @var \Closure
+     * @var \Closure|null
      */
     protected $renderException;
 
@@ -274,7 +274,7 @@ class Form implements Renderable
     }
 
     /**
-     * @return Model
+     * @return Model|null
      */
     public function model()
     {
@@ -582,7 +582,7 @@ class Form implements Renderable
      * Handle update.
      *
      * @param int  $id
-     * @param null $data
+     * @param mixed $data
      *
      * @return bool|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|mixed|null|Response
      */
@@ -684,7 +684,7 @@ class Form implements Renderable
      * Handle validation update.
      *
      * @param int  $id
-     * @param null $data
+     * @param mixed $data
      *
      * @return bool|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|mixed|null|Response
      */
@@ -759,7 +759,7 @@ class Form implements Renderable
      * Handle update before validation.
      *
      * @param int  $id
-     * @param null $data
+     * @param mixed $data
      *
      * @return bool|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|mixed|null|Response
      */
@@ -1964,7 +1964,7 @@ class Form implements Renderable
      * Get or set input data.
      *
      * @param string $key
-     * @param null   $value
+     * @param mixed   $value
      *
      * @return array|mixed
      */

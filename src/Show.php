@@ -29,7 +29,7 @@ class Show implements Renderable
     /**
      * The Eloquent model to show.
      *
-     * @var Model
+     * @var Model|null
      */
     protected $model;
 
@@ -81,7 +81,7 @@ class Show implements Renderable
     /**
      * If set, not call default renderException, and \Closure.
      *
-     * @var \Closure
+     * @var \Closure|null
      */
     protected $renderException;
 

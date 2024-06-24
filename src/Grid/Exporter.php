@@ -69,9 +69,7 @@ class Exporter
     /**
      * Resolve export driver.
      *
-     * @param string $driver
-     *
-     * @return CsvExporter
+     * @param string|Grid\Exporters\AbstractExporter $driver
      */
     public function resolve($driver)
     {
@@ -86,7 +84,6 @@ class Exporter
      * Get export driver.
      *
      * @param string $driver
-     *
      * @return CsvExporter
      */
     protected function getExporter($driver)

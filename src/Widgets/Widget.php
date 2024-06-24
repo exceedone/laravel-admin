@@ -63,9 +63,7 @@ abstract class Widget extends Fluent
      * Build a single attribute element.
      *
      * @param string $key
-     * @param string $value
-     *
-     * @return string
+     * @param string|null $value
      */
     protected function attributeElement($key, $value)
     {

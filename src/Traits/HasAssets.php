@@ -103,7 +103,7 @@ trait HasAssets
     /**
      * Add css or get all css.
      *
-     * @param null $css
+     * @param null|array $css
      *
      * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -145,7 +145,7 @@ trait HasAssets
     /**
      * Add js or get all js.
      *
-     * @param null $js
+     * @param null|array $js
      *
      * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */

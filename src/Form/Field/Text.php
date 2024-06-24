@@ -9,7 +9,7 @@ class Text extends Field
     use PlainInput;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $icon = 'fa-pencil';
 

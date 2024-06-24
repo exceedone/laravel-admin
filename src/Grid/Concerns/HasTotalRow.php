@@ -14,7 +14,7 @@ trait HasTotalRow
 
     /**
      * @param string  $column
-     * @param Closure $callback
+     * @param Closure|null $callback
      *
      * @return $this
      */

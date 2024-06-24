@@ -109,6 +109,7 @@ class Select extends Field
             return [];
         }
 
+        /** @phpstan-ignore-next-line Parameter #2 $callback of function array_filter expects (callable(mixed): bool)|null, 'strlen' given. */
         return array_filter($options, 'strlen');
     }
 
@@ -622,6 +623,7 @@ EOT;
             $this->options(call_user_func($this->options, $this->value, $this, isset($this->form) ? $this->form->model() : null));
         }
 
+        /** @phpstan-ignore-next-line Parameter #2 $callback of function array_filter expects (callable(mixed): bool)|null, 'strlen' given. */
         $this->options = array_filter($this->options, 'strlen');
 
         $this->addVariables([

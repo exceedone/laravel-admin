@@ -4,6 +4,9 @@ namespace Encore\Admin\Widgets;
 
 use Illuminate\Contracts\Support\Renderable;
 
+/**
+ * @property string $class
+ */
 class Box extends Widget implements Renderable
 {
     /**
@@ -40,7 +43,7 @@ class Box extends Widget implements Renderable
      * Box constructor.
      *
      * @param string $title
-     * @param string $content
+     * @param string|Form $content
      */
     public function __construct($title = '', $content = '', $footer = '')
     {
@@ -62,7 +65,7 @@ class Box extends Widget implements Renderable
     /**
      * Set box content.
      *
-     * @param string $content
+     * @param Renderable|string $content
      *
      * @return $this
      */
@@ -80,7 +83,7 @@ class Box extends Widget implements Renderable
     /**
      * Set box footer.
      *
-     * @param string $footer
+     * @param Renderable|string $footer
      *
      * @return $this
      */
@@ -170,7 +173,7 @@ SCRIPT;
     /**
      * Set box style.
      *
-     * @param string $styles
+     * @param string|array $styles
      *
      * @return $this|Box
      */

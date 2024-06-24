@@ -11,14 +11,14 @@ class ListField extends Field
     /**
      * Max list size.
      *
-     * @var int
+     * @var int|null
      */
     protected $max;
 
     /**
      * Minimum list size.
      *
-     * @var int
+     * @var int|null
      */
     protected $min = 0;
 

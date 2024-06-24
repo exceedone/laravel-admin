@@ -17,7 +17,7 @@ class Tools implements Renderable
     protected $panel;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $resource;
 
@@ -45,7 +45,7 @@ class Tools implements Renderable
     /**
      * list path Expressly
      *
-     * @var string
+     * @var string|null
      */
     protected $listPath;
 

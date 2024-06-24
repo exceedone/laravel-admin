@@ -32,14 +32,14 @@ class Footer implements Renderable
     /**
      * Default Submit label.
      *
-     * @var string
+     * @var string|null
      */
     public static $defaultSubmitLabel;
 
     /**
      * Submit label.
      *
-     * @var string
+     * @var string|null
      */
     protected $submitLabel;
 

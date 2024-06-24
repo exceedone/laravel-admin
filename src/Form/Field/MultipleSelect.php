@@ -129,6 +129,7 @@ class MultipleSelect extends Select
     {
         $value = (array) $value;
 
+        /** @phpstan-ignore-next-line Parameter #2 $callback of function array_filter expects (callable(mixed): bool)|null, 'strlen_ex' given. */
         return array_filter($value, 'strlen_ex');
     }
 }

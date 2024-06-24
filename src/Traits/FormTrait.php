@@ -81,7 +81,7 @@ trait FormTrait
      * Add form attributes.
      *
      * @param string|array $attr
-     * @param string       $value
+     * @param string|int       $value
      *
      * @return $this
      */

@@ -28,7 +28,7 @@ class MultipleSteps implements Renderable
      * MultipleSteps constructor.
      *
      * @param array $steps
-     * @param null  $current
+     * @param null|int|string  $current
      */
     public function __construct($steps = [], $current = null)
     {

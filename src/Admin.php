@@ -28,7 +28,7 @@ class Admin
     const VERSION = '1.7.0';
 
     /**
-     * @var Navbar
+     * @var Navbar|null
      */
     protected $navbar;
 
@@ -445,6 +445,7 @@ class Admin
     public function disablePjax()
     {
         if (request()->pjax()) {
+            /** @phpstan-ignore-next-line Parameter #2 $values of method Symfony\Component\HttpFoundation\HeaderBag::set() expects array<string>|string|null, false given.   */
             request()->headers->set('X-PJAX', false);
         }
     }

@@ -96,6 +96,7 @@ class Permission
             abort(403, $message);
         }
 
+        /** @phpstan-ignore-next-line Parameter #1 $content of function response expects array|Illuminate\Contracts\View\View|string|null, Encore\Admin\Layout\Content given. */
         $response = response(Admin::content()->withError($message));
 
         Pjax::respond($response);

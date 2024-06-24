@@ -413,7 +413,7 @@ abstract class AbstractFilter
     /**
      * Set default value for filter.
      *
-     * @param null $default
+     * @param array|string|null $default
      *
      * @return $this
      */

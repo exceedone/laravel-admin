@@ -104,7 +104,7 @@ class Filter implements Renderable
     protected $filterID = 'filter-box';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $filterAjax;
 

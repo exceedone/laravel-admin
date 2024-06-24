@@ -211,7 +211,7 @@ abstract class Extension
      * Get config set in config/admin.php.
      *
      * @param string $key
-     * @param null   $default
+     * @param null|array   $default
      *
      * @return \Illuminate\Config\Repository|mixed
      */
@@ -305,9 +305,9 @@ abstract class Extension
     /**
      * Create a item in laravel-admin left side menu.
      *
-     * @param string $title
-     * @param string $uri
-     * @param string $icon
+     * @param string|null $title
+     * @param string|null $uri
+     * @param string|null  $icon
      * @param int    $parentId
      */
     protected static function createMenu($title, $uri, $icon = 'fa-bars', $parentId = 0)

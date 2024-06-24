@@ -32,6 +32,7 @@ class Paginator extends AbstractTool
     {
         $this->paginator = $this->grid->model()->eloquent();
 
+        /** @phpstan-ignore-next-line Instanceof between Illuminate\Database\Eloquent\Model and Illuminate\Pagination\LengthAwarePaginator will always evaluate to false. */
         if ($this->paginator instanceof LengthAwarePaginator) {
             $this->paginator->appends(Request::all());
         }

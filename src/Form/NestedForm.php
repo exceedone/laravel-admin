@@ -65,7 +65,7 @@ class NestedForm
     protected $key;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $index;
 
@@ -77,7 +77,7 @@ class NestedForm
     /**
      * NestedForm key.
      *
-     * @var Model
+     * @var Model|null
      */
     protected $model;
 
@@ -130,7 +130,7 @@ class NestedForm
     /**
      * Get the value of the model's primary key.
      *
-     * @return mixed|null
+     * @return string|mixed|null
      */
     public function getKey()
     {

@@ -48,7 +48,7 @@ abstract class AbstractField implements Renderable
     }
 
     /**
-     * @param Model $model
+     * @param Model|Field $model
      *
      * @return AbstractField $this
      */

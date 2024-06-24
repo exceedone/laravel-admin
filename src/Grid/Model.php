@@ -96,7 +96,7 @@ class Model
     /**
      * Collection callback.
      *
-     * @var \Closure
+     * @var \Closure|null
      */
     protected $collectionCallback;
 
@@ -106,7 +106,7 @@ class Model
     protected $grid;
 
     /**
-     * @var Relation
+     * @var Relation|null
      */
     protected $relation;
 
@@ -352,8 +352,8 @@ class Model
      * Build.
      *
      * @param bool $toArray
-     *
-     * @return array|Collection|mixed
+     * @return array|\Illuminate\Database\Eloquent\Builder|EloquentModel|LengthAwarePaginator|Collection|mixed|mixed[]
+     * @throws \Exception
      */
     public function buildData($toArray = true)
     {
@@ -512,6 +512,7 @@ class Model
                 $paginator->getPageName() => $paginator->lastPage(),
             ]);
 
+            /** @phpstan-ignore-next-line Parameter #1 $response of static method Encore\Admin\Middleware\Pjax::respond() expects Illuminate\Http\Response, Illuminate\Http\RedirectResponse given.   */
             Pjax::respond(redirect($lastPageUrl));
         }
     }
@@ -547,7 +548,7 @@ class Model
     /**
      * Resolve perPage for pagination.
      *
-     * @param array|null $paginate
+     * @param array|null|Model $paginate
      *
      * @return array
      */

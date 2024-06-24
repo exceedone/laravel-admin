@@ -19,7 +19,7 @@ class HasOptionRule implements Rule
     * Check Validation
     *
     * @param  string  $attribute
-    * @param  mixed  $value
+    * @param  array|string|null  $value
     * @return bool
     */
     public function passes($attribute, $value)

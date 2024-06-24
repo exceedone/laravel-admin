@@ -53,6 +53,9 @@
         "test": "./vendor/bin/phpunit",
         "post-autoload-dump": [
             "@php vendor/bin/testbench package:discover --ansi"
+        ],
+        "phpstan": [
+            "@php vendor/bin/phpstan analyse"
         ]
     },
     "suggest": {
