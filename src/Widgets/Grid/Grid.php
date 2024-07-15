@@ -149,7 +149,7 @@ class Grid
     /**
      * Grid builder.
      *
-     * @var \Closure
+     * @var \Closure|null
      */
     protected $builder;
 

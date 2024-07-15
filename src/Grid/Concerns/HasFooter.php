@@ -8,7 +8,7 @@ use Encore\Admin\Grid\Tools\Footer;
 trait HasFooter
 {
     /**
-     * @var Closure
+     * @var Closure|null
      */
     protected $footer;
 

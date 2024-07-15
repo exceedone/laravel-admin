@@ -71,6 +71,7 @@ class LogController extends AdminController
      */
     public function destroy($id)
     {
+        /** @phpstan-ignore-next-line Parameter #2 $string of function explode expects string, int given. */
         $ids = explode(',', $id);
 
         if (OperationLog::destroy(array_filter($ids))) {

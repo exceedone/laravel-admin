@@ -167,7 +167,7 @@ class Embeds extends Field
      *
      * @param array  $input
      * @param string $label
-     * @param string $column
+     * @param string|array $column
      *
      * @return array
      */

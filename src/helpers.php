@@ -69,7 +69,7 @@ if (!function_exists('admin_base_path')) {
 
         $path = trim($path?? '', '/');
 
-        if (is_null($path) || strlen($path) == 0) {
+        if (strlen($path) == 0) {
             return $prefix ?: '/';
         }
 
@@ -218,10 +218,8 @@ if (!function_exists('admin_trans')) {
      * Translate the given message.
      *
      * @param string $key
-     * @param array  $replace
+     * @param array $replace
      * @param string $locale
-     *
-     * @return \Illuminate\Contracts\Translation\Translator|string|array|null
      */
     function admin_trans($key = null, $replace = [], $locale = null)
     {
@@ -469,9 +467,8 @@ if (!function_exists('json_encode_options')) {
          *
          * @param string|null $url parse target URL
          * @param int $component get only a specific URL component
-         * @return int|string|array|false|null
          */
-        function parse_url_ex(?string $url, int $component = -1): int|string|array|null|false
+        function parse_url_ex(?string $url, int $component = -1)
         {
             $url = $url?? '';
 
@@ -574,6 +571,7 @@ if (!function_exists('json_encode_options')) {
         {
             $subject = $subject?? '';
 
+            /** @phpstan-ignore-next-line Parameter #4 $flags of function preg_match expects TFlags of 0|256|512|768, int given. */
             return preg_match($pattern, $subject, $matches, $flags, $offset);
         }
     }

@@ -83,7 +83,7 @@ class Form implements Renderable
     /**
      * Submit label.
      *
-     * @var string
+     * @var string|null
      */
     protected $submitLabel;
 
@@ -119,7 +119,7 @@ class Form implements Renderable
     /**
      * Default Submit label.
      *
-     * @var string
+     * @var string|null
      */
     public static $defaultSubmitLabel;
 
@@ -141,7 +141,7 @@ class Form implements Renderable
     /**
      * Validation closure.
      *
-     * @var Closure
+     * @var Closure|null
      */
     protected $validatorSavingCallback;
 
@@ -185,7 +185,7 @@ class Form implements Renderable
     /**
      * Fill data to form fields.
      *
-     * @param array $data
+     * @param array|mixed $data
      *
      * @return $this
      */

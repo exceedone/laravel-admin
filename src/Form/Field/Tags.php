@@ -30,7 +30,7 @@ class Tags extends Field
     protected $key = null;
 
     /**
-     * @var \Closure
+     * @var \Closure|null
      */
     protected $saveAction = null;
 
@@ -62,7 +62,7 @@ class Tags extends Field
         if (is_string($this->value)) {
             $this->value = explode(',', $this->value);
         }
-
+        /** @phpstan-ignore-next-line Parameter #2 $callback of function array_filter expects (callable(mixed): bool)|null, 'strlen' given. */
         $this->value = array_filter((array) $this->value, 'strlen');
     }
 
@@ -131,6 +131,7 @@ class Tags extends Field
      */
     public function prepare($value)
     {
+        /** @phpstan-ignore-next-line Parameter #2 $callback of function array_filter expects (callable(mixed): bool)|null, 'strlen' given.*/
         $value = array_filter($value, 'strlen');
 
         if ($this->keyAsValue) {

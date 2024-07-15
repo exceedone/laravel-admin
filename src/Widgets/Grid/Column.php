@@ -84,7 +84,7 @@ class Column
     /**
      * Sort column name.
      *
-     * @var string
+     * @var string|null
      */
     protected $sortName;
 
@@ -98,14 +98,14 @@ class Column
     /**
      * Cast Name for sort.
      *
-     * @var array
+     * @var array|null
      */
     protected $cast;
 
     /**
      * Sort as callback.
      *
-     * @var \Closure
+     * @var \Closure|null
      */
     protected $sortCallback;
 
@@ -700,9 +700,9 @@ class Column
     }
 
     /**
-     * Return a human readable format time.
+     * Return a human-readable format time.
      *
-     * @param null $locale
+     * @param mixed|null $locale
      *
      * @return $this
      */
@@ -775,7 +775,7 @@ class Column
     /**
      * Get row model
      *
-     * @param string $key
+     * @param string|int $key
      * @return ?Model
      */
     protected function getRowModel($key){
@@ -1023,10 +1023,8 @@ HELP;
     /**
      * Call Builtin displayer.
      *
-     * @param string $abstract
+     * @param string|Closure $abstract
      * @param array  $arguments
-     *
-     * @return $this
      */
     protected function callBuiltinDisplayer($abstract, $arguments)
     {

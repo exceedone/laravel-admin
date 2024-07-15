@@ -38,7 +38,7 @@ class Tools implements Renderable
     /**
      * list path Expressly
      *
-     * @var string
+     * @var string|null
      */
     protected $listPath;
 

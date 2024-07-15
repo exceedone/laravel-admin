@@ -19,8 +19,7 @@ trait GridWidth
     /**
      * set grid width
      *
-     * @param integer|array $width
-     * @return mixed
+     * @param int|array|null $width
      */
     public function setWidth($width = 12)
     {

@@ -23,6 +23,7 @@ class CheckboxRequiredRule implements Rule
         if(!is_array($value)){
             $value = [$value];
         }
+        /** @phpstan-ignore-next-line Parameter #2 $callback of function array_filter expects (callable(mixed): bool)|null, 'strlen' given. */
         $value = array_filter($value, 'strlen');
 
         return count($value) > 0;

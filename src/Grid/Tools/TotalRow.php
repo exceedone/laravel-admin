@@ -21,7 +21,7 @@ class TotalRow extends AbstractTool
     /**
      * TotalRow constructor.
      *
-     * @param Builder $query
+     * @param Builder|\Illuminate\Database\Eloquent\Builder $query
      * @param array   $columns
      */
     public function __construct($query, array $columns)

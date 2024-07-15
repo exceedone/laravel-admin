@@ -13,7 +13,7 @@ trait UploadField
     /**
      * Upload directory.
      *
-     * @var string
+     * @var \Closure|string|null
      */
     protected $directory = '';
 
@@ -71,21 +71,21 @@ trait UploadField
     /**
      * Controls the storage permission. Could be 'private' or 'public'.
      *
-     * @var string
+     * @var string|null
      */
     protected $storagePermission;
 
     /**
      * filetype
      *
-     * @var string
+     * @var string|null
      */
     protected $filetype;
 
     /**
      * Get file from tmp. Almost use preview.
      *
-     * @var \Closure
+     * @var \Closure|null
      */
     protected $getTmp = null;
 
@@ -368,7 +368,7 @@ trait UploadField
     /**
      * Set callable name.
      *
-     * @param callable $callableName
+     * @param callable|null $callableName
      * @return $this
      */
     public function callableName($callableName)

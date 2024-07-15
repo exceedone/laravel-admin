@@ -3,6 +3,7 @@
 namespace Encore\Admin\Widgets;
 
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Collection;
 
 class Carousel extends Widget implements Renderable
 {
@@ -24,7 +25,7 @@ class Carousel extends Widget implements Renderable
     /**
      * Carousel constructor.
      *
-     * @param array $items
+     * @param array|Collection $items
      */
     public function __construct($items = [])
     {

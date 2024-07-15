@@ -84,7 +84,7 @@ class Column
     /**
      * Sort column name.
      *
-     * @var string
+     * @var string|null
      */
     protected $sortName;
 
@@ -177,7 +177,7 @@ class Column
     protected static $classes = [];
 
     /**
-     * @var Model
+     * @var Model|null
      */
     protected static $model;
 
@@ -771,10 +771,9 @@ class Column
     }
 
     /**
-     * Return a human readable format time.
+     * Return a human-readable format time.
      *
-     * @param null $locale
-     *
+     * @param string|null $locale
      * @return $this
      */
     public function diffForHumans($locale = null)
@@ -846,7 +845,7 @@ class Column
     /**
      * Get row model
      *
-     * @param string $key
+     * @param string|int $key
      * @return ?Model
      */
     protected function getRowModel($key){
@@ -1104,7 +1103,7 @@ HELP;
     /**
      * Call Builtin displayer.
      *
-     * @param string $abstract
+     * @param Closure|string $abstract
      * @param array  $arguments
      *
      * @return $this

@@ -145,7 +145,7 @@ class Field implements Renderable
     public $updateRules = [];
 
     /**
-     * @var \Closure
+     * @var \Closure|null
      */
     protected $validator;
 
@@ -187,7 +187,7 @@ class Field implements Renderable
     /**
      * Parent form.
      *
-     * @var Form
+     * @var Form|null
      */
     protected $form = null;
 
@@ -243,7 +243,7 @@ class Field implements Renderable
     /**
      * column data format.
      *
-     * @var \Closure
+     * @var \Closure|null
      */
     protected $customFormat = null;
 
@@ -408,7 +408,7 @@ class Field implements Renderable
     /**
      * Format the name of the field.
      *
-     * @param string $column
+     * @param string|array $column
      *
      * @return array|mixed|string
      */
@@ -464,7 +464,7 @@ class Field implements Renderable
     /**
      * Get form element name.
      *
-     * @return string
+     * @return string|array
      *
      */
     public function getElementName()
@@ -573,7 +573,7 @@ class Field implements Renderable
     /**
      * Set the field options.
      *
-     * @param array $options
+     * @param array|Arrayable $options
      *
      * @return $this
      */
@@ -591,7 +591,7 @@ class Field implements Renderable
     /**
      * Set the field option checked.
      *
-     * @param array $checked
+     * @param array|Arrayable $checked
      *
      * @return $this
      */
@@ -917,7 +917,7 @@ class Field implements Renderable
     /**
      * Set or get value of the field.
      *
-     * @param null $value
+     * @param mixed $value
      *
      * @return mixed
      */
@@ -1363,6 +1363,7 @@ class Field implements Renderable
      */
     public function prepareConfirm($value)
     {
+        /** @phpstan-ignore-next-line Negated boolean expression is always false. */
         if(!$this->prepareConfirm){
             return $this->prepare($value);
         }
@@ -1688,7 +1689,7 @@ class Field implements Renderable
     /**
      * Get form unique class name for class selector
      *
-     * @return  string
+     * @return  string|null
      */ 
     public function getFormUniqueName()
     {
