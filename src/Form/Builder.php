@@ -21,6 +21,9 @@ class Builder
      *  Previous url key.
      */
     const PREVIOUS_URL_KEY = '_previous_';
+    const FORM_ID = 'formid';
+    const REDIRECT_DASHBOARD = 'redirect-dashboard';
+    const REDIRECT_CAMERA = 'redirect-camera';
 
     /**
      * @var mixed
@@ -512,7 +515,19 @@ class Builder
     protected function addRedirectUrlField()
     {
         $previous = URL::previous();
+        $formid = request()->get('formid');
+        $redirectDashboard = request()->get('redirect-dashboard');
+        $redirectCamera = request()->get('redirect-camera');
 
+        if ($formid) {
+            $this->addHiddenField((new Hidden(static::FORM_ID))->value($formid));
+        }
+        if ($redirectDashboard) {
+            $this->addHiddenField((new Hidden(static::REDIRECT_DASHBOARD))->value($redirectDashboard));
+        }
+        if ($redirectCamera) {
+            $this->addHiddenField((new Hidden(static::REDIRECT_CAMERA))->value($redirectCamera));
+        }
         if (!$previous || $previous == URL::current()) {
             return;
         }

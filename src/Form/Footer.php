@@ -254,6 +254,9 @@ class Footer implements Renderable
      */
     public function getRedirect($resourcesPath, $key, $afterSaveValue){
         // set submitRedirects
+        $formId = request()->get('formid');
+        $redirectDashboard = request()->get('redirect-dashboard');
+        $redirectCamera = request()->get('redirect-camera');
         foreach($this->submitRedirects as $submitRedirect){
             if(Arr::get($submitRedirect, 'value') == $afterSaveValue){
                 $url = Arr::get($submitRedirect, 'redirect');
@@ -261,17 +264,27 @@ class Footer implements Renderable
             }
         }
 
-        if(!isset($url)){
+        if(!isset($url) || $formId){
             if ($afterSaveValue == 1) {
                 // continue editing
-                $url = rtrim($resourcesPath, '/')."/{$key}/edit?after-save=1";
+                if ($formId) {
+                    $url = rtrim($resourcesPath, '/')."/{$key}/edit?after-save=1&formid=" . $formId;
+                } else {
+                    $url = rtrim($resourcesPath, '/')."/{$key}/edit?after-save=1";
+                }
             } elseif ($afterSaveValue == 2) {
                 // continue creating
                 $url = rtrim($resourcesPath, '/').'/create?after-save=2';
             } elseif ($afterSaveValue == 3) {
                 // view resource
                 $url = rtrim($resourcesPath, '/')."/{$key}";
-            }         
+            } elseif ($redirectDashboard) {
+                // dashboard
+                $url = admin_url('');
+            } elseif ($formId && $redirectCamera) {
+                // camera
+                $url = rtrim($resourcesPath, '/')."/{$key}/edit?redirect-camera=1&formid=" . $formId;
+            }
         }
 
         
@@ -292,12 +305,18 @@ class Footer implements Renderable
      */
     protected function setupScript()
     {
+        $redirectCamera = request()->get('redirect-camera');
         $script = <<<'EOT'
 $('.after-submit').iCheck({checkboxClass:'icheckbox_minimal-blue'}).on('ifChecked', function () {
     $('.after-submit').not(this).iCheck('uncheck');
 });
 EOT;
-
+        if ($redirectCamera) {
+            $script .= <<<'EOT'
+            $('#admin-submit').click(function(){setTimeout(function() {waitForElm(".hidden-xs").then(async (elm) => {$('[role="readQRDashboard"]').click();})},2000);});
+            EOT;
+        }
+        
         Admin::script($script);
     }
 
