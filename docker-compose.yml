@@ -10,3 +10,11 @@ services:
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
       - MYSQL_ROOT_PASSWORD=password
+  php:
+    build:
+      context: docker
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 8000:8000

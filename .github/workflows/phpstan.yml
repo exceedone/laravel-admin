@@ -16,21 +16,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          extensions: mongodb, sodium
-          tools: composer:v2
+      - name: Build an image from a Dockerfile
+        run: docker build --build-arg=PHP_VERSION=${{ matrix.php }} -t phpstan ./docker
 
-      - name: Prepare
-        run: composer install
+      - name: Composer install
+        run: docker run --rm -v ${{ github.workspace }}:/var/www/html phpstan composer install
 
-      - name: Versions
-        run: |
-          cat /etc/os-release
-          php -v
-          ./vendor/bin/phpstan --version
-      - name: Execute phpstan
-        run: |
-          ./vendor/bin/phpstan analyse
+      - name: Execute PHPStan
+        run: docker run --rm -v ${{ github.workspace }}:/var/www/html phpstan vendor/bin/phpstan analyse --memory-limit=512M
+
+
