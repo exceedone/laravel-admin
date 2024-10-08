@@ -88,6 +88,22 @@ Configurations
 ------------
 The file `config/admin.php` contains an array of configurations, you can find the default configurations in there.
 
+## Development
+
+### PHPStan
+
+```bash
+$ cd ./laravel-admin
+$ composer run phpstan
+```
+
+### php cs fixer
+
+```bash
+$ cd ./laravel-admin
+$ composer run phpcsfixer
+```
+
 ## Extensions
 
 | Extension                                        | Description                              | laravel-admin                              |
