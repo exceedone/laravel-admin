@@ -71,7 +71,7 @@ class FilterButton extends AbstractTool
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
                     $('#{$id}').html($(data.html).children('form'));
-                    eval(data.script);
+                    jQuery.globalEval(data.script);
 
                     target.attr('disabled', false).addClass('loaded');
                     target.find('.fa-spinner').remove();

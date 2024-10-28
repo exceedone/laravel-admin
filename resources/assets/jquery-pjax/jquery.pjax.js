@@ -4,6 +4,33 @@
  * https://github.com/defunkt/jquery-pjax
  */
 
+jQuery.DOMEval = function( code, node, doc ) {
+  doc = doc || document;
+  var preservedScriptAttributes = {
+    type: true,
+    src: true,
+    nonce: true,
+    noModule: true
+  };
+  var i, val,
+    script = doc.createElement( "script" );
+  if (typeof code === 'string') {
+    script.text = `(function() {  ${code} })();`;
+  }
+  if ( node ) {
+    for ( i in preservedScriptAttributes ) {
+      val = node[ i ] || node.getAttribute && node.getAttribute( i );
+      if ( val ) {
+        script.setAttribute( i, val );
+      }
+    }
+  }
+  doc.head.appendChild( script ).parentNode.removeChild( script );
+};
+jQuery.globalEval = function( code, options, doc ) {
+  jQuery.DOMEval( code, { nonce: options && options.nonce }, doc );
+};
+
 (function($){
 
 // When called on a container with a selector, fetches the href with
