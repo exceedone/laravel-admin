@@ -51,7 +51,7 @@ class FilterButton extends AbstractTool
         let target = $('.{$this->getElementClassName()}');
         target.unbind('click');
         target.click(function (e) {
-    if ($('#{$id}').is(':visible')) {
+    if ($('#{$id}').is(':visible')) {eval
         $('#{$id}').addClass('hide');
     } else {
         if('$filterAjax'.length > 0){
@@ -71,7 +71,7 @@ class FilterButton extends AbstractTool
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
                     $('#{$id}').html($(data.html).children('form'));
-                    eval(data.script);
+                    jQuery.globalEval(data.script);
 
                     target.attr('disabled', false).addClass('loaded');
                     target.find('.fa-spinner').remove();
