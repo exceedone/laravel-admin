@@ -98,7 +98,7 @@ trait HasAssets
     /**
      * @var string
      */
-    public static $jQuery = 'vendor/laravel-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js';
+    public static $jQuery = 'vendor/laravel-admin/AdminLTE/plugins/jQuery/jquery.min.js';
 
     /**
      * Add css or get all css.
