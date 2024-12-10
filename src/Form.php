@@ -1,17 +1,17 @@
 <?php
 
-namespace Encore\Admin;
+namespace OpenAdmin\Admin;
 
 use Closure;
-use Encore\Admin\Exception\Handler;
-use Encore\Admin\Form\Builder;
-use Encore\Admin\Form\Field;
-use Encore\Admin\Form\HasHooks;
-use Encore\Admin\Form\Row;
-use Encore\Admin\Form\Tab;
-use Encore\Admin\Grid\Tools\Footer;
-use Encore\Admin\Traits\Resource;
-use Encore\Admin\Traits\FormTrait;
+use OpenAdmin\Admin\Exception\Handler;
+use OpenAdmin\Admin\Form\Builder;
+use OpenAdmin\Admin\Form\Field;
+use OpenAdmin\Admin\Form\HasHooks;
+use OpenAdmin\Admin\Form\Row;
+use OpenAdmin\Admin\Form\Tab;
+use OpenAdmin\Admin\Grid\Tools\Footer;
+use OpenAdmin\Admin\Traits\Resource;
+use OpenAdmin\Admin\Traits\FormTrait;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations;
@@ -1943,7 +1943,7 @@ class Form implements Renderable
      *
      * @param Closure $callback
      *
-     * @return \Encore\Admin\Form\Footer|void
+     * @return \OpenAdmin\Admin\Form\Footer|void
      */
     public function footer(Closure $callback = null)
     {

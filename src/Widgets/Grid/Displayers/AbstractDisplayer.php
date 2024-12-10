@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Widgets\Grid\Displayers;
+namespace OpenAdmin\Admin\Widgets\Grid\Displayers;
 
-use Encore\Admin\Widgets\Grid\Grid;
-use Encore\Admin\Widgets\Grid\Column;
+use OpenAdmin\Admin\Widgets\Grid\Grid;
+use OpenAdmin\Admin\Widgets\Grid\Column;
 
 abstract class AbstractDisplayer
 {

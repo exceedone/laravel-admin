@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid;
+namespace OpenAdmin\Admin\Grid;
 
-use Encore\Admin\Grid;
-use Encore\Admin\Middleware\Pjax;
+use OpenAdmin\Admin\Grid;
+use OpenAdmin\Admin\Middleware\Pjax;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -517,7 +517,7 @@ class Model
                 $paginator->getPageName() => $paginator->lastPage(),
             ]);
 
-            /** @phpstan-ignore-next-line Parameter #1 $response of static method Encore\Admin\Middleware\Pjax::respond() expects Illuminate\Http\Response, Illuminate\Http\RedirectResponse given.   */
+            /** @phpstan-ignore-next-line Parameter #1 $response of static method OpenAdmin\Admin\Middleware\Pjax::respond() expects Illuminate\Http\Response, Illuminate\Http\RedirectResponse given.   */
             Pjax::respond(redirect($lastPageUrl));
         }
     }

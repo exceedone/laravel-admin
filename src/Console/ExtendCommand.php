@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Console;
+namespace OpenAdmin\Admin\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
@@ -20,7 +20,7 @@ class ExtendCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Build a Laravel-admin extension';
+    protected $description = 'Build a Open-admin extension';
 
     /**
      * @var string

@@ -1,18 +1,18 @@
 <?php
 
-namespace Encore\Admin\Widgets\Grid;
+namespace OpenAdmin\Admin\Widgets\Grid;
 
 use Closure;
-use Encore\Admin\Exception\Handler;
-use Encore\Admin\Grid\Row;
-use Encore\Admin\Widgets\Grid\Exporters\AbstractExporter;
-use Encore\Admin\Widgets\Grid\Exporter;
-use Encore\Admin\Widgets\Grid\Column;
-use Encore\Admin\Widgets\Grid\Concerns;
-use Encore\Admin\Widgets\Grid\Displayers;
-use Encore\Admin\Widgets\Grid\Tools;
-use Encore\Admin\Widgets\Table;
-use Encore\Admin\Traits;
+use OpenAdmin\Admin\Exception\Handler;
+use OpenAdmin\Admin\Grid\Row;
+use OpenAdmin\Admin\Widgets\Grid\Exporters\AbstractExporter;
+use OpenAdmin\Admin\Widgets\Grid\Exporter;
+use OpenAdmin\Admin\Widgets\Grid\Column;
+use OpenAdmin\Admin\Widgets\Grid\Concerns;
+use OpenAdmin\Admin\Widgets\Grid\Displayers;
+use OpenAdmin\Admin\Widgets\Grid\Tools;
+use OpenAdmin\Admin\Widgets\Table;
+use OpenAdmin\Admin\Traits;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Relations;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -23,8 +23,8 @@ use Illuminate\Support\Traits\Macroable;
 use Illuminate\Contracts\Support\Renderable;
 
 /**
- * @method $this|\Encore\Admin\Grid\Column addRelationColumn(string $name, string $label)
- * @method $this|\Encore\Admin\Grid\Column addJsonColumn(string $name, string $label)
+ * @method $this|\OpenAdmin\Admin\Grid\Column addRelationColumn(string $name, string $label)
+ * @method $this|\OpenAdmin\Admin\Grid\Column addJsonColumn(string $name, string $label)
  * @property mixed $paginator
  * @property mixed $variables
  * @property mixed $originalCollection
@@ -539,7 +539,7 @@ class Grid
      * @param string $name
      * @param string $label
      *
-     * @return \Encore\Admin\Grid\Column|Column
+     * @return \OpenAdmin\Admin\Grid\Column|Column
      */
     public function column($name, $label = '')
     {

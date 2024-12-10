@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Auth;
+namespace OpenAdmin\Admin\Auth;
 
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Middleware\Pjax;
+use OpenAdmin\Admin\Facades\Admin;
+use OpenAdmin\Admin\Middleware\Pjax;
 use Illuminate\Support\Facades\Auth;
 
 class Permission
@@ -99,7 +99,7 @@ class Permission
             abort(403, $message);
         }
 
-        /** @phpstan-ignore-next-line Parameter #1 $content of function response expects array|Illuminate\Contracts\View\View|string|null, Encore\Admin\Layout\Content given. */
+        /** @phpstan-ignore-next-line Parameter #1 $content of function response expects array|Illuminate\Contracts\View\View|string|null, OpenAdmin\Admin\Layout\Content given. */
         $response = response(Admin::content()->withError($message));
 
         Pjax::respond($response);

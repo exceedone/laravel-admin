@@ -1,19 +1,19 @@
 <?php
 
-namespace Encore\Admin\Facades;
+namespace OpenAdmin\Admin\Facades;
 
-use Encore\Admin\Auth\Database\Administrator;
-use Encore\Admin\Auth\Database\HasPermissions;
+use OpenAdmin\Admin\Auth\Database\Administrator;
+use OpenAdmin\Admin\Auth\Database\HasPermissions;
 use Illuminate\Support\Facades\Facade;
 
 /**
  * Class Admin.
  *
- * @method static \Encore\Admin\Grid grid($model, \Closure $callable)
- * @method static \Encore\Admin\Form form($model, \Closure $callable)
- * @method static \Encore\Admin\Show show($model, $callable = null)
- * @method static \Encore\Admin\Tree tree($model, \Closure $callable = null)
- * @method static \Encore\Admin\Layout\Content content(\Closure $callable = null)
+ * @method static \OpenAdmin\Admin\Grid grid($model, \Closure $callable)
+ * @method static \OpenAdmin\Admin\Form form($model, \Closure $callable)
+ * @method static \OpenAdmin\Admin\Show show($model, $callable = null)
+ * @method static \OpenAdmin\Admin\Tree tree($model, \Closure $callable = null)
+ * @method static \OpenAdmin\Admin\Layout\Content content(\Closure $callable = null)
  * @method static \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void css($css = null)
  * @method static \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void js($js = null)
  * @method static \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void headerJs($js = null)
@@ -29,12 +29,12 @@ use Illuminate\Support\Facades\Facade;
  * @method static void booted(\Closure $builder)
  * @method static void bootstrap()
  *
- * @see \Encore\Admin\Admin
+ * @see \OpenAdmin\Admin\Admin
  */
 class Admin extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \Encore\Admin\Admin::class;
+        return \OpenAdmin\Admin\Admin::class;
     }
 }

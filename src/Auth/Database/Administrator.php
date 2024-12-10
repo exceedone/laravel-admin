@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Auth\Database;
+namespace OpenAdmin\Admin\Auth\Database;
 
-use Encore\Admin\Traits\AdminBuilder;
+use OpenAdmin\Admin\Traits\AdminBuilder;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Collection;
@@ -57,7 +57,7 @@ class Administrator extends Model implements AuthenticatableContract
             return Storage::disk(config('admin.upload.disk'))->url($avatar);
         }
 
-        $default = config('admin.default_avatar') ?: '/vendor/laravel-admin/AdminLTE/dist/img/user2-160x160.jpg';
+        $default = config('admin.default_avatar') ?: '/vendor/open-admin/AdminLTE/dist/img/user2-160x160.jpg';
 
         return admin_asset($default);
     }

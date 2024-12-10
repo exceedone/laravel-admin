@@ -43,7 +43,7 @@
     </div>
     <!-- /.box-body -->
     <div class="box-footer text-center">
-        <a href="https://github.com/laravel-admin-extensions" target="_blank" class="uppercase">View All Extensions</a>
+        <a href="https://github.com/open-admin-org" target="_blank" class="uppercase">View All Extensions</a>
     </div>
     <!-- /.box-footer -->
 </div>

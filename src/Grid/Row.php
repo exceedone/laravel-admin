@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Grid;
+namespace OpenAdmin\Admin\Grid;
 
 use Closure;
 use Illuminate\Contracts\Support\Htmlable;

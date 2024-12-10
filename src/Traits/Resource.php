@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Traits;
+namespace OpenAdmin\Admin\Traits;
 
 trait Resource
 {

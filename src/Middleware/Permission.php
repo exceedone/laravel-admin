@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Middleware;
+namespace OpenAdmin\Admin\Middleware;
 
-use Encore\Admin\Auth\Permission as Checker;
-use Encore\Admin\Facades\Admin;
+use OpenAdmin\Admin\Auth\Permission as Checker;
+use OpenAdmin\Admin\Facades\Admin;
 use Illuminate\Config\Repository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;

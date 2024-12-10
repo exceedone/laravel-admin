@@ -1,17 +1,17 @@
 <?php
 
-namespace Encore\Admin;
+namespace OpenAdmin\Admin;
 
 use Closure;
-use Encore\Admin\Exception\Handler;
-use Encore\Admin\Grid\Column;
-use Encore\Admin\Grid\Concerns;
-use Encore\Admin\Grid\Displayers;
-use Encore\Admin\Grid\Exporter;
-use Encore\Admin\Grid\Exporters\AbstractExporter;
-use Encore\Admin\Grid\Model;
-use Encore\Admin\Grid\Row;
-use Encore\Admin\Grid\Tools;
+use OpenAdmin\Admin\Exception\Handler;
+use OpenAdmin\Admin\Grid\Column;
+use OpenAdmin\Admin\Grid\Concerns;
+use OpenAdmin\Admin\Grid\Displayers;
+use OpenAdmin\Admin\Grid\Exporter;
+use OpenAdmin\Admin\Grid\Exporters\AbstractExporter;
+use OpenAdmin\Admin\Grid\Model;
+use OpenAdmin\Admin\Grid\Row;
+use OpenAdmin\Admin\Grid\Tools;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Relations;
 use Illuminate\Support\Collection;
@@ -37,7 +37,7 @@ class Grid
     /**
      * The grid data model instance.
      *
-     * @var \Encore\Admin\Grid\Model
+     * @var \OpenAdmin\Admin\Grid\Model
      */
     protected $model;
 

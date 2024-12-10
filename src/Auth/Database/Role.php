@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Auth\Database;
+namespace OpenAdmin\Admin\Auth\Database;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -29,7 +29,7 @@ class Role extends Model
      * A role belongs to many users.
      *
      * @return BelongsToMany
-     * @phpstan-ignore-next-line Method Encore\Admin\Auth\Database\Role::administrators() return type with generic class Illuminate\Database\Eloquent\Relations\BelongsToMany does not specify its types: TRelatedModel
+     * @phpstan-ignore-next-line Method OpenAdmin\Admin\Auth\Database\Role::administrators() return type with generic class Illuminate\Database\Eloquent\Relations\BelongsToMany does not specify its types: TRelatedModel
      */
     public function administrators() : BelongsToMany
     {
@@ -44,7 +44,7 @@ class Role extends Model
      * A role belongs to many permissions.
      *
      * @return BelongsToMany
-     * @phpstan-ignore-next-line Method Encore\Admin\Auth\Database\Role::administrators() return type with generic class Illuminate\Database\Eloquent\Relations\BelongsToMany does not specify its types: TRelatedModel
+     * @phpstan-ignore-next-line Method OpenAdmin\Admin\Auth\Database\Role::administrators() return type with generic class Illuminate\Database\Eloquent\Relations\BelongsToMany does not specify its types: TRelatedModel
      */
     public function permissions() : BelongsToMany
     {
@@ -59,7 +59,7 @@ class Role extends Model
      * A role belongs to many menus.
      *
      * @return BelongsToMany
-     * @phpstan-ignore-next-line Method Encore\Admin\Auth\Database\Role::administrators() return type with generic class Illuminate\Database\Eloquent\Relations\BelongsToMany does not specify its types: TRelatedModel
+     * @phpstan-ignore-next-line Method OpenAdmin\Admin\Auth\Database\Role::administrators() return type with generic class Illuminate\Database\Eloquent\Relations\BelongsToMany does not specify its types: TRelatedModel
      */
     public function menus() : BelongsToMany
     {

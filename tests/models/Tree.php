@@ -2,8 +2,8 @@
 
 namespace Tests\Models;
 
-use Encore\Admin\Traits\AdminBuilder;
-use Encore\Admin\Traits\ModelTree;
+use OpenAdmin\Admin\Traits\AdminBuilder;
+use OpenAdmin\Admin\Traits\ModelTree;
 use Illuminate\Database\Eloquent\Model;
 
 class Tree extends Model

@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Form\EmbeddedForm;
-use Encore\Admin\Form\Field;
+use OpenAdmin\Admin\Form\EmbeddedForm;
+use OpenAdmin\Admin\Form\Field;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 

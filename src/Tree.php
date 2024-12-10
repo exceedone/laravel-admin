@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin;
+namespace OpenAdmin\Admin;
 
 use Closure;
-use Encore\Admin\Auth\Database\Menu;
-use Encore\Admin\Traits\ModelTree;
-use Encore\Admin\Tree\Tools;
+use OpenAdmin\Admin\Auth\Database\Menu;
+use OpenAdmin\Admin\Traits\ModelTree;
+use OpenAdmin\Admin\Tree\Tools;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 

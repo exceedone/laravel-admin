@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Layout;
+namespace OpenAdmin\Admin\Layout;
 
 use Closure;
 use Illuminate\Contracts\Support\Renderable;

@@ -1,6 +1,6 @@
 <?php
 
-use Encore\Admin\Auth\Database\Administrator;
+use OpenAdmin\Admin\Auth\Database\Administrator;
 
 class FileUploadTest extends TestCase
 {

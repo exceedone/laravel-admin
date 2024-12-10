@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Widgets\Grid\Displayers;
+namespace OpenAdmin\Admin\Widgets\Grid\Displayers;
 
-use Encore\Admin\Admin;
+use OpenAdmin\Admin\Admin;
 
 class RowSelector extends AbstractDisplayer
 {

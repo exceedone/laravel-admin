@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace OpenAdmin\Admin\Grid\Displayers;
 
-use Encore\Admin\Admin;
+use OpenAdmin\Admin\Admin;
 
 class Orderable extends AbstractDisplayer
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Widgets\Grid;
+namespace OpenAdmin\Admin\Widgets\Grid;
 
-use Encore\Admin\Widgets\Grid\Exporters\AbstractExporter;
-use Encore\Admin\Widgets\Grid\Grid;
-use Encore\Admin\Widgets\Grid\Exporters\CsvExporter;
+use OpenAdmin\Admin\Widgets\Grid\Exporters\AbstractExporter;
+use OpenAdmin\Admin\Widgets\Grid\Grid;
+use OpenAdmin\Admin\Widgets\Grid\Exporters\CsvExporter;
 
 class Exporter
 {

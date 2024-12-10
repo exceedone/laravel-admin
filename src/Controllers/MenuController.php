@@ -1,14 +1,14 @@
 <?php
 
-namespace Encore\Admin\Controllers;
+namespace OpenAdmin\Admin\Controllers;
 
-use Encore\Admin\Auth\Database\Menu;
-use Encore\Admin\Form;
-use Encore\Admin\Layout\Column;
-use Encore\Admin\Layout\Content;
-use Encore\Admin\Layout\Row;
-use Encore\Admin\Tree;
-use Encore\Admin\Widgets\Box;
+use OpenAdmin\Admin\Auth\Database\Menu;
+use OpenAdmin\Admin\Form;
+use OpenAdmin\Admin\Layout\Column;
+use OpenAdmin\Admin\Layout\Content;
+use OpenAdmin\Admin\Layout\Row;
+use OpenAdmin\Admin\Tree;
+use OpenAdmin\Admin\Widgets\Box;
 use Illuminate\Routing\Controller;
 
 class MenuController extends Controller
@@ -31,7 +31,7 @@ class MenuController extends Controller
                 $row->column(6, $this->treeView()->render());
 
                 $row->column(6, function (Column $column) {
-                    $form = new \Encore\Admin\Widgets\Form();
+                    $form = new \OpenAdmin\Admin\Widgets\Form();
                     $form->action(admin_url('auth/menu'));
 
                     $menuModel = config('admin.database.menu_model');
@@ -66,7 +66,7 @@ class MenuController extends Controller
     }
 
     /**
-     * @return \Encore\Admin\Tree
+     * @return \OpenAdmin\Admin\Tree
      */
     protected function treeView()
     {

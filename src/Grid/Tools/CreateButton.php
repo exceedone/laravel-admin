@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Grid\Tools;
+namespace OpenAdmin\Admin\Grid\Tools;
 
-use Encore\Admin\Grid;
+use OpenAdmin\Admin\Grid;
 
 class CreateButton extends AbstractTool
 {

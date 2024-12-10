@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Validator\HasOptionRule;
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Form\Field;
+use OpenAdmin\Admin\Validator\HasOptionRule;
+use OpenAdmin\Admin\Facades\Admin;
+use OpenAdmin\Admin\Form\Field;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -16,14 +16,14 @@ class Select extends Field
      * @var array<string>
      */
     protected static $css = [
-        '/vendor/laravel-admin/AdminLTE/plugins/select2/select2.min.css',
+        '/vendor/open-admin/AdminLTE/plugins/select2/select2.min.css',
     ];
 
     /**
      * @var array<string>
      */
     protected static $js = [
-        '/vendor/laravel-admin/AdminLTE/plugins/select2/select2.full.min.js',
+        '/vendor/open-admin/AdminLTE/plugins/select2/select2.full.min.js',
     ];
 
     /**
@@ -659,7 +659,7 @@ EOT;
 
         // add select2 lang file
         if(in_array(get_called_class(), [Select::class, MultipleSelect::class])){
-            $assets['js'][] = '/vendor/laravel-admin/AdminLTE/plugins/select2/i18n/' . \App::getLocale() . '.js';
+            $assets['js'][] = '/vendor/open-admin/AdminLTE/plugins/select2/i18n/' . \App::getLocale() . '.js';
         }
 
         return $assets;

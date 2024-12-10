@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Exception;
+namespace OpenAdmin\Admin\Exception;
 
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;

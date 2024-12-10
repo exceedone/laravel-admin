@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Form\Field;
-use Encore\Admin\Validator\HasOptionRule;
+use OpenAdmin\Admin\Form\Field;
+use OpenAdmin\Admin\Validator\HasOptionRule;
 use Illuminate\Support\Arr;
 
 class SwitchField extends Field
@@ -12,14 +12,14 @@ class SwitchField extends Field
      * @var array<string>
      */
     protected static $css = [
-        '/vendor/laravel-admin/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css',
+        '/vendor/open-admin/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css',
     ];
 
     /**
      * @var array<string>
      */
     protected static $js = [
-        '/vendor/laravel-admin/bootstrap-switch/dist/js/bootstrap-switch.min.js',
+        '/vendor/open-admin/bootstrap-switch/dist/js/bootstrap-switch.min.js',
     ];
 
     /**

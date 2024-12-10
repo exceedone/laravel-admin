@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin;
+namespace OpenAdmin\Admin;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;

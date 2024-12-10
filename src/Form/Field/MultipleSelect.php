@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Arr;
-use Encore\Admin\Validator\CheckboxRequiredRule;
+use OpenAdmin\Admin\Validator\CheckboxRequiredRule;
 
 class MultipleSelect extends Select
 {

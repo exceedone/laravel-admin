@@ -1,14 +1,14 @@
 <?php
 
-namespace Encore\Admin;
+namespace OpenAdmin\Admin;
 
 use Doctrine\DBAL\Schema\View;
-use Encore\Admin\Exception\Handler;
-use Encore\Admin\Show\Divider;
-use Encore\Admin\Show\Field;
-use Encore\Admin\Show\Panel;
-use Encore\Admin\Show\Relation;
-use Encore\Admin\Traits\Resource;
+use OpenAdmin\Admin\Exception\Handler;
+use OpenAdmin\Admin\Show\Divider;
+use OpenAdmin\Admin\Show\Field;
+use OpenAdmin\Admin\Show\Panel;
+use OpenAdmin\Admin\Show\Relation;
+use OpenAdmin\Admin\Traits\Resource;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

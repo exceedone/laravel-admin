@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Controllers;
+namespace OpenAdmin\Admin\Controllers;
 
-use Encore\Admin\Widgets\Form;
+use OpenAdmin\Admin\Widgets\Form;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;

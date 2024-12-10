@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Console;
+namespace OpenAdmin\Admin\Console;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Facades\Admin as AdminFacade;
+use OpenAdmin\Admin\Admin;
+use OpenAdmin\Admin\Facades\Admin as AdminFacade;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use MatthiasMullie\Minify;
@@ -51,7 +51,7 @@ class MinifyCommand extends Command
         }
 
         if ($this->option('clear')) {
-            /** @phpstan-ignore-next-line  Result of method Encore\Admin\Console\MinifyCommand::clearMinifiedFiles() (void) is used */
+            /** @phpstan-ignore-next-line  Result of method OpenAdmin\Admin\Console\MinifyCommand::clearMinifiedFiles() (void) is used */
             return $this->clearMinifiedFiles();
         }
 

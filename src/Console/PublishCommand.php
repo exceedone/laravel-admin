@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin\Console;
+namespace OpenAdmin\Admin\Console;
 
 use Illuminate\Console\Command;
 
@@ -18,7 +18,7 @@ class PublishCommand extends Command
      *
      * @var string
      */
-    protected $description = "re-publish laravel-admin's assets, configuration, language and migration files. If you want overwrite the existing files, you can add the `--force` option";
+    protected $description = "publish open-admin's assets, configuration, language and migration files. If you want overwrite the existing files, you can add the `--force` option";
 
     /**
      * Execute the console command.
@@ -28,7 +28,7 @@ class PublishCommand extends Command
     public function handle()
     {
         $force = $this->option('force');
-        $options = ['--provider' => 'Encore\Admin\AdminServiceProvider'];
+        $options = ['--provider' => 'OpenAdmin\Admin\AdminServiceProvider'];
         if ($force == true) {
             $options['--force'] = true;
         }

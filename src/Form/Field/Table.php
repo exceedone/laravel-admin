@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Form\NestedForm;
+use OpenAdmin\Admin\Form\NestedForm;
 
 class Table extends HasMany
 {

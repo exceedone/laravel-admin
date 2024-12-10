@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Widgets\Grid\Tools;
+namespace OpenAdmin\Admin\Widgets\Grid\Tools;
 
-use Encore\Admin\Widgets\Grid\Grid;
+use OpenAdmin\Admin\Widgets\Grid\Grid;
 use Illuminate\Contracts\Support\Renderable;
 
 abstract class BatchAction implements Renderable

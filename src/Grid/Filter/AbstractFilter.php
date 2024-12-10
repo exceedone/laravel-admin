@@ -1,16 +1,16 @@
 <?php
 
-namespace Encore\Admin\Grid\Filter;
+namespace OpenAdmin\Admin\Grid\Filter;
 
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Grid\Filter;
-use Encore\Admin\Grid\Filter\Presenter\Checkbox;
-use Encore\Admin\Grid\Filter\Presenter\DateTime;
-use Encore\Admin\Grid\Filter\Presenter\MultipleSelect;
-use Encore\Admin\Grid\Filter\Presenter\Presenter;
-use Encore\Admin\Grid\Filter\Presenter\Radio;
-use Encore\Admin\Grid\Filter\Presenter\Select;
-use Encore\Admin\Grid\Filter\Presenter\Text;
+use OpenAdmin\Admin\Facades\Admin;
+use OpenAdmin\Admin\Grid\Filter;
+use OpenAdmin\Admin\Grid\Filter\Presenter\Checkbox;
+use OpenAdmin\Admin\Grid\Filter\Presenter\DateTime;
+use OpenAdmin\Admin\Grid\Filter\Presenter\MultipleSelect;
+use OpenAdmin\Admin\Grid\Filter\Presenter\Presenter;
+use OpenAdmin\Admin\Grid\Filter\Presenter\Radio;
+use OpenAdmin\Admin\Grid\Filter\Presenter\Select;
+use OpenAdmin\Admin\Grid\Filter\Presenter\Text;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 

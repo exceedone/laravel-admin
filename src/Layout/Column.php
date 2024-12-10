@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Layout;
+namespace OpenAdmin\Admin\Layout;
 
-use Encore\Admin\Grid;
+use OpenAdmin\Admin\Grid;
 use Illuminate\Contracts\Support\Renderable;
-use Encore\Admin\Traits\GridWidth;
+use OpenAdmin\Admin\Traits\GridWidth;
 
 class Column implements Buildable
 {

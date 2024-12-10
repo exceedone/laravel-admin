@@ -86,7 +86,7 @@ return [
             'driver'     => 'oss',
             'access_id'  => 'LTAIsOQNIDQN78Jr',
             'access_key' => 'ChsYewaCxm1mi7AIBPRniuncEbFHNO',
-            'bucket'     => 'laravel-admin',
+            'bucket'     => 'open-admin',
             'endpoint'   => 'oss-cn-shanghai.aliyuncs.com',
         ],
 

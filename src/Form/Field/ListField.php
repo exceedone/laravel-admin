@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Form\Field;
+use OpenAdmin\Admin\Admin;
+use OpenAdmin\Admin\Form\Field;
 use Illuminate\Support\Arr;
 
 class ListField extends Field

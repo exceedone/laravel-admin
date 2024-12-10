@@ -1,13 +1,13 @@
 <?php
 
-namespace Encore\Admin\Grid\Exporters;
+namespace OpenAdmin\Admin\Grid\Exporters;
 
-use Encore\Admin\Grid;
+use OpenAdmin\Admin\Grid;
 
 abstract class AbstractExporter implements ExporterInterface
 {
     /**
-     * @var \Encore\Admin\Grid
+     * @var \OpenAdmin\Admin\Grid
      */
     protected $grid;
 

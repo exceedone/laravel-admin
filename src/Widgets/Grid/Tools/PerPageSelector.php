@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Widgets\Grid\Tools;
+namespace OpenAdmin\Admin\Widgets\Grid\Tools;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Widgets\Grid\Grid;
+use OpenAdmin\Admin\Admin;
+use OpenAdmin\Admin\Widgets\Grid\Grid;
 use Illuminate\Support\Collection;
 
 class PerPageSelector extends AbstractTool

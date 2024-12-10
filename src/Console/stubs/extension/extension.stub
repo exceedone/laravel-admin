@@ -2,7 +2,7 @@
 
 namespace :namespace;
 
-use Encore\Admin\Extension;
+use OpenAdmin\Admin\Extension;
 
 class :class_name extends Extension
 {
@@ -15,6 +15,6 @@ class :class_name extends Extension
     public $menu = [
         'title' => ':title',
         'path'  => ':path',
-        'icon'  => 'fa-gears',
+        'icon'  => 'icon-cogs',
     ];
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Encore\Admin\Widgets\Grid;
+namespace OpenAdmin\Admin\Widgets\Grid;
 
 use Carbon\Carbon;
 use Closure;
-use Encore\Admin\Admin;
-use Encore\Admin\Widgets\Grid\Grid;
-use Encore\Admin\Widgets\Grid\Displayers\AbstractDisplayer;
+use OpenAdmin\Admin\Admin;
+use OpenAdmin\Admin\Widgets\Grid\Grid;
+use OpenAdmin\Admin\Widgets\Grid\Displayers\AbstractDisplayer;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;

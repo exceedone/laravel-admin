@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Displayers;
+namespace OpenAdmin\Admin\Grid\Displayers;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Grid\Linker;
+use OpenAdmin\Admin\Admin;
+use OpenAdmin\Admin\Grid\Linker;
 
 class Actions extends AbstractDisplayer
 {

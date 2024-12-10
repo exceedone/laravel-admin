@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid;
+namespace OpenAdmin\Admin\Grid;
 
-use Encore\Admin\Grid;
-use Encore\Admin\Grid\Exporters\CsvExporter;
+use OpenAdmin\Admin\Grid;
+use OpenAdmin\Admin\Grid\Exporters\CsvExporter;
 
 class Exporter
 {

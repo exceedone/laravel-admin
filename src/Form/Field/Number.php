@@ -1,17 +1,17 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Validator\DigitBetweenRule;
-use Encore\Admin\Validator\DigitMinRule;
-use Encore\Admin\Validator\DigitMaxRule;
+use OpenAdmin\Admin\Validator\DigitBetweenRule;
+use OpenAdmin\Admin\Validator\DigitMinRule;
+use OpenAdmin\Admin\Validator\DigitMaxRule;
 
 class Number extends Text
 {
     protected $rules = ['nullable', 'numeric'];
 
     protected static $js = [
-        '/vendor/laravel-admin/number-input/bootstrap-number-input.js',
+        '/vendor/open-admin/number-input/bootstrap-number-input.js',
     ];
 
     public function render()

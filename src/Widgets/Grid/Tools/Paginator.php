@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Widgets\Grid\Tools;
+namespace OpenAdmin\Admin\Widgets\Grid\Tools;
 
-use Encore\Admin\Widgets\Grid\Grid;
+use OpenAdmin\Admin\Widgets\Grid\Grid;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Request;

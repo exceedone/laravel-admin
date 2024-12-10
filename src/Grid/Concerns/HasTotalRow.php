@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Grid\Concerns;
+namespace OpenAdmin\Admin\Grid\Concerns;
 
 use Closure;
-use Encore\Admin\Grid\Tools\TotalRow;
+use OpenAdmin\Admin\Grid\Tools\TotalRow;
 
 trait HasTotalRow
 {

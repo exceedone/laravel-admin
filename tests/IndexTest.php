@@ -1,6 +1,6 @@
 <?php
 
-use Encore\Admin\Auth\Database\Administrator;
+use OpenAdmin\Admin\Auth\Database\Administrator;
 
 class IndexTest extends TestCase
 {
@@ -22,9 +22,9 @@ class IndexTest extends TestCase
             ->see('Laravel version')
 
             ->see('Available extensions')
-            ->seeLink('laravel-admin-ext/helpers', 'https://github.com/laravel-admin-extensions/helpers')
-            ->seeLink('laravel-admin-ext/backup', 'https://github.com/laravel-admin-extensions/backup')
-            ->seeLink('laravel-admin-ext/media-manager', 'https://github.com/laravel-admin-extensions/media-manager')
+            ->seeLink('open-admin-ext/helpers', 'https://github.com/open-admin-org/helpers')
+            ->seeLink('open-admin-ext/backup', 'https://github.com/open-admin-org/backup')
+            ->seeLink('open-admin-ext/media-manager', 'https://github.com/open-admin-org/media-manager')
 
             ->see('Dependencies')
             ->see('php')

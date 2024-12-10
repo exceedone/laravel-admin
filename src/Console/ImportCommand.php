@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Console;
+namespace OpenAdmin\Admin\Console;
 
-use Encore\Admin\Admin;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
+use OpenAdmin\Admin\Admin;
 
 class ImportCommand extends Command
 {
@@ -20,7 +20,7 @@ class ImportCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Import a Laravel-admin extension';
+    protected $description = 'Import a Open-admin extension';
 
     /**
      * Execute the console command.

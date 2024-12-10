@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Traits;
+namespace OpenAdmin\Admin\Traits;
 
-use Encore\Admin\Auth\Database\Menu;
+use OpenAdmin\Admin\Auth\Database\Menu;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;

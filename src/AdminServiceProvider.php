@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\Admin;
+namespace OpenAdmin\Admin;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
@@ -76,11 +76,11 @@ class AdminServiceProvider extends ServiceProvider
         }
 
         if ($this->app->runningInConsole()) {
-            $this->publishes([__DIR__.'/../config' => config_path()], 'laravel-admin-config');
-            $this->publishes([__DIR__.'/../resources/lang' => resource_path('lang')], 'laravel-admin-lang');
-//            $this->publishes([__DIR__.'/../resources/views' => resource_path('views/vendor/admin')],           'laravel-admin-views');
-            $this->publishes([__DIR__.'/../database/migrations' => database_path('migrations')], 'laravel-admin-migrations');
-            $this->publishes([__DIR__.'/../resources/assets' => public_path('vendor/laravel-admin')], 'laravel-admin-assets');
+            $this->publishes([__DIR__.'/../config' => config_path()], 'open-admin-config');
+            $this->publishes([__DIR__.'/../resources/lang' => resource_path('lang')], 'open-admin-lang');
+            $this->publishes([__DIR__.'/../database/migrations' => database_path('migrations')], 'open-admin-migrations');
+            $this->publishes([__DIR__.'/../resources/assets' => public_path('vendor/open-admin')], 'open-admin-assets');
+            $this->publishes([__DIR__.'/../resources/assets/test' => public_path('vendor/open-admin-test')], 'open-admin-test');
         }
 
         //remove default feature of double encoding enable in laravel 5.6 or later.

@@ -1,10 +1,10 @@
 <?php
 
-namespace Encore\Admin\Form\Field;
+namespace OpenAdmin\Admin\Form\Field;
 
-use Encore\Admin\Form\Field;
+use OpenAdmin\Admin\Form\Field;
 use Illuminate\Contracts\Support\Arrayable;
-use Encore\Admin\Validator\HasOptionRule;
+use OpenAdmin\Admin\Validator\HasOptionRule;
 
 class Radio extends Field
 {
@@ -17,14 +17,14 @@ class Radio extends Field
      * @var array<string>
      */
     protected static $css = [
-        '/vendor/laravel-admin/AdminLTE/plugins/iCheck/all.css',
+        '/vendor/open-admin/AdminLTE/plugins/iCheck/all.css',
     ];
 
     /**
      * @var array<string>
      */
     protected static $js = [
-        '/vendor/laravel-admin/AdminLTE/plugins/iCheck/icheck.min.js',
+        '/vendor/open-admin/AdminLTE/plugins/iCheck/icheck.min.js',
     ];
 
     /**

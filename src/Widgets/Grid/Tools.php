@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin\Widgets\Grid;
+namespace OpenAdmin\Admin\Widgets\Grid;
 
-use Encore\Admin\Widgets\Grid\Grid;
-use Encore\Admin\Widgets\Grid\Tools\AbstractTool;
-use Encore\Admin\Widgets\Grid\Tools\BatchActions;
-//use Encore\Admin\Widgets\Grid\Tools\FilterButton;
+use OpenAdmin\Admin\Widgets\Grid\Grid;
+use OpenAdmin\Admin\Widgets\Grid\Tools\AbstractTool;
+use OpenAdmin\Admin\Widgets\Grid\Tools\BatchActions;
+//use OpenAdmin\Admin\Widgets\Grid\Tools\FilterButton;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;

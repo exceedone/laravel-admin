@@ -1,13 +1,13 @@
 <?php
 
-namespace Encore\Admin;
+namespace OpenAdmin\Admin;
 
 use Closure;
-use Encore\Admin\Auth\Database\Menu;
-use Encore\Admin\Controllers\AuthController;
-use Encore\Admin\Layout\Content;
-use Encore\Admin\Traits\HasAssets;
-use Encore\Admin\Widgets\Navbar;
+use OpenAdmin\Admin\Auth\Database\Menu;
+use OpenAdmin\Admin\Controllers\AuthController;
+use OpenAdmin\Admin\Layout\Content;
+use OpenAdmin\Admin\Traits\HasAssets;
+use OpenAdmin\Admin\Widgets\Navbar;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -81,7 +81,7 @@ class Admin
      * @param mixed $model
      * @param Closure $callable
      *
-     * @return \Encore\Admin\Grid
+     * @return \OpenAdmin\Admin\Grid
      *
      * @deprecated since v1.6.1
      */
@@ -94,7 +94,7 @@ class Admin
      * @param mixed $model
      * @param Closure $callable
      *
-     * @return \Encore\Admin\Form
+     * @return \OpenAdmin\Admin\Form
      *
      *  @deprecated since v1.6.1
      */
@@ -109,7 +109,7 @@ class Admin
      * @param mixed $model
      * @param Closure|null $callable
      *
-     * @return \Encore\Admin\Tree
+     * @return \OpenAdmin\Admin\Tree
      */
     public function tree($model, Closure $callable = null)
     {
@@ -134,7 +134,7 @@ class Admin
     /**
      * @param Closure $callable
      *
-     * @return \Encore\Admin\Layout\Content
+     * @return \OpenAdmin\Admin\Layout\Content
      *
      * @deprecated since v1.6.1
      */
@@ -280,7 +280,7 @@ class Admin
     /**
      * Get navbar object.
      *
-     * @return \Encore\Admin\Widgets\Navbar
+     * @return \OpenAdmin\Admin\Widgets\Navbar
      */
     public function getNavbar()
     {
@@ -292,7 +292,7 @@ class Admin
     }
 
     /**
-     * Register the laravel-admin builtin routes.
+     * Register the Open-admin builtin routes.
      *
      * @return void
      *
@@ -304,7 +304,7 @@ class Admin
     }
 
     /**
-     * Register the laravel-admin builtin routes.
+     * Register the Open-admin builtin routes.
      *
      * @return void
      */
@@ -318,7 +318,7 @@ class Admin
         app('router')->group($attributes, function ($router) {
 
             /* @var \Illuminate\Support\Facades\Route $router */
-            $router->namespace('\Encore\Admin\Controllers')->group(function ($router) {
+            $router->namespace('\OpenAdmin\Admin\Controllers')->group(function ($router) {
 
                 /* @var \Illuminate\Routing\Router $router */
                 $router->resource('auth/users', 'UserController')->names('admin.auth.users');

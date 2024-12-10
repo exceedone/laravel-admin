@@ -3,10 +3,10 @@
 namespace DummyNamespace;
 
 use DummyModelNamespace;
-use Encore\Admin\Controllers\AdminController;
-use Encore\Admin\Form;
-use Encore\Admin\Grid;
-use Encore\Admin\Show;
+use OpenAdmin\Admin\Controllers\AdminController;
+use OpenAdmin\Admin\Form;
+use OpenAdmin\Admin\Grid;
+use OpenAdmin\Admin\Show;
 
 class DummyClass extends AdminController
 {
@@ -24,7 +24,7 @@ class DummyClass extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new DummyModel);
+        $grid = new Grid(new DummyModel());
 
 DummyGrid
 
@@ -53,7 +53,7 @@ DummyShow
      */
     protected function form()
     {
-        $form = new Form(new DummyModel);
+        $form = new Form(new DummyModel());
 
 DummyForm
 

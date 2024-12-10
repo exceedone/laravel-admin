@@ -1,2 +1,2 @@
 # Changelog
-See https://laravel-admin.org/docs/
+See https://open-admin.org/docs/

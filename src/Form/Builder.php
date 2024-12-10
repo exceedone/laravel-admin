@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin\Form;
+namespace OpenAdmin\Admin\Form;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Form;
-use Encore\Admin\Form\Field\Hidden;
-use Encore\Admin\Grid\Model;
+use OpenAdmin\Admin\Admin;
+use OpenAdmin\Admin\Form;
+use OpenAdmin\Admin\Form\Field\Hidden;
+use OpenAdmin\Admin\Grid\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\URL;
@@ -19,7 +19,7 @@ class Builder
     /**
      * @var string
      */
-    public static $footerClassName = \Encore\Admin\Form\Footer::class;
+    public static $footerClassName = \OpenAdmin\Admin\Form\Footer::class;
 
     /**
      *  Previous url key.

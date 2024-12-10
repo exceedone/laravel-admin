@@ -1,14 +1,14 @@
 {
-    "name": "exceedone/laravel-admin",
-    "description": "laravel admin",
+    "name": "exceedone/open-admin",
+    "description": "open-admin. Open-source Laravel Admin panel. No pro or paid package, free & open",
     "type": "library",
-    "keywords": ["laravel", "admin", "grid", "form"],
-    "homepage": "https://github.com/z-song/laravel-admin",
+    "keywords": ["laravel", "admin", "grid", "form", "open-admin","open","free"],
+    "homepage": "https://github.com/open-admin-org/open-admin",
     "license": "MIT",
     "authors": [
         {
-            "name": "zsong",
-            "email": "zosong@126.com"
+            "name": "Sjors Broersen | Open-Admin.org",
+            "email": "info@open-admin.org"
         }
     ],
     "require": {
@@ -33,7 +33,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Encore\\Admin\\": "src/"
+            "OpenAdmin\\Admin\\": "src/"
         },
         "files": [
             "src/helpers.php"
@@ -65,10 +65,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Encore\\Admin\\AdminServiceProvider"
+                "OpenAdmin\\Admin\\AdminServiceProvider"
             ],
             "aliases": {
-                "Admin": "Encore\\Admin\\Facades\\Admin"
+                "Admin": "OpenAdmin\\Admin\\Facades\\Admin"
             }
         }
     }

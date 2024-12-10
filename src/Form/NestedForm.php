@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Form;
+namespace OpenAdmin\Admin\Form;
 
-use Encore\Admin\Admin;
-use Encore\Admin\Form;
+use OpenAdmin\Admin\Admin;
+use OpenAdmin\Admin\Form;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -96,7 +96,7 @@ class NestedForm
     protected $original = [];
 
     /**
-     * @var \Encore\Admin\Form
+     * @var \OpenAdmin\Admin\Form
      */
     protected $form;
 
@@ -346,7 +346,7 @@ class NestedForm
             }
 
             $isSet = false;
-            if (($field instanceof \Encore\Admin\Form\Field\Hidden) || $value != $field->original()) {
+            if (($field instanceof \OpenAdmin\Admin\Form\Field\Hidden) || $value != $field->original()) {
                 $isSet = true;
             }
             // 0($value) != null($field->original()) is false, so if value is 0, especially check.

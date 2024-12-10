@@ -1,11 +1,11 @@
 <?php
 
-namespace Encore\Admin\Widgets;
+namespace OpenAdmin\Admin\Widgets;
 
 use Closure;
-use Encore\Admin\Form as BaseForm;
-use Encore\Admin\Form\Field;
-use Encore\Admin\Traits\FormTrait;
+use OpenAdmin\Admin\Form as BaseForm;
+use OpenAdmin\Admin\Form\Field;
+use OpenAdmin\Admin\Traits\FormTrait;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;

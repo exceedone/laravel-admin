@@ -21,12 +21,12 @@ class TestCase extends BaseTestCase
 
         $app->booting(function () {
             $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-            $loader->alias('Admin', \Encore\Admin\Facades\Admin::class);
+            $loader->alias('Admin', \OpenAdmin\Admin\Facades\Admin::class);
         });
 
         $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
 
-        $app->register('Encore\Admin\AdminServiceProvider');
+        $app->register('OpenAdmin\Admin\AdminServiceProvider');
 
         return $app;
     }
@@ -50,7 +50,7 @@ class TestCase extends BaseTestCase
             $this->app['config']->set($key, $value);
         }
 
-        $this->artisan('vendor:publish', ['--provider' => 'Encore\Admin\AdminServiceProvider']);
+        $this->artisan('vendor:publish', ['--provider' => 'OpenAdmin\Admin\AdminServiceProvider']);
 
         Schema::defaultStringLength(191);
 

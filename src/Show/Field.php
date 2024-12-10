@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\Admin\Show;
+namespace OpenAdmin\Admin\Show;
 
-use Encore\Admin\Show;
-use Encore\Admin\Widgets\Carousel;
+use OpenAdmin\Admin\Show;
+use OpenAdmin\Admin\Widgets\Carousel;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;

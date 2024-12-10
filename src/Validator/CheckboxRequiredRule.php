@@ -1,5 +1,5 @@
 <?php
-namespace Encore\Admin\Validator;
+namespace OpenAdmin\Admin\Validator;
 
 use Illuminate\Contracts\Validation\Rule;
 

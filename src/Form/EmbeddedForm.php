@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\Admin\Form;
+namespace OpenAdmin\Admin\Form;
 
-use Encore\Admin\Form;
+use OpenAdmin\Admin\Form;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
