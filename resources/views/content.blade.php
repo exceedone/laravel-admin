@@ -1,7 +1,7 @@
 @extends('admin::index', ['header' => $header])
 
 @section('content')
-    <section class="content-header">
+    <section class="content-header clearfix">
         <h1>
             @if(isset($headericon))
             <i class="fa {{$headericon}}" style="padding-right:4px;"></i>

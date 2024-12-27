@@ -14,7 +14,7 @@
             </ul>
         </div>
     @endif
-    <div class="input-group-addon">
+    <div class="input-group-text">
         <i class="fa fa-calendar"></i>
     </div>
     <input class="form-control" id="{{$id}}" placeholder="{{$label}}" name="{{$name}}" value="{{ request($name, $value) }}">
