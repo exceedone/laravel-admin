@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\MessageBag;
 use Symfony\Component\DomCrawler\Crawler;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class Pjax
 {
@@ -63,7 +63,7 @@ class Pjax
     /**
      * Handle Response with exceptions.
      *
-     * @param Response $response
+     * @param \Illuminate\Http\Response $response
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -151,7 +151,7 @@ class Pjax
     /**
      * Set the PJAX-URL header to the current uri.
      *
-     * @param Response $response
+     * @param \Illuminate\Http\Response $response
      * @param Request  $request
      *
      * @return void
