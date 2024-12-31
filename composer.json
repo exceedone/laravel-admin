@@ -29,7 +29,8 @@
         "matthiasmullie/minify": "^1.3",
         "nunomaduro/larastan": "^2.5",
         "orchestra/testbench": "^8.0",
-        "spatie/eloquent-sortable": "^4.0"
+        "spatie/eloquent-sortable": "^4.0",
+        "friendsofphp/php-cs-fixer": "^3.64"
     },
     "autoload": {
         "psr-4": {
@@ -51,6 +52,8 @@
     },
     "scripts": {
         "test": "./vendor/bin/phpunit",
+        "phpstan": "./vendor/bin/phpstan analyse",
+        "phpcsfixer": "./vendor/bin/php-cs-fixer fix --dry-run",
         "post-autoload-dump": [
             "@php vendor/bin/testbench package:discover --ansi"
         ],
