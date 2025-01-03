@@ -27,8 +27,8 @@
 
         @include('admin::partials.sidebar')
 
-        <div class="content-wrapper p-4" id="main" style="margin-left:280px; border-left:none">
-            <div class="pjax-container">
+        <div class="content-wrapper p-4" id="main">
+            <div id="pjax-container">
                 {!! Admin::style() !!}
                 <div id="app">
                     @yield('content')

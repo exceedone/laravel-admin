@@ -87,6 +87,7 @@ trait HasAssets
         // custom open admin stuff
         // generated through sass
         'vendor/open-admin/open-admin/css/styles.css',
+        'vendor/open-admin/AdminLTE4/css/adminlte.min.css',
 
     ];
 
@@ -95,42 +96,43 @@ trait HasAssets
      */
     public static $baseJs = [
         // 'vendor/open-admin/AdminLTE/bootstrap/js/bootstrap.min.js',
-        // 'vendor/open-admin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js',
-        // 'vendor/open-admin/AdminLTE/dist/js/app.min.js',
-        // 'vendor/open-admin/jquery-pjax/jquery.pjax.js',
-        // 'vendor/open-admin/nprogress/nprogress.js',
-        // 'vendor/open-admin/nestable/jquery.nestable.js',
-        // 'vendor/open-admin/toastr/build/toastr.min.js',
-        // 'vendor/open-admin/bootstrap3-editable/js/bootstrap-editable.min.js',
-        // 'vendor/open-admin/sweetalert2/dist/sweetalert2.min.js',
-        // 'vendor/open-admin/open-admin/open-admin.js',
+        'vendor/open-admin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js',
+        'vendor/open-admin/AdminLTE/dist/js/app.min.js',
+        'vendor/open-admin/jquery-pjax/jquery.pjax.js',
+        'vendor/open-admin/nprogress/nprogress.js',
+        'vendor/open-admin/nestable/jquery.nestable.js',
+        'vendor/open-admin/toastr/build/toastr.min.js',
+        'vendor/open-admin/bootstrap3-editable/js/bootstrap-editable.min.js',
+        'vendor/open-admin/sweetalert2/dist/sweetalert2.min.js',
+        'vendor/open-admin/open-admin/open-admin.js',
 
         'vendor/open-admin/bootstrap5/bootstrap.bundle.min.js',
-        'vendor/open-admin/nprogress/nprogress.js',
-        'vendor/open-admin/axios/axios.min.js',
-        'vendor/open-admin/sweetalert2/sweetalert2.min.js',
-        'vendor/open-admin/toastify-js/toastify.js',
-        'vendor/open-admin/flatpickr/flatpickr.min.js',
-        'vendor/open-admin/choicesjs/scripts/choices.min.js',
-        'vendor/open-admin/sortablejs/Sortable.min.js',
+        // 'vendor/open-admin/nprogress/nprogress.js',
+        // 'vendor/open-admin/axios/axios.min.js',
+        // 'vendor/open-admin/sweetalert2/sweetalert2.min.js',
+        // 'vendor/open-admin/toastify-js/toastify.js',
+        // 'vendor/open-admin/flatpickr/flatpickr.min.js',
+        // 'vendor/open-admin/choicesjs/scripts/choices.min.js',
+        // 'vendor/open-admin/sortablejs/Sortable.min.js',
 
-        'vendor/open-admin/open-admin/js/polyfills.js',
-        'vendor/open-admin/open-admin/js/helpers.js',
-        'vendor/open-admin/open-admin/js/open-admin.js',
-        'vendor/open-admin/open-admin/js/open-admin-actions.js',
-        'vendor/open-admin/open-admin/js/open-admin-grid.js',
-        'vendor/open-admin/open-admin/js/open-admin-grid-inline-edit.js',
-        'vendor/open-admin/open-admin/js/open-admin-form.js',
-        'vendor/open-admin/open-admin/js/open-admin-toastr.js',
-        'vendor/open-admin/open-admin/js/open-admin-resource.js',
-        'vendor/open-admin/open-admin/js/open-admin-tree.js',
-        'vendor/open-admin/open-admin/js/open-admin-selectable.js',
+        // 'vendor/open-admin/open-admin/js/polyfills.js',
+        // 'vendor/open-admin/open-admin/js/helpers.js',
+        // 'vendor/open-admin/open-admin/js/open-admin.js',
+        // 'vendor/open-admin/open-admin/js/open-admin-actions.js',
+        // 'vendor/open-admin/open-admin/js/open-admin-grid.js',
+        // 'vendor/open-admin/open-admin/js/open-admin-grid-inline-edit.js',
+        // 'vendor/open-admin/open-admin/js/open-admin-form.js',
+        // 'vendor/open-admin/open-admin/js/open-admin-toastr.js',
+        // 'vendor/open-admin/open-admin/js/open-admin-resource.js',
+        // 'vendor/open-admin/open-admin/js/open-admin-tree.js',
+        // 'vendor/open-admin/open-admin/js/open-admin-selectable.js',
 
         'vendor/open-admin/jquery-pjax/jquery.pjax.js',
         'vendor/open-admin/toastr/build/toastr.min.js',
         'vendor/open-admin/bootstrap3-editable/js/bootstrap-editable.min.js',
         'vendor/laravel-admin/laravel-admin/laravel-admin.js',
         'vendor/open-admin/AdminLTE/bootstrap/js/bootstrap.min.js',
+        'vendor/open-admin/AdminLTE4/js/adminlte.min.js',
 
 
     ];

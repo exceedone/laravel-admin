@@ -1620,7 +1620,7 @@ class Field implements Renderable
     protected function getGroupClass($default = false)
     : string
     {
-        return ($default ? 'form-group ' : '').implode(' ', array_filter($this->groupClass));
+        return ($default ? 'row mb-3 justify-content-center ' : '').implode(' ', array_filter($this->groupClass));
     }
 
     /**

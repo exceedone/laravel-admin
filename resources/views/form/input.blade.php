@@ -9,7 +9,7 @@
         <div class="input-group">
 
             @if ($prepend)
-            <span class="input-group-addon">{!! $prepend !!}</span>
+            <span class="input-group-addon d-flex align-items-center justify-content-center" style="border: 1px solid #ced4da;">{!! $prepend !!}</span>
             @endif
 
             <input {!! $attributes !!} />

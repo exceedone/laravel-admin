@@ -12,7 +12,7 @@ class RefreshButton implements Renderable
         $message = __('admin.refresh_succeeded');
 
         $script = <<<SCRIPT
-$('.container-refresh').off('click').on('click', function() {
+$('.refresh-button').off('click').on('click', function() {
     $.admin.reload();
     $.admin.toastr.success('{$message}', '', {positionClass:"toast-top-center"});
 });
@@ -22,7 +22,7 @@ SCRIPT;
 
         return <<<'EOT'
 <li>
-    <a href="javascript:void(0);" class="container-refresh hidden-xs">
+    <a href="javascript:void(0);" class="refresh-button hidden-xs">
       <i class="fa fa-refresh"></i>
     </a>
 </li>
