@@ -17965,7 +17965,7 @@ span.d-none d-sm-inline {
 }
 
 a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .content > *:not(footer) {
@@ -18065,6 +18065,11 @@ main#main {
 
 span.long.user-image img {
   width: unset;
+}
+
+button.close.fileinput-remove {
+  border: none;
+  background: none;
 }
 
 @media (min-width: 768px) {
