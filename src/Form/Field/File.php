@@ -125,7 +125,7 @@ class File extends Field
     public function prepare($file)
     {
         // If has $file is string, and has TMP_FILE_PREFIX, get $file
-        if(is_string($file) && strpos($file, static::TMP_FILE_PREFIX) === 0 && $this->getTmp){
+        if (is_string($file) && strpos($file, static::TMP_FILE_PREFIX) === 0 && $this->getTmp) {
             $file = call_user_func($this->getTmp, $file);
         }
 
@@ -149,10 +149,10 @@ class File extends Field
      */
     protected function uploadAndDeleteOriginal(?UploadedFile $file)
     {
-        if(is_null($file)){
+        if (is_null($file)) {
             return null;
         }
-        
+
         $this->renameIfExists($file);
 
         $path = null;
@@ -214,7 +214,7 @@ class File extends Field
      */
     protected function initialFileIndex($file)
     {
-        if($this->fileIndex instanceof \Closure){
+        if ($this->fileIndex instanceof \Closure) {
             return $this->fileIndex->call($this, 0, $file);
         }
         return 0;
@@ -230,7 +230,7 @@ class File extends Field
      */
     protected function initialCaption($caption, $key)
     {
-        if($this->caption instanceof Closure){
+        if ($this->caption instanceof Closure) {
             return $this->caption->call($this, $caption, $key);
         }
         return basename($caption);
@@ -258,30 +258,31 @@ class File extends Field
         $this->script = <<<EOT
 $("{$this->getElementClassSelector()}").each(function(index, element){
     var options = {$options};
-    if(options['initialPreviewConfig'] && options['initialPreviewConfig'].length > 0){
-        options['initialPreviewConfig'][0]['caption'] = $(element).data('initial-caption');
-        options['initialPreviewConfig'][0]['type'] = $(element).data('initial-type');
-        options['initialPreviewConfig'][0]['downloadUrl'] = $(element).data('initial-download-url');
-    }
-
+    options['fileActionSettings'] = {
+        showRemove: true,
+        removeIcon: '<i class="fas fa-trash-alt"></i>',
+        showUpload: true,
+        uploadIcon: '<i class="fas fa-upload"></i>',
+        showDownload: true,
+        downloadIcon: '<i class="fas fa-download"></i>',
+        showZoom: false,
+    };
+    options['browseIcon'] = '<i class="fas fa-folder-open"></i>';
     $(element).fileinput(options);
 });
 EOT;
 
         if ($this->fileActionSettings['showRemove']) {
             $text = [
-                'title'   => trans('admin.delete_confirm'),
+                'title' => trans('admin.delete_confirm'),
                 'confirm' => trans('admin.confirm'),
-                'cancel'  => trans('admin.cancel'),
+                'cancel' => trans('admin.cancel'),
             ];
 
             $this->script .= <<<EOT
 $("{$this->getElementClassSelector()}").on('filebeforedelete', function() {
-    
     return new Promise(function(resolve, reject) {
-    
         var remove = resolve;
-    
         swal({
             title: "{$text['title']}",
             type: "warning",
@@ -298,18 +299,44 @@ $("{$this->getElementClassSelector()}").on('filebeforedelete', function() {
         });
     });
 });
-
 EOT;
 
-            if(isset($this->options['deletedEvent'])){
+            if (isset($this->options['deletedEvent'])) {
                 $deletedEvent = $this->options['deletedEvent'];
                 $this->script .= <<<EOT
-                $("{$this->getElementClassSelector()}").on('filedeleted', function(event, key, jqXHR, data) {
-                    {$deletedEvent};
-                });
+$("{$this->getElementClassSelector()}").on('filedeleted', function(event, key, jqXHR, data) {
+    {$deletedEvent};
+});
 EOT;
             }
         }
+
+        $this->script .= <<<EOT
+$("{$this->getElementClassSelector()}").on('fileloaded', function(event, previewId, index, file) {
+    // Tìm class .file-preview
+    var previewElement = $(this).closest('.file-input').find('.file-preview');
+    
+    if (previewElement.length) {
+    // Lấy giá trị width ban đầu
+    var currentWidth = previewElement.width();
+
+    previewElement.css({
+        'width': (currentWidth + 100) + 'px',
+        'transition': 'all 0.2s ease-in-out' 
+    });
+
+    setTimeout(function() {
+       previewElement.css({
+            'width': '100%'
+        });
+    }, 0);
+}
+
+});
+
+
+EOT;
+
     }
 
     /**

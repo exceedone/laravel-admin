@@ -18072,6 +18072,21 @@ button.close.fileinput-remove {
   background: none;
 }
 
+#totop {
+  display: none;
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  z-index: 99999;
+  outline: none;
+  background-color: rgb(34, 45, 50);
+  color: rgb(238, 238, 238);
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 4px;
+  opacity: 0.5;
+}
+
 @media (min-width: 768px) {
   .col-md-6 {
     padding: 12px;
