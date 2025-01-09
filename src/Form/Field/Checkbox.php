@@ -21,14 +21,14 @@ class Checkbox extends MultipleSelect
      * @var array<string>
      */
     protected static $css = [
-        '/vendor/laravel-admin/AdminLTE/plugins/iCheck/all.css',
+        '/vendor/open-admin/AdminLTE/plugins/iCheck/all.css',
     ];
 
     /**
      * @var array<string>
      */
     protected static $js = [
-        '/vendor/laravel-admin/AdminLTE/plugins/iCheck/icheck.min.js',
+        '/vendor/open-admin/AdminLTE/plugins/iCheck/icheck.min.js',
     ];
 
     /**

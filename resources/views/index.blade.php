@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +10,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
     @if(!is_null($favicon = Admin::favicon()))
-    <link rel="shortcut icon" href="{{$favicon}}">
+        <link rel="shortcut icon" href="{{$favicon}}">
     @endif
 
     {!! Admin::css() !!}
@@ -20,35 +21,39 @@
 </head>
 
 <body class="hold-transition {{config('admin.skin')}} {{join(' ', config('admin.layout'))}}">
-<div class="wrapper">
+    <div class="wrapper">
 
-    @include('admin::partials.header')
+        @include('admin::partials.header')
 
-    @include('admin::partials.sidebar')
+        @include('admin::partials.sidebar')
 
-    <div class="content-wrapper" id="pjax-container">
-        {!! Admin::style() !!}
-        <div id="app">
-        @yield('content')
+        <div class="content-wrapper" id="main">
+            <div id="pjax-container">
+                {!! Admin::style() !!}
+                <div id="app">
+                    @yield('content')
+                </div>
+                {!! Admin::script() !!}
+            </div>
+
         </div>
-        {!! Admin::script() !!}
+        @include('admin::partials.footer')
+
+
     </div>
 
-    @include('admin::partials.footer')
+    {!! Admin::html() !!}
 
-</div>
+    <button id="totop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up"></i></button>
 
-{!! Admin::html() !!}
+    <script>
+        function LA() { }
+        LA.token = "{{ csrf_token() }}";
+    </script>
 
-<button id="totop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up"></i></button>
-
-<script>
-    function LA() {}
-    LA.token = "{{ csrf_token() }}";
-</script>
-
-<!-- REQUIRED JS SCRIPTS -->
-{!! Admin::js() !!}
+    <!-- REQUIRED JS SCRIPTS -->
+    {!! Admin::js() !!}
 
 </body>
+
 </html>

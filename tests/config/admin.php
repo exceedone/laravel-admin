@@ -3,9 +3,9 @@
 return [
 
     /*
-     * Laravel-admin name.
+     * Open-admin name.
      */
-    'name' => 'Laravel-admin',
+    'name' => 'Open-admin',
 
     /*
      * Logo in admin panel header.
@@ -30,12 +30,12 @@ return [
     ],
 
     /*
-     * Laravel-admin install directory.
+     * Open-admin install directory.
      */
     'directory' => app_path('Admin'),
 
     /*
-     * Laravel-admin html title.
+     * Open-admin html title.
      */
     'title' => 'Admin',
 
@@ -45,7 +45,7 @@ return [
     'secure' => false,
 
     /*
-     * Laravel-admin auth setting.
+     * Open-admin auth setting.
      */
     'auth' => [
         'guards' => [
@@ -64,7 +64,7 @@ return [
     ],
 
     /*
-     * Laravel-admin upload setting.
+     * Open-admin upload setting.
      */
     'upload' => [
 
@@ -77,7 +77,7 @@ return [
     ],
 
     /*
-     * Laravel-admin database setting.
+     * Open-admin database setting.
      */
     'database' => [
 
@@ -109,7 +109,7 @@ return [
     ],
 
     /*
-     * By setting this option to open or close operation log in laravel-admin.
+     * By setting this option to open or close operation log in open-admin.
      */
     'operation_log' => [
 

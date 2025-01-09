@@ -1,15 +1,15 @@
 {
     "name": "exceedone/laravel-admin",
-    "description": "laravel admin",
+    "description": "open-admin-core. Open-source Laravel Admin panel. No pro or paid package, free & open. Based on laravel-admin, with special thanks to z-song",
     "type": "library",
-    "keywords": ["laravel", "admin", "grid", "form"],
-    "homepage": "https://github.com/z-song/laravel-admin",
+    "keywords": ["laravel", "admin", "grid", "form", "open-admin","open","free"],
+    "homepage": "https://github.com/dedermus/open-admin-core.git",
     "license": "MIT",
     "authors": [
-        {
-            "name": "zsong",
-            "email": "zosong@126.com"
-        }
+      {
+          "name": "dedermus",
+          "email": "dedermus@yandex.ru"
+      }
     ],
     "require": {
         "php": "^8.0.0",

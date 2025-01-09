@@ -13,14 +13,14 @@ class Icon extends Text
      * @var array<string>
      */
     protected static $css = [
-        '/vendor/laravel-admin/fontawesome-iconpicker/dist/css/fontawesome-iconpicker.min.css',
+        '/vendor/open-admin/fontawesome-iconpicker/dist/css/fontawesome-iconpicker.min.css',
     ];
 
     /**
      * @var array<string>
      */
     protected static $js = [
-        '/vendor/laravel-admin/fontawesome-iconpicker/dist/js/fontawesome-iconpicker-customize.js',
+        '/vendor/open-admin/fontawesome-iconpicker/dist/js/fontawesome-iconpicker-customize.js',
     ];
 
     /**

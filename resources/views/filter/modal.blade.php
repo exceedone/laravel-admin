@@ -17,7 +17,7 @@
                 <div class="modal-body">
                     <div class="form">
                         @foreach($filters as $filter)
-                            <div class="form-group">
+                            <div class="form-group row">
                                 {!! $filter->render() !!}
                             </div>
                         @endforeach

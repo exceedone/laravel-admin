@@ -10,15 +10,15 @@ class Slider extends Field
      * @var array<string>
      */
     protected static $css = [
-        '/vendor/laravel-admin/AdminLTE/plugins/ionslider/ion.rangeSlider.css',
-        '/vendor/laravel-admin/AdminLTE/plugins/ionslider/ion.rangeSlider.skinNice.css',
+        '/vendor/open-admin/AdminLTE/plugins/ionslider/ion.rangeSlider.css',
+        '/vendor/open-admin/AdminLTE/plugins/ionslider/ion.rangeSlider.skinNice.css',
     ];
 
     /**
      * @var array<string>
      */
     protected static $js = [
-        '/vendor/laravel-admin/AdminLTE/plugins/ionslider/ion.rangeSlider.min.js',
+        '/vendor/open-admin/AdminLTE/plugins/ionslider/ion.rangeSlider.min.js',
     ];
 
     /**

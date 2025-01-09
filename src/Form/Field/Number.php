@@ -11,7 +11,7 @@ class Number extends Text
     protected $rules = ['nullable', 'numeric'];
 
     protected static $js = [
-        '/vendor/laravel-admin/number-input/bootstrap-number-input.js',
+        '/vendor/open-admin/number-input/bootstrap-number-input.js',
     ];
 
     public function render()

@@ -208,8 +208,8 @@ class Tools implements Renderable
                 if (!$tool->allowed()) {
                     return '';
                 }
-
-                $tool = $tool->setGrid($this->grid)->render();
+                $g = $tool->setGrid($this->grid);
+                $tool = $g->render();
             }
 
             if ($tool instanceof Renderable) {

@@ -1,6 +1,6 @@
 <div {!! $attributes !!}>
     @if($title || $tools)
-        <div class="box-header with-border">
+        <div class="box-header with-border d-flex justify-content-between border-bottom border-light p-1 mb-3">
             <h3 class="box-title">{{ $title }}</h3>
             <div class="box-tools pull-right">
                 @foreach($tools as $tool)

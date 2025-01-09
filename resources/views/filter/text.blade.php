@@ -1,4 +1,4 @@
-<div class="input-group input-group-sm">
+<div class="input-group">
     @if($group)
     <div class="input-group-btn">
         <input type="hidden" name="{{ $id }}_group" class="{{ $group_name }}-operation" value="0"/>
@@ -14,7 +14,7 @@
         </ul>
     </div>
     @endif
-        <div class="input-group-addon">
+        <div class="input-group-text">
             <i class="fa fa-{{ $icon }}"></i>
         </div>
 

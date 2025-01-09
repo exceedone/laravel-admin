@@ -91,8 +91,8 @@ class Paginator extends AbstractTool
             return '';
         }
 
-        return $this->paginationRanger().
-            $this->paginationLinks().
-            $this->perPageSelector();
+        return '<div class="flex-grow-1">'.$this->paginationRanger().'</div>'.
+        $this->perPageSelector().
+            $this->paginationLinks();
     }
 }

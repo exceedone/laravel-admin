@@ -8,14 +8,14 @@ class Color extends Text
      * @var array<string>
      */
     protected static $css = [
-        '/vendor/laravel-admin/AdminLTE/plugins/colorpicker/bootstrap-colorpicker.min.css',
+        '/vendor/open-admin/AdminLTE/plugins/colorpicker/bootstrap-colorpicker.min.css',
     ];
 
     /**
      * @var array<string>
      */
     protected static $js = [
-        '/vendor/laravel-admin/AdminLTE/plugins/colorpicker/bootstrap-colorpicker.min.js',
+        '/vendor/open-admin/AdminLTE/plugins/colorpicker/bootstrap-colorpicker.min.js',
     ];
 
     /**

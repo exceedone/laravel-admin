@@ -18,14 +18,14 @@ class Listbox extends MultipleSelect
      * @var array<string>
      */
     protected static $css = [
-        '/vendor/laravel-admin/bootstrap-duallistbox/dist/bootstrap-duallistbox.min.css?v=3.0.9',
+        '/vendor/open-admin/bootstrap-duallistbox/dist/bootstrap-duallistbox.min.css?v=3.0.9',
     ];
 
     /**
      * @var array<string>
      */
     protected static $js = [
-        '/vendor/laravel-admin/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js?v=3.0.9',
+        '/vendor/open-admin/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js?v=3.0.9',
     ];
 
     /**

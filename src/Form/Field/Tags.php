@@ -38,14 +38,14 @@ class Tags extends Field
      * @var array<string>
      */
     protected static $css = [
-        '/vendor/laravel-admin/AdminLTE/plugins/select2/select2.min.css',
+        '/vendor/open-admin/AdminLTE/plugins/select2/select2.min.css',
     ];
 
     /**
      * @var array<string>
      */
     protected static $js = [
-        '/vendor/laravel-admin/AdminLTE/plugins/select2/select2.full.min.js',
+        '/vendor/open-admin/AdminLTE/plugins/select2/select2.full.min.js',
     ];
 
     /**
