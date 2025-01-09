@@ -36,6 +36,7 @@
   --bs-secondary: #6c757d;
   --bs-success: #00a65a;
   --bs-info: #3fb7ff;
+  --bs-twitter: #3fb7ff;
   --bs-warning: #ffc107;
   --bs-danger: #dc3545;
   --bs-light: #e7e7e7;
@@ -44,6 +45,7 @@
   --bs-secondary-rgb: 108, 117, 125;
   --bs-success-rgb: 0, 166, 90;
   --bs-info-rgb: 63, 183, 255;
+  --bs-twitter-rgb: 63, 183, 255;
   --bs-warning-rgb: 255, 193, 7;
   --bs-danger-rgb: 220, 53, 69;
   --bs-light-rgb: 231, 231, 231;
@@ -2834,6 +2836,36 @@ textarea.form-control-lg {
   border-color: #3fb7ff;
 }
 
+.btn-twitter {
+  color: #fff;
+  background-color: #3fb7ff;
+  border-color: #3fb7ff;
+}
+.btn-twitter:hover {
+  color: #fff;
+  background-color: rgb(53.55, 155.55, 216.75);
+  border-color: rgb(50.4, 146.4, 204);
+}
+.btn-check:focus + .btn-twitter, .btn-twitter:focus {
+  color: #fff;
+  background-color: rgb(53.55, 155.55, 216.75);
+  border-color: rgb(50.4, 146.4, 204);
+  box-shadow: 0 0 0 0.25rem rgba(91.8, 193.8, 255, 0.5);
+}
+.btn-check:checked + .btn-twitter, .btn-check:active + .btn-twitter, .btn-twitter:active, .btn-twitter.active, .show > .btn-twitter.dropdown-toggle {
+  color: #fff;
+  background-color: rgb(50.4, 146.4, 204);
+  border-color: rgb(47.25, 137.25, 191.25);
+}
+.btn-check:checked + .btn-twitter:focus, .btn-check:active + .btn-twitter:focus, .btn-twitter:active:focus, .btn-twitter.active:focus, .show > .btn-twitter.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.25rem rgba(91.8, 193.8, 255, 0.5);
+}
+.btn-twitter:disabled, .btn-twitter.disabled {
+  color: #fff;
+  background-color: #3fb7ff;
+  border-color: #3fb7ff;
+}
+
 .btn-warning {
   color: #fff;
   background-color: #ffc107;
@@ -3050,6 +3082,31 @@ textarea.form-control-lg {
   box-shadow: 0 0 0 0.25rem rgba(63, 183, 255, 0.5);
 }
 .btn-outline-info:disabled, .btn-outline-info.disabled {
+  color: #3fb7ff;
+  background-color: transparent;
+}
+
+.btn-outline-twitter {
+  color: #3fb7ff;
+  border-color: #3fb7ff;
+}
+.btn-outline-twitter:hover {
+  color: #fff;
+  background-color: #3fb7ff;
+  border-color: #3fb7ff;
+}
+.btn-check:focus + .btn-outline-twitter, .btn-outline-twitter:focus {
+  box-shadow: 0 0 0 0.25rem rgba(63, 183, 255, 0.5);
+}
+.btn-check:checked + .btn-outline-twitter, .btn-check:active + .btn-outline-twitter, .btn-outline-twitter:active, .btn-outline-twitter.active, .btn-outline-twitter.dropdown-toggle.show {
+  color: #fff;
+  background-color: #3fb7ff;
+  border-color: #3fb7ff;
+}
+.btn-check:checked + .btn-outline-twitter:focus, .btn-check:active + .btn-outline-twitter:focus, .btn-outline-twitter:active:focus, .btn-outline-twitter.active:focus, .btn-outline-twitter.dropdown-toggle.show:focus {
+  box-shadow: 0 0 0 0.25rem rgba(63, 183, 255, 0.5);
+}
+.btn-outline-twitter:disabled, .btn-outline-twitter.disabled {
   color: #3fb7ff;
   background-color: transparent;
 }
@@ -4648,6 +4705,15 @@ textarea.form-control-lg {
   color: rgb(30.24, 87.84, 122.4);
 }
 
+.alert-twitter {
+  color: rgb(37.8, 109.8, 153);
+  background-color: rgb(216.6, 240.6, 255);
+  border-color: rgb(197.4, 233.4, 255);
+}
+.alert-twitter .alert-link {
+  color: rgb(30.24, 87.84, 122.4);
+}
+
 .alert-warning {
   color: rgb(153, 115.8, 4.2);
   background-color: rgb(255, 242.6, 205.4);
@@ -5002,6 +5068,20 @@ textarea.form-control-lg {
   background-color: rgb(194.94, 216.54, 229.5);
 }
 .list-group-item-info.list-group-item-action.active {
+  color: #fff;
+  background-color: rgb(37.8, 109.8, 153);
+  border-color: rgb(37.8, 109.8, 153);
+}
+
+.list-group-item-twitter {
+  color: rgb(37.8, 109.8, 153);
+  background-color: rgb(216.6, 240.6, 255);
+}
+.list-group-item-twitter.list-group-item-action:hover, .list-group-item-twitter.list-group-item-action:focus {
+  color: rgb(37.8, 109.8, 153);
+  background-color: rgb(194.94, 216.54, 229.5);
+}
+.list-group-item-twitter.list-group-item-action.active {
   color: #fff;
   background-color: rgb(37.8, 109.8, 153);
   border-color: rgb(37.8, 109.8, 153);
@@ -6087,6 +6167,13 @@ textarea.form-control-lg {
   color: rgb(50.4, 146.4, 204);
 }
 
+.link-twitter {
+  color: #3fb7ff;
+}
+.link-twitter:hover, .link-twitter:focus {
+  color: rgb(50.4, 146.4, 204);
+}
+
 .link-warning {
   color: #ffc107;
 }
@@ -6518,6 +6605,10 @@ textarea.form-control-lg {
 }
 
 .border-info {
+  border-color: #3fb7ff !important;
+}
+
+.border-twitter {
   border-color: #3fb7ff !important;
 }
 
@@ -7354,6 +7445,11 @@ textarea.form-control-lg {
   color: rgba(var(--bs-info-rgb), var(--bs-text-opacity)) !important;
 }
 
+.text-twitter {
+  --bs-text-opacity: 1;
+  color: rgba(var(--bs-twitter-rgb), var(--bs-text-opacity)) !important;
+}
+
 .text-warning {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-warning-rgb), var(--bs-text-opacity)) !important;
@@ -7443,6 +7539,11 @@ textarea.form-control-lg {
 .bg-info {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-info-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.bg-twitter {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-twitter-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-warning {
@@ -10157,6 +10258,13 @@ textarea.form-control-lg {
   border-left-color: #3fb7ff;
 }
 .callout-info h4, .callout-info .h4 {
+  color: #3fb7ff;
+}
+
+.callout-twitter {
+  border-left-color: #3fb7ff;
+}
+.callout-twitter h4, .callout-twitter .h4 {
   color: #3fb7ff;
 }
 
@@ -18085,6 +18193,10 @@ button.close.fileinput-remove {
   padding: 10px 15px;
   border-radius: 4px;
   opacity: 0.5;
+}
+
+.file-drop-zone {
+  min-height: 275px !important;
 }
 
 @media (min-width: 768px) {

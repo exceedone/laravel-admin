@@ -23,7 +23,7 @@ class File extends Field
      * @var array<string>
      */
     protected static $css = [
-        '/vendor/open-admin/bootstrap-fileinput/css/fileinput.min.css?v=4.5.2',
+        // '/vendor/open-admin/bootstrap-fileinput/css/fileinput.min.css?v=4.5.2',
     ];
 
     /**
@@ -33,7 +33,7 @@ class File extends Field
      */
     protected static $js = [
         '/vendor/open-admin/bootstrap-fileinput/js/plugins/canvas-to-blob.min.js',
-        '/vendor/open-admin/bootstrap-fileinput/js/fileinput.min.js?v=4.5.2',
+        // '/vendor/open-admin/bootstrap-fileinput/js/fileinput.min.js?v=4.5.2',
     ];
 
     /**
@@ -268,6 +268,9 @@ $("{$this->getElementClassSelector()}").each(function(index, element){
         showZoom: false,
     };
     options['browseIcon'] = '<i class="fas fa-folder-open"></i>';
+    options['allowedFileExtensions'] = ["jpg", "png", "gif"];
+    options['initialPreviewAsData'] = true;
+    options['initialPreview'] = $(element).data('initial-preview');
     $(element).fileinput(options);
 });
 EOT;
@@ -310,32 +313,6 @@ $("{$this->getElementClassSelector()}").on('filedeleted', function(event, key, j
 EOT;
             }
         }
-
-        $this->script .= <<<EOT
-$("{$this->getElementClassSelector()}").on('fileloaded', function(event, previewId, index, file) {
-    // Tìm class .file-preview
-    var previewElement = $(this).closest('.file-input').find('.file-preview');
-    
-    if (previewElement.length) {
-    // Lấy giá trị width ban đầu
-    var currentWidth = previewElement.width();
-
-    previewElement.css({
-        'width': (currentWidth + 100) + 'px',
-        'transition': 'all 0.2s ease-in-out' 
-    });
-
-    setTimeout(function() {
-       previewElement.css({
-            'width': '100%'
-        });
-    }, 0);
-}
-
-});
-
-
-EOT;
 
     }
 

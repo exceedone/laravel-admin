@@ -209,6 +209,9 @@ button.close.fileinput-remove{
     border-radius: 4px;
     opacity: 0.5;
 }
+.file-drop-zone{
+    min-height: 275px !important;
+}
 
 @media (min-width: 768px) {
     .col-md-6 {

@@ -16,7 +16,7 @@ class MultipleFile extends Field
      * @var array<string>
      */
     protected static $css = [
-        '/vendor/open-admin/bootstrap-fileinput/css/fileinput.min.css?v=4.5.2',
+        // '/vendor/open-admin/bootstrap-fileinput/css/fileinput.min.css?v=4.5.2',
     ];
 
     /**
@@ -26,7 +26,7 @@ class MultipleFile extends Field
      */
     protected static $js = [
         '/vendor/open-admin/bootstrap-fileinput/js/plugins/canvas-to-blob.min.js',
-        '/vendor/open-admin/bootstrap-fileinput/js/fileinput.min.js?v=4.5.2',
+        // '/vendor/open-admin/bootstrap-fileinput/js/fileinput.min.js?v=4.5.2',
         '/vendor/open-admin/bootstrap-fileinput/js/plugins/sortable.min.js?v=4.5.2',
     ];
 

@@ -89,6 +89,10 @@ trait HasAssets
         'vendor/open-admin/open-admin/css/styles.css',
         'vendor/open-admin/AdminLTE4/css/adminlte.min.css',
 
+        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
+        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css",
+        "https://cdn.jsdelivr.net/npm/bootstrap-fileinput/css/fileinput.min.css"
+
     ];
 
     /**
@@ -143,7 +147,7 @@ trait HasAssets
     /**
      * @var string
      */
-    public static $jQuery = 'vendor/open-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js';
+    public static $jQuery = 'https://code.jquery.com/jquery-3.6.4.min.js';
 
     /**
      * Add css or get all css.
