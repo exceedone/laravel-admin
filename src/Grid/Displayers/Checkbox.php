@@ -44,7 +44,7 @@ EOT;
         return <<<EOT
 <form class="form-group grid-checkbox-$name" style="text-align:left;" data-key="{$this->getKey()}">
     $radios
-    <button type="submit" class="btn btn-info btn-xs pull-left">
+    <button type="submit" class="btn btn-twitter btn-xs pull-left">
         <i class="fa fa-save"></i>&nbsp;{$this->trans('save')}
     </button>
     <button type="reset" class="btn btn-warning btn-xs pull-left" style="margin-left:10px;">

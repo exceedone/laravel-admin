@@ -16,7 +16,7 @@ class Button extends Field
      */
     public function info()
     {
-        $this->class = 'btn-info';
+        $this->class = 'btn-twitter';
 
         return $this;
     }

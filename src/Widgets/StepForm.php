@@ -166,11 +166,11 @@ class StepForm extends Form
         }
 
         if ($index !== count($this->steps) - 1) {
-            $footer .= "<button class=\"btn btn-info pull-right\">{$trans['next']}</button>";
+            $footer .= "<button class=\"btn btn-twitter pull-right\">{$trans['next']}</button>";
         }
 
         if ($index === count($this->steps) - 1) {
-            $footer .= "<button class=\"btn btn-info pull-right\">{$trans['submit']}</button>";
+            $footer .= "<button class=\"btn btn-twitter pull-right\">{$trans['submit']}</button>";
         }
 
         $this->html($footer);
