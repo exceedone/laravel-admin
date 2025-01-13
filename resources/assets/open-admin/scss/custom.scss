@@ -249,6 +249,10 @@ button.close {
     opacity: .2;
 }
 
+.skin-blue-light .main-header .navbar, .skin-blue-light .main-header .logo {
+    background-color: #3A96FF !important;
+}
+
 @media (min-width: 768px) {
     .col-md-6 {
         padding: 12px;
