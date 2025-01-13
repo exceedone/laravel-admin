@@ -89,8 +89,8 @@ trait HasAssets
         'vendor/open-admin/open-admin/css/styles.css',
         'vendor/open-admin/AdminLTE4/css/adminlte.min.css',
 
-        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
-        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css",
+        // "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
+        // "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css",
         "https://cdn.jsdelivr.net/npm/bootstrap-fileinput/css/fileinput.min.css"
 
     ];
@@ -110,7 +110,7 @@ trait HasAssets
         'vendor/open-admin/sweetalert2/dist/sweetalert2.min.js',
         'vendor/open-admin/open-admin/open-admin.js',
 
-        'vendor/open-admin/bootstrap5/bootstrap.bundle.min.js',
+        // 'vendor/open-admin/bootstrap5/bootstrap.bundle.min.js',
         // 'vendor/open-admin/nprogress/nprogress.js',
         // 'vendor/open-admin/axios/axios.min.js',
         // 'vendor/open-admin/sweetalert2/sweetalert2.min.js',
@@ -138,7 +138,7 @@ trait HasAssets
         // 'vendor/open-admin/AdminLTE/bootstrap/js/bootstrap.min.js',
         // 'vendor/open-admin/AdminLTE4/js/adminlte.min.js',
 
-        "https://code.jquery.com/jquery-3.6.4.min.js",
+        "https://code.jquery.com/jquery-3.7.1.min.js",
         "https://cdn.jsdelivr.net/npm/bootstrap-fileinput/js/fileinput.min.js",
         "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 
@@ -147,7 +147,7 @@ trait HasAssets
     /**
      * @var string
      */
-    public static $jQuery = 'https://code.jquery.com/jquery-3.6.4.min.js';
+    public static $jQuery = 'vendor/open-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js';
 
     /**
      * Add css or get all css.

@@ -36,7 +36,7 @@
   --bs-secondary: #6c757d;
   --bs-success: #00a65a;
   --bs-info: #3fb7ff;
-  --bs-twitter: #3fb7ff;
+  --bs-twitter: #55acee;
   --bs-warning: #ffc107;
   --bs-danger: #dc3545;
   --bs-light: #e7e7e7;
@@ -45,7 +45,7 @@
   --bs-secondary-rgb: 108, 117, 125;
   --bs-success-rgb: 0, 166, 90;
   --bs-info-rgb: 63, 183, 255;
-  --bs-twitter-rgb: 63, 183, 255;
+  --bs-twitter-rgb: 85, 172, 238;
   --bs-warning-rgb: 255, 193, 7;
   --bs-danger-rgb: 220, 53, 69;
   --bs-light-rgb: 231, 231, 231;
@@ -2838,32 +2838,32 @@ textarea.form-control-lg {
 
 .btn-twitter {
   color: #fff;
-  background-color: #3fb7ff;
-  border-color: #3fb7ff;
+  background-color: #55acee;
+  border-color: #55acee;
 }
 .btn-twitter:hover {
   color: #fff;
-  background-color: rgb(53.55, 155.55, 216.75);
-  border-color: rgb(50.4, 146.4, 204);
+  background-color: rgb(72.25, 146.2, 202.3);
+  border-color: rgb(68, 137.6, 190.4);
 }
 .btn-check:focus + .btn-twitter, .btn-twitter:focus {
   color: #fff;
-  background-color: rgb(53.55, 155.55, 216.75);
-  border-color: rgb(50.4, 146.4, 204);
-  box-shadow: 0 0 0 0.25rem rgba(91.8, 193.8, 255, 0.5);
+  background-color: rgb(72.25, 146.2, 202.3);
+  border-color: rgb(68, 137.6, 190.4);
+  box-shadow: 0 0 0 0.25rem rgba(110.5, 184.45, 240.55, 0.5);
 }
 .btn-check:checked + .btn-twitter, .btn-check:active + .btn-twitter, .btn-twitter:active, .btn-twitter.active, .show > .btn-twitter.dropdown-toggle {
   color: #fff;
-  background-color: rgb(50.4, 146.4, 204);
-  border-color: rgb(47.25, 137.25, 191.25);
+  background-color: rgb(68, 137.6, 190.4);
+  border-color: rgb(63.75, 129, 178.5);
 }
 .btn-check:checked + .btn-twitter:focus, .btn-check:active + .btn-twitter:focus, .btn-twitter:active:focus, .btn-twitter.active:focus, .show > .btn-twitter.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.25rem rgba(91.8, 193.8, 255, 0.5);
+  box-shadow: 0 0 0 0.25rem rgba(110.5, 184.45, 240.55, 0.5);
 }
 .btn-twitter:disabled, .btn-twitter.disabled {
   color: #fff;
-  background-color: #3fb7ff;
-  border-color: #3fb7ff;
+  background-color: #55acee;
+  border-color: #55acee;
 }
 
 .btn-warning {
@@ -3087,27 +3087,27 @@ textarea.form-control-lg {
 }
 
 .btn-outline-twitter {
-  color: #3fb7ff;
-  border-color: #3fb7ff;
+  color: #55acee;
+  border-color: #55acee;
 }
 .btn-outline-twitter:hover {
   color: #fff;
-  background-color: #3fb7ff;
-  border-color: #3fb7ff;
+  background-color: #55acee;
+  border-color: #55acee;
 }
 .btn-check:focus + .btn-outline-twitter, .btn-outline-twitter:focus {
-  box-shadow: 0 0 0 0.25rem rgba(63, 183, 255, 0.5);
+  box-shadow: 0 0 0 0.25rem rgba(85, 172, 238, 0.5);
 }
 .btn-check:checked + .btn-outline-twitter, .btn-check:active + .btn-outline-twitter, .btn-outline-twitter:active, .btn-outline-twitter.active, .btn-outline-twitter.dropdown-toggle.show {
   color: #fff;
-  background-color: #3fb7ff;
-  border-color: #3fb7ff;
+  background-color: #55acee;
+  border-color: #55acee;
 }
 .btn-check:checked + .btn-outline-twitter:focus, .btn-check:active + .btn-outline-twitter:focus, .btn-outline-twitter:active:focus, .btn-outline-twitter.active:focus, .btn-outline-twitter.dropdown-toggle.show:focus {
-  box-shadow: 0 0 0 0.25rem rgba(63, 183, 255, 0.5);
+  box-shadow: 0 0 0 0.25rem rgba(85, 172, 238, 0.5);
 }
 .btn-outline-twitter:disabled, .btn-outline-twitter.disabled {
-  color: #3fb7ff;
+  color: #55acee;
   background-color: transparent;
 }
 
@@ -4706,12 +4706,12 @@ textarea.form-control-lg {
 }
 
 .alert-twitter {
-  color: rgb(37.8, 109.8, 153);
-  background-color: rgb(216.6, 240.6, 255);
-  border-color: rgb(197.4, 233.4, 255);
+  color: rgb(51, 103.2, 142.8);
+  background-color: rgb(221, 238.4, 251.6);
+  border-color: rgb(204, 230.1, 249.9);
 }
 .alert-twitter .alert-link {
-  color: rgb(30.24, 87.84, 122.4);
+  color: rgb(40.8, 82.56, 114.24);
 }
 
 .alert-warning {
@@ -5074,17 +5074,17 @@ textarea.form-control-lg {
 }
 
 .list-group-item-twitter {
-  color: rgb(37.8, 109.8, 153);
-  background-color: rgb(216.6, 240.6, 255);
+  color: rgb(51, 103.2, 142.8);
+  background-color: rgb(221, 238.4, 251.6);
 }
 .list-group-item-twitter.list-group-item-action:hover, .list-group-item-twitter.list-group-item-action:focus {
-  color: rgb(37.8, 109.8, 153);
-  background-color: rgb(194.94, 216.54, 229.5);
+  color: rgb(51, 103.2, 142.8);
+  background-color: rgb(198.9, 214.56, 226.44);
 }
 .list-group-item-twitter.list-group-item-action.active {
   color: #fff;
-  background-color: rgb(37.8, 109.8, 153);
-  border-color: rgb(37.8, 109.8, 153);
+  background-color: rgb(51, 103.2, 142.8);
+  border-color: rgb(51, 103.2, 142.8);
 }
 
 .list-group-item-warning {
@@ -6168,10 +6168,10 @@ textarea.form-control-lg {
 }
 
 .link-twitter {
-  color: #3fb7ff;
+  color: #55acee;
 }
 .link-twitter:hover, .link-twitter:focus {
-  color: rgb(50.4, 146.4, 204);
+  color: rgb(68, 137.6, 190.4);
 }
 
 .link-warning {
@@ -6609,7 +6609,7 @@ textarea.form-control-lg {
 }
 
 .border-twitter {
-  border-color: #3fb7ff !important;
+  border-color: #55acee !important;
 }
 
 .border-warning {
@@ -10262,10 +10262,10 @@ textarea.form-control-lg {
 }
 
 .callout-twitter {
-  border-left-color: #3fb7ff;
+  border-left-color: #55acee;
 }
 .callout-twitter h4, .callout-twitter .h4 {
-  color: #3fb7ff;
+  color: #55acee;
 }
 
 .callout-warning {
@@ -10304,16 +10304,16 @@ textarea.form-control-lg {
 /* colors */
 /*-------------------------------------------------------*/
 :root {
-  --sidebar-width: 250px;
+  --sidebar-width: 230px;
   --primary-color: #3a96ff;
   --success-color: #00a65a;
   --menu-bg: #263544;
   --menu-active-bg: #212d3a;
   --menu-darker-bg: #1c2631;
   --menu-text: #a7a7be;
-  --menu-width: 250px;
+  --menu-width: 230px;
   --menu-closed-width: 55px;
-  --negative-menu-width: -250px;
+  --negative-menu-width: -230px;
   --main-bg: #ecf0f5;
   --text-color: #515151;
   --table-color: var(--text-color);
@@ -18108,9 +18108,14 @@ a#menu-toggle {
   clear: both;
   font-weight: 400;
   line-height: 1.42857143;
-  color: #333;
+  color: #777;
   white-space: nowrap;
   text-decoration: none;
+}
+
+.dropdown-menu > li > a:hover {
+  background-color: #e1e3e9;
+  color: #333;
 }
 
 .btn-outline-secondary.dropdown-toggle.show:focus {
@@ -18137,7 +18142,7 @@ a#menu-toggle {
 }
 
 form.search-form {
-  margin: 0 !important;
+  margin: 0 0 0 20px !important;
 }
 
 .header-items.navbar {
@@ -18195,8 +18200,32 @@ button.close.fileinput-remove {
   opacity: 0.5;
 }
 
+.user-image {
+  width: 25px;
+  height: 25px;
+  line-height: unset;
+}
+
 .file-drop-zone {
-  min-height: 275px !important;
+  min-height: unset !important;
+}
+
+button.close {
+  padding: 0;
+  cursor: pointer;
+  background: 0 0;
+  border: 0;
+}
+
+.close {
+  float: right;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  filter: alpha(opacity=20);
+  opacity: 0.2;
 }
 
 @media (min-width: 768px) {

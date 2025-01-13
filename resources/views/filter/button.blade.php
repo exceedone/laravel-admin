@@ -14,7 +14,7 @@
         @foreach($scopes as $scope)
             {!! $scope->render() !!}
         @endforeach
-        <li role="separator" class="divider"></li>
+        <li role="separator" class="dropdown-divider"></li>
         <li><a href="{{ $url_no_scopes }}">{{ trans('admin.cancel') }}</a></li>
     </ul>
     @endif
