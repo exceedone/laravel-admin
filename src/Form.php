@@ -479,6 +479,7 @@ class Form implements Renderable
             }
 
             $this->model->save();
+            $this->storeJancode($this->model);
 
             $this->updateRelation($this->relations);
 
@@ -502,6 +503,31 @@ class Form implements Renderable
         }
 
         return $this->redirectAfterStore();
+    }
+
+    /**
+     * Save Jancode
+     *
+     * @param mixed $model
+     *
+     * @return void
+     */
+    protected function storeJancode($model)
+    {
+        $jan_code = request()->get('jan_code');
+        $table_code = request()->get('table_code');
+        if ($jan_code && $table_code) {
+            DB::table('jan_codes')
+                ->insert([
+                    'table_id' => $table_code,
+                    'target_id' => $model->id,
+                    'jan_code' => $jan_code,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                    'created_user_id' => \Exment::user()->base_user_id,
+                    'updated_user_id' => \Exment::user()->base_user_id,
+                ]);
+        };
     }
 
     /**

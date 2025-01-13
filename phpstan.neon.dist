@@ -3,6 +3,7 @@ parameters:
         - src
     level: 6
     ignoreErrors:
+        - '#Call to static method user\(\) on an unknown class Exment.#'
         - '#Call to static method transaction\(\) on an unknown class ExmentDB.#'
         - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$id.#'
         - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$password.#'
