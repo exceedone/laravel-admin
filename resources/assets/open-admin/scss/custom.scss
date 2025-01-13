@@ -197,6 +197,7 @@ main#main {
 
 span.long.user-image img {
     width: unset;
+    object-fit: contain !important;
 }
 
 button.close.fileinput-remove {
@@ -223,6 +224,7 @@ button.close.fileinput-remove {
     width: 25px;
     height: 25px;
     line-height: unset;
+    margin-right: 10px !important;
 }
 
 .file-drop-zone {
