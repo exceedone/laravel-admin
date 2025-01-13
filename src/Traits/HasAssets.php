@@ -86,12 +86,13 @@ trait HasAssets
 
         // custom open admin stuff
         // generated through sass
+        'vendor/open-admin/open-admin/css/custom.css',
         'vendor/open-admin/open-admin/css/styles.css',
         'vendor/open-admin/AdminLTE4/css/adminlte.min.css',
 
         // "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
         // "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css",
-        "https://cdn.jsdelivr.net/npm/bootstrap-fileinput/css/fileinput.min.css"
+        "https://cdn.jsdelivr.net/npm/bootstrap-fileinput/css/fileinput.min.css",
 
     ];
 
@@ -140,7 +141,8 @@ trait HasAssets
 
         "https://code.jquery.com/jquery-3.7.1.min.js",
         "https://cdn.jsdelivr.net/npm/bootstrap-fileinput/js/fileinput.min.js",
-        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js",
+        "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
 
     ];
 

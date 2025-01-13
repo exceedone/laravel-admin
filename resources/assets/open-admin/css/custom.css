@@ -1,0 +1,349 @@
+.control-label {
+  padding-right: 20px;
+  font-weight: bold;
+  word-wrap: normal;
+}
+
+#main.content-wrapper.p-4 {
+  margin-left: var(--sidebar-width);
+  border-left: none;
+}
+
+.fixed-bottom {
+  margin-left: var(--sidebar-width);
+}
+
+.input-group-addon {
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+.form-select {
+  display: unset !important;
+  width: unset !important;
+}
+
+.page-link {
+  font-size: 1rem;
+  padding: unset;
+}
+
+.btn-default:hover {
+  background-color: #e7e7e7 !important;
+}
+
+/* style header */
+.custom-navbar .header-items > a:hover,
+.custom-navbar .header-items > ul > li:hover,
+.custom-navbar .navbar-brand :hover {
+  background: transparent !important;
+}
+
+.custom-menu ul a:hover {
+  color: black !important;
+}
+
+.custom-menu > ul > li.active {
+  background: transparent !important;
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary.dropdown-toggle.show {
+  color: #fff;
+  background-color: #0d6aad;
+  border-color: #0d6aad;
+}
+
+ul.dropdown-menu.show {
+  transform: translate(0, 29px) !important;
+}
+
+.show {
+  box-shadow: none !important;
+}
+
+.custom-menu ul li ul {
+  border-left: none !important;
+}
+
+.custom-navbar .navbar-brand span {
+  color: white !important;
+}
+
+section.content {
+  padding-top: 15px;
+}
+
+span.d-none d-sm-inline {
+  color: white;
+}
+
+.table-responsive th.column-__actions__ {
+  text-align: start;
+}
+
+.table-responsive .__actions__div {
+  background: none;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.content > *:not(footer) {
+  flex-grow: 1;
+}
+
+footer {
+  margin-top: auto;
+}
+
+a#menu-toggle {
+  color: white;
+}
+
+.user-panel {
+  margin-top: 0px;
+  padding: 0.5rem 1.2rem;
+}
+
+.text-dotted {
+  text-decoration-style: dotted;
+}
+
+.btn-outline-secondary {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+.dropdown-menu > li > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: 400;
+  line-height: 1.42857143;
+  color: #777;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.dropdown-menu > li > a:hover {
+  background-color: #e1e3e9;
+  color: #333;
+}
+
+.btn-outline-secondary.dropdown-toggle.show:focus {
+  box-shadow: none;
+}
+
+#filter-box > form > div.box-footer > div > div {
+  display: flex;
+}
+
+.col-form-label {
+  text-align: right;
+  font-weight: 700 !important;
+}
+
+.btn-default {
+  background-color: #f4f4f4 !important;
+  color: #444 !important;
+  border-color: #ddd !important;
+}
+
+.hide {
+  display: none !important;
+}
+
+form.search-form {
+  margin: 0 0 0 20px !important;
+}
+
+.header-items.navbar {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.custom-navbar .valign-header > *,
+.custom-navbar .navbar-brand,
+.custom-navbar .header-items > .nav {
+  line-height: 0px !important;
+}
+
+html {
+  font-size: 13px !important;
+}
+
+.btn-sm,
+.btn-group-sm > .btn {
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+}
+
+.custom-menu a:active,
+.custom-menu a:focus,
+.custom-menu li > ul > li.active a {
+  color: #444;
+}
+
+main#main {
+  height: 91vh;
+}
+
+span.long.user-image img {
+  width: unset;
+}
+
+button.close.fileinput-remove {
+  border: none;
+  background: none;
+}
+
+#totop {
+  display: none;
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  z-index: 99999;
+  outline: none;
+  background-color: rgb(34, 45, 50);
+  color: rgb(238, 238, 238);
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 4px;
+  opacity: 0.5;
+}
+
+.user-image {
+  width: 25px;
+  height: 25px;
+  line-height: unset;
+}
+
+.file-drop-zone {
+  min-height: unset !important;
+}
+
+button.close {
+  padding: 0;
+  cursor: pointer;
+  background: 0 0;
+  border: 0;
+}
+
+.close {
+  float: right;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  filter: alpha(opacity=20);
+  opacity: 0.2;
+}
+
+@media (min-width: 768px) {
+  .col-md-6 {
+    padding: 12px;
+  }
+}
+@media (max-width: 576px) {
+  #main.content-wrapper.p-4 {
+    margin-left: 0;
+  }
+  .fixed-bottom {
+    margin-left: 0;
+  }
+}
+/**/
+:root {
+  --bs-twitter: #55acee;
+  --bs-twitter-rgb: 85, 172, 238;
+}
+
+.btn-twitter {
+  color: #fff;
+  background-color: #55acee;
+  border-color: #55acee;
+}
+
+.btn-twitter:hover {
+  color: #fff;
+  background-color: rgb(72.25, 146.2, 202.3);
+  border-color: rgb(68, 137.6, 190.4);
+}
+
+.btn-check:focus + .btn-twitter,
+.btn-twitter:focus {
+  color: #fff;
+  background-color: rgb(72.25, 146.2, 202.3);
+  border-color: rgb(68, 137.6, 190.4);
+  box-shadow: 0 0 0 0.25rem rgba(110.5, 184.45, 240.55, 0.5);
+}
+
+.btn-check:checked + .btn-twitter,
+.btn-check:active + .btn-twitter,
+.btn-twitter:active,
+.btn-twitter.active,
+.show > .btn-twitter.dropdown-toggle {
+  color: #fff;
+  background-color: rgb(68, 137.6, 190.4);
+  border-color: rgb(63.75, 129, 178.5);
+}
+
+.btn-check:checked + .btn-twitter:focus,
+.btn-check:active + .btn-twitter:focus,
+.btn-twitter:active:focus,
+.btn-twitter.active:focus,
+.show > .btn-twitter.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.25rem rgba(110.5, 184.45, 240.55, 0.5);
+}
+
+.btn-twitter:disabled,
+.btn-twitter.disabled {
+  color: #fff;
+  background-color: #55acee;
+  border-color: #55acee;
+}
+
+.btn-outline-twitter {
+  color: #55acee;
+  border-color: #55acee;
+}
+
+.btn-outline-twitter:hover {
+  color: #fff;
+  background-color: #55acee;
+  border-color: #55acee;
+}
+
+.btn-check:focus + .btn-outline-twitter,
+.btn-outline-twitter:focus {
+  box-shadow: 0 0 0 0.25rem rgba(85, 172, 238, 0.5);
+}
+
+.btn-check:checked + .btn-outline-twitter,
+.btn-check:active + .btn-outline-twitter,
+.btn-outline-twitter:active,
+.btn-outline-twitter.active,
+.btn-outline-twitter.dropdown-toggle.show {
+  color: #fff;
+  background-color: #55acee;
+  border-color: #55acee;
+}
+
+.btn-check:checked + .btn-outline-twitter:focus,
+.btn-check:active + .btn-outline-twitter:focus,
+.btn-outline-twitter:active:focus,
+.btn-outline-twitter.active:focus,
+.btn-outline-twitter.dropdown-toggle.show:focus {
+  box-shadow: 0 0 0 0.25rem rgba(85, 172, 238, 0.5);
+}
+
+.btn-outline-twitter:disabled,
+.btn-outline-twitter.disabled {
+  color: #55acee;
+  background-color: transparent;
+}
+
+/*# sourceMappingURL=custom.css.map */
