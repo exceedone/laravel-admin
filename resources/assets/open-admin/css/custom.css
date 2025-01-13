@@ -23,11 +23,6 @@
   width: unset !important;
 }
 
-.page-link {
-  font-size: 1rem;
-  padding: unset;
-}
-
 .btn-default:hover {
   background-color: #e7e7e7 !important;
 }
