@@ -3,7 +3,7 @@
 @if(!$isHoldSelectAllCheckbox)
 <div class="btn-group {{$selectAllName}}-btn" style="display:none;margin-right: 5px;">
     <a class="btn btn-sm btn-default"><span class="hidden-xs selected"></span></a>
-    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-bs-toggle="dropdown">
         <span class="caret"></span>
         <span class="sr-only">Toggle Dropdown</span>
     </button>
