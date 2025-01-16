@@ -256,23 +256,40 @@ class File extends Field
     protected function setupScripts($options)
     {
         $this->script = <<<EOT
-$("{$this->getElementClassSelector()}").each(function(index, element){
-    var options = {$options};
-    options['fileActionSettings'] = {
-        showRemove: true,
-        removeIcon: '<i class="fas fa-trash-alt"></i>',
-        showUpload: true,
-        uploadIcon: '<i class="fas fa-upload"></i>',
-        showDownload: true,
-        downloadIcon: '<i class="fas fa-download"></i>',
-        showZoom: false,
-    };
-    options['browseIcon'] = '<i class="fas fa-folder-open"></i>';
-    options['allowedFileExtensions'] = ["jpg", "png", "gif"];
-    options['initialPreviewAsData'] = true;
-    options['initialPreview'] = $(element).data('initial-preview');
-    $(element).fileinput(options);
+            $("{$this->getElementClassSelector()}").each(function(index, element){
+            var initialPreview = $(element).data('initial-preview');
+            var initialPreviewConfig = $options.initialPreviewConfig;
+            var deleteUrl = $options.deleteUrl;
+            var deleteExtraData = $options.deleteExtraData;
+
+            var options = {
+                allowedFileTypes: ['image', 'video'], 
+                allowedFileExtensions: ['jpg', 'png', 'mp4'], 
+                showPreview: true, 
+                showUpload: false,
+                showRemove: false,
+                fileActionSettings: {
+                    showRemove: true,
+                    removeIcon: '<i class="fas fa-trash-alt"></i>',
+                    showUpload: false,
+                    showDownload: true,
+                    downloadIcon: '<i class="fas fa-download"></i>',
+                    showZoom: false,
+                    showRotate: false,
+                },
+                initialPreview: initialPreview, 
+                initialPreviewConfig: initialPreviewConfig,
+                initialPreviewAsData: true,
+                deleteUrl: deleteUrl,
+                deleteExtraData: deleteExtraData,
+
+            }
+            options['browseIcon'] = '<i class="fas fa-folder-open"></i>';
+            $(element).fileinput(options);
 });
+
+
+
 EOT;
 
         if ($this->fileActionSettings['showRemove']) {
@@ -345,7 +362,6 @@ EOT;
              */
             unset($this->attributes['required']);
         }
-
         $options = json_encode_options($this->options);
 
         $this->setupScripts($options);

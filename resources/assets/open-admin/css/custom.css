@@ -243,6 +243,38 @@ button.close {
   background-color: #3A96FF !important;
 }
 
+.table tr th.column-__row_selector__, .table tr td.column-__row_selector__ {
+  padding-left: 0.75rem !important;
+}
+
+.table tr th a {
+  font-size: 1.2rem !important;
+}
+
+.table-responsive th.column-__actions__ {
+  padding-right: unset !important;
+}
+
+.table-responsive th.column-__actions__,
+.column-__actions__ {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-group > .btn-group:not(:first-child), .btn-group > :not(.btn-check:first-child) + .btn {
+  border-left: 1px solid #000;
+}
+
+.btn:hover {
+  background-color: #fff !important;
+}
+
+button#search-btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
 @media (min-width: 768px) {
   .col-md-6 {
     padding: 12px;
