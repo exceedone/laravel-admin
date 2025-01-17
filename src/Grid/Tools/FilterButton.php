@@ -32,7 +32,7 @@ class FilterButton extends AbstractTool
     protected function getElementClassName()
     {
         if (!$this->btnClassName) {
-            $this->btnClassName = uniqid().'-filter-btn';
+            $this->btnClassName = uniqid() . '-filter-btn';
         }
 
         return $this->btnClassName;
@@ -43,50 +43,53 @@ class FilterButton extends AbstractTool
      * @return void
      */
     protected function setUpScripts()
-    {
-        $id = $this->filter()->getFilterID();
-        $filterAjax = $this->filter()->getFilterAjax();
+{
+    $id = $this->filter()->getFilterID();
+    $filterAjax = $this->filter()->getFilterAjax();
 
-        $script = <<<SCRIPT
-        let target = $('.{$this->getElementClassName()}');
-        target.unbind('click');
-        target.click(function (e) {
-    if ($('#{$id}').is(':visible')) {
-        $('#{$id}').addClass('hide');
-    } else {
-        if('$filterAjax'.length > 0){
-            if(target.attr('disabled')){
-                return;
-            }
-            if(target.hasClass('loaded')){
-                $('#{$id}').removeClass('hide');
-                return;
-            }
-            
-            var spinner = target.attr('disabled', true).data('loading-text');
-            target.append(spinner);
-            $.ajax({
-                url:'$filterAjax',
-                type: "GET",
-                contentType: 'application/json;charset=utf-8',
-                success: function (data) {
-                    $('#{$id}').html($(data.html).children('form'));
-                    eval(data.script);
-
-                    target.attr('disabled', false).addClass('loaded');
-                    target.find('.fa-spinner').remove();
-                    $('#{$id}').removeClass('hide');
+    $script = <<<SCRIPT
+    let target = $('.{$this->getElementClassName()}');
+    target.off('click');  
+    target.on('click', function (e) {  
+        e.preventDefault();
+        if ($('#{$id}').is(':visible')) {
+            $('#{$id}').addClass('hide');
+        } else {
+            if ('$filterAjax'.length > 0) {
+                if (target.attr('disabled')) {
+                    return;
                 }
-            });
-        }else{
-            $('#{$id}').removeClass('hide');
+                if (target.hasClass('loaded')) {
+                    $('#{$id}').removeClass('hide');
+                    return;
+                }
+
+                var spinner = target.attr('disabled', true).data('loading-text');
+                target.append(spinner);
+                $.ajax({
+                    url: '$filterAjax',
+                    type: "GET",
+                    contentType: 'application/json;charset=utf-8',
+                    success: function (data) {
+                        $('#{$id}').html($(data.html).children('form'));
+                        eval(data.script);
+
+                        target.attr('disabled', false).addClass('loaded');
+                        target.find('.fa-spinner').remove();
+                        $('#{$id}').removeClass('hide');
+                    }
+                });
+            } else {
+                $('#{$id}').removeClass('hide');
+            }
         }
-    }
-});
+    });
 SCRIPT;
 
-        Admin::script($script);
-    }
+
+    Admin::script($script);
+}
+
 
     /**
      * @return mixed
@@ -118,11 +121,11 @@ SCRIPT;
         $this->setUpScripts();
 
         $variables = [
-            'scopes'        => $this->filter()->getScopes(),
+            'scopes' => $this->filter()->getScopes(),
             'current_label' => $this->getCurrentScopeLabel(),
             'url_no_scopes' => $this->filter()->urlWithoutScopes(),
-            'btn_class'     => $this->getElementClassName(),
-            'expand'        => $this->filter()->expand,
+            'btn_class' => $this->getElementClassName(),
+            'expand' => $this->filter()->expand,
         ];
 
         return view($this->view, $variables)->render();
