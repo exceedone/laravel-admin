@@ -110,7 +110,7 @@ trait HasAssets
         'vendor/open-admin/toastr/build/toastr.min.js',
         'vendor/open-admin/bootstrap3-editable/js/bootstrap-editable.min.js',
         'vendor/open-admin/sweetalert2/dist/sweetalert2.min.js',
-        'vendor/open-admin/open-admin/open-admin.js',
+        // 'vendor/open-admin/open-admin/open-admin.js',
 
         // 'vendor/open-admin/bootstrap5/bootstrap.bundle.min.js',
         // 'vendor/open-admin/nprogress/nprogress.js',

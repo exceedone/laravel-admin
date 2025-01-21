@@ -18040,9 +18040,6 @@ form .card-footer {
   border-color: #0d6aad;
 }
 
-ul.dropdown-menu.show {
-  transform: translate(0, 29px) !important;
-}
 
 .show {
   box-shadow: none !important;

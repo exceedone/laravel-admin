@@ -49,7 +49,7 @@
   border-color: #0d6aad;
 }
 
-ul.dropdown-menu.show {
+ul.fillter-btn {
   transform: translate(0, 29px) !important;
 }
 
@@ -267,6 +267,10 @@ button#search-btn {
 
 div#main {
   min-height: unset !important;
+}
+
+.custom-navbar ul.user-menu {
+  width: 20rem;
 }
 
 @media (min-width: 768px) {

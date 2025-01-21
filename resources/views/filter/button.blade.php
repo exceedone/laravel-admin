@@ -10,7 +10,7 @@
         <span class="caret"></span>
         <span class="sr-only">Toggle Dropdown</span>
     </button>
-    <ul class="dropdown-menu" role="menu">
+    <ul class="dropdown-menu fillter-btn" role="menu">
         @foreach($scopes as $scope)
             {!! $scope->render() !!}
         @endforeach

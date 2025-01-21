@@ -61,6 +61,7 @@ class FilterButton extends AbstractTool
                 }
                 if (target.hasClass('loaded')) {
                     $('#{$id}').removeClass('hide');
+                    Exment.CustomScriptEvent.bindSubmitButtons();
                     return;
                 }
 
@@ -77,10 +78,12 @@ class FilterButton extends AbstractTool
                         target.attr('disabled', false).addClass('loaded');
                         target.find('.fa-spinner').remove();
                         $('#{$id}').removeClass('hide');
+                        Exment.CustomScriptEvent.bindSubmitButtons();
                     }
                 });
             } else {
                 $('#{$id}').removeClass('hide');
+            Exment.CustomScriptEvent.bindSubmitButtons();
             }
         }
     });
