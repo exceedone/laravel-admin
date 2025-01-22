@@ -73,7 +73,6 @@ trait HasAssets
         // 'vendor/open-admin/nprogress/nprogress.css',
         'vendor/open-admin/sweetalert2/dist/sweetalert2.css',
         // 'vendor/open-admin/nestable/nestable.css',
-        // 'vendor/open-admin/toastr/build/toastr.min.css',
         // 'vendor/open-admin/bootstrap3-editable/css/bootstrap-editable.css',
         // 'vendor/open-admin/google-fonts/fonts.css',
         // 'vendor/open-admin/AdminLTE/dist/css/AdminLTE.min.css',
@@ -89,6 +88,7 @@ trait HasAssets
         'vendor/open-admin/open-admin/css/styles.css',
         'vendor/open-admin/AdminLTE4/css/adminlte.min.css',
         'vendor/open-admin/open-admin/css/custom.css',
+        'vendor/open-admin/toastr/build/toastr.min.css',
 
         // "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
         // "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css",
