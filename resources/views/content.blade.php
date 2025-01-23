@@ -1,7 +1,7 @@
 @extends('admin::index', ['header' => $header])
 
 @section('content')
-    <section class="content-header clearfix">
+    <section class="content-header clearfix p-3 pb-0">
         <h1>
             @if(isset($headericon))
             <i class="fa {{$headericon}}" style="padding-right:4px;"></i>
@@ -49,7 +49,7 @@
 
     </section>
 
-    <section class="content">
+    <section class="content p-3">
 
         @include('admin::partials.alerts')
         @include('admin::partials.exception')

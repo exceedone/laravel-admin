@@ -4,9 +4,12 @@
     word-wrap: normal;
 }
 
-#main.content-wrapper.p-4 {
+#main.content-wrapper {
     margin-left: var(--sidebar-width);
     border-left: none;
+    min-height: 87.5vh !important;
+    background-color: #ecf0f5;
+    overflow: auto;
 }
 
 .fixed-bottom {
@@ -279,6 +282,12 @@ div#main {
 }
 .custom-navbar ul.user-menu {
     width: 20rem;
+}
+#app > .content{
+    margin-bottom: 0 !important;
+}
+.app-footer {
+    margin-left: var(--sidebar-width);
 }
 
 @media (min-width: 768px) {
