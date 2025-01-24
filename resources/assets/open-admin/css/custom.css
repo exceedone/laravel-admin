@@ -30,6 +30,10 @@
   background-color: #e7e7e7 !important;
 }
 
+.btn-info {
+  --bs-btn-color: #fff;
+}
+
 /* style header */
 .custom-navbar .header-items > a:hover,
 .custom-navbar .header-items > ul > li:hover,
@@ -236,11 +240,13 @@ button.close {
   opacity: 0.2;
 }
 
-.skin-blue-light .main-header .navbar, .skin-blue-light .main-header .logo {
+.skin-blue-light .main-header .navbar,
+.skin-blue-light .main-header .logo {
   background-color: #3A96FF !important;
 }
 
-.table tr th.column-__row_selector__, .table tr td.column-__row_selector__ {
+.table tr th.column-__row_selector__,
+.table tr td.column-__row_selector__ {
   padding-left: 0.75rem !important;
 }
 
@@ -282,6 +288,49 @@ div#main {
 
 .app-footer {
   margin-left: var(--sidebar-width);
+  min-height: 5rem;
+}
+
+.select2-search__field:focus-visible {
+  outline: none;
+}
+
+.box-footer {
+  justify-content: center;
+}
+
+.table tr td {
+  white-space: nowrap !important;
+}
+
+.skin-blue-light.sidebar-mini.side-menu-closed .sidebar .user-panel > .image > img {
+  width: 30px;
+  height: 30px;
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.skin-blue-light.sidebar-mini.side-menu-closed .sidebar .user-panel > .info,
+.skin-blue-light.sidebar-mini.side-menu-closed #menu > li.header {
+  display: none;
+}
+
+.skin-blue-light.sidebar-mini.side-menu-closed #main,
+.skin-blue-light.sidebar-mini.side-menu-closed > .wrapper > footer {
+  margin-left: 54px;
+  transition: margin-left 0.3s ease;
+}
+
+.skin-blue-light.sidebar-mini.side-menu-closed .sidebar .user-panel {
+  padding: 0.5rem 0.8rem;
+}
+
+.side-menu-closed .custom-menu > ul > li:hover ul,
+.side-menu-closed .custom-menu > ul > li:hover > a > span {
+  background: #f4f4f5;
+}
+
+.side-menu-closed .custom-menu > ul > li:hover > a > span {
+  margin: 2px 0 0 3px;
 }
 
 @media (min-width: 768px) {
@@ -290,7 +339,7 @@ div#main {
   }
 }
 @media (max-width: 576px) {
-  #main.content-wrapper.p-4 {
+  #main.content-wrapper {
     margin-left: 0;
   }
   .fixed-bottom {
@@ -300,8 +349,10 @@ div#main {
     margin-bottom: 10px;
   }
 }
-.btn-info {
-  --bs-btn-color: #fff;
+@media (max-width: 768px) {
+  .box-footer {
+    justify-content: end;
+  }
 }
 
 /*# sourceMappingURL=custom.css.map */

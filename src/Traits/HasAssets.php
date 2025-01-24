@@ -123,7 +123,7 @@ trait HasAssets
 
         // 'vendor/open-admin/open-admin/js/polyfills.js',
         // 'vendor/open-admin/open-admin/js/helpers.js',
-        // 'vendor/open-admin/open-admin/js/open-admin.js',
+        'vendor/open-admin/open-admin/js/open-admin.js',
         // 'vendor/open-admin/open-admin/js/open-admin-actions.js',
         // 'vendor/open-admin/open-admin/js/open-admin-grid.js',
         // 'vendor/open-admin/open-admin/js/open-admin-grid-inline-edit.js',

@@ -1,4 +1,4 @@
-<div class="box-footer mt-3 border-top border-light py-3 d-flex justify-content-center" style="background-color: inherit;">
+<div class="box-footer mt-3 border-top border-light py-3 d-flex" style="background-color: inherit;">
 
     {{ csrf_field() }}
 
