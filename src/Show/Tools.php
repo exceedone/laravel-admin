@@ -216,7 +216,7 @@ class Tools implements Renderable
 
         return <<<HTML
 <div class="btn-group pull-right" style="margin-right: 5px">
-    <a href="{$url}" class="btn btn-sm btn-default" title="{$list}">
+    <a href="{$url}" class="btn btn-sm btn-default d-flex justify-content-center align-items-center" title="{$list}">
         <i class="fa fa-list"></i><span class="hidden-xs"> {$list}</span>
     </a>
 </div>
@@ -235,7 +235,7 @@ HTML;
 
         return <<<HTML
 <div class="btn-group pull-right" style="margin-right: 5px">
-    <a href="{$url}" class="btn btn-sm btn-primary" title="{$edit}">
+    <a href="{$url}" class="btn btn-sm btn-primary d-flex justify-content-center align-items-center" title="{$edit}">
         <i class="fa fa-edit"></i><span class="hidden-xs"> {$edit}</span>
     </a>
 </div>
@@ -308,7 +308,7 @@ SCRIPT;
 
         return <<<HTML
 <div class="btn-group pull-right" style="margin-right: 5px">
-    <a href="javascript:void(0);" class="btn btn-sm btn-danger {$class}-delete" title="{$trans['delete']}">
+    <a href="javascript:void(0);" class="btn btn-sm btn-danger {$class}-delete d-flex justify-content-center align-items-center" title="{$trans['delete']}">
         <i class="fa fa-trash"></i><span class="hidden-xs">  {$trans['delete']}</span>
     </a>
 </div>
