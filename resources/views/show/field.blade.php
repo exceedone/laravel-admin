@@ -1,5 +1,5 @@
-<div class="{{$form_group}} ">
-    <label class="{{$width['label']}} control-label">{{ $label }}</label>
+<div class="{{$form_group}} row">
+    <label class="{{$width['label']}} col-form-label text-right">{{ $label }}</label>
     <div class="{{$width['field']}}">
         @if($wrapped)
         <div class="box box-solid box-default no-margin box-show">
