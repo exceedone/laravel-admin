@@ -332,7 +332,7 @@ class MultipleFile extends Field
     protected function setupScripts($options)
     {
         $this->script = <<<EOT
-$("{$this->getElementClassSelector()}").fileinput({$options});
+        $("{$this->getElementClassSelector()}").fileinput({$options});
 EOT;
 
         if ($this->fileActionSettings['showRemove']) {

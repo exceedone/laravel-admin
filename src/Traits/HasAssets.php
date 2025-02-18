@@ -141,9 +141,9 @@ trait HasAssets
         // 'vendor/open-admin/AdminLTE/bootstrap/js/bootstrap.min.js',
         // 'vendor/open-admin/AdminLTE4/js/adminlte.min.js',
 
-        "https://cdn.jsdelivr.net/npm/bootstrap-fileinput/js/fileinput.min.js",
-        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js",
-        "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js",
+        "vendor/open-admin/open-admin/js/fileinput.min.js",
+        "vendor/open-admin/open-admin/js/bootstrap.bundle.min.js",
+        "vendor/open-admin/open-admin/js/popper.min.js",
 
     ];
 

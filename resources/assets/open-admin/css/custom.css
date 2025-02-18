@@ -333,6 +333,10 @@ div#main {
   margin: 2px 0 0 3px;
 }
 
+.select2-container {
+  z-index: 99999;
+}
+
 @media (min-width: 768px) {
   .col-md-6 {
     padding: 12px;
