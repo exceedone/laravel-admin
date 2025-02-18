@@ -13,7 +13,7 @@
                 <!-- Status -->
                 <a href="#"><i class="fa fa-circle text-success"></i> {{ trans('admin.online') }}</a>
             </div>
-        </div>
+        </div>  
 
         @if(config('admin.enable_menu_search'))
         <!-- search form (Optional) -->

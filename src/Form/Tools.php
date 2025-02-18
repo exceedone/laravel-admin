@@ -300,7 +300,7 @@ SCRIPT;
 
         return <<<HTML
 <div class="btn-group pull-right" style="margin-right: 5px">
-    <a href="javascript:void(0);" class="btn btn-sm btn-danger d-flex align-items-center {$class}-delete" title="{$trans['delete']}">
+    <a href="javascript:void(0);" class="btn btn-sm btn-danger py-2 d-flex align-items-center {$class}-delete" title="{$trans['delete']}">
         <i class="fa fa-trash"></i><span class="hidden-xs">  {$trans['delete']}</span>
     </a>
 </div>

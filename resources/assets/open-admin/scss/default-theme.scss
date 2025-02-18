@@ -140,4 +140,9 @@
         @include button-size($padding-y, $padding-x, $font-size, $border-radius);
     }
 
+    .btn-outline-secondary {
+        border: none !important;
+        background-color: transparent !important;
+    }
+
 

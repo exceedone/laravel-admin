@@ -52,8 +52,19 @@
 .btn-outline-secondary:hover,
 .btn-outline-secondary.dropdown-toggle.show {
   color: #fff;
-  background-color: #0d6aad;
-  border-color: #0d6aad;
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.btn-outline-secondary {
+  box-shadow: none !important;
+  background-color: #fff !important;
+  border-color: #fff !important;
+}
+
+.btn-outline-secondary.active {
+  background-color: #fff !important;
+  border-color: #fff !important;
 }
 
 ul.fillter-btn {
@@ -151,6 +162,10 @@ a#menu-toggle {
   background-color: #f4f4f4 !important;
   color: #444 !important;
   border-color: #ddd !important;
+}
+
+.btn-outline-secondary i:hover {
+  color: #111010 !important;
 }
 
 .hide {
@@ -297,10 +312,6 @@ div#main {
 
 .box-footer {
   justify-content: center;
-}
-
-.table tr td {
-  white-space: nowrap !important;
 }
 
 .skin-blue-light.sidebar-mini.side-menu-closed .sidebar .user-panel > .image > img {
