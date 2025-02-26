@@ -57,8 +57,19 @@
 .btn-outline-secondary:hover,
 .btn-outline-secondary.dropdown-toggle.show {
     color: #fff;
-    background-color: #0d6aad;
-    border-color: #0d6aad;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.btn-outline-secondary{
+    box-shadow: none !important;
+    background-color: #fff !important ;
+    border-color: #fff !important;
+}
+
+.btn-outline-secondary.active{
+    background-color: #fff !important ;
+    border-color: #fff !important;
 }
 
 ul.fillter-btn {
@@ -160,6 +171,10 @@ a#menu-toggle {
     color: #444 !important;
     border-color: #ddd !important;
 }
+.btn-outline-secondary i:hover {
+    color: #111010 !important; 
+}
+
 
 .hide {
     display: none !important;
@@ -185,11 +200,26 @@ html {
     font-size: 13px !important;
 }
 
-// .btn-sm,
-// .btn-group-sm>.btn {
-//     padding: 0.375rem 0.75rem;
-//     font-size: 1rem;
-// }
+.btn-sm,
+.btn-group-sm>.btn, .btn.btn-sm.btn-success, .btn-group, .btn{
+    font-size: 14px !important;
+    width: auto;
+    margin-bottom: 5px;
+}
+
+.btn.btn-primary.btn-file{
+    margin: 0px;
+}
+
+.select2-container.select2-container--default.select2-container--open{
+    z-index: 5000;
+}
+
+
+.card.custom-border-success{
+    border-top: 3px solid #00a65a;
+}
+  
 
 .custom-menu a:active,
 .custom-menu a:focus,
@@ -314,9 +344,13 @@ div#main {
     justify-content: center;
 }
 
-.table tr td {
-    white-space: nowrap !important;
+.box-footer.border-top.border-1.border-gray-500 {
+    text-align: -webkit-right;
 }
+
+// .table tr td {
+//     white-space: nowrap !important;
+// }
 
 .skin-blue-light.sidebar-mini.side-menu-closed .sidebar .user-panel > .image > img {
     width: 30px;
@@ -368,9 +402,10 @@ div#main {
     }
 }
 
+
+
 @media(max-width:768px) {
     .box-footer {
         justify-content: end;
     }
-
 }

@@ -1,8 +1,8 @@
 <div class="card p-2 custom-border-info">
-    <div class="box-header with-border d-flex justify-content-between border-bottom border-light p-1 mb-3">
+    <div class="box-header with-border d-flex justify-content-between border-bottom border-light p-1 gap-2 pt-0 mb-0 mt-n1">
         <h3 class="box-title">{{ $form->title() }}</h3>
 
-        <div class="box-tools d-flex flex-row-reverse">
+        <div class="box-tools d-flex flex-row-reverse align-items-center">
             {!! $form->renderTools() !!}
         </div>
     </div>

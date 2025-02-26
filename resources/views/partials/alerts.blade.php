@@ -33,8 +33,9 @@
 @if($info = session()->get('info'))
     <div class="alert alert-info alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h4><i class="icon fa fa-info"></i>{{ \Illuminate\Support\Arr::get($info->get('title'), 0) }}</h4>
-        <p>{!!  \Illuminate\Support\Arr::get($info->get('message'), 0) !!}</p>
+        <h4><i class="icon fa fa-info pe-2"></i>{{ \Illuminate\Support\Arr::get($info->get('title'), 0) }}</h4>
+        <p class="text-decoration-underline text-primary">{!! \Illuminate\Support\Arr::get($info->get('message'), 0) !!}</p>
+
     </div>
 @endif
 
