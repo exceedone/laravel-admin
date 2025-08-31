@@ -711,6 +711,7 @@ $('.after-submit').iCheck({checkboxClass:'icheckbox_minimal-blue'}).on('ifChecke
 });
 EOT;
 
+        /** @phpstan-ignore-next-line class.notFound */
         \Admin::script($script);
     }
 

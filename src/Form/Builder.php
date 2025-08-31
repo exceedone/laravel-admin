@@ -273,6 +273,7 @@ class Builder
     public function disablePjax()
     {
         $this->disablePjax = true;
+        /** @phpstan-ignore-next-line class.notFound */
         \Admin::disablePjax();
 
         return $this;
