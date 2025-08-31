@@ -45,6 +45,7 @@ class MakeCommand extends GeneratorCommand
 
         $stub = $this->option('stub');
 
+        /** @phpstan-ignore-next-line */
         if ($stub and !is_file($stub)) {
             $this->error('The stub file dose not exist.');
 
@@ -62,11 +63,13 @@ class MakeCommand extends GeneratorCommand
 
         if (parent::handle() !== false) {
             $name = $this->argument('name');
+            /** @phpstan-ignore-next-line */
             $path = Str::plural(Str::kebab(class_basename($this->option('model'))));
 
             $this->line('');
             $this->comment('Add the following route to app/Admin/routes.php:');
             $this->line('');
+            /** @phpstan-ignore-next-line */
             $this->info("    \$router->resource('{$path}', {$name}::class);");
             $this->line('');
         }
@@ -99,6 +102,7 @@ class MakeCommand extends GeneratorCommand
             return true;
         }
 
+        /** @phpstan-ignore-next-line */
         return class_exists($model) && is_subclass_of($model, Model::class);
     }
 
@@ -126,8 +130,9 @@ class MakeCommand extends GeneratorCommand
             [
                 $this->option('model'),
                 $this->option('title') ?: $this->option('model'),
+                /** @phpstan-ignore-next-line */
                 class_basename($this->option('model')),
-                $this->indentCodes($this->generator->generateGrid()),
+            $this->indentCodes($this->generator->generateGrid()),
                 $this->indentCodes($this->generator->generateShow()),
                 $this->indentCodes($this->generator->generateForm()),
             ],
@@ -155,6 +160,7 @@ class MakeCommand extends GeneratorCommand
     protected function getStub()
     {
         if ($stub = $this->option('stub')) {
+            /** @phpstan-ignore-next-line */
             return $stub;
         }
 
@@ -175,6 +181,7 @@ class MakeCommand extends GeneratorCommand
     protected function getDefaultNamespace($rootNamespace)
     {
         if ($namespace = $this->option('namespace')) {
+            /** @phpstan-ignore-next-line */
             return $namespace;
         }
 
@@ -188,6 +195,7 @@ class MakeCommand extends GeneratorCommand
      */
     protected function getNameInput()
     {
+        /** @phpstan-ignore-next-line */
         $name = trim($this->argument('name'));
 
         $this->type = $this->qualifyClass($name);

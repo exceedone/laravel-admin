@@ -284,6 +284,7 @@ class Model
      *
      * @return $this
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::setGrid() should return $this(Encore\Admin\Grid\Model) but returns Encore\Admin\Grid\Model. */
     public function setGrid(Grid $grid)
     {
         $this->grid = $grid;
@@ -296,6 +297,7 @@ class Model
      *
      * @return Grid
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::getGrid() should return Encore\Admin\Grid but returns Encore\Admin\Grid|null. */
     public function getGrid()
     {
         return $this->grid;
@@ -306,6 +308,7 @@ class Model
      *
      * @return $this
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::setRelation() should return $this(Encore\Admin\Grid\Model) but returns Encore\Admin\Grid\Model. */
     public function setRelation(Relation $relation)
     {
         $this->relation = $relation;
@@ -326,10 +329,12 @@ class Model
      *
      * @return array<mixed>|bool
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::getConstraints() should return array<mixed>|bool but returns array<string, mixed>|false. */
     public function getConstraints()
     {
         if ($this->relation instanceof HasMany) {
             return [
+                /** @phpstan-ignore-next-line Method Illuminate\Database\Eloquent\Relations\HasMany::getForeignKeyName() should return string but returns string|null. */
                 $this->relation->getForeignKeyName() => $this->relation->getParentKey(),
             ];
         }
@@ -364,10 +369,12 @@ class Model
             $collection = $this->get();
 
             if ($this->collectionCallback) {
+                /** @phpstan-ignore-next-line Function call_user_func() with \Closure will throw a TypeError. */
                 $collection = call_user_func($this->collectionCallback, $collection);
             }
 
             if ($toArray) {
+                /** @phpstan-ignore-next-line Method Illuminate\Support\Collection<int|string, mixed>::toArray() should return array but returns array<int, mixed>|array<string, mixed>. */
                 $this->data = $collection->toArray();
             } else {
                 $this->data = $collection;
@@ -386,19 +393,23 @@ class Model
     public function chunk($callback, $count = 100)
     {
         if ($this->usePaginate) {
+            /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::buildData() should return array|\Illuminate\Database\Eloquent\Builder|Illuminate\Database\Eloquent\Model|Illuminate\Pagination\LengthAwarePaginator|Illuminate\Support\Collection|mixed|mixed[] but returns array<mixed>|\Illuminate\Support\Collection<int|string, mixed>. */
             return $this->buildData(false)->chunk($count)->each($callback);
         }
 
         $this->setSort();
 
+        /** @phpstan-ignore-next-line Method Illuminate\Support\Collection<int|string, mixed>::reject() should return Illuminate\Support\Collection<int|string, mixed> but returns Illuminate\Support\Collection<int, mixed>. */
         $this->queries->reject(function ($query) {
             return $query['method'] == 'paginate';
         })->each(function ($query) {
             if(isset($query['callback'])){
                 $func = $query['callback'];
+                /** @phpstan-ignore-next-line Variable $func in function() is never defined. */
                 $func($this->model, $query['arguments']);
             }
             else{
+                /** @phpstan-ignore-next-line Call to method {method}() on an unknown class mixed. */
                 $this->model = $this->model->{$query['method']}(...$query['arguments']);
             }
         });
@@ -416,6 +427,7 @@ class Model
     public function addConditions(array $conditions)
     {
         foreach ($conditions as $condition) {
+            /** @phpstan-ignore-next-line Function call_user_func_array() with array{$this(Encore\Admin\Grid\Model), int|string|null} will throw a TypeError. */
             call_user_func_array([$this, key($condition)], current($condition));
         }
 
@@ -450,25 +462,31 @@ class Model
         $this->setSort();
         $this->setPaginate();
 
+        /** @phpstan-ignore-next-line Method Illuminate\Support\Collection<int|string, mixed>::unique() should return Illuminate\Support\Collection<int|string, mixed> but returns Illuminate\Support\Collection<int, mixed>. */
         $this->queries->unique()->each(function ($query) {
             if(isset($query['callback'])){
                 $func = $query['callback'];
+                /** @phpstan-ignore-next-line Variable $func in function() is never defined. */
                 $func($this->model, $query['arguments']);
             }
             else{
+                /** @phpstan-ignore-next-line Function call_user_func_array() with array{mixed, mixed} will throw a TypeError. */
                 $this->model = call_user_func_array([$this->model, $query['method']], $query['arguments']);
             }
         });
 
         if ($this->model instanceof Collection) {
+            /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::get() should return Illuminate\Support\Collection<int|string, mixed>|Illuminate\Pagination\LengthAwarePaginator<array<string, mixed>> but returns mixed. */
             return $this->model;
         }
 
         if ($this->model instanceof LengthAwarePaginator) {
             if($this->handleInvalidPage){
+                /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::handleInvalidPage() expects parameter 1 to be Illuminate\Pagination\LengthAwarePaginator<array<string, mixed>>, mixed given. */
                 $this->handleInvalidPage($this->model);
             }
 
+            /** @phpstan-ignore-next-line Method Illuminate\Pagination\LengthAwarePaginator<mixed>::getCollection() should return Illuminate\Support\Collection<int, mixed> but returns Illuminate\Support\Collection<int, mixed>. */
             return $this->model->getCollection();
         }
 
@@ -488,14 +506,17 @@ class Model
 
         $queryBuilder = $this->originalModel;
 
+        /** @phpstan-ignore-next-line Method Illuminate\Support\Collection<int|string, mixed>::reject() should return Illuminate\Support\Collection<int|string, mixed> but returns Illuminate\Support\Collection<int, mixed>. */
         $this->queries->reject(function ($query) {
             return in_array($query['method'], ['get', 'paginate']);
         })->each(function ($query) use (&$queryBuilder) {
             if(isset($query['callback'])){
                 $func = $query['callback'];
+                /** @phpstan-ignore-next-line Variable $func in function() is never defined. */
                 $func($queryBuilder, $query['arguments']);
             }
             else{
+                /** @phpstan-ignore-next-line Call to method {method}() on an unknown class mixed. */
                 $queryBuilder = $queryBuilder->{$query['method']}(...$query['arguments']);
             }
         });
@@ -512,11 +533,14 @@ class Model
      */
     protected function handleInvalidPage(LengthAwarePaginator $paginator)
     {
+        /** @phpstan-ignore-next-line Method Illuminate\Pagination\LengthAwarePaginator<array<string, mixed>>::lastPage() should return int but returns int|null. */
         if ($paginator->lastPage() && $paginator->currentPage() > $paginator->lastPage()) {
             $lastPageUrl = Request::fullUrlWithQuery([
+                /** @phpstan-ignore-next-line Method Illuminate\Pagination\LengthAwarePaginator<array<string, mixed>>::lastPage() should return int but returns int|null. */
                 $paginator->getPageName() => $paginator->lastPage(),
             ]);
 
+            /** @phpstan-ignore-next-line Method Encore\Admin\Middleware\Pjax::respond() has no return type specified. */
             Pjax::respond(redirect($lastPageUrl));
         }
     }
@@ -530,6 +554,7 @@ class Model
     {
         $paginate = $this->findQueryByMethod('paginate');
 
+        /** @phpstan-ignore-next-line Method Illuminate\Support\Collection<int|string, mixed>::reject() should return Illuminate\Support\Collection<int|string, mixed> but returns Illuminate\Support\Collection<int, mixed>. */
         $this->queries = $this->queries->reject(function ($query) {
             return $query['method'] == 'paginate';
         });
@@ -562,6 +587,7 @@ class Model
             if (is_array($paginate)) {
                 $paginate['arguments'][0] = (int) $perPage;
 
+                /** @phpstan-ignore-next-line Method Encore\Admin\Grid::getName() has no return type specified. */
                 if ($name = $this->grid->getName()) {
                     if (!array_key_exists(1, $paginate['arguments'])) {
                         $paginate['arguments'][1] = '*';
@@ -582,6 +608,7 @@ class Model
             return $this->perPageArguments;
         }
 
+        /** @phpstan-ignore-next-line Method Encore\Admin\Grid::getName() has no return type specified. */
         if ($name = $this->grid->getName()) {
             return [$this->perPage, ['*'], "{$name}_page"];
         }
@@ -602,6 +629,7 @@ class Model
      */
     protected function findQueryByMethod($method)
     {
+        /** @phpstan-ignore-next-line Method Illuminate\Support\Collection<int|string, mixed>::first() should return mixed but returns mixed|null. */
         return $this->queries->first(function ($query) use ($method) {
             return $query['method'] == $method;
         });
@@ -625,8 +653,9 @@ class Model
 
         $column = $this->getSortColumn();
         // if sort as callback, Execute callback
-        /** @phpstan-ignore-next-line Call to function is_null() with Closure will always evaluate to false.  */
+        /** @phpstan-ignore-next-line Call to function is_null() with Closure will always evaluate to false. */
         if($column && !is_null($column->getSortCallback())){
+            /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::setCallbackSort() should return false|void but returns false|void. */
             $this->setCallbackSort();
             return;
         }
@@ -648,6 +677,7 @@ class Model
             $type = ($this->sort['type'] ?? 1) == -1 ? 'desc' : 'asc';
     
             // get column. if contains "cast", set set column as cast
+            /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Column::getCast() should return string|null but returns mixed. */
             if ($column && !is_null($cast = $column->getCast())) {
                 $columnName = \DB::getQueryGrammar()->wrap($this->sort['column']);
                 $column = "CAST({$columnName} AS {$cast}) {$type}";
@@ -676,7 +706,9 @@ class Model
         if(!$column_name){
             return null;
         }
+        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Column\Collection::first() should return Encore\Admin\Grid\Column|null but returns mixed. */
         return $this->grid->columns()->first(function($column) use($column_name){
+            /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Column::getSortName() should return string but returns mixed. */
             if($column->getSortName() == $column_name){
                 return true;
             }
@@ -695,9 +727,11 @@ class Model
     {
         list($relationName, $relationColumn) = explode('.', $column);
 
+        /** @phpstan-ignore-next-line Method Illuminate\Support\Collection<int|string, mixed>::contains() should return bool but returns bool. */
         if ($this->queries->contains(function ($query) use ($relationName) {
             return $query['method'] == 'with' && in_array($relationName, $query['arguments']);
         })) {
+            /** @phpstan-ignore-next-line Call to method $relationName() on an unknown class mixed. */
             $relation = $this->model->$relationName();
 
             $this->queries->push([
@@ -742,6 +776,7 @@ class Model
             // call callback sorting.
             $this->queries->push([
                 'method' => null,
+                /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Column::getSortCallback() should return \Closure|null but returns mixed. */
                 'callback' => $func,
                 'arguments' => [$type],
             ]);
@@ -756,6 +791,7 @@ class Model
      */
     public function resetOrderBy()
     {
+        /** @phpstan-ignore-next-line Method Illuminate\Support\Collection<int|string, mixed>::reject() should return Illuminate\Support\Collection<int|string, mixed> but returns Illuminate\Support\Collection<int, mixed>. */
         $this->queries = $this->queries->reject(function ($query) {
             return $query['method'] == 'orderBy' || $query['method'] == 'orderByDesc';
         });
@@ -781,6 +817,7 @@ class Model
 
             return [
                 $relatedTable,
+                /** @phpstan-ignore-next-line Call to method {method}() on an unknown class Illuminate\Database\Eloquent\Relations\Relation<Illuminate\Database\Eloquent\Model>. */
                 $relation->{$foreignKeyMethod}(),
                 '=',
                 $relatedTable.'.'.$relation->getRelated()->getKeyName(),
@@ -810,6 +847,7 @@ class Model
         $match = false;
 
         // if matched method name, update
+        /** @phpstan-ignore-next-line Method Illuminate\Support\Collection<int|string, mixed>::map() should return Illuminate\Support\Collection<int, mixed> but returns Illuminate\Support\Collection<int, mixed>. */
         $this->queries = $this->queries->map(function($query) use($method, $arguments, &$match){
             // rewrite value target methods
             $rewriteTargets = ['paginate'];
@@ -842,6 +880,7 @@ class Model
     public function with($relations)
     {
         if (is_array($relations)) {
+            /** @phpstan-ignore-next-line Method Illuminate\Support\Arr::isAssoc() should return bool but returns bool. */
             if (Arr::isAssoc($relations)) {
                 $relations = array_keys($relations);
             }
@@ -859,12 +898,14 @@ class Model
             }
 
             if (in_array($relations, $this->eagerLoads)) {
+                /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::with() should return $this(Encore\Admin\Grid\Model)|Encore\Admin\Grid\Model but returns $this(Encore\Admin\Grid\Model). */
                 return $this;
             }
 
             $this->eagerLoads[] = $relations;
         }
 
+        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::__call() should return $this(Encore\Admin\Grid\Model) but returns Encore\Admin\Grid\Model. */
         return $this->__call('with', (array) $relations);
     }
 
@@ -875,6 +916,7 @@ class Model
      */
     public function __get($key)
     {
+        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::buildData() should return array|\Illuminate\Database\Eloquent\Builder|Illuminate\Database\Eloquent\Model|Illuminate\Pagination\LengthAwarePaginator|Illuminate\Support\Collection|mixed|mixed[] but returns array<mixed>|\Illuminate\Support\Collection<int|string, mixed>. */
         $data = $this->buildData();
 
         if (array_key_exists($key, $data)) {

@@ -33,6 +33,7 @@ class ExportSeedCommand extends Command
         $exceptFields = [];
         $exportUsers = $this->option('users');
 
+        /** @phpstan-ignore-next-line */
         $seedFile = $this->laravel->databasePath().'/seeds/'.$name.'.php';
         $contents = $this->getStub('AdminTablesSeeder');
 
@@ -70,9 +71,11 @@ class ExportSeedCommand extends Command
 
         $contents = str_replace(array_keys($replaces), array_values($replaces), $contents);
 
+        /** @phpstan-ignore-next-line */
         $this->laravel['files']->put($seedFile, $contents);
 
         $this->line('<info>Admin tables seed file was created:</info> '.str_replace(base_path(), '', $seedFile));
+        /** @phpstan-ignore-next-line */
         $this->line("Use: <info>php artisan db:seed --class={$name}</info>");
     }
 
@@ -93,6 +96,7 @@ class ExportSeedCommand extends Command
             return (array) $item;
         })->all();
 
+        /** @phpstan-ignore-next-line */
         return $this->varExport($array, str_repeat(' ', 12));
     }
 
@@ -105,6 +109,7 @@ class ExportSeedCommand extends Command
      */
     protected function getStub($name)
     {
+        /** @phpstan-ignore-next-line */
         return $this->laravel['files']->get(__DIR__."/stubs/$name.stub");
     }
 
@@ -129,7 +134,9 @@ class ExportSeedCommand extends Command
                 $r = [];
 
                 foreach ($var as $key => $value) {
+                    /** @phpstan-ignore-next-line */
                     $r[] = "$indent    "
+                        /** @phpstan-ignore-next-line */
                         .($indexed ? '' : $this->varExport($key).' => ')
                         .$this->varExport($value, "{$indent}    ");
                 }

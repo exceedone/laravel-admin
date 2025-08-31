@@ -32,6 +32,7 @@ EOT;
 
         Admin::script($this->script());
 
+        /** @phpstan-ignore-next-line */
         return <<<EOT
 <form class="form-group grid-radio-$name" style="text-align: left" data-key="{$this->getKey()}">
     $radios

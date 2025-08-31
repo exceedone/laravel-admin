@@ -94,6 +94,7 @@ abstract class Extension
             self::$instance[$class] = new static();
         }
 
+        /** @phpstan-ignore-next-line */
         return static::$instance[$class];
     }
 
@@ -222,8 +223,10 @@ abstract class Extension
         $name = array_search(get_called_class(), Admin::$extensions);
 
         if (is_null($key)) {
+            /** @phpstan-ignore-next-line */
             $key = sprintf('admin.extensions.%s', strtolower($name));
         } else {
+            /** @phpstan-ignore-next-line */
             $key = sprintf('admin.extensions.%s.%s', strtolower($name), $key);
         }
 

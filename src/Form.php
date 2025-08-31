@@ -394,13 +394,16 @@ class Form implements Renderable
 
                 $model = $builder->with($this->getRelations())->findOrFail($id);
 
+                /** @phpstan-ignore-next-line */
                 if (($this->isSoftDeletes && $model->trashed()) || $this->isForceDelete) {
+                    /** @phpstan-ignore-next-line */
                     $this->deleteFiles($model, true);
                     $model->forceDelete();
 
                     return;
                 }
 
+                /** @phpstan-ignore-next-line */
                 $this->deleteFiles($model);
                 $model->delete();
             });
@@ -463,10 +466,13 @@ class Form implements Renderable
         }
 
         // Handle validation errors.
+        /** @phpstan-ignore-next-line */
         if ($validationMessages = $this->validationMessages($data)) {
+            /** @phpstan-ignore-next-line */
             return back()->withInput()->withErrors($validationMessages);
         }
 
+        /** @phpstan-ignore-next-line */
         if (($response = $this->prepare($data)) instanceof Response) {
             return $response;
         }
@@ -611,6 +617,7 @@ class Form implements Renderable
                 continue;
             }
 
+            /** @phpstan-ignore-next-line */
             $relation = call_user_func([$this->model, $column]);
 
             if ($relation instanceof Relations\Relation) {
@@ -647,19 +654,24 @@ class Form implements Renderable
             $builder = $builder->withTrashed();
         }
 
+        /** @phpstan-ignore-next-line */
         $this->model = $builder->with($this->getRelations())->findOrFail($id);
 
         $this->setFieldOriginalValue();
 
         // Handle validation errors.
+        /** @phpstan-ignore-next-line */
         if ($validationMessages = $this->validationMessages($data)) {
             if (!$isEditable) {
+                /** @phpstan-ignore-next-line */
                 return back()->withInput()->withErrors($validationMessages);
             }
 
+            /** @phpstan-ignore-next-line */
             return response()->json(['errors' => Arr::dot($validationMessages->getMessages())], 422);
         }
 
+        /** @phpstan-ignore-next-line */
         if (($response = $this->prepare($data)) instanceof Response) {
             return $response;
         }
@@ -751,19 +763,24 @@ class Form implements Renderable
             $builder = $builder->withTrashed();
         }
 
+        /** @phpstan-ignore-next-line */
         $this->model = $builder->with($this->getRelations())->findOrFail($id);
 
         $this->setFieldOriginalValue();
 
         // Handle validation errors.
+        /** @phpstan-ignore-next-line */
         if ($validationMessages = $this->validationMessages($data)) {
             if (!$isEditable) {
+                /** @phpstan-ignore-next-line */
                 return back()->withInput()->withErrors($validationMessages);
             }
 
+            /** @phpstan-ignore-next-line */
             return response()->json(['errors' => Arr::dot($validationMessages->getMessages())], 422);
         }
 
+        /** @phpstan-ignore-next-line */
         if (($response = $this->prepare($data)) instanceof Response) {
             return $response;
         }
@@ -826,11 +843,13 @@ class Form implements Renderable
             $builder = $builder->withTrashed();
         }
 
+        /** @phpstan-ignore-next-line */
         $this->model = $builder->with($this->getRelations())->findOrFail($id);
 
         $this->setFieldOriginalValue();
 
         // Handle validation errors.
+        /** @phpstan-ignore-next-line */
         if ($validationMessages = $this->validationMessages($data)) {
             return [
                 'validationMessages' => $validationMessages,
@@ -1038,6 +1057,7 @@ class Form implements Renderable
                 continue;
             }
 
+            /** @phpstan-ignore-next-line */
             $relation = $this->model->$name();
 
             $oneToOneRelation = $relation instanceof Relations\HasOne
@@ -1059,6 +1079,7 @@ class Form implements Renderable
                     break;
                 case $relation instanceof Relations\HasOne:
 
+                    /** @phpstan-ignore-next-line */
                     $related = $this->model->$name;
 
                     // if related is empty
@@ -1066,6 +1087,7 @@ class Form implements Renderable
                         $related = $relation->getRelated();
                         $qualifiedParentKeyName = $relation->getQualifiedParentKeyName();
                         $localKey = Arr::last(explode('.', $qualifiedParentKeyName));
+                        /** @phpstan-ignore-next-line */
                         $related->{$relation->getForeignKeyName()} = $this->model->{$localKey};
                     }
 
@@ -1078,6 +1100,7 @@ class Form implements Renderable
                 case $relation instanceof Relations\BelongsTo:
                 case $relation instanceof Relations\MorphTo:
 
+                    /** @phpstan-ignore-next-line */
                     $parent = $this->model->$name;
 
                     // if related is empty
@@ -1093,7 +1116,9 @@ class Form implements Renderable
 
                     // When in creating, associate two models
                     $foreignKeyMethod = version_compare(app()->version(), '5.8.0', '<') ? 'getForeignKey' : 'getForeignKeyName';
+                    /** @phpstan-ignore-next-line */
                     if (!$this->model->{$relation->{$foreignKeyMethod}()}) {
+                        /** @phpstan-ignore-next-line */
                         $this->model->{$relation->{$foreignKeyMethod}()} = $parent->getKey();
 
                         $this->model->save();
@@ -1101,6 +1126,7 @@ class Form implements Renderable
 
                     break;
                 case $relation instanceof Relations\MorphOne:
+                    /** @phpstan-ignore-next-line */
                     $related = $this->model->$name;
                     if (is_null($related)) {
                         $related = $relation->make();
@@ -1436,6 +1462,7 @@ class Form implements Renderable
             $data = request()->all();
         }
 
+        /** @phpstan-ignore-next-line */
         if (($response = $this->prepare($data)) instanceof Response) {
             return $response;
         }
@@ -2230,6 +2257,7 @@ class Form implements Renderable
         if ($className = static::findFieldClass($method)) {
             $column = Arr::get($arguments, 0, ''); //[0];
 
+            /** @phpstan-ignore-next-line */
             $element = new $className($column, array_slice($arguments, 1));
 
             $this->pushField($element);

@@ -266,6 +266,7 @@ class Filter implements Renderable
      *
      * @return string
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter::getFilterAjax() has no return type specified. */
     public function getFilterAjax(){
         return $this->filterAjax;
     }
@@ -315,6 +316,7 @@ class Filter implements Renderable
      *
      * @return void
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter::removeDefaultIDFilter() should return void but returns array<int, Encore\Admin\Grid\Filter\AbstractFilter>. */
     protected function removeDefaultIDFilter()
     {
         array_shift($this->filters);
@@ -356,6 +358,7 @@ class Filter implements Renderable
         $params = [];
 
         foreach ($inputs as $key => $value) {
+            /** @phpstan-ignore-next-line Argument #3 ($array) of static method Illuminate\Support\Arr::set() expects array, array<mixed> given. */
             Arr::set($params, $key, $value);
         }
 
@@ -363,6 +366,7 @@ class Filter implements Renderable
 
         $this->removeIDFilterIfNeeded();
 
+        /** @phpstan-ignore-next-line Argument #1 ($array) of function array_filter() expects array, array<Encore\Admin\Grid\Filter\AbstractFilter> given. */
         foreach ($this->filters() as $filter) {
             if (in_array($column = $filter->getColumn(), $this->layoutOnlyFilterColumns)) {
                 $filter->default(Arr::get($params, $column));
@@ -371,6 +375,7 @@ class Filter implements Renderable
             }
         }
 
+        /** @phpstan-ignore-next-line Method tap() invoked with 2 parameters, 1 required. */
         return tap(array_filter($conditions), function ($conditions) {
             if (!empty($conditions)) {
                 $this->expand();

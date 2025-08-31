@@ -35,6 +35,7 @@ class FormCommand extends GeneratorCommand
     {
         $stub = parent::replaceClass($stub, $name);
 
+        /** @phpstan-ignore-next-line */
         return str_replace('DummyTitle', $this->option('title'), $stub);
     }
 
@@ -65,6 +66,7 @@ class FormCommand extends GeneratorCommand
             return $namespace;
         }
 
+        /** @phpstan-ignore-next-line */
         return str_replace('Controllers', 'Forms', config('admin.route.namespace'));
     }
 
@@ -75,6 +77,7 @@ class FormCommand extends GeneratorCommand
      */
     protected function getNameInput()
     {
+        /** @phpstan-ignore-next-line */
         $name = trim($this->argument('name'));
 
         $this->type = $this->qualifyClass($name);

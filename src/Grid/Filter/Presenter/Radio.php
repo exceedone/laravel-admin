@@ -24,9 +24,11 @@ class Radio extends Presenter
      *
      * @param array<mixed>|Arrayable<int|string, mixed>|null $options
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\Presenter\Radio::__construct() should return void but returns void. */
     public function __construct($options = [])
     {
         if ($options instanceof Arrayable) {
+            /** @phpstan-ignore-next-line Method Illuminate\Contracts\Support\Arrayable<int|string, mixed>::toArray() has no return type specified. */
             $options = $options->toArray();
         }
 

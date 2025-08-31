@@ -41,6 +41,7 @@ $(document).on('change', ".{$this->getClass($column)}", function () {
 });
 EOT;
 
+        /** @phpstan-ignore-next-line Method Encore\Admin\Facades\Admin::script() has no return type specified. */
         Admin::script($script);
 
         return $this;

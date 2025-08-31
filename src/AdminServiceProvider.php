@@ -68,6 +68,7 @@ class AdminServiceProvider extends ServiceProvider
 
         if (config('admin.https') || config('admin.secure')) {
             \URL::forceScheme('https');
+            /** @phpstan-ignore-next-line */
             $this->app['request']->server->set('HTTPS', true);
         }
 

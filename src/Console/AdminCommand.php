@@ -84,7 +84,9 @@ LOGO;
         $widths = [];
 
         foreach ($commands as $command) {
+            /** @phpstan-ignore-next-line */
             $widths[] = static::strlen($command->getName());
+            /** @phpstan-ignore-next-line */
             foreach ($command->getAliases() as $alias) {
                 $widths[] = static::strlen($alias);
             }

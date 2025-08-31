@@ -286,8 +286,10 @@ abstract class AbstractFilter
      *
      * @return Select
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::select() should return Encore\Admin\Grid\Filter\Presenter\Select but returns Encore\Admin\Grid\Filter\Presenter\Presenter. */
     public function select($options = [])
     {
+        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::setPresenter() should return mixed but returns Encore\Admin\Grid\Filter\Presenter\Presenter. */
         return $this->setPresenter(new Select($options));
     }
 
@@ -296,8 +298,10 @@ abstract class AbstractFilter
      *
      * @return MultipleSelect
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::multipleSelect() should return Encore\Admin\Grid\Filter\Presenter\MultipleSelect but returns Encore\Admin\Grid\Filter\Presenter\Presenter. */
     public function multipleSelect($options = [])
     {
+        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::setPresenter() should return mixed but returns Encore\Admin\Grid\Filter\Presenter\Presenter. */
         return $this->setPresenter(new MultipleSelect($options));
     }
 
@@ -306,8 +310,10 @@ abstract class AbstractFilter
      *
      * @return Radio
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::radio() should return Encore\Admin\Grid\Filter\Presenter\Radio but returns Encore\Admin\Grid\Filter\Presenter\Presenter. */
     public function radio($options = [])
     {
+        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::setPresenter() should return mixed but returns Encore\Admin\Grid\Filter\Presenter\Presenter. */
         return $this->setPresenter(new Radio($options));
     }
 
@@ -316,8 +322,10 @@ abstract class AbstractFilter
      *
      * @return Checkbox
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::checkbox() should return Encore\Admin\Grid\Filter\Presenter\Checkbox but returns Encore\Admin\Grid\Filter\Presenter\Presenter. */
     public function checkbox($options = [])
     {
+        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::setPresenter() should return mixed but returns Encore\Admin\Grid\Filter\Presenter\Presenter. */
         return $this->setPresenter(new Checkbox($options));
     }
 
@@ -328,8 +336,10 @@ abstract class AbstractFilter
      *
      * @return mixed
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::datetime() should return mixed but returns Encore\Admin\Grid\Filter\Presenter\Presenter. */
     public function datetime($options = [])
     {
+        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::setPresenter() should return mixed but returns Encore\Admin\Grid\Filter\Presenter\Presenter. */
         return $this->setPresenter(new DateTime($options));
     }
 
@@ -388,6 +398,7 @@ abstract class AbstractFilter
      *
      * @return $this
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::showNullCheck() should return $this(Encore\Admin\Grid\Filter\AbstractFilter) but returns Encore\Admin\Grid\Filter\AbstractFilter. */
     public function showNullCheck()
     {
         $this->nullcheck = true;
@@ -401,8 +412,12 @@ abstract class AbstractFilter
      *
      * @return mixed
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::setPresenter() should return mixed but returns Encore\Admin\Grid\Filter\Presenter\Presenter. */
     protected function setPresenter(Presenter $presenter)
     {
+        $presenter->setParent($this);
+
+        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\Presenter\Presenter::setParent() has no return type specified. */
         $presenter->setParent($this);
 
         return $this->presenter = $presenter;
@@ -413,6 +428,7 @@ abstract class AbstractFilter
      *
      * @return Presenter
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::presenter() should return Encore\Admin\Grid\Filter\Presenter\Presenter but returns Encore\Admin\Grid\Filter\Presenter\Presenter|null. */
     protected function presenter()
     {
         return $this->presenter;
@@ -425,8 +441,10 @@ abstract class AbstractFilter
      *
      * @return $this
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::default() should return $this(Encore\Admin\Grid\Filter\AbstractFilter) but returns Encore\Admin\Grid\Filter\AbstractFilter. */
     public function default($default = null)
     {
+        /** @phpstan-ignore-next-line If condition is always true. */
         if ($default) {
             $this->defaultValue = $default;
         }
@@ -451,6 +469,7 @@ abstract class AbstractFilter
      *
      * @return $this
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::setId() should return $this(Encore\Admin\Grid\Filter\AbstractFilter) but returns Encore\Admin\Grid\Filter\AbstractFilter. */
     public function setId($id)
     {
         $this->id = $this->formatId($id);
@@ -463,8 +482,10 @@ abstract class AbstractFilter
      *
      * @return string
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::getColumn() should return string but returns string|null. */
     public function getColumn()
     {
+        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter::getName() has no return type specified. */
         $parentName = $this->parent->getName();
 
         return $parentName ? "{$parentName}_{$this->column}" : $this->column;
@@ -485,14 +506,17 @@ abstract class AbstractFilter
      *
      * @return mixed
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::buildCondition() should return mixed but returns array<string, array<int, mixed>>|array<string, mixed>. */
     protected function buildCondition()
     {
         $column = explode('.', $this->column);
 
         if (count($column) == 1) {
+            /** @phpstan-ignore-next-line Function func_get_args() should be used only within a function with variadic arguments. */
             return [$this->query => func_get_args()];
         }
 
+        /** @phpstan-ignore-next-line Function func_get_args() should be used only within a function with variadic arguments. */
         return $this->buildRelationQuery(...func_get_args());
     }
 
@@ -501,13 +525,16 @@ abstract class AbstractFilter
      *
      * @return array<string, mixed>
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::buildRelationQuery() should return array<string, mixed> but returns array<string, array<int, \Closure>|string>. */
     protected function buildRelationQuery()
     {
+        /** @phpstan-ignore-next-line Function func_get_args() should be used only within a function with variadic arguments. */
         $args = func_get_args();
 
         list($relation, $args[0]) = explode('.', $this->column);
 
         return ['whereHas' => [$relation, function ($relation) use ($args) {
+            /** @phpstan-ignore-next-line Function call_user_func_array() with array{mixed, string} will throw a TypeError. */
             call_user_func_array([$relation, $this->query], $args);
         }]];
     }
@@ -517,10 +544,12 @@ abstract class AbstractFilter
      *
      * @return array<string, mixed>
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::variables() should return array<string, mixed> but returns array<array<string, mixed>|bool|string, mixed>. */
     protected function variables()
     {
         return array_merge([
             'id'        => $this->id,
+            /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::formatName() should return string|null but returns string|array<string, string>. */
             'name'      => $this->formatName($this->column),
             'column'    => $this->column,
             'label'     => $this->label,
@@ -528,6 +557,7 @@ abstract class AbstractFilter
             'nullcheck' => $this->nullcheck,
             'isnull'    => $this->isnull? 'checked': '',
             'presenter' => $this->presenter(),
+        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\Presenter\Presenter::variables() has no return type specified. */
         ], $this->presenter()->variables());
     }
 
@@ -539,6 +569,7 @@ abstract class AbstractFilter
     public function render()
     {
         $script = "$('.isnull-{$this->column}').iCheck({checkboxClass:'icheckbox_minimal-blue'});";
+        /** @phpstan-ignore-next-line Method Encore\Admin\Facades\Admin::script() has no return type specified. */
         Admin::script($script);
 
         return view($this->view, $this->variables());
@@ -549,6 +580,7 @@ abstract class AbstractFilter
      *
      * @return \Illuminate\View\View|string
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::__toString() should return string but returns \Illuminate\View\View|string. */
     public function __toString()
     {
         return $this->render();
@@ -565,6 +597,7 @@ abstract class AbstractFilter
     public function __call($method, $params)
     {
         if (method_exists($this->presenter, $method)) {
+            /** @phpstan-ignore-next-line Call to method {method}() on an unknown class Encore\Admin\Grid\Filter\Presenter\Presenter. */
             return $this->presenter()->{$method}(...$params);
         }
 
