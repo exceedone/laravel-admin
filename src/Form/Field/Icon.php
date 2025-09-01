@@ -28,6 +28,7 @@ class Icon extends Text
      */
     public function render()
     {
+        /** @phpstan-ignore-next-line argument.type */
         $this->script = <<<EOT
 
 $('{$this->getElementClassSelector()}').iconpicker({placement:'bottomLeft'});

@@ -26,6 +26,7 @@ class KeyValue extends Field
     {
         $this->data = $data;
 
+        /** @phpstan-ignore-next-line Parameter #2 $key of static method Illuminate\Support\Arr::get() expects int|string|null, array|string given. */
         $this->value = Arr::get($data, $this->column, $this->value);
 
         $this->formatValue();
@@ -69,6 +70,7 @@ class KeyValue extends Field
      */
     protected function setupScript()
     {
+        /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
         $this->script = <<<SCRIPT
 
 $('.{$this->column}-add').on('click', function () {

@@ -141,6 +141,7 @@ class Select extends Field
         }
 
         if (is_callable($options)) {
+            /** @phpstan-ignore-next-line Property Encore\Admin\Form\Field::$options (array<string, mixed>|Closure) does not accept callable(): mixed. */
             $this->options = $options;
         } else {
             $this->options = (array) $options;
@@ -310,6 +311,7 @@ class Select extends Field
 
         $freeInput = $this->freeInput ? '1' : '0';
 
+        /** @phpstan-ignore-next-line */
         $script = <<<EOT
 $(document).off('change', "{$this->getElementClassSelector()}");
 $(document).on('change', "{$this->getElementClassSelector()}", function () {
@@ -357,6 +359,7 @@ EOT;
 
         $freeInput = $this->freeInput ? '1' : '0';
 
+        /** @phpstan-ignore-next-line */
         $script = <<<EOT
 var fields = '$fieldsStr'.split('.');
 var urls = '$urlsStr'.split('^');
@@ -466,10 +469,12 @@ EOT;
         ], $this->config);
 
         $configs = json_encode($configs);
+        /** @phpstan-ignore-next-line return.type */
         $configs = substr($configs, 1, strlen($configs) - 2);
 
         $ajaxOptions = json_encode(array_merge($ajaxOptions, $options));
 
+        /** @phpstan-ignore-next-line argument.type */
         $this->script = <<<EOT
 
 $.ajax($ajaxOptions).done(function(data) {
@@ -517,9 +522,10 @@ EOT;
         ], $this->config);
 
         $configs = json_encode($configs);
+        /** @phpstan-ignore-next-line return.type */
         $configs = substr($configs, 1, strlen($configs) - 2);
         $dropdownParent = $this->asModal ? '$("' . static::$modalSelectorName . ' .modal-dialog")' : 'null';
-
+        /** @phpstan-ignore-next-line argument.type */
         $this->script = <<<EOT
 
 $("{$this->getElementClassSelector()}").not('.admin-added-select2').select2({
@@ -605,10 +611,12 @@ EOT;
         ], $this->config);
 
         $configs = json_encode($configs);
+        /** @phpstan-ignore-next-line return.type */
         $configs = substr($configs, 1, strlen($configs) - 2);
 
         if (empty($this->script)) {
             $dropdownParent = $this->asModal ? '$("' . static::$modalSelectorName . ' .modal-dialog")' : 'null';
+            /** @phpstan-ignore-next-line argument.type */
             $this->script = "$(\"{$this->getElementClassSelector()}\").not('.admin-added-select2').select2({
                 dropdownParent: $dropdownParent,
                 $configs,
@@ -616,6 +624,7 @@ EOT;
         }
 
         if($this->escapeMarkup){
+            /** @phpstan-ignore-next-line argument.type */
             $this->script .= "$(\"{$this->getElementClassSelector()}\").select2({
                 escapeMarkup: function(markup) {
                     return markup;

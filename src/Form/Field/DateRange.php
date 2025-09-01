@@ -89,6 +89,7 @@ class DateRange extends Field
      */
     public function render()
     {
+        /** @phpstan-ignore-next-line Cannot access offset 'locale' on array<string, mixed>|Closure. */
         $this->options['locale'] = config('app.locale');
 
         $startOptions = json_encode($this->options);
@@ -96,6 +97,8 @@ class DateRange extends Field
 
         $class = $this->getElementClassSelector();
 
+        /** @phpstan-ignore-next-line Offset 'start' does not exist on array|string. */
+        /** @phpstan-ignore-next-line Offset 'end' does not exist on array|string. */
         $this->script = <<<EOT
             $('{$class['start']}').datetimepicker($startOptions);
             $('{$class['end']}').datetimepicker($endOptions);

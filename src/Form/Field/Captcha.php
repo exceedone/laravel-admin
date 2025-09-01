@@ -28,8 +28,10 @@ class Captcha extends Text
 
     public function setForm($form = null)
     {
+        /** @phpstan-ignore-next-line Property Encore\Admin\Form\Field::$form (Encore\Admin\Form|null) does not accept Encore\Admin\Form|Encore\Admin\Widgets\Form|null. */
         $this->form = $form;
 
+        /** @phpstan-ignore-next-line Call to an undefined method Encore\Admin\Form|Encore\Admin\Widgets\Form::ignore(). */
         $this->form->ignore($this->column);
 
         return $this;
@@ -37,6 +39,7 @@ class Captcha extends Text
 
     public function render()
     {
+        /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
         $this->script = <<<EOT
 
 $('#{$this->column}-captcha').click(function () {

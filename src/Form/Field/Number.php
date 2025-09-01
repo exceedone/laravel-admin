@@ -17,7 +17,8 @@ class Number extends Text
     public function render()
     {
         $this->default($this->default);
-
+        
+        /** @phpstan-ignore-next-line argument.type */
         $this->script = <<<EOT
 
 $('{$this->getElementClassSelector()}:not(.initialized)')

@@ -94,6 +94,7 @@ class Editable extends AbstractDisplayer
 
         if ($options instanceof \Closure) {
             $useClosure = true;
+            /** @phpstan-ignore-next-line Method Closure::call() expects object|null, static<Encore\Admin\Grid\Displayers\Editable> given. */
             $options = $options->call($this, $this->row);
         }
 
@@ -212,6 +213,7 @@ class Editable extends AbstractDisplayer
 
         $class = 'grid-editable-'.str_replace(['.', '#', '[', ']'], '-', $column);
 
+        /** @phpstan-ignore-next-line Function func_get_args() should be used only within a function with variadic arguments. */
         $this->buildEditableOptions(func_get_args());
 
         $options = json_encode($this->options);
@@ -234,6 +236,7 @@ class Editable extends AbstractDisplayer
             $attributes = array_merge($attributes, $this->attributes);
         }
 
+        /** @phpstan-ignore-next-line Method Illuminate\Support\Collection<(int|string), mixed>::map() should return Illuminate\Support\Collection<(int|string), mixed> but returns Illuminate\Support\Collection<int, string>. */
         $attributes = collect($attributes)->map(function ($attribute, $name) {
             return "$name='$attribute'";
         })->implode(' ');

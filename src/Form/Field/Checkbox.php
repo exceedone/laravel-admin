@@ -45,6 +45,7 @@ class Checkbox extends MultipleSelect
         }
 
         if (is_callable($options)) {
+            /** @phpstan-ignore-next-line */
             $this->options = $options;
         } else {
             $this->options = (array) $options;
@@ -116,6 +117,7 @@ class Checkbox extends MultipleSelect
         Arr::forget($this->attributes, 'required');
         $this->removeRules(['required']);
 
+        /** @phpstan-ignore-next-line argument.type */
         $this->script = "$('{$this->getElementClassSelector()}').iCheck({checkboxClass:'icheckbox_minimal-blue'});";
 
         $this->addVariables([
@@ -127,6 +129,7 @@ class Checkbox extends MultipleSelect
         if ($this->canCheckAll) {
             $checkAllClass = uniqid('check-all-');
 
+            /** @phpstan-ignore-next-line argument.type */
             $this->script .= <<<SCRIPT
 $('.{$checkAllClass}').iCheck({checkboxClass:'icheckbox_minimal-blue'}).on('ifChanged', function () {
     if (this.checked) {

@@ -613,6 +613,7 @@ class Model
             return [$this->perPage, ['*'], "{$name}_page"];
         }
 
+        /** @phpstan-ignore-next-line Cannot access offset 'arguments' on array|Encore\Admin\Grid\Model. */
         if (isset($paginate['arguments'][0])) {
             return $paginate['arguments'];
         }

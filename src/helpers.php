@@ -286,10 +286,12 @@ if (!function_exists('class_uses_deep')) {
         $traits = [];
 
         do {
+            /** @phpstan-ignore-next-line argument.type */
             $traits = array_merge(class_uses($class, $autoload), $traits);
         } while ($class = get_parent_class($class));
 
         foreach ($traits as $trait => $same) {
+            /** @phpstan-ignore-next-line */
             $traits = array_merge(class_uses($trait, $autoload), $traits);
         }
 
@@ -314,6 +316,7 @@ if (!function_exists('admin_dump')) {
 
         ob_end_clean();
 
+        /** @phpstan-ignore-next-line return.type */
         return $contents;
     }
 }
@@ -393,6 +396,7 @@ if (!function_exists('json_encode_options')) {
 
         $json = json_encode($data['options']);
 
+        /** @phpstan-ignore-next-line argument.type */
         return str_replace($data['toReplace'], $data['original'], $json);
     }
     
@@ -478,6 +482,7 @@ if (!function_exists('json_encode_options')) {
         {
             $string = $string?? '';
 
+            /** @phpstan-ignore-next-line argument.type */
             return explode($separator, $string, $limit);
         }
     }

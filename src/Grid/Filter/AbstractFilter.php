@@ -210,6 +210,7 @@ abstract class AbstractFilter
      */
     public function previous($step = 1)
     {
+        /** @phpstan-ignore-next-line Binary operation "-" between int|string|false and int results in an error. */
         return $this->siblings(
             array_search($this, $this->parent->filters()) - $step
         );
@@ -224,6 +225,7 @@ abstract class AbstractFilter
      */
     public function next($step = 1)
     {
+        /** @phpstan-ignore-next-line Binary operation "+" between int|string|false and int results in an error. */
         return $this->siblings(
             array_search($this, $this->parent->filters()) + $step
         );
