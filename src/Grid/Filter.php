@@ -358,7 +358,6 @@ class Filter implements Renderable
         $params = [];
 
         foreach ($inputs as $key => $value) {
-            /** @phpstan-ignore-next-line Argument #3 ($array) of static method Illuminate\Support\Arr::set() expects array, array<mixed> given. */
             Arr::set($params, $key, $value);
         }
 
@@ -366,7 +365,6 @@ class Filter implements Renderable
 
         $this->removeIDFilterIfNeeded();
 
-        /** @phpstan-ignore-next-line Argument #1 ($array) of function array_filter() expects array, array<Encore\Admin\Grid\Filter\AbstractFilter> given. */
         foreach ($this->filters() as $filter) {
             if (in_array($column = $filter->getColumn(), $this->layoutOnlyFilterColumns)) {
                 $filter->default(Arr::get($params, $column));
@@ -375,7 +373,6 @@ class Filter implements Renderable
             }
         }
 
-        /** @phpstan-ignore-next-line Method tap() invoked with 2 parameters, 1 required. */
         return tap(array_filter($conditions), function ($conditions) {
             if (!empty($conditions)) {
                 $this->expand();

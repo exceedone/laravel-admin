@@ -69,6 +69,7 @@ class Embeds extends Field
      */
     public function getValidator(array $input)
     {
+        /** @phpstan-ignore-next-line Parameter #1 $key of function array_key_exists expects int|string, array|string given. */
         if (!array_key_exists($this->column, $input)) {
             return false;
         }
@@ -107,11 +108,13 @@ class Embeds extends Field
              */
             if (is_array($column)) {
                 foreach ($column as $key => $name) {
+                    /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
                     $rules["{$this->column}.$name$key"] = $fieldRules;
                 }
 
                 $this->resetInputKey($input, $column);
             } else {
+                /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
                 $rules["{$this->column}.$column"] = $fieldRules;
             }
 
@@ -217,6 +220,7 @@ class Embeds extends Field
     {
         $column = array_flip($column);
 
+        /** @phpstan-ignore-next-line Possibly invalid array key type array|string. */
         foreach ($input[$this->column] as $key => $value) {
             if (!array_key_exists($key, $column)) {
                 continue;
@@ -227,10 +231,12 @@ class Embeds extends Field
             /*
              * set new key
              */
+            /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
             Arr::set($input, "{$this->column}.$newKey", $value);
             /*
              * forget the old key and value
              */
+            /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
             Arr::forget($input, "{$this->column}.$key");
         }
     }
@@ -246,6 +252,7 @@ class Embeds extends Field
      */
     protected function getEmbeddedData()
     {
+        /** @phpstan-ignore-next-line Parameter #1 $key of function old expects string|null, array|string given. */
         if ($old = old($this->column)) {
             return $old;
         }
@@ -268,6 +275,7 @@ class Embeds extends Field
      */
     protected function buildEmbeddedForm()
     {
+        /** @phpstan-ignore-next-line Parameter #1 $column of class Encore\Admin\Form\EmbeddedForm constructor expects string, array|string given. */
         $form = new EmbeddedForm($this->column);
 
         $form->setParent($this->form);

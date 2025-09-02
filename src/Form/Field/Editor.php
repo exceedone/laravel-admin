@@ -12,6 +12,7 @@ class Editor extends Field
 
     public function render()
     {
+        /** @phpstan-ignore-next-line Part \$this->id (array|string) of encapsed string cannot be cast to string. */
         $this->script = "CKEDITOR.replace('{$this->id}');";
 
         return parent::render();

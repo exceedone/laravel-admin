@@ -828,14 +828,12 @@ class Column
             $previous = $value;
 
             $callback = $this->bindOriginalRowModel($callback, $key);
-            /** @phpstan-ignore-next-line Parameter #1 $callback of function call_user_func_array expects callable(): mixed, (Closure(mixed, static<Encore\Admin\Grid\Column>, Illuminate\Database\Eloquent\Model|null): mixed)|Closure given. */
             $value = call_user_func_array($callback, [$value, $this, $this->getRowModel($key)]);
 
             if (($value instanceof static) &&
                 ($last = array_pop($this->displayCallbacks))
             ) {
                 $last = $this->bindOriginalRowModel($last, $key);
-                /** @phpstan-ignore-next-line Parameter #1 $callback of function call_user_func expects callable(): mixed, (Closure(mixed, static<Encore\Admin\Grid\Column>, Illuminate\Database\Eloquent\Model|null): mixed)|Closure given. */
                 $value = call_user_func($last, $previous);
             }
         }
@@ -868,7 +866,6 @@ class Column
      * @return ?Model
      */
     protected function getRowModel($key){
-        /** @phpstan-ignore-next-line Cannot access offset string|int on Illuminate\Support\Collection<int|string, mixed>|null. */
         return static::$originalGridModels[$key];
     }
 
@@ -1070,7 +1067,6 @@ class Column
             'content'   => $this->help,
         ];
 
-        /** @phpstan-ignore-next-line Method Illuminate\Support\Collection<(int|string), mixed>::map() should return Illuminate\Support\Collection<(int|string), mixed> but returns Illuminate\Support\Collection<int, string>. */
         $data = collect($data)->map(function ($val, $key) {
             return "data-{$key}=\"{$val}\"";
         })->implode(' ');
@@ -1093,11 +1089,9 @@ HELP;
     protected function resolveDisplayer($abstract, $arguments)
     {
         if (array_key_exists($abstract, static::$displayers)) {
-            /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Column::callBuiltinDisplayer() expects Closure|string, mixed given. */
             return $this->callBuiltinDisplayer(static::$displayers[$abstract], $arguments);
         }
 
-        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Column::callSupportDisplayer() expects string, mixed given. */
         return $this->callSupportDisplayer($abstract, $arguments);
     }
 
@@ -1138,19 +1132,16 @@ HELP;
     {
         if ($abstract instanceof Closure) {
             return $this->display(function ($value) use ($abstract, $arguments) {
-                    /** @phpstan-ignore-next-line Method Closure::call() expects object|null, static<Encore\Admin\Grid\Column> given. */
                 return $abstract->call($this, ...array_merge([$value], $arguments));
             });
         }
 
-        /** @phpstan-ignore-next-line Parameter #1 $objectOrClass of function class_exists expects class-string|object, Closure|string given. */
         if (class_exists($abstract) && is_subclass_of($abstract, AbstractDisplayer::class)) {
             $grid = $this->grid;
             $column = $this;
 
             return $this->display(function ($value) use ($abstract, $grid, $column, $arguments) {
                 /** @var AbstractDisplayer $displayer */
-                /** @phpstan-ignore-next-line Instantiated class Closure|string not found. */
                 $displayer = new $abstract($value, $grid, $column, $this);
 
                 return $displayer->display(...$arguments);
@@ -1181,7 +1172,6 @@ HELP;
             return $this;
         }
 
-        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Column::resolveDisplayer() expects string, mixed given. */
         return $this->resolveDisplayer($method, $arguments);
     }
 }

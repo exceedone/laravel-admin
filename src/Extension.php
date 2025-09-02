@@ -89,6 +89,7 @@ abstract class Extension
     {
         $class = get_called_class();
 
+        /** @phpstan-ignore-next-line Cannot access offset class-string<static(Encore\\Admin\\Extension)> on Encore\\Admin\\Extension. */
         if (!isset(self::$instance[$class]) || !self::$instance[$class] instanceof $class) {
             /** @phpstan-ignore-next-line https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static */
             self::$instance[$class] = new static();

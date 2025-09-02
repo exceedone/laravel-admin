@@ -63,10 +63,10 @@ class FormCommand extends GeneratorCommand
     protected function getDefaultNamespace($rootNamespace)
     {
         if ($namespace = $this->option('namespace')) {
+            /** @phpstan-ignore-next-line Method Encore\Admin\Console\FormCommand::getDefaultNamespace() should return string but returns array|string|true. */
             return $namespace;
         }
 
-        /** @phpstan-ignore-next-line */
         return str_replace('Controllers', 'Forms', config('admin.route.namespace'));
     }
 

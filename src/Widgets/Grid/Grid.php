@@ -544,10 +544,12 @@ class Grid
     public function column($name, $label = '')
     {
         if (Str::contains($name, '.')) {
+            /** @phpstan-ignore-next-line Method Encore\Admin\Widgets\Grid\Grid::column() should return Encore\Admin\Grid\Column|Encore\Admin\Widgets\Grid\Column but returns $this(Encore\Admin\Widgets\Grid\Grid)|Encore\Admin\Grid\Column. */
             return $this->addRelationColumn($name, $label);
         }
 
         if (Str::contains($name, '->')) {
+            /** @phpstan-ignore-next-line Method Encore\Admin\Widgets\Grid\Grid::column() should return Encore\Admin\Grid\Column|Encore\Admin\Widgets\Grid\Column but returns $this(Encore\Admin\Widgets\Grid\Grid)|Encore\Admin\Grid\Column. */
             return $this->addJsonColumn($name, $label);
         }
 
@@ -673,6 +675,7 @@ class Grid
     public function getActions($row)
     {
         $class = $this->actionsClass;
+        /** @phpstan-ignore-next-line Call to an undefined method object::display(). */
         return (new $class(null, $this, null, $row))->display();
     }
 

@@ -99,7 +99,9 @@ class File extends Field
         /*
          * Make input data validatable if the column data is `null`.
          */
+        /** @phpstan-ignore-next-line Parameter #2 \$key of static method Illuminate\\Support\\Arr::get() expects int|string|null, array|string given. */
         if (Arr::has($input, $this->column) && is_null(Arr::get($input, $this->column))) {
+            /** @phpstan-ignore-next-line Possibly invalid array key type array|string. */
             $input[$this->column] = '';
         }
 
@@ -109,7 +111,9 @@ class File extends Field
             return false;
         }
 
+        /** @phpstan-ignore-next-line Possibly invalid array key type array|string. */
         $rules[$this->column] = $fieldRules;
+        /** @phpstan-ignore-next-line Possibly invalid array key type array|string. */
         $attributes[$this->column] = $this->label;
 
         return \validator($input, $rules, $this->getValidationMessages(), $attributes);
@@ -158,8 +162,10 @@ class File extends Field
         $path = null;
 
         if (!is_null($this->storagePermission)) {
+            /** @phpstan-ignore-next-line Cannot call method putFileAs() on Illuminate\Filesystem\FilesystemAdapter|string. */
             $path = $this->storage->putFileAs($this->getDirectory(), $file, $this->name, $this->storagePermission);
         } else {
+            /** @phpstan-ignore-next-line Cannot call method putFileAs() on Illuminate\Filesystem\FilesystemAdapter|string. */
             $path = $this->storage->putFileAs($this->getDirectory(), $file, $this->name);
         }
 

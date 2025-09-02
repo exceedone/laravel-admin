@@ -466,13 +466,11 @@ class Form implements Renderable
         }
 
         // Handle validation errors.
-        /** @phpstan-ignore-next-line */
         if ($validationMessages = $this->validationMessages($data)) {
-            /** @phpstan-ignore-next-line */
+            /** @phpstan-ignore-next-line Parameter $provider of method withErrors() expects array|Illuminate\Contracts\Support\MessageProvider|string, Illuminate\Support\MessageBag|false given. */
             return back()->withInput()->withErrors($validationMessages);
         }
 
-        /** @phpstan-ignore-next-line */
         if (($response = $this->prepare($data)) instanceof Response) {
             return $response;
         }
@@ -867,7 +865,7 @@ class Form implements Renderable
     /**
      * Get RedirectResponse after store.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function redirectAfterStore()
     {
@@ -883,7 +881,7 @@ class Form implements Renderable
      *
      * @param mixed $key
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     protected function redirectAfterUpdate($key)
     {
@@ -907,6 +905,7 @@ class Form implements Renderable
         admin_toastr(trans('admin.save_succeeded'));
         
         if(isset($redirect)){
+            /** @phpstan-ignore-next-line Method redirectAfterSaving() should return Illuminate\\Http\\RedirectResponse|Illuminate\\Routing\\Redirector but returns Illuminate\\Http\\RedirectResponse|Illuminate\\Routing\\Redirector|null. */
             return $redirect;
         }
 
@@ -1057,7 +1056,6 @@ class Form implements Renderable
                 continue;
             }
 
-            /** @phpstan-ignore-next-line */
             $relation = $this->model->$name();
 
             $oneToOneRelation = $relation instanceof Relations\HasOne
@@ -1079,7 +1077,6 @@ class Form implements Renderable
                     break;
                 case $relation instanceof Relations\HasOne:
 
-                    /** @phpstan-ignore-next-line */
                     $related = $this->model->$name;
 
                     // if related is empty
@@ -1087,7 +1084,6 @@ class Form implements Renderable
                         $related = $relation->getRelated();
                         $qualifiedParentKeyName = $relation->getQualifiedParentKeyName();
                         $localKey = Arr::last(explode('.', $qualifiedParentKeyName));
-                        /** @phpstan-ignore-next-line */
                         $related->{$relation->getForeignKeyName()} = $this->model->{$localKey};
                     }
 
@@ -1100,7 +1096,6 @@ class Form implements Renderable
                 case $relation instanceof Relations\BelongsTo:
                 case $relation instanceof Relations\MorphTo:
 
-                    /** @phpstan-ignore-next-line */
                     $parent = $this->model->$name;
 
                     // if related is empty
@@ -1116,9 +1111,7 @@ class Form implements Renderable
 
                     // When in creating, associate two models
                     $foreignKeyMethod = version_compare(app()->version(), '5.8.0', '<') ? 'getForeignKey' : 'getForeignKeyName';
-                    /** @phpstan-ignore-next-line */
                     if (!$this->model->{$relation->{$foreignKeyMethod}()}) {
-                        /** @phpstan-ignore-next-line */
                         $this->model->{$relation->{$foreignKeyMethod}()} = $parent->getKey();
 
                         $this->model->save();
@@ -1126,7 +1119,6 @@ class Form implements Renderable
 
                     break;
                 case $relation instanceof Relations\MorphOne:
-                    /** @phpstan-ignore-next-line */
                     $related = $this->model->$name;
                     if (is_null($related)) {
                         $related = $relation->make();
@@ -1143,11 +1135,13 @@ class Form implements Renderable
                         /** @var Relations\Relation<Model>|\Illuminate\Database\Eloquent\Builder<Model> $relation */
                         $relation = $this->model()->$name();
 
+                        /** @phpstan-ignore-next-line Call to an undefined method getRelated(). */
                         $keyName = $relation->getRelated()->getKeyName();
 
                         $instance = $relation->findOrNew(Arr::get($related, $keyName));
 
                         if ($related[static::REMOVE_FLAG_NAME] == 1) {
+                            /** @phpstan-ignore-next-line Call to an undefined method delete(). */
                             $instance->delete();
 
                             continue;
@@ -1155,8 +1149,10 @@ class Form implements Renderable
 
                         Arr::forget($related, static::REMOVE_FLAG_NAME);
 
+                        /** @phpstan-ignore-next-line Call to an undefined method fill(). */
                         $instance->fill($related);
 
+                        /** @phpstan-ignore-next-line Call to an undefined method save(). */
                         $instance->save();
                     }
 
@@ -1428,6 +1424,7 @@ class Form implements Renderable
         if($id instanceof \Illuminate\Database\Eloquent\Model){
             $this->model = $id;
         }else{
+            /** @phpstan-ignore-next-line Property Encore\Admin\Form::$model (Illuminate\Database\Eloquent\Model|null) does not accept Encore\Admin\SoftDeletableModel|Illuminate\Database\Eloquent\Collection<int, Encore\Admin\SoftDeletableModel>|Illuminate\Database\Eloquent\Collection<int, Illuminate\Database\Eloquent\Model>|Illuminate\Database\Eloquent\Model. */
             $this->model = $builder->with($relations)->findOrFail($id);
         }
 
@@ -1462,7 +1459,6 @@ class Form implements Renderable
             $data = request()->all();
         }
 
-        /** @phpstan-ignore-next-line */
         if (($response = $this->prepare($data)) instanceof Response) {
             return $response;
         }
@@ -1506,6 +1502,7 @@ class Form implements Renderable
                 continue;
             }
 
+            /** @phpstan-ignore-next-line Parameter $callback of function call_user_func expects callable, array{Illuminate\\Database\\Eloquent\\Model, string} given. */
             $relation = call_user_func([$this->model, $column]);
 
             if (!($relation instanceof Relations\Relation)) {
@@ -1623,6 +1620,7 @@ class Form implements Renderable
     {
         $message = $this->validationMessages($input);
         if($message !== false){
+            /** @phpstan-ignore-next-line Parameter $provider of method withErrors() expects array|Illuminate\\Contracts\\Support\\MessageProvider|string, Illuminate\\Support\\MessageBag|false given. */
             return back()->withInput()->withErrors($message);
         }
         return true;
@@ -2208,6 +2206,7 @@ class Form implements Renderable
                 continue;
             }
 
+            /** @phpstan-ignore-next-line Parameter $callback of function call_user_func expects callable, array{class-string, string} given. */
             $assets = call_user_func([$field, 'getAssets']);
 
             $css->push(Arr::get($assets, 'css'));
@@ -2257,11 +2256,12 @@ class Form implements Renderable
         if ($className = static::findFieldClass($method)) {
             $column = Arr::get($arguments, 0, ''); //[0];
 
-            /** @phpstan-ignore-next-line */
             $element = new $className($column, array_slice($arguments, 1));
 
+            /** @phpstan-ignore-next-line Parameter $field of method pushField() expects Encore\\Admin\\Form\\Field, object given. */
             $this->pushField($element);
 
+            /** @phpstan-ignore-next-line Method __call() should return Encore\\Admin\\Form\\Field but returns object. */
             return $element;
         }
 

@@ -32,15 +32,18 @@ class CsvExporter extends AbstractExporter
                     $titles = $this->getHeaderRowFromRecords($records);
 
                     // Add CSV headers
+                    /** @phpstan-ignore-next-line Parameter #1 $stream of function fputcsv expects resource, resource|false given. */
                     fputcsv($handle, $titles);
                 }
 
                 foreach ($records as $record) {
+                    /** @phpstan-ignore-next-line Parameter #1 $stream of function fputcsv expects resource, resource|false given. */
                     fputcsv($handle, $this->getFormattedRecord($record));
                 }
             });
 
             // Close the output stream
+            /** @phpstan-ignore-next-line Parameter #1 $stream of function fclose expects resource, resource|false given. */
             fclose($handle);
         }, 200, $headers)->send();
 

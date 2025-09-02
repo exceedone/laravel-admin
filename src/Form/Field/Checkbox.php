@@ -129,12 +129,13 @@ class Checkbox extends MultipleSelect
         if ($this->canCheckAll) {
             $checkAllClass = uniqid('check-all-');
 
-            /** @phpstan-ignore-next-line argument.type */
             $this->script .= <<<SCRIPT
 $('.{$checkAllClass}').iCheck({checkboxClass:'icheckbox_minimal-blue'}).on('ifChanged', function () {
     if (this.checked) {
+        /** @phpstan-ignore-next-line Part \$this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
         $('{$this->getElementClassSelector()}').iCheck('check');
     } else {
+        /** @phpstan-ignore-next-line Part \$this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
         $('{$this->getElementClassSelector()}').iCheck('uncheck');
     }
 })

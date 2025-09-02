@@ -97,8 +97,7 @@ class DateRange extends Field
 
         $class = $this->getElementClassSelector();
 
-        /** @phpstan-ignore-next-line Offset 'start' does not exist on array|string. */
-        /** @phpstan-ignore-next-line Offset 'end' does not exist on array|string. */
+        /** @phpstan-ignore-next-line Offset 'start' does not exist on array|string. Offset 'end' does not exist on array|string. */
         $this->script = <<<EOT
             $('{$class['start']}').datetimepicker($startOptions);
             $('{$class['end']}').datetimepicker($endOptions);
