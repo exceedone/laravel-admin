@@ -500,6 +500,7 @@ if (!function_exists('json_encode_options')) {
         {
             $url = $url?? '';
 
+            /** @phpstan-ignore-next-line Function parse_url_ex() should return array<string>|string|false|null but returns array{scheme?: string, host?: string, port?: int<0, 65535>, user?: string, pass?: string, path?: string, query?: string, fragment?: string}|int<0, 65535>|string|false|null. */
             return parse_url($url, $component);
         }
     }

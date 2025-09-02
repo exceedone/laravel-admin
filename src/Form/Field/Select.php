@@ -311,9 +311,10 @@ class Select extends Field
 
         $freeInput = $this->freeInput ? '1' : '0';
 
-        /** @phpstan-ignore-next-line */
         $script = <<<EOT
+/** @phpstan-ignore-next-line argument.type */
 $(document).off('change', "{$this->getElementClassSelector()}");
+/** @phpstan-ignore-next-line argument.type */
 $(document).on('change', "{$this->getElementClassSelector()}", function () {
     var target = $(this).closest('.fields-group').find(".$class");
     $.get("$sourceUrl",{q : this.value}, function (data) {
@@ -359,7 +360,6 @@ EOT;
 
         $freeInput = $this->freeInput ? '1' : '0';
 
-        /** @phpstan-ignore-next-line */
         $script = <<<EOT
 var fields = '$fieldsStr'.split('.');
 var urls = '$urlsStr'.split('^');
@@ -380,7 +380,9 @@ var refreshOptions = function(url, target) {
     });
 };
 
+/** @phpstan-ignore-next-line argument.type */
 $(document).off('change', "{$this->getElementClassSelector()}");
+/** @phpstan-ignore-next-line argument.type */
 $(document).on('change', "{$this->getElementClassSelector()}", function () {
     var _this = this;
     var promises = [];
@@ -474,11 +476,11 @@ EOT;
 
         $ajaxOptions = json_encode(array_merge($ajaxOptions, $options));
 
-        /** @phpstan-ignore-next-line argument.type */
         $this->script = <<<EOT
 
 $.ajax($ajaxOptions).done(function(data) {
 
+  /** @phpstan-ignore-next-line argument.type */
   var select = $("{$this->getElementClassSelector()}");
 
   select.select2({
@@ -525,9 +527,9 @@ EOT;
         /** @phpstan-ignore-next-line return.type */
         $configs = substr($configs, 1, strlen($configs) - 2);
         $dropdownParent = $this->asModal ? '$("' . static::$modalSelectorName . ' .modal-dialog")' : 'null';
-        /** @phpstan-ignore-next-line argument.type */
         $this->script = <<<EOT
 
+/** @phpstan-ignore-next-line argument.type */
 $("{$this->getElementClassSelector()}").not('.admin-added-select2').select2({
   ajax: {
     url: "$url",

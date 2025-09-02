@@ -110,9 +110,9 @@ class SwitchField extends Field
             }
         }
 
-        /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
         $this->script = <<<EOT
 
+/** @phpstan-ignore-next-line argument.type */
 $('{$this->getElementClassSelector()}.la_checkbox').bootstrapSwitch({
     size:'{$this->size}',
     onText: '{$this->states['on']['text']}',

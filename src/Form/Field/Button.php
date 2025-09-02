@@ -28,7 +28,7 @@ class Button extends Field
      */
     public function on($event, $callback)
     {
-        /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
+        /** @phpstan-ignore-next-line argument.type */
         $this->script = <<<EOT
 
         $('{$this->getElementClassSelector()}').on('$event', function() {

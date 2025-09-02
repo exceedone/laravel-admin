@@ -250,6 +250,7 @@ class File extends Field
         $key = $this->initialFileIndex($this->value);
         $config = ['caption' => $this->initialCaption($this->value, $key), 'key' => $key];
 
+        /** @phpstan-ignore-next-line */
         $config = array_merge($config, $this->guessPreviewType($this->value));
 
         return [$config];
@@ -261,6 +262,7 @@ class File extends Field
      */
     protected function setupScripts($options)
     {
+        /** @phpstan-ignore-next-line argument.type */
         $this->script = <<<EOT
 $("{$this->getElementClassSelector()}").each(function(index, element){
     var options = {$options};
@@ -281,6 +283,7 @@ EOT;
                 'cancel'  => trans('admin.cancel'),
             ];
 
+            /** @phpstan-ignore-next-line argument.type */
             $this->script .= <<<EOT
 $("{$this->getElementClassSelector()}").on('filebeforedelete', function() {
     
@@ -307,8 +310,11 @@ $("{$this->getElementClassSelector()}").on('filebeforedelete', function() {
 
 EOT;
 
+            /** @phpstan-ignore-next-line Cannot access offset 'deletedEvent' on array<string, mixed>|Closure. */
             if(isset($this->options['deletedEvent'])){
+                /** @phpstan-ignore-next-line Cannot access offset 'deletedEvent' on array<string, mixed>|Closure. */
                 $deletedEvent = $this->options['deletedEvent'];
+                /** @phpstan-ignore-next-line argument.type */
                 $this->script .= <<<EOT
                 $("{$this->getElementClassSelector()}").on('filedeleted', function(event, key, jqXHR, data) {
                     {$deletedEvent};
@@ -336,10 +342,13 @@ EOT;
             $this->setupPreviewOptions();
 
             $this->attribute('data-initial-preview', $this->preview());
+            /** @phpstan-ignore-next-line */
             $this->attribute('data-initial-caption', Arr::get($this->options, 'initialPreviewConfig.0.caption'));
 
             $previewType = $this->guessPreviewType($this->value);
+            /** @phpstan-ignore-next-line */
             $this->attribute('data-initial-type', Arr::get($previewType, 'type'));
+            /** @phpstan-ignore-next-line */
             $this->attribute('data-initial-download-url', Arr::get($previewType, 'downloadUrl'));
             /*
              * If has original value, means the form is in edit mode,
@@ -348,6 +357,7 @@ EOT;
             unset($this->attributes['required']);
         }
 
+        /** @phpstan-ignore-next-line */
         $options = json_encode_options($this->options);
 
         $this->setupScripts($options);

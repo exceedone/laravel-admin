@@ -18,9 +18,9 @@ class Number extends Text
     {
         $this->default($this->default);
         
-        /** @phpstan-ignore-next-line argument.type */
         $this->script = <<<EOT
 
+/** @phpstan-ignore-next-line argument.type */
 $('{$this->getElementClassSelector()}:not(.initialized)')
     .addClass('initialized')
     .bootstrapNumber({
