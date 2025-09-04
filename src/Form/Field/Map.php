@@ -75,8 +75,6 @@ class Map extends Field
      */
     public function useGoogleMap()
     {
-        /** @phpstan-ignore-next-line Offset 'lat' does not exist on array|string. */
-        /** @phpstan-ignore-next-line Offset 'lng' does not exist on array|string. */
         $this->script = <<<EOT
         (function() {
             function initGoogleMap(name) {
@@ -120,8 +118,6 @@ EOT;
      */
     public function useTencentMap()
     {
-        /** @phpstan-ignore-next-line Offset 'lat' does not exist on array|string. */
-        /** @phpstan-ignore-next-line Offset 'lng' does not exist on array|string. */
         $this->script = <<<EOT
         (function() {
             function initTencentMap(name) {
@@ -174,8 +170,6 @@ EOT;
      */
     public function useYandexMap()
     {
-        /** @phpstan-ignore-next-line Offset 'lat' does not exist on array|string. */
-        /** @phpstan-ignore-next-line Offset 'lng' does not exist on array|string. */
         $this->script = <<<EOT
         (function() {
             function initYandexMap(name) {

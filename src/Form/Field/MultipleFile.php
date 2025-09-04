@@ -93,7 +93,9 @@ class MultipleFile extends Field
             return false;
         }
 
+        /** @phpstan-ignore-next-line Possibly invalid array key type array|string. */
         $attributes[$this->column] = $this->label;
+        /** @phpstan-ignore-next-line Parameter #2 $key of static method Illuminate\Support\Arr::get() expects int|string|null, array|string given. */
         $fileNames = Arr::get($input, $this->column);
         list($rules, $input) = $this->hydrateFiles($fileNames ? (is_array($fileNames) ? $fileNames : $fileNames->toArray()) : []);
 
@@ -110,13 +112,16 @@ class MultipleFile extends Field
     protected function hydrateFiles(array $value)
     {
         if (empty($value)) {
+            /** @phpstan-ignore-next-line Possibly invalid array key type array|string. */
             return [[$this->column => $this->getRules()], []];
         }
 
         $rules = $input = [];
 
         foreach ($value as $key => $file) {
+            /** @phpstan-ignore-next-line Binary operation "." between array|string and (int|string) results in an error. */
             $rules[$this->column.$key] = $this->getRules();
+            /** @phpstan-ignore-next-line Binary operation "." between array|string and (int|string) results in an error. */
             $input[$this->column.$key] = $file;
         }
 
@@ -391,6 +396,7 @@ $("{$this->getElementClassSelector()}").on('filesorted', function(event, params)
         order.push(item.key);
     });
     
+    /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
     $("{$this->getElementClassSelector()}_sort").val(order);
 });
 EOT;
@@ -420,6 +426,7 @@ EOT;
 
         $options = json_encode($this->options);
 
+        /** @phpstan-ignore-next-line Parameter #1 $options of method Encore\Admin\Form\Field\MultipleFile::setupScripts() expects string, string|false given. */
         $this->setupScripts($options);
 
         return parent::render();
@@ -438,7 +445,9 @@ EOT;
 
         $file = Arr::get($files, $key);
 
+        /** @phpstan-ignore-next-line Cannot call method exists() on Illuminate\Filesystem\FilesystemAdapter|string. */
         if (!$this->retainable && $this->storage->exists($file)) {
+            /** @phpstan-ignore-next-line Cannot call method delete() on Illuminate\Filesystem\FilesystemAdapter|string. */
             $this->storage->delete($file);
         }
 

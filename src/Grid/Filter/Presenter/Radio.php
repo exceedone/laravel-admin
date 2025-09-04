@@ -28,7 +28,6 @@ class Radio extends Presenter
     public function __construct($options = [])
     {
         if ($options instanceof Arrayable) {
-            /** @phpstan-ignore-next-line Method Illuminate\Contracts\Support\Arrayable<int|string, mixed>::toArray() has no return type specified. */
             $options = $options->toArray();
         }
 
@@ -52,6 +51,7 @@ class Radio extends Presenter
      */
     protected function prepare()
     {
+        /** @phpstan-ignore-next-line Part $this->filter->getId() (array|string) of encapsed string cannot be cast to string. */
         $script = "$('.{$this->filter->getId()}').iCheck({radioClass:'iradio_minimal-blue'});";
 
         Admin::script($script);

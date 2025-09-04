@@ -68,7 +68,6 @@ class SwitchGroup extends AbstractDisplayer
             });
         }
 
-        /** @phpstan-ignore-next-line */
         $script = <<<EOT
 
 $('.$class').bootstrapSwitch({

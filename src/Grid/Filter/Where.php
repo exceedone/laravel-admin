@@ -27,13 +27,11 @@ class Where extends AbstractFilter
      * @param string   $label
      * @param string   $column
      */
-    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\Where::__construct() should return void but returns void. */
     public function __construct(\Closure $query, $label, $column = null)
     {
         $this->where = $query;
 
         $this->label = $this->formatLabel($label);
-        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\Where::getQueryHash() should return string but returns string|null. */
         $this->column = $column ?: static::getQueryHash($query, $this->label);
         $this->id = $this->formatId($this->column);
 
@@ -48,12 +46,10 @@ class Where extends AbstractFilter
      *
      * @return string
      */
-    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\Where::getQueryHash() should return string but returns string|null. */
     public static function getQueryHash(\Closure $closure, $label = '')
     {
         $reflection = new \ReflectionFunction($closure);
 
-        /** @phpstan-ignore-next-line Method ReflectionFunction::getFileName() should return string but returns string|false. */
         return md5($reflection->getFileName().$reflection->getStartLine().$reflection->getEndLine().$label);
     }
 
@@ -66,7 +62,6 @@ class Where extends AbstractFilter
      */
     public function condition($inputs)
     {
-        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\Where::getQueryHash() should return string but returns string|null. */
         $value = Arr::get($inputs, $this->column ?: static::getQueryHash($this->where, $this->label));
 
         if (is_null($value)) {
@@ -75,7 +70,6 @@ class Where extends AbstractFilter
 
         $this->input = $this->value = $value;
 
-        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::buildCondition() should return mixed but returns array<string, array<int, mixed>>|array<string, mixed>. */
         return $this->buildCondition($this->where->bindTo($this));
     }
 }

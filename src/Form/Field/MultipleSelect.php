@@ -48,6 +48,7 @@ class MultipleSelect extends Select
     {
         $this->data = $data;
         
+        /** @phpstan-ignore-next-line Parameter #2 $key of static method Illuminate\Support\Arr::get() expects int|string|null, array|string given. */
         $relations = Arr::get($data, $this->column);
 
         if (is_string($relations)) {
@@ -80,6 +81,7 @@ class MultipleSelect extends Select
      */
     public function setOriginal($data)
     {
+        /** @phpstan-ignore-next-line Parameter #2 $key of static method Illuminate\Support\Arr::get() expects int|string|null, array|string given. */
         $relations = Arr::get($data, $this->column);
 
         if (is_string($relations)) {
@@ -116,8 +118,10 @@ class MultipleSelect extends Select
         $rules = parent::getRules();
 
         // if contains required rule, set select option rule
+        /** @phpstan-ignore-next-line Argument of an invalid type array|Closure|string supplied for foreach, only iterables are supported. */
         foreach($rules as $rule){
             if(is_string($rule) && $rule == 'required'){
+                /** @phpstan-ignore-next-line Cannot access an offset on array|Closure|string. */
                 $rules[] = new CheckboxRequiredRule;
             }
         }

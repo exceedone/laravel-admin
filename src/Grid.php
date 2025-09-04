@@ -915,7 +915,6 @@ class Grid
             return false;
         }
 
-        /** @phpstan-ignore-next-line */
         if (!($relation = $model->$method()) instanceof Relations\Relation) {
             return false;
         }

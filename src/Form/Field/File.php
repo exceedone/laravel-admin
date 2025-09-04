@@ -262,7 +262,7 @@ class File extends Field
      */
     protected function setupScripts($options)
     {
-        /** @phpstan-ignore-next-line argument.type */
+        /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
         $this->script = <<<EOT
 $("{$this->getElementClassSelector()}").each(function(index, element){
     var options = {$options};
@@ -283,7 +283,7 @@ EOT;
                 'cancel'  => trans('admin.cancel'),
             ];
 
-            /** @phpstan-ignore-next-line argument.type */
+            /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
             $this->script .= <<<EOT
 $("{$this->getElementClassSelector()}").on('filebeforedelete', function() {
     
@@ -312,9 +312,8 @@ EOT;
 
             /** @phpstan-ignore-next-line Cannot access offset 'deletedEvent' on array<string, mixed>|Closure. */
             if(isset($this->options['deletedEvent'])){
-                /** @phpstan-ignore-next-line Cannot access offset 'deletedEvent' on array<string, mixed>|Closure. */
                 $deletedEvent = $this->options['deletedEvent'];
-                /** @phpstan-ignore-next-line argument.type */
+                /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
                 $this->script .= <<<EOT
                 $("{$this->getElementClassSelector()}").on('filedeleted', function(event, key, jqXHR, data) {
                     {$deletedEvent};

@@ -71,7 +71,6 @@ class FilterButton extends AbstractTool
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
                     $('#{$id}').html($(data.html).children('form'));
-                    /** @phpstan-ignore-next-line Function eval() should not be used. */
                     eval(data.script);
 
                     target.attr('disabled', false).addClass('loaded');

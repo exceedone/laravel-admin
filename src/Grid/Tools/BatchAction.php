@@ -68,6 +68,7 @@ abstract class BatchAction implements Renderable
     {
         $this->grid = $grid;
 
+        /** @phpstan-ignore-next-line Property Encore\Admin\Grid\Tools\BatchAction::$resource (string) does not accept Encore\Admin\Grid|string. */
         $this->resource = $grid->resource();
     }
 

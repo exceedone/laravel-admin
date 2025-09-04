@@ -66,6 +66,7 @@ class ListField extends Field
     {
         $this->data = $data;
 
+        /** @phpstan-ignore-next-line Parameter #2 $key of static method Illuminate\Support\Arr::get() expects int|string|null, array|string given. */
         $this->value = Arr::get($data, $this->column, $this->value);
 
         $this->formatValue();
@@ -99,6 +100,7 @@ class ListField extends Field
         $rules["{$this->column}.values.*"] = $fieldRules;
         $attributes["{$this->column}.values.*"] = __('Value');
 
+        /** @phpstan-ignore-next-line Cannot access an offset on array|Closure|string. */
         $rules["{$this->column}.values"][] = 'array';
 
         if (!is_null($this->max)) {

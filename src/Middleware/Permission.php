@@ -67,6 +67,7 @@ class Permission
             throw new \InvalidArgumentException("Invalid permission method [$method].");
         }
 
+        /** @phpstan-ignore-next-line argument.type */
         call_user_func_array([Checker::class, $method], [$args]);
 
         return true;

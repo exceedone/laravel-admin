@@ -64,7 +64,6 @@ class Listbox extends MultipleSelect
             'url' => $url.'?'.http_build_query($parameters),
         ], $options));
 
-        /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
         $this->script = <<<EOT
         
 $.ajax($ajaxOptions).done(function(data) {
@@ -106,7 +105,6 @@ EOT;
 
         $settings = json_encode($settings);
 
-        /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
         $this->script .= <<<SCRIPT
 
         var dualListBox = $("{$this->getElementClassSelector()}");

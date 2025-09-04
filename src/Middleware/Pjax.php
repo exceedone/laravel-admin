@@ -91,6 +91,7 @@ class Pjax
      */
     protected function filterResponse(Response $response, $container)
     {
+        /** @phpstan-ignore-next-line argument.type */
         $crawler = new Crawler($response->getContent());
 
         $response->setContent(

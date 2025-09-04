@@ -33,7 +33,6 @@ class Between extends AbstractFilter
      *
      * @return array<string, string>
      */
-    /** @phpstan-ignore-next-line Return type (array<string, string>) of method Encore\Admin\Grid\Filter\Between::formatName() should be compatible with return type (string|null) of method Encore\Admin\Grid\Filter\AbstractFilter::formatName() */
     protected function formatName($column)
     {
         $columns = explode('.', $column);
@@ -75,18 +74,15 @@ class Between extends AbstractFilter
         }
 
         if (!isset($value['start'])) {
-            /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::buildCondition() should return mixed but returns array<string, array<int, mixed>>|array<string, mixed>. */
             return $this->buildCondition($this->column, '<=', $value['end']);
         }
 
         if (!isset($value['end'])) {
-            /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::buildCondition() should return mixed but returns array<string, array<int, mixed>>|array<string, mixed>. */
             return $this->buildCondition($this->column, '>=', $value['start']);
         }
 
         $this->query = 'whereBetween';
 
-        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\AbstractFilter::buildCondition() should return mixed but returns array<string, array<int, mixed>>|array<string, mixed>. */
         return $this->buildCondition($this->column, $this->value);
     }
 
@@ -118,18 +114,12 @@ class Between extends AbstractFilter
         $endOptions = json_encode($options + ['useCurrent' => false]);
 
         $script = <<<EOT
-            /** @phpstan-ignore-next-line Cannot access offset 'start' on array<mixed>|string. */
             $('#{$this->id['start']}').datetimepicker($startOptions);
-            /** @phpstan-ignore-next-line Cannot access offset 'end' on array<mixed>|string. */
             $('#{$this->id['end']}').datetimepicker($endOptions);
-            /** @phpstan-ignore-next-line Cannot access offset 'start' on array<mixed>|string. */
             $("#{$this->id['start']}").on("dp.change", function (e) {
-                /** @phpstan-ignore-next-line Cannot access offset 'end' on array<mixed>|string. */
                 $('#{$this->id['end']}').data("DateTimePicker").minDate(e.date);
             });
-            /** @phpstan-ignore-next-line Cannot access offset 'end' on array<mixed>|string. */
             $("#{$this->id['end']}").on("dp.change", function (e) {
-                /** @phpstan-ignore-next-line Cannot access offset 'start' on array<mixed>|string. */
                 $('#{$this->id['start']}').data("DateTimePicker").maxDate(e.date);
             });
 EOT;

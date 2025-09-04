@@ -527,6 +527,7 @@ class Form implements Renderable
     {
         $message = $this->validate($request);
         if($message !== false){
+            /** @phpstan-ignore-next-line Parameter #1 $provider of method Illuminate\Http\RedirectResponse::withErrors() expects array|Illuminate\Contracts\Support\MessageProvider|string, Illuminate\Support\MessageBag|true given. */
             return back()->withInput()->withErrors($message);
         }
         return true;
@@ -579,6 +580,7 @@ class Form implements Renderable
     {
         $message = $this->validationMessageArray($input);
 
+        /** @phpstan-ignore-next-line Cannot call method any() on bool|Illuminate\Support\MessageBag. */
         return $message->any() ? $message : false;
     }
 
@@ -763,6 +765,7 @@ EOT;
 
         $field = new $class(Arr::get($arguments, 0), array_slice($arguments, 1));
 
+        /** @phpstan-ignore-next-line Method Encore\Admin\Widgets\Form::__call() should return $this(Encore\Admin\Widgets\Form)|Encore\Admin\Form\Field but returns object. */
         return tap($field, function ($field) {
             $this->pushField($field);
         });

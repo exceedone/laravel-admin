@@ -20,7 +20,6 @@ class Number extends Text
         
         $this->script = <<<EOT
 
-/** @phpstan-ignore-next-line argument.type */
 $('{$this->getElementClassSelector()}:not(.initialized)')
     .addClass('initialized')
     .bootstrapNumber({

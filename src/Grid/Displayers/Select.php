@@ -20,7 +20,6 @@ class Select extends AbstractDisplayer
 
         $class = "grid-select-{$name}";
 
-        /** @phpstan-ignore-next-line */
         $script = <<<EOT
 
 $('.$class').select2().on('change', function(){

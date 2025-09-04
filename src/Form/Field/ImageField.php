@@ -47,6 +47,7 @@ trait ImageField
             $image = ImageManagerStatic::make($target);
 
             foreach ($this->interventionCalls as $call) {
+                /** @phpstan-ignore-next-line argument.type */
                 call_user_func_array(
                     [$image, $call['method']],
                     $call['arguments']

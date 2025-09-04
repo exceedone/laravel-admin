@@ -561,6 +561,7 @@ class HasMany extends Field
         $removeClass = NestedForm::REMOVE_FLAG_CLASS;
         $defaultKey = NestedForm::DEFAULT_KEY_NAME;
         $count = !isset($this->value) ? 0 : count($this->value);
+        /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
         $indexName = "index_{$this->column}";
 
         /**
@@ -570,7 +571,7 @@ class HasMany extends Field
          *
          * {count} is increment number of current sub form count.
          */
-        /** @phpstan-ignore-next-line argument.type */
+        /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
         $script = <<<EOT
 var index = 0;
 $('#has-many-{$this->column}').off('click.admin_add', '.add').on('click.admin_add', '.add', function () {
@@ -609,7 +610,7 @@ EOT;
         $defaultKey = NestedForm::DEFAULT_KEY_NAME;
         $count = !isset($this->value) ? 0 : count($this->value);
 
-        /** @phpstan-ignore-next-line argument.type */
+        /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
         $script = <<<EOT
 
 $('#has-many-{$this->column} > .nav').off('click', 'i.close-tab').on('click', 'i.close-tab', function(){
@@ -674,7 +675,6 @@ EOT;
          */
         $script = <<<EOT
 var index = 0;
-/** @phpstan-ignore-next-line argument.type */
 $('#has-many-{$this->column}').off('click.admin_add').on('click.admin_add', '.add', function () {
 
     var tpl = $('template.{$this->column}-tpl');
@@ -682,17 +682,13 @@ $('#has-many-{$this->column}').off('click.admin_add').on('click.admin_add', '.ad
     index++;
 
     var template = tpl.html().replace(/{$defaultKey}/g, index);
-    /** @phpstan-ignore-next-line argument.type */
     $('.has-many-{$this->column}-forms').append(template);
     {$templateScript}
     return false;
 });
 
-/** @phpstan-ignore-next-line argument.type */
 $('#has-many-{$this->column}').off('click.admin_remove').on('click.admin_remove', '.remove', function () {
-    /** @phpstan-ignore-next-line argument.type */
     $(this).closest('.has-many-{$this->column}-form').hide();
-    /** @phpstan-ignore-next-line argument.type */
     $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
     return false;
 });
@@ -740,6 +736,7 @@ EOT;
         // specify a view to render.
         $this->view = $this->views[$this->viewMode];
 
+        /** @phpstan-ignore-next-line Parameter #1 $column of method Encore\Admin\Form\Field\HasMany::buildNestedForm() expects string, array|string given. */
         list($template, $script) = $this->buildNestedForm($this->column, $this->builder)
             ->getTemplateHtmlAndScript();
 
@@ -766,6 +763,7 @@ EOT;
         $scripts = [];
 
         /* @var Field $field */
+        /** @phpstan-ignore-next-line Parameter #1 $column of method Encore\Admin\Form\Field\HasMany::buildNestedForm() expects string, array|string given. */
         foreach ($this->buildNestedForm($this->column, $this->builder)->fields() as $field) {
             if (is_a($field, Hidden::class)) {
                 $hidden[] = $field->render();

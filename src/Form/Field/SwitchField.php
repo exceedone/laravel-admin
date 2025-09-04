@@ -112,7 +112,6 @@ class SwitchField extends Field
 
         $this->script = <<<EOT
 
-/** @phpstan-ignore-next-line argument.type */
 $('{$this->getElementClassSelector()}.la_checkbox').bootstrapSwitch({
     size:'{$this->size}',
     onText: '{$this->states['on']['text']}',

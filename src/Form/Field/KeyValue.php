@@ -70,7 +70,6 @@ class KeyValue extends Field
      */
     protected function setupScript()
     {
-        /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
         $this->script = <<<SCRIPT
 
 $('.{$this->column}-add').on('click', function () {

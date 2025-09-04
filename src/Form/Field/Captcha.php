@@ -39,7 +39,7 @@ class Captcha extends Text
 
     public function render()
     {
-        /** @phpstan-ignore-next-line argument.type */
+        /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
         $this->script = <<<EOT
 
 $('#{$this->column}-captcha').click(function () {

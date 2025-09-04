@@ -118,6 +118,7 @@ class Relation extends Field
             || $relation instanceof BelongsToMany
             || $relation instanceof HasManyThrough
         ) {
+            /** @phpstan-ignore-next-line argument.type */
             $renderable = new Grid($relation->getRelated(), $this->builder);
 
             $renderable->setName($this->name)

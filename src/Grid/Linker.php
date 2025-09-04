@@ -183,6 +183,7 @@ class Linker
      * @return string
      */
     public function __toString(){
+        /** @phpstan-ignore-next-line Call to an undefined method Illuminate\Contracts\Foundation\Application|Illuminate\Contracts\View\Factory|Illuminate\Contracts\View\View::render(). */
         return $this->render()->render();
     }
 
