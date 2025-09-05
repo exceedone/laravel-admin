@@ -336,6 +336,7 @@ class MultipleFile extends Field
      */
     protected function setupScripts($options)
     {
+        /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
         $this->script = <<<EOT
 $("{$this->getElementClassSelector()}").fileinput({$options});
 EOT;
@@ -387,6 +388,7 @@ EOT;
                 'sort_flag' => static::FILE_SORT_FLAG,
             ]);
 
+            /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
             $this->script .= <<<EOT
 $("{$this->getElementClassSelector()}").on('filesorted', function(event, params) {
     
@@ -396,7 +398,6 @@ $("{$this->getElementClassSelector()}").on('filesorted', function(event, params)
         order.push(item.key);
     });
     
-    /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
     $("{$this->getElementClassSelector()}_sort").val(order);
 });
 EOT;
@@ -426,7 +427,6 @@ EOT;
 
         $options = json_encode($this->options);
 
-        /** @phpstan-ignore-next-line Parameter #1 $options of method Encore\Admin\Form\Field\MultipleFile::setupScripts() expects string, string|false given. */
         $this->setupScripts($options);
 
         return parent::render();
@@ -445,9 +445,7 @@ EOT;
 
         $file = Arr::get($files, $key);
 
-        /** @phpstan-ignore-next-line Cannot call method exists() on Illuminate\Filesystem\FilesystemAdapter|string. */
         if (!$this->retainable && $this->storage->exists($file)) {
-            /** @phpstan-ignore-next-line Cannot call method delete() on Illuminate\Filesystem\FilesystemAdapter|string. */
             $this->storage->delete($file);
         }
 

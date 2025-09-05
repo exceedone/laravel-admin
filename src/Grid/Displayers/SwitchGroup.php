@@ -68,6 +68,7 @@ class SwitchGroup extends AbstractDisplayer
             });
         }
 
+        /** @phpstan-ignore-next-line Part $this->grid->resource() (Encore\Admin\Grid|string) of encapsed string cannot be cast to string. */
         $script = <<<EOT
 
 $('.$class').bootstrapSwitch({

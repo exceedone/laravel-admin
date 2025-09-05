@@ -469,7 +469,7 @@ EOT;
         ], $this->config);
 
         $configs = json_encode($configs);
-        /** @phpstan-ignore-next-line return.type */
+        /** @phpstan-ignore-next-line Parameter #1 $string of function substr expects string, string|false given. */
         $configs = substr($configs, 1, strlen($configs) - 2);
 
         $ajaxOptions = json_encode(array_merge($ajaxOptions, $options));
@@ -522,7 +522,7 @@ EOT;
         ], $this->config);
 
         $configs = json_encode($configs);
-        /** @phpstan-ignore-next-line return.type */
+        /** @phpstan-ignore-next-line Parameter #1 $string of function substr expects string, string|false given. */
         $configs = substr($configs, 1, strlen($configs) - 2);
         $dropdownParent = $this->asModal ? '$("' . static::$modalSelectorName . ' .modal-dialog")' : 'null';
         $this->script = <<<EOT
@@ -611,12 +611,11 @@ EOT;
         ], $this->config);
 
         $configs = json_encode($configs);
-        /** @phpstan-ignore-next-line return.type */
+        /** @phpstan-ignore-next-line Parameter #1 $string of function substr expects string, string|false given. */
         $configs = substr($configs, 1, strlen($configs) - 2);
 
         if (empty($this->script)) {
             $dropdownParent = $this->asModal ? '$("' . static::$modalSelectorName . ' .modal-dialog")' : 'null';
-            /** @phpstan-ignore-next-line cast.string */
             $this->script = "$(\"{$this->getElementClassSelector()}\").not('.admin-added-select2').select2({
                 dropdownParent: $dropdownParent,
                 $configs,
@@ -624,7 +623,6 @@ EOT;
         }
 
         if($this->escapeMarkup){
-            /** @phpstan-ignore-next-line cast.string */
             $this->script .= "$(\"{$this->getElementClassSelector()}\").select2({
                 escapeMarkup: function(markup) {
                     return markup;
@@ -640,7 +638,6 @@ EOT;
             $this->options(call_user_func($this->options, $this->value, $this, isset($this->form) ? $this->form->model() : null));
         }
 
-        /** @phpstan-ignore-next-line Parameter #2 $callback of function array_filter expects (callable(mixed): bool)|null, 'strlen' given. */
         $this->options = array_filter($this->options, 'strlen');
 
         $this->addVariables([

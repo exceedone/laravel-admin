@@ -157,12 +157,12 @@ class HasMany extends Field
 
         foreach ($rules as $column => $rule) {
             foreach (array_keys($input[$this->column]) as $key) {
-                /** @phpstan-ignore-next-line */
+                /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
                 $newRules["{$this->column}.$key.$column"] = $rule;
                 if (isset($input[$this->column][$key][$column]) &&
                     is_array($input[$this->column][$key][$column])) {
                     foreach ($input[$this->column][$key][$column] as $vkey => $value) {
-                        /** @phpstan-ignore-next-line */
+                        /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
                         $newInput["{$this->column}.$key.{$column}$vkey"] = $value;
                     }
                 }
@@ -278,12 +278,12 @@ class HasMany extends Field
                 /*
                  * set new key
                  */
-                /** @phpstan-ignore-next-line */
+                /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
                 Arr::set($input, "{$this->column}.$index.$newKey", $value);
                 /*
                  * forget the old key and value
                  */
-                /** @phpstan-ignore-next-line */
+                /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
                 Arr::forget($input, "{$this->column}.$index.$name");
             }
         }
@@ -571,7 +571,6 @@ class HasMany extends Field
          *
          * {count} is increment number of current sub form count.
          */
-        /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
         $script = <<<EOT
 var index = 0;
 $('#has-many-{$this->column}').off('click.admin_add', '.add').on('click.admin_add', '.add', function () {
@@ -610,7 +609,6 @@ EOT;
         $defaultKey = NestedForm::DEFAULT_KEY_NAME;
         $count = !isset($this->value) ? 0 : count($this->value);
 
-        /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
         $script = <<<EOT
 
 $('#has-many-{$this->column} > .nav').off('click', 'i.close-tab').on('click', 'i.close-tab', function(){
@@ -736,7 +734,6 @@ EOT;
         // specify a view to render.
         $this->view = $this->views[$this->viewMode];
 
-        /** @phpstan-ignore-next-line Parameter #1 $column of method Encore\Admin\Form\Field\HasMany::buildNestedForm() expects string, array|string given. */
         list($template, $script) = $this->buildNestedForm($this->column, $this->builder)
             ->getTemplateHtmlAndScript();
 
@@ -763,7 +760,6 @@ EOT;
         $scripts = [];
 
         /* @var Field $field */
-        /** @phpstan-ignore-next-line Parameter #1 $column of method Encore\Admin\Form\Field\HasMany::buildNestedForm() expects string, array|string given. */
         foreach ($this->buildNestedForm($this->column, $this->builder)->fields() as $field) {
             if (is_a($field, Hidden::class)) {
                 $hidden[] = $field->render();

@@ -18,6 +18,7 @@ class Number extends Text
     {
         $this->default($this->default);
         
+        /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
         $this->script = <<<EOT
 
 $('{$this->getElementClassSelector()}:not(.initialized)')

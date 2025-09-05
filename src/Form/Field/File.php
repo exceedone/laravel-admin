@@ -262,7 +262,6 @@ class File extends Field
      */
     protected function setupScripts($options)
     {
-        /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
         $this->script = <<<EOT
 $("{$this->getElementClassSelector()}").each(function(index, element){
     var options = {$options};
@@ -283,7 +282,6 @@ EOT;
                 'cancel'  => trans('admin.cancel'),
             ];
 
-            /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
             $this->script .= <<<EOT
 $("{$this->getElementClassSelector()}").on('filebeforedelete', function() {
     
@@ -313,7 +311,6 @@ EOT;
             /** @phpstan-ignore-next-line Cannot access offset 'deletedEvent' on array<string, mixed>|Closure. */
             if(isset($this->options['deletedEvent'])){
                 $deletedEvent = $this->options['deletedEvent'];
-                /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
                 $this->script .= <<<EOT
                 $("{$this->getElementClassSelector()}").on('filedeleted', function(event, key, jqXHR, data) {
                     {$deletedEvent};
@@ -341,13 +338,13 @@ EOT;
             $this->setupPreviewOptions();
 
             $this->attribute('data-initial-preview', $this->preview());
-            /** @phpstan-ignore-next-line */
+            /** @phpstan-ignore-next-line Parameter #1 $array of static method Illuminate\Support\Arr::get() expects array|ArrayAccess, array<string, mixed>|Closure given. */
             $this->attribute('data-initial-caption', Arr::get($this->options, 'initialPreviewConfig.0.caption'));
 
             $previewType = $this->guessPreviewType($this->value);
-            /** @phpstan-ignore-next-line */
+            /** @phpstan-ignore-next-line Parameter #1 $array of static method Illuminate\Support\Arr::get() expects array|ArrayAccess, array<string>|bool given. */
             $this->attribute('data-initial-type', Arr::get($previewType, 'type'));
-            /** @phpstan-ignore-next-line */
+            /** @phpstan-ignore-next-line Parameter #1 $array of static method Illuminate\Support\Arr::get() expects array|ArrayAccess, array<string>|bool given. */
             $this->attribute('data-initial-download-url', Arr::get($previewType, 'downloadUrl'));
             /*
              * If has original value, means the form is in edit mode,
@@ -356,7 +353,7 @@ EOT;
             unset($this->attributes['required']);
         }
 
-        /** @phpstan-ignore-next-line */
+        /** @phpstan-ignore-next-line Parameter #1 $options of function json_encode_options expects array, array<string, mixed>|Closure given. */
         $options = json_encode_options($this->options);
 
         $this->setupScripts($options);

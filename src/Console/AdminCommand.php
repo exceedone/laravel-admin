@@ -84,9 +84,9 @@ LOGO;
         $widths = [];
 
         foreach ($commands as $command) {
-            /** @phpstan-ignore-next-line */
+            /** @phpstan-ignore-next-line Cannot call method getName() on Illuminate\Console\Command|string. */
             $widths[] = static::strlen($command->getName());
-            /** @phpstan-ignore-next-line */
+            /** @phpstan-ignore-next-line Cannot call method getAliases() on Illuminate\Console\Command|string. */
             foreach ($command->getAliases() as $alias) {
                 $widths[] = static::strlen($alias);
             }

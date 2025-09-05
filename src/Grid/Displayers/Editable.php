@@ -199,7 +199,6 @@ class Editable extends AbstractDisplayer
     {
         $this->type = Arr::get($arguments, 0, 'text');
 
-        /** @phpstan-ignore-next-line argument.type */
         call_user_func_array([$this, $this->type], array_slice($arguments, 1));
     }
 
@@ -225,6 +224,7 @@ class Editable extends AbstractDisplayer
             'class'      => "$class",
             'data-type'  => $this->type,
             'data-pk'    => "{$this->getKey()}",
+            /** @phpstan-ignore-next-line Part $this->grid->resource() (Encore\Admin\Grid|string) of encapsed string cannot be cast to string. */
             'data-url'   => url("{$this->grid->resource()}/{$this->getKey()}"),
             'data-value' => "{$this->value}",
         ];
