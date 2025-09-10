@@ -18,10 +18,13 @@ class Number extends Text
     {
         $this->default($this->default);
         
-        /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
+        // Ensure selector is string for heredoc usage
+        $selector = $this->getElementClassSelector();
+        $selectorString = is_array($selector) ? implode(',', $selector) : (string) $selector;
+        
         $this->script = <<<EOT
 
-$('{$this->getElementClassSelector()}:not(.initialized)')
+$('{$selectorString}:not(.initialized)')
     .addClass('initialized')
     .bootstrapNumber({
         upClass: 'success',

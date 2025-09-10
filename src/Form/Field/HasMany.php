@@ -561,8 +561,11 @@ class HasMany extends Field
         $removeClass = NestedForm::REMOVE_FLAG_CLASS;
         $defaultKey = NestedForm::DEFAULT_KEY_NAME;
         $count = !isset($this->value) ? 0 : count($this->value);
-        /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
-        $indexName = "index_{$this->column}";
+        
+        // Maintain original behavior - column will be cast to string
+        /** @phpstan-ignore-next-line */
+        $columnName = (string) $this->column;
+        $indexName = "index_{$columnName}";
 
         /**
          * When add a new sub form, replace all element key in new sub form.
@@ -573,21 +576,21 @@ class HasMany extends Field
          */
         $script = <<<EOT
 var index = 0;
-$('#has-many-{$this->column}').off('click.admin_add', '.add').on('click.admin_add', '.add', function () {
+$('#has-many-{$columnName}').off('click.admin_add', '.add').on('click.admin_add', '.add', function () {
 
-    var tpl = $('template.{$this->column}-tpl');
+    var tpl = $('template.{$columnName}-tpl');
 
     $indexName++;
 
     var template = tpl.html().replace(/{$defaultKey}/g, $indexName);
-    $('.has-many-{$this->column}-forms').append(template);
+    $('.has-many-{$columnName}-forms').append(template);
     {$templateScript}
     return false;
 });
 
-$('#has-many-{$this->column}').off('click.admin_remove', '.remove').on('click.admin_remove', '.remove', function () {
-    $(this).closest('.has-many-{$this->column}-form').hide();
-    $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
+$('#has-many-{$columnName}').off('click.admin_remove', '.remove').on('click.admin_remove', '.remove', function () {
+    $(this).closest('.has-many-{$columnName}-form').hide();
+    $(this).closest('.has-many-{$columnName}-form').find('.$removeClass').val(1);
     return false;
 });
 
@@ -608,10 +611,14 @@ EOT;
         $removeClass = NestedForm::REMOVE_FLAG_CLASS;
         $defaultKey = NestedForm::DEFAULT_KEY_NAME;
         $count = !isset($this->value) ? 0 : count($this->value);
+        
+        // Maintain original behavior - column will be cast to string
+        /** @phpstan-ignore-next-line */
+        $columnName = (string) $this->column;
 
         $script = <<<EOT
 
-$('#has-many-{$this->column} > .nav').off('click', 'i.close-tab').on('click', 'i.close-tab', function(){
+$('#has-many-{$columnName} > .nav').off('click', 'i.close-tab').on('click', 'i.close-tab', function(){
     var \$navTab = $(this).siblings('a');
     var \$pane = $(\$navTab.attr('href'));
     if( \$pane.hasClass('new') ){
@@ -621,20 +628,20 @@ $('#has-many-{$this->column} > .nav').off('click', 'i.close-tab').on('click', 'i
     }
     if(\$navTab.closest('li').hasClass('active')){
         \$navTab.closest('li').remove();
-        $('#has-many-{$this->column} > .nav > li:nth-child(1) > a').tab('show');
+        $('#has-many-{$columnName} > .nav > li:nth-child(1) > a').tab('show');
     }else{
         \$navTab.closest('li').remove();
     }
 });
 
 var index = {$count};
-$('#has-many-{$this->column} > .header').off('click', '.add').on('click', '.add', function(){
+$('#has-many-{$columnName} > .header').off('click', '.add').on('click', '.add', function(){
     index++;
-    var navTabHtml = $('#has-many-{$this->column} > template.nav-tab-tpl').html().replace(/{$defaultKey}/g, index);
-    var paneHtml = $('#has-many-{$this->column} > template.pane-tpl').html().replace(/{$defaultKey}/g, index);
-    $('#has-many-{$this->column} > .nav').append(navTabHtml);
-    $('#has-many-{$this->column} > .tab-content').append(paneHtml);
-    $('#has-many-{$this->column} > .nav > li:last-child a').tab('show');
+    var navTabHtml = $('#has-many-{$columnName} > template.nav-tab-tpl').html().replace(/{$defaultKey}/g, index);
+    var paneHtml = $('#has-many-{$columnName} > template.pane-tpl').html().replace(/{$defaultKey}/g, index);
+    $('#has-many-{$columnName} > .nav').append(navTabHtml);
+    $('#has-many-{$columnName} > .tab-content').append(paneHtml);
+    $('#has-many-{$columnName} > .nav > li:last-child a').tab('show');
     {$templateScript}
 });
 
@@ -663,6 +670,10 @@ EOT;
     {
         $removeClass = NestedForm::REMOVE_FLAG_CLASS;
         $defaultKey = NestedForm::DEFAULT_KEY_NAME;
+        
+        // Maintain original behavior - column will be cast to string
+        /** @phpstan-ignore-next-line */
+        $columnName = (string) $this->column;
 
         /**
          * When add a new sub form, replace all element key in new sub form.
@@ -673,21 +684,21 @@ EOT;
          */
         $script = <<<EOT
 var index = 0;
-$('#has-many-{$this->column}').off('click.admin_add').on('click.admin_add', '.add', function () {
+$('#has-many-{$columnName}').off('click.admin_add').on('click.admin_add', '.add', function () {
 
-    var tpl = $('template.{$this->column}-tpl');
+    var tpl = $('template.{$columnName}-tpl');
 
     index++;
 
     var template = tpl.html().replace(/{$defaultKey}/g, index);
-    $('.has-many-{$this->column}-forms').append(template);
+    $('.has-many-{$columnName}-forms').append(template);
     {$templateScript}
     return false;
 });
 
-$('#has-many-{$this->column}').off('click.admin_remove').on('click.admin_remove', '.remove', function () {
-    $(this).closest('.has-many-{$this->column}-form').hide();
-    $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
+$('#has-many-{$columnName}').off('click.admin_remove').on('click.admin_remove', '.remove', function () {
+    $(this).closest('.has-many-{$columnName}-form').hide();
+    $(this).closest('.has-many-{$columnName}-form').find('.$removeClass').val(1);
     return false;
 });
 
@@ -734,6 +745,7 @@ EOT;
         // specify a view to render.
         $this->view = $this->views[$this->viewMode];
 
+        /** @phpstan-ignore-next-line Parameter #1 $column of method Encore\Admin\Form\Field\HasMany::buildNestedForm() expects string, array|string given. */
         list($template, $script) = $this->buildNestedForm($this->column, $this->builder)
             ->getTemplateHtmlAndScript();
 
@@ -760,6 +772,7 @@ EOT;
         $scripts = [];
 
         /* @var Field $field */
+        /** @phpstan-ignore-next-line Parameter #1 $column of method Encore\Admin\Form\Field\HasMany::buildNestedForm() expects string, array|string given. */
         foreach ($this->buildNestedForm($this->column, $this->builder)->fields() as $field) {
             if (is_a($field, Hidden::class)) {
                 $hidden[] = $field->render();

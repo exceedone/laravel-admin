@@ -33,7 +33,7 @@ class Between extends AbstractFilter
      *
      * @return array<string, string>
      */
-    protected function formatName($column)
+    protected function formatBetweenName($column)
     {
         $columns = explode('.', $column);
 
@@ -48,6 +48,16 @@ class Between extends AbstractFilter
         }
 
         return ['start' => "{$name}[start]", 'end' => "{$name}[end]"];
+    }
+    
+    /**
+     * Override parent formatName to use our formatBetweenName method
+     * @param string $column
+     * @return array<string, string>|string|null
+     */
+    protected function formatName($column)
+    {
+        return $this->formatBetweenName($column);
     }
 
     /**
@@ -113,14 +123,20 @@ class Between extends AbstractFilter
         $startOptions = json_encode($options);
         $endOptions = json_encode($options + ['useCurrent' => false]);
 
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var array{start: string, end: string} $idArray */
+        $idArray = $this->id;
+        $startId = $idArray['start'];
+        $endId = $idArray['end'];
+        
         $script = <<<EOT
-            $('#{$this->id['start']}').datetimepicker($startOptions);
-            $('#{$this->id['end']}').datetimepicker($endOptions);
-            $("#{$this->id['start']}").on("dp.change", function (e) {
-                $('#{$this->id['end']}').data("DateTimePicker").minDate(e.date);
+            $('#{$startId}').datetimepicker($startOptions);
+            $('#{$endId}').datetimepicker($endOptions);
+            $("#{$startId}").on("dp.change", function (e) {
+                $('#{$endId}').data("DateTimePicker").minDate(e.date);
             });
-            $("#{$this->id['end']}").on("dp.change", function (e) {
-                $('#{$this->id['start']}').data("DateTimePicker").maxDate(e.date);
+            $("#{$endId}").on("dp.change", function (e) {
+                $('#{$startId}').data("DateTimePicker").maxDate(e.date);
             });
 EOT;
 

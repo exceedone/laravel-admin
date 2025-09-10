@@ -96,15 +96,20 @@ class DateRange extends Field
         $endOptions = json_encode($this->options + ['useCurrent' => false]);
 
         $class = $this->getElementClassSelector();
+        
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var array{start: string, end: string} $class */
+        $startClass = $class['start'];
+        $endClass = $class['end'];
 
         $this->script = <<<EOT
-            $('{$class['start']}').datetimepicker($startOptions);
-            $('{$class['end']}').datetimepicker($endOptions);
-            $("{$class['start']}").on("dp.change", function (e) {
-                $('{$class['end']}').data("DateTimePicker").minDate(e.date);
+            $('{$startClass}').datetimepicker($startOptions);
+            $('{$endClass}').datetimepicker($endOptions);
+            $("{$startClass}").on("dp.change", function (e) {
+                $('{$endClass}').data("DateTimePicker").minDate(e.date);
             });
-            $("{$class['end']}").on("dp.change", function (e) {
-                $('{$class['start']}').data("DateTimePicker").maxDate(e.date);
+            $("{$endClass}").on("dp.change", function (e) {
+                $('{$startClass}').data("DateTimePicker").maxDate(e.date);
             });
 EOT;
 

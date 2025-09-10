@@ -314,7 +314,9 @@ SCRIPT;
      */
     public function variables()
     {
-        $select = request("{$this->id}_group");
+        // Ensure id is string for request key
+        $idString = is_array($this->id) ? implode('_', $this->id) : (string) $this->id;
+        $select = request("{$idString}_group");
 
         $default = $this->group->get($select) ?: $this->group->first();
 
@@ -332,6 +334,7 @@ SCRIPT;
         $this->injectScript();
 
         if ($this->builder && $this->group->isEmpty()) {
+            /** @phpstan-ignore-next-line Parameter #1 $callback of function call_user_func expects callable(): mixed, (callable(): mixed)|non-falsy-string given. */
             call_user_func($this->builder, $this);
         }
 

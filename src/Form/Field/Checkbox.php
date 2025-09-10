@@ -128,13 +128,15 @@ class Checkbox extends MultipleSelect
 
         if ($this->canCheckAll) {
             $checkAllClass = uniqid('check-all-');
+            /** @var string $selector */
+            $selector = $this->getElementClassSelector();
 
             $this->script .= <<<SCRIPT
 $('.{$checkAllClass}').iCheck({checkboxClass:'icheckbox_minimal-blue'}).on('ifChanged', function () {
     if (this.checked) {
-        $('{$this->getElementClassSelector()}').iCheck('check');
+        $('{$selector}').iCheck('check');
     } else {
-        $('{$this->getElementClassSelector()}').iCheck('uncheck');
+        $('{$selector}').iCheck('uncheck');
     }
 })
 SCRIPT;

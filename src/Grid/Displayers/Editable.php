@@ -199,6 +199,7 @@ class Editable extends AbstractDisplayer
     {
         $this->type = Arr::get($arguments, 0, 'text');
 
+        /** @phpstan-ignore-next-line Parameter #1 $callback of function call_user_func_array expects callable(): mixed, array{$this(Encore\Admin\Grid\Displayers\Editable), mixed} given. */
         call_user_func_array([$this, $this->type], array_slice($arguments, 1));
     }
 

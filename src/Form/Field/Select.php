@@ -310,10 +310,14 @@ class Select extends Field
         ]);
 
         $freeInput = $this->freeInput ? '1' : '0';
+        
+        // Ensure selector is string for heredoc usage
+        $selector = $this->getElementClassSelector();
+        $selectorString = is_array($selector) ? implode(',', $selector) : (string) $selector;
 
         $script = <<<EOT
-$(document).off('change', "{$this->getElementClassSelector()}");
-$(document).on('change', "{$this->getElementClassSelector()}", function () {
+$(document).off('change', "{$selectorString}");
+$(document).on('change', "{$selectorString}", function () {
     var target = $(this).closest('.fields-group').find(".$class");
     $.get("$sourceUrl",{q : this.value}, function (data) {
         target.find("option").remove();
@@ -357,6 +361,10 @@ EOT;
         ]);
 
         $freeInput = $this->freeInput ? '1' : '0';
+        
+        // Ensure selector is string for heredoc usage
+        $selector = $this->getElementClassSelector();
+        $selectorString = is_array($selector) ? implode(',', $selector) : (string) $selector;
 
         $script = <<<EOT
 var fields = '$fieldsStr'.split('.');
@@ -378,10 +386,8 @@ var refreshOptions = function(url, target) {
     });
 };
 
-/** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
-$(document).off('change', "{$this->getElementClassSelector()}");
-/** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
-$(document).on('change', "{$this->getElementClassSelector()}", function () {
+$(document).off('change', "{$selectorString}");
+$(document).on('change', "{$selectorString}", function () {
     var _this = this;
     var promises = [];
 
@@ -474,12 +480,15 @@ EOT;
 
         $ajaxOptions = json_encode(array_merge($ajaxOptions, $options));
 
+        // Ensure selector is string for heredoc usage
+        $selector = $this->getElementClassSelector();
+        $selectorString = is_array($selector) ? implode(',', $selector) : (string) $selector;
+        
         $this->script = <<<EOT
 
 $.ajax($ajaxOptions).done(function(data) {
 
-  /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
-  var select = $("{$this->getElementClassSelector()}");
+  var select = $("{$selectorString}");
 
   select.select2({
     data: data,
@@ -525,10 +534,13 @@ EOT;
         /** @phpstan-ignore-next-line Parameter #1 $string of function substr expects string, string|false given. */
         $configs = substr($configs, 1, strlen($configs) - 2);
         $dropdownParent = $this->asModal ? '$("' . static::$modalSelectorName . ' .modal-dialog")' : 'null';
+        // Ensure selector is string for heredoc usage
+        $selector = $this->getElementClassSelector();
+        $selectorString = is_array($selector) ? implode(',', $selector) : (string) $selector;
+        
         $this->script = <<<EOT
 
-/** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
-$("{$this->getElementClassSelector()}").not('.admin-added-select2').select2({
+$("{$selectorString}").not('.admin-added-select2').select2({
   ajax: {
     url: "$url",
     dataType: 'json',
@@ -616,14 +628,20 @@ EOT;
 
         if (empty($this->script)) {
             $dropdownParent = $this->asModal ? '$("' . static::$modalSelectorName . ' .modal-dialog")' : 'null';
-            $this->script = "$(\"{$this->getElementClassSelector()}\").not('.admin-added-select2').select2({
+            // Ensure selector is string for script usage
+            $selector = $this->getElementClassSelector();
+            $selectorString = is_array($selector) ? implode(',', $selector) : (string) $selector;
+            $this->script = "$(\"{$selectorString}\").not('.admin-added-select2').select2({
                 dropdownParent: $dropdownParent,
                 $configs,
             }).addClass('admin-added-select2');";
         }
 
         if($this->escapeMarkup){
-            $this->script .= "$(\"{$this->getElementClassSelector()}\").select2({
+            // Ensure selector is string for script usage
+            $selector = $this->getElementClassSelector();
+            $selectorString = is_array($selector) ? implode(',', $selector) : (string) $selector;
+            $this->script .= "$(\"{$selectorString}\").select2({
                 escapeMarkup: function(markup) {
                     return markup;
                 }
@@ -638,6 +656,7 @@ EOT;
             $this->options(call_user_func($this->options, $this->value, $this, isset($this->form) ? $this->form->model() : null));
         }
 
+        /** @phpstan-ignore-next-line Parameter #1 $array of function array_filter expects array, array<string, mixed>|Closure|null given. */
         $this->options = array_filter($this->options, 'strlen');
 
         $this->addVariables([

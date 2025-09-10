@@ -529,6 +529,7 @@ class NestedForm
             /** @phpstan-ignore-next-line Call to an undefined method object::setForm(). */
             $field->setForm($this->form);
 
+            /** @phpstan-ignore-next-line Parameter #1 $field of method Encore\Admin\Form\NestedForm::formatField() expects Encore\Admin\Form\Field, object given. */
             $field = $this->formatField($field);
 
             $this->pushField($field);

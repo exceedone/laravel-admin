@@ -28,10 +28,11 @@ class Icon extends Text
      */
     public function render()
     {
-        /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
+        /** @var string $selector */
+        $selector = $this->getElementClassSelector();
         $this->script = <<<EOT
 
-$('{$this->getElementClassSelector()}').iconpicker({placement:'bottomLeft'});
+$('{$selector}').iconpicker({placement:'bottomLeft'});
 
 EOT;
 

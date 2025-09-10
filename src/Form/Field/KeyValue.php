@@ -70,15 +70,18 @@ class KeyValue extends Field
      */
     protected function setupScript()
     {
-        /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
+        // Maintain original behavior - column will be cast to string
+        /** @phpstan-ignore-next-line */
+        $columnName = (string) $this->column;
+        
         $this->script = <<<SCRIPT
 
-$('.{$this->column}-add').on('click', function () {
-    var tpl = $('template.{$this->column}-tpl').html();
-    $('tbody.kv-{$this->column}-table').append(tpl);
+$('.{$columnName}-add').on('click', function () {
+    var tpl = $('template.{$columnName}-tpl').html();
+    $('tbody.kv-{$columnName}-table').append(tpl);
 });
 
-$('tbody').on('click', '.{$this->column}-remove', function () {
+$('tbody').on('click', '.{$columnName}-remove', function () {
     $(this).closest('tr').remove();
 });
 
