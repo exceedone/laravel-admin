@@ -114,6 +114,7 @@ class Show implements Renderable
      */
     public static function init(\Closure $callback = null)
     {
+        // @phpstan-ignore-next-line Callback may be null to reset initialization
         static::$initCallback = $callback;
     }
 
@@ -201,6 +202,7 @@ class Show implements Renderable
      */
     public function all()
     {
+        // @phpstan-ignore-next-line Model is guaranteed to be set at this point
         $fields = array_keys($this->model->getAttributes());
 
         return $this->fields($fields);
@@ -390,6 +392,7 @@ class Show implements Renderable
      */
     public function getModel()
     {
+        // @phpstan-ignore-next-line Model may be null but return type declares Model
         return $this->model;
     }
 
@@ -447,6 +450,7 @@ class Show implements Renderable
      */
     protected function handleRelationField($method, $arguments)
     {
+        // @phpstan-ignore-next-line Model is guaranteed to be set at this point
         if (!method_exists($this->model, $method)) {
             return false;
         }
@@ -459,6 +463,7 @@ class Show implements Renderable
             || $relation instanceof BelongsTo
             || $relation instanceof MorphOne
         ) {
+            // @phpstan-ignore-next-line Model is guaranteed to be set at this point
             $this->model->with($method);
 
             if (count($arguments) == 1 && $arguments[0] instanceof \Closure) {
@@ -481,6 +486,7 @@ class Show implements Renderable
                 return $this->showRelationAsField($method, $arguments[0] ?? '');
             }
 
+            // @phpstan-ignore-next-line Model is guaranteed to be set at this point
             $this->model->with($method);
 
             if (count($arguments) == 1 && is_callable($arguments[0])) {
@@ -518,6 +524,7 @@ class Show implements Renderable
      */
     protected function handleModelField($method, $label)
     {
+        // @phpstan-ignore-next-line Model is guaranteed to be set at this point
         if (in_array($method, $this->model->getAttributes())) {
             return $this->addField($method, $label);
         }

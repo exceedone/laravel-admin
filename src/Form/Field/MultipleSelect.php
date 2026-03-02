@@ -28,8 +28,9 @@ class MultipleSelect extends Select
             return $this->otherKey;
         }
 
+        // @phpstan-ignore-next-line Form and Model are guaranteed to be set at this point
         if (is_callable([$this->form->model(), $this->column]) &&
-            ($relation = $this->form->model()->{$this->column}()) instanceof BelongsToMany
+            ($relation = $this->form->model()->{$this->column}()) instanceof BelongsToMany // @phpstan-ignore-line Form is guaranteed to be set
         ) {
             /* @var BelongsToMany $relation */
             $fullKey = $relation->getQualifiedRelatedPivotKeyName();

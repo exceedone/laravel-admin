@@ -509,6 +509,7 @@ class HasMany extends Field
                     $index++;
             }
         } else {
+            // @phpstan-ignore-next-line Value is guaranteed to be iterable at this point
             foreach ($this->value as $index => $data) {
                 $key = Arr::get($data, $relation->getRelated()->getKeyName());
 

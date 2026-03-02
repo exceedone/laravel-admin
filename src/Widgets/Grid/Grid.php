@@ -184,6 +184,7 @@ class Grid
     public function __construct(Closure $builder = null, Closure $getDataCallback = null)
     {
         $this->builder = $builder;
+        // @phpstan-ignore-next-line Callback accepts nullable Closure from parameter
         $this->getDataCallback = $getDataCallback;
 
         $this->initialize();
@@ -755,6 +756,7 @@ class Grid
     {
         $label = $arguments[0] ?? null;
 
+        // @phpstan-ignore-next-line Label may be null from optional argument
         return $this->addColumn($method, $label);
     }
 

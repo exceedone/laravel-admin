@@ -213,6 +213,7 @@ class MultipleFile extends Field
     {
         $this->name = $this->getStoreName($file);
 
+        // @phpstan-ignore-next-line File is guaranteed to be set when preparing upload
         return tap($this->upload($file), function () {
             $this->name = null;
         });

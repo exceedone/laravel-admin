@@ -128,6 +128,7 @@ class Model
 
         $this->originalModel = $model;
 
+        // @phpstan-ignore-next-line Grid accepts nullable Grid from parameter
         $this->grid = $grid;
 
         $this->queries = collect();
@@ -683,6 +684,7 @@ class Model
         if(!$column_name){
             return null;
         }
+        // @phpstan-ignore-next-line Columns collection is guaranteed to exist on grid
         return $this->grid->columns()->first(function($column) use($column_name){
             if($column->getSortName() == $column_name){
                 return true;

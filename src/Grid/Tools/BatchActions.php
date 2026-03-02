@@ -94,6 +94,7 @@ class BatchActions extends AbstractTool
             /** @phpstan-ignore-next-line Cannot call method setId() on Encore\Admin\Grid\Tools\BatchAction|string. */
             $action->setId($id);
         } elseif (func_num_args() == 2) {
+            // @phpstan-ignore-next-line Action is guaranteed to be BatchAction instance at this point
             $action->setId($id);
             /** @phpstan-ignore-next-line Parameter #1 $title of method Encore\Admin\Grid\Tools\BatchAction::setTitle() expects string, Encore\Admin\Grid\Tools\BatchAction|string given. */
             $action->setTitle($title);

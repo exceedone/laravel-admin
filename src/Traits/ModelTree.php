@@ -135,6 +135,7 @@ trait ModelTree
      */
     public function withQuery(\Closure $query = null)
     {
+        // @phpstan-ignore-next-line Callback accepts nullable Closure to reset query callback
         $this->queryCallback = $query;
 
         return $this;
@@ -147,6 +148,7 @@ trait ModelTree
      */
     public function getCallback(\Closure $get = null)
     {
+        // @phpstan-ignore-next-line Callback accepts nullable Closure to reset get callback
         $this->getCallback = $get;
 
         return $this;

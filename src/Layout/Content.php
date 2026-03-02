@@ -18,7 +18,7 @@ class Content implements Renderable
     /**
      * Content header icon.
      *
-     * @var string
+     * @var string|null
      */
     protected $headericon = null;
 

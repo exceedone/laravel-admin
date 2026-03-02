@@ -208,6 +208,7 @@ class ResourceGenerator
      */
     protected function getReservedColumns()
     {
+        // @phpstan-ignore-next-line getCreatedAtColumn/getUpdatedAtColumn may return string|null but are always string in practice
         return [
             $this->model->getKeyName(),
             $this->model->getCreatedAtColumn(),

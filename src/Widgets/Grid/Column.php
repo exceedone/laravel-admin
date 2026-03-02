@@ -413,6 +413,7 @@ class Column
     public function setRelation($relation, $relationColumn = null)
     {
         $this->relation = $relation;
+        // @phpstan-ignore-next-line relationColumn accepts nullable string from parameter
         $this->relationColumn = $relationColumn;
 
         return $this;

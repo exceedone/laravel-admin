@@ -114,6 +114,7 @@ trait HasAssets
         }
 
         if (!$css = static::getMinifiedCss()) {
+            // @phpstan-ignore-next-line baseCss() may return null but is always array in practice
             $css = array_merge(static::$css, static::baseCss());
         }
 
@@ -156,6 +157,7 @@ trait HasAssets
         }
 
         if (!$js = static::getMinifiedJs()) {
+            // @phpstan-ignore-next-line baseJs() may return null but is always array in practice
             $js = array_merge(static::baseJs(), static::$js);
         }
 

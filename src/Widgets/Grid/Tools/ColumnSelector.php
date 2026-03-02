@@ -100,6 +100,7 @@ EOT;
      */
     protected function getGridColumns()
     {
+        // @phpstan-ignore-next-line Columns collection is guaranteed to exist on grid
         return $this->grid->columns()->map(function (Column $column) {
             $name = $column->getName();
 

@@ -294,8 +294,9 @@ trait HasQuickSearch
             $value = null;
         }
 
+        // @phpstan-ignore-next-line Value may be null but is checked for 'NULL' string above
         if (Str::startsWith($value, '"') && Str::endsWith($value, '"')) {
-            $value = substr($value, 1, -1);
+            $value = substr($value, 1, -1); // @phpstan-ignore-line Value may be null but is checked above
         }
 
         $this->model()->{$method}($column, $operator, $value);

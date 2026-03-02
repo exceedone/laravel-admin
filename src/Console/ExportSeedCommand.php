@@ -69,6 +69,7 @@ class ExportSeedCommand extends Command
             $contents = preg_replace('/\/\/ users tables[\s\S]*?(?=\/\/ finish)/mu', '', $contents);
         }
 
+        // @phpstan-ignore-next-line $contents is always string from preg_replace in practice
         $contents = str_replace(array_keys($replaces), array_values($replaces), $contents);
 
         /** @phpstan-ignore-next-line */

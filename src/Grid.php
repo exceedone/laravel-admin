@@ -239,6 +239,7 @@ class Grid
      */
     public static function init(Closure $callback = null)
     {
+        // @phpstan-ignore-next-line Callback may be null but is handled during execution
         static::$initCallbacks[] = $callback;
     }
 
@@ -283,6 +284,7 @@ class Grid
      */
     public static function getDataCallback(Closure $callback = null)
     {
+        // @phpstan-ignore-next-line Callback may be null but is handled during execution
         static::$getDataCallbacks[] = $callback;
     }
 

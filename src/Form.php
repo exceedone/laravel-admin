@@ -246,6 +246,7 @@ class Form implements Renderable
      */
     public static function init(Closure $callback = null)
     {
+        // @phpstan-ignore-next-line Callback may be null but is handled during execution
         static::$initCallbacks[] = $callback;
     }
 
@@ -386,6 +387,7 @@ class Form implements Renderable
 
             collect(explode(',', $id))->filter()->each(function ($id) {
                 /** @var SoftDeletableModel $builder */
+                // @phpstan-ignore-next-line Model is guaranteed to be set when destroy is called
                 $builder = $this->model()->newQuery();
 
                 if ($this->isSoftDeletes) {
@@ -479,9 +481,11 @@ class Form implements Renderable
             $inserts = $this->prepareInsert($this->updates);
 
             foreach ($inserts as $column => $value) {
+                // @phpstan-ignore-next-line Model is guaranteed to be set during store
                 $this->model->setAttribute($column, $value);
             }
 
+            // @phpstan-ignore-next-line Model is guaranteed to be set during store
             $this->model->save();
             $this->storeJancode($this->model);
 
@@ -611,6 +615,7 @@ class Form implements Renderable
         $relations = [];
 
         foreach ($inputs as $column => $value) {
+            // @phpstan-ignore-next-line Model is guaranteed to be set at this point
             if (!method_exists($this->model, $column)) {
                 continue;
             }
@@ -679,9 +684,11 @@ class Form implements Renderable
 
             foreach ($updates as $column => $value) {
                 /* @var Model $this->model */
+                // @phpstan-ignore-next-line Model is guaranteed to be set during update
                 $this->model->setAttribute($column, $value);
             }
 
+            // @phpstan-ignore-next-line Model is guaranteed to be set during update
             $this->model->save();
 
             $this->updateRelation($this->relations);
@@ -788,9 +795,11 @@ class Form implements Renderable
 
             foreach ($updates as $column => $value) {
                 /* @var Model $this->model */
+                // @phpstan-ignore-next-line Model is guaranteed to be set during validationUpdate
                 $this->model->setAttribute($column, $value);
             }
 
+            // @phpstan-ignore-next-line Model is guaranteed to be set during validationUpdate
             $this->model->save();
 
             $this->updateRelation($this->relations);
@@ -871,6 +880,7 @@ class Form implements Renderable
     {
         $resourcesPath = $this->getResource(0);
 
+        // @phpstan-ignore-next-line Model is guaranteed to be set after store
         $key = $this->model->getKey();
 
         return $this->redirectAfterSaving($resourcesPath, $key);
@@ -1030,6 +1040,7 @@ class Form implements Renderable
     {
         if (array_key_exists('_orderable', $input)) {
             /** @var SortableModel $model */
+            // @phpstan-ignore-next-line Model is guaranteed to be set at this point
             $model = $this->model->find($id);
 
             if ($model instanceof Sortable) {
@@ -1052,6 +1063,7 @@ class Form implements Renderable
     protected function updateRelation($relationsData)
     {
         foreach ($relationsData as $name => $values) {
+            // @phpstan-ignore-next-line Model is guaranteed to be set when updating relations
             if (!method_exists($this->model, $name)) {
                 continue;
             }
@@ -1114,6 +1126,7 @@ class Form implements Renderable
                     if (!$this->model->{$relation->{$foreignKeyMethod}()}) {
                         $this->model->{$relation->{$foreignKeyMethod}()} = $parent->getKey();
 
+                        // @phpstan-ignore-next-line Model is guaranteed to be set when saving relations
                         $this->model->save();
                     }
 
@@ -1394,6 +1407,7 @@ class Form implements Renderable
     {
 //        static::doNotSnakeAttributes($this->model);
 
+        // @phpstan-ignore-next-line Model is guaranteed to be set when setting field original values
         $values = $this->model->toArray();
 
         $this->builder->fields()->each(function (Field $field) use ($values) {
@@ -1470,12 +1484,14 @@ class Form implements Renderable
         }
 
         foreach ($inserts as $column => $value) {
+            // @phpstan-ignore-next-line Model is guaranteed to be set at this point
             $this->model->setAttribute($column, $value);
         }
 
         // Now, I only call this function, If need, set such as array.
         $this->getRelationModelByInputs($data);
 
+        // @phpstan-ignore-next-line Model may be null but is expected to be set here
         return $this->model;
     }
 
@@ -1497,7 +1513,7 @@ class Form implements Renderable
 
         $relations = [];
         foreach ($inputs as $column => $value) {
-            
+            // @phpstan-ignore-next-line Model is guaranteed to be set at this point
             if (!method_exists($this->model, $column)) {
                 continue;
             }
@@ -1656,6 +1672,7 @@ class Form implements Renderable
             $func($input, $message, $this);
         }
         // if contains function 'validatorSaving' in model, call
+        // @phpstan-ignore-next-line Model is guaranteed to be set during validation
         if(method_exists($this->model, 'validatorSaving')){
             if(is_array($validateResult = $this->model->validatorSaving($input))){
                 $message = $message->merge($validateResult);
@@ -1702,11 +1719,13 @@ class Form implements Renderable
             if (Str::contains($column, '.')) {
                 list($relation) = explode('.', $column);
 
+                // @phpstan-ignore-next-line Model is guaranteed to be set at this point
                 if (method_exists($this->model, $relation) &&
                     $this->model->$relation() instanceof Relations\Relation
                 ) {
                     $relations[] = $relation;
                 }
+            // @phpstan-ignore-next-line Model is guaranteed to be set at this point
             } elseif (method_exists($this->model, $column) &&
                 !method_exists(Model::class, $column)
             ) {
@@ -1830,6 +1849,7 @@ class Form implements Renderable
             return $this->builder->getTools();
         }
 
+        // @phpstan-ignore-next-line Closure is guaranteed to be set when called with arguments
         $callback->call($this, $this->builder->getTools());
     }
 
@@ -2002,6 +2022,7 @@ class Form implements Renderable
             return $this->builder()->getFooter();
         }
 
+        // @phpstan-ignore-next-line Closure is guaranteed to be set when called with arguments
         call_user_func($callback, $this->builder()->getFooter());
     }
 

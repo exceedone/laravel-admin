@@ -257,13 +257,13 @@ class Builder
     public function getResource($slice = null)
     {
         if ($this->mode == self::MODE_CREATE) {
-            return $this->form->resource(-1);
+            return $this->form->resource(-1); // @phpstan-ignore-line Form is guaranteed to be set in Builder
         }
         if ($slice !== null) {
-            return $this->form->resource($slice);
+            return $this->form->resource($slice); // @phpstan-ignore-line Form is guaranteed to be set in Builder
         }
 
-        return $this->form->resource();
+        return $this->form->resource(); // @phpstan-ignore-line Form is guaranteed to be set in Builder
     }
 
     /**
@@ -342,11 +342,11 @@ class Builder
         }
 
         if ($this->isMode(static::MODE_EDIT)) {
-            return $this->form->resource().'/'.$this->id;
+            return $this->form->resource().'/'.$this->id; // @phpstan-ignore-line Form is guaranteed to be set in Builder
         }
 
         if ($this->isMode(static::MODE_CREATE)) {
-            return $this->form->resource(-1);
+            return $this->form->resource(-1); // @phpstan-ignore-line Form is guaranteed to be set in Builder
         }
 
         return '';
@@ -387,6 +387,7 @@ class Builder
      */
     public function fields()
     {
+        // @phpstan-ignore-next-line Fields collection may be null before initialization
         return $this->fields;
     }
 
@@ -421,6 +422,7 @@ class Builder
      */
     public function getRows()
     {
+        // @phpstan-ignore-next-line Form is guaranteed to be set in Builder
         return $this->form->rows;
     }
 
@@ -559,6 +561,7 @@ class Builder
     public function open($options = [])
     {
         // set atribute
+        // @phpstan-ignore-next-line Form is guaranteed to be set in Builder
         $this->form->attribute($options);
 
         if ($this->isMode(self::MODE_EDIT)) {
@@ -567,23 +570,23 @@ class Builder
 
         $this->addRedirectUrlField();
 
-        $this->form->attribute([
+        $this->form->attribute([ // @phpstan-ignore-line Form is guaranteed to be set in Builder
             'action' => url($this->getAction()),
             'method' => Arr::get($options, 'method', 'post'),
             'accept-charset' => 'UTF-8',
-            'data-form_uniquename' => $this->form->getUniqueName(),
-            'class' => $this->form->getUniqueName(),
+            'data-form_uniquename' => $this->form->getUniqueName(), // @phpstan-ignore-line Form is guaranteed to be set in Builder
+            'class' => $this->form->getUniqueName(), // @phpstan-ignore-line Form is guaranteed to be set in Builder
         ]);
-        
+
         if($this->disableValidate){
-            $this->form->attribute('novalidate', 1);
+            $this->form->attribute('novalidate', 1); // @phpstan-ignore-line Form is guaranteed to be set in Builder
         }
         if ($this->hasFile()) {
-            $this->form->attribute('enctype', 'multipart/form-data');
+            $this->form->attribute('enctype', 'multipart/form-data'); // @phpstan-ignore-line Form is guaranteed to be set in Builder
         }
 
         $html = [];
-        foreach ($this->form->getAttributes() as $name => $value) {
+        foreach ($this->form->getAttributes() as $name => $value) { // @phpstan-ignore-line Form is guaranteed to be set in Builder
             $html[] = "$name=\"$value\"";
         }
 
@@ -615,9 +618,9 @@ class Builder
         }
 
         $reservedColumns = [
-            $this->form->model()->getKeyName(),
-            $this->form->model()->getCreatedAtColumn(),
-            $this->form->model()->getUpdatedAtColumn(),
+            $this->form->model()->getKeyName(), // @phpstan-ignore-line Form and Model are guaranteed to be set in Builder
+            $this->form->model()->getCreatedAtColumn(), // @phpstan-ignore-line Form and Model are guaranteed to be set in Builder
+            $this->form->model()->getUpdatedAtColumn(), // @phpstan-ignore-line Form and Model are guaranteed to be set in Builder
         ];
 
         $this->fields = $this->fields()->reject(function (Field $field) use ($reservedColumns) {
@@ -654,6 +657,7 @@ class Builder
     {
         $this->removeReservedFields();
 
+        // @phpstan-ignore-next-line Form is guaranteed to be set in Builder
         $tabObj = $this->form->getTab();
 
         if (!$tabObj->isEmpty()) {

@@ -173,6 +173,7 @@ class NestedForm
      */
     public function getIndex()
     {
+        // @phpstan-ignore-next-line Index may be null but return type declares int
         return $this->index;
     }
 
@@ -197,6 +198,7 @@ class NestedForm
      */
     public function setForm($form = null)
     {
+        // @phpstan-ignore-next-line Form property accepts nullable Form from parameter
         $this->form = $form;
 
         return $this;

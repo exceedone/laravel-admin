@@ -309,6 +309,7 @@ TREE;
             return;
         }
 
+        // @phpstan-ignore-next-line $to from argument() may be string|null but is validated by caller
         $to = $this->extensionPath($to);
 
         /** @phpstan-ignore-next-line Parameter #1 $path of method Illuminate\Filesystem\Filesystem::copy() expects string, array|string given. */

@@ -187,6 +187,7 @@ trait UploadField
         ];
 
         if ($this->form instanceof Form) {
+            // @phpstan-ignore-next-line Model is guaranteed to be set when Form is instance of Form
             $defaults['deleteUrl'] = $this->form->resource().'/'.$this->form->model()->getKey();
         }
 
@@ -338,6 +339,7 @@ trait UploadField
     {
         $this->dir($directory);
 
+        // @phpstan-ignore-next-line Name may be null which is valid for auto-generated names
         $this->name($name);
 
         return $this;

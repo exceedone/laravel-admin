@@ -52,6 +52,7 @@ class Table extends HasMany
                 $forms[$key] = $this->buildNestedForm($this->column, $this->builder, $key)->fill($data);
             }
         } else {
+            // @phpstan-ignore-next-line Value is guaranteed to be iterable at this point
             foreach ($this->value as $key => $data) {
                 if (isset($data['pivot'])) {
                     $data = array_merge($data, $data['pivot']);

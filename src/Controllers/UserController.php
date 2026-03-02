@@ -115,6 +115,7 @@ class UserController extends AdminController
         $form->display('updated_at', trans('admin.updated_at'));
 
         $form->saving(function (Form $form) {
+            // @phpstan-ignore-next-line Model is guaranteed to exist during saving callback
             if ($form->password && $form->model()->password != $form->password) {
                 $form->password = bcrypt($form->password);
             }

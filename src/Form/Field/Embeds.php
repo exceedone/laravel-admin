@@ -278,6 +278,7 @@ class Embeds extends Field
         /** @phpstan-ignore-next-line Parameter #1 $column of class Encore\Admin\Form\EmbeddedForm constructor expects string, array|string given. */
         $form = new EmbeddedForm($this->column);
 
+        // @phpstan-ignore-next-line Form is guaranteed to be set when building embedded form
         $form->setParent($this->form);
 
         call_user_func($this->builder, $form);

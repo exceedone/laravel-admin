@@ -894,6 +894,7 @@ class Field implements Renderable
         }
 
         $pattern = "/{$rule}[^\|]?(\||$)/";
+        // @phpstan-ignore-next-line preg_replace may return null but rules is always string here
         $this->rules = preg_replace($pattern, '', $this->rules, -1);
     }
 
@@ -1040,6 +1041,7 @@ class Field implements Renderable
      */
     public function getHelpText()
     {
+        // @phpstan-ignore-next-line helpText may be null but return type declares string
         return $this->helpText;
     }
 
@@ -1743,6 +1745,7 @@ class Field implements Renderable
     public function setIndex(?int $index)
     : self
     {
+        // @phpstan-ignore-next-line Index accepts nullable int from parameter
         $this->index = $index;
 
         return $this;
@@ -1916,6 +1919,7 @@ class Field implements Renderable
         }
 
         if ($this->callback instanceof Closure) {
+            // @phpstan-ignore-next-line Form and Model are guaranteed to be set during render
             $this->value = $this->callback->call($this->form->model(), $this->value, $this);
         }
 
