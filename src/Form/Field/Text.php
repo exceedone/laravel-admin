@@ -6,19 +6,7 @@ use Encore\Admin\Form\Field;
 
 class Text extends Field
 {
-    protected $customOptions = [];
-
-    public function setCustomOptions(array $customOptions)
-    {
-        $this->customOptions = $customOptions;
-        return $this;
-    }
-
-    public function getCustomOptions()
-    {
-        return $this->customOptions;
-    }
-
+    use HasCustomOptions;
     use PlainInput;
 
     /**
