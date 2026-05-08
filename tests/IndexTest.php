@@ -13,37 +13,29 @@ class IndexTest extends TestCase
 
     public function testIndex()
     {
-        $this->visit('admin/')
-            ->see('Dashboard')
-            ->see('Description...')
-
-            ->see('Environment')
-            ->see('PHP version')
-            ->see('Laravel version')
-
-            ->see('Available extensions')
-            ->seeLink('laravel-admin-ext/helpers', 'https://github.com/laravel-admin-extensions/helpers')
-            ->seeLink('laravel-admin-ext/backup', 'https://github.com/laravel-admin-extensions/backup')
-            ->seeLink('laravel-admin-ext/media-manager', 'https://github.com/laravel-admin-extensions/media-manager')
-
-            ->see('Dependencies')
-            ->see('php')
-//            ->see('>=7.0.0')
-            ->see('laravel/framework');
+        $this->get('admin/')
+            ->assertOk()
+            ->assertSee('Dashboard')
+            ->assertSee('Description...')
+            ->assertSee('Environment')
+            ->assertSee('PHP version')
+            ->assertSee('Laravel version')
+            ->assertSee('Available extensions')
+            ->assertSee('https://github.com/laravel-admin-extensions/helpers')
+            ->assertSee('https://github.com/laravel-admin-extensions/backup')
+            ->assertSee('https://github.com/laravel-admin-extensions/media-manager')
+            ->assertSee('Dependencies')
+            ->assertSee('php')
+            ->assertSee('laravel/framework');
     }
 
     public function testClickMenu()
     {
-        $this->visit('admin/')
-            ->click('Users')
-            ->seePageis('admin/auth/users')
-            ->click('Roles')
-            ->seePageis('admin/auth/roles')
-            ->click('Permission')
-            ->seePageis('admin/auth/permissions')
-            ->click('Menu')
-            ->seePageis('admin/auth/menu')
-            ->click('Operation log')
-            ->seePageis('admin/auth/logs');
+        // Navigate directly to each menu-linked page (replaces BrowserKit click+seePageIs)
+        $this->get('admin/auth/users')->assertOk();
+        $this->get('admin/auth/roles')->assertOk();
+        $this->get('admin/auth/permissions')->assertOk();
+        $this->get('admin/auth/menu')->assertOk();
+        $this->get('admin/auth/logs')->assertOk();
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Encore\Admin\Auth\Database\Administrator;
+use Symfony\Component\DomCrawler\Crawler;
 use Tests\Models\Profile as ProfileModel;
 use Tests\Models\User as UserModel;
 
@@ -29,12 +30,19 @@ class UserGridTest extends TestCase
             ->create();
     }
 
+    /** Helper: create a DomCrawler from a TestResponse. */
+    private function crawlerFrom(\Illuminate\Testing\TestResponse $response): Crawler
+    {
+        return new Crawler($response->getContent());
+    }
+
     public function testGridWithData()
     {
         $this->seedsTable();
 
-        $this->visit('admin/users')
-            ->see('All users');
+        $this->get('admin/users')
+            ->assertOk()
+            ->assertSee('All users');
 
         $this->assertCount(100, UserModel::all());
         $this->assertCount(100, ProfileModel::all());
@@ -44,20 +52,19 @@ class UserGridTest extends TestCase
     {
         $this->seedsTable(65);
 
-        $this->visit('admin/users')
-            ->see('All users');
+        $this->get('admin/users')->assertOk()->assertSee('All users');
 
-        $this->visit('admin/users?page=2');
-        $this->assertCount(20, $this->crawler()->filter('td a i[class*=fa-edit]'));
+        $response = $this->get('admin/users?page=2')->assertOk();
+        $this->assertCount(20, $this->crawlerFrom($response)->filter('td a i[class*=fa-edit]'));
 
-        $this->visit('admin/users?page=3');
-        $this->assertCount(20, $this->crawler()->filter('td a i[class*=fa-edit]'));
+        $response = $this->get('admin/users?page=3')->assertOk();
+        $this->assertCount(20, $this->crawlerFrom($response)->filter('td a i[class*=fa-edit]'));
 
-        $this->visit('admin/users?page=4');
-        $this->assertCount(5, $this->crawler()->filter('td a i[class*=fa-edit]'));
+        $response = $this->get('admin/users?page=4')->assertOk();
+        $this->assertCount(5, $this->crawlerFrom($response)->filter('td a i[class*=fa-edit]'));
 
-        $this->click(1)->seePageIs('admin/users?page=1');
-        $this->assertCount(20, $this->crawler()->filter('td a i[class*=fa-edit]'));
+        $response = $this->get('admin/users?page=1')->assertOk();
+        $this->assertCount(20, $this->crawlerFrom($response)->filter('td a i[class*=fa-edit]'));
     }
 
     public function testEqualFilter()
@@ -71,20 +78,21 @@ class UserGridTest extends TestCase
     {
         $this->seedsTable(50);
 
-        $this->visit('admin/users')
-            ->see('All users');
+        $this->get('admin/users')->assertOk()->assertSee('All users');
 
         $this->assertCount(50, UserModel::all());
         $this->assertCount(50, ProfileModel::all());
 
         $users = UserModel::where('username', 'like', '%mi%')->get();
 
-        $this->visit('admin/users?username=mi');
+        $response = $this->get('admin/users?username=mi')->assertOk();
+        $crawler  = $this->crawlerFrom($response);
 
-        $this->assertCount($this->crawler()->filter('table tr')->count() - 1, $users);
+        // Table rows minus header row should equal matching users count.
+        $this->assertCount($crawler->filter('table tr')->count() - 1, $users);
 
         foreach ($users as $user) {
-            $this->seeInElement('td', $user->username);
+            $response->assertSee($user->username);
         }
     }
 
@@ -101,11 +109,12 @@ class UserGridTest extends TestCase
 
         $user = UserModel::with('profile')->find(1);
 
-        $this->visit('admin/users')
-            ->seeInElement('th', 'Column1 not in table')
-            ->seeInElement('th', 'Column2 not in table')
-            ->seeInElement('td', "full name:{$user->profile->first_name} {$user->profile->last_name}")
-            ->seeInElement('td', "{$user->email}#{$user->profile->color}");
+        $this->get('admin/users')
+            ->assertOk()
+            ->assertSee('Column1 not in table')
+            ->assertSee('Column2 not in table')
+            ->assertSee("full name:{$user->profile->first_name} {$user->profile->last_name}")
+            ->assertSee("{$user->email}#{$user->profile->color}");
     }
 
     public function testHasManyRelation()
@@ -119,40 +128,49 @@ class UserGridTest extends TestCase
     {
         $this->seedsTable(15);
 
-        $this->visit('admin/users');
+        $response = $this->get('admin/users')->assertOk();
+        $crawler  = $this->crawlerFrom($response);
 
-        $this->assertCount(15, $this->crawler()->filter('td a i[class*=fa-edit]'));
-        $this->assertCount(15, $this->crawler()->filter('td a i[class*=fa-trash]'));
+        $this->assertCount(15, $crawler->filter('td a i[class*=fa-edit]'));
+        $this->assertCount(15, $crawler->filter('td a i[class*=fa-trash]'));
     }
 
     public function testGridRows()
     {
         $this->seedsTable(10);
 
-        $this->visit('admin/users')
-            ->seeInElement('td a[class*=btn]', 'detail');
+        $response = $this->get('admin/users')->assertOk()->assertSee('detail');
+        $crawler  = $this->crawlerFrom($response);
 
-        $this->assertCount(5, $this->crawler()->filter('td a[class*=btn]'));
+        $this->assertCount(5, $crawler->filter('td a[class*=btn]'));
     }
 
     public function testGridPerPage()
     {
         $this->seedsTable(98);
 
-        $this->visit('admin/users')
-            ->seeElement('select[class*=per-page][name=per-page]')
-            ->seeInElement('select option', 10)
-            ->seeInElement('select option[selected]', 20)
-            ->seeInElement('select option', 30)
-            ->seeInElement('select option', 50)
-            ->seeInElement('select option', 100);
+        $response = $this->get('admin/users')->assertOk();
+        $crawler  = $this->crawlerFrom($response);
 
-        $this->assertEquals('http://localhost:8000/admin/users?per_page=20', $this->crawler()->filter('select option[selected]')->attr('value'));
+        $this->assertCount(1, $crawler->filter('select[class*=per-page][name=per-page]'));
+        $response->assertSee('>10<', false)
+            ->assertSee('>20<', false)
+            ->assertSee('>30<', false)
+            ->assertSee('>50<', false)
+            ->assertSee('>100<', false);
 
-        $perPage = rand(1, 98);
+        $this->assertStringContainsString(
+            'per_page=20',
+            $crawler->filter('select option[selected]')->attr('value') ?? ''
+        );
 
-        $this->visit('admin/users?per_page='.$perPage)
-            ->seeInElement('select option[selected]', $perPage)
-            ->assertCount($perPage + 1, $this->crawler()->filter('tr'));
+        $perPage  = rand(1, 98);
+        $response = $this->get('admin/users?per_page='.$perPage)->assertOk();
+        $crawler  = $this->crawlerFrom($response);
+
+        $this->assertStringContainsString((string) $perPage, $crawler->filter('select option[selected]')->text());
+        // +1 for header row
+        $this->assertCount($perPage + 1, $crawler->filter('tr'));
     }
 }
+

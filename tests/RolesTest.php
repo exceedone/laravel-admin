@@ -14,9 +14,10 @@ class RolesTest extends TestCase
 
     public function testRolesIndex()
     {
-        $this->visit('admin/auth/roles')
-            ->see('Roles')
-            ->see('administrator');
+        $this->get('admin/auth/roles')
+            ->assertOk()
+            ->assertSee('Roles')
+            ->assertSee('administrator');
     }
 
     public function testAddRole()

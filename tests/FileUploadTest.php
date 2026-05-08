@@ -20,14 +20,14 @@ class FileUploadTest extends TestCase
 
     protected function uploadFiles()
     {
-        return $this->visit('admin/files/create')
-            ->attach(__DIR__.'/AuthTest.php', 'file1')
-            ->attach(__DIR__.'/InstallTest.php', 'file2')
-            ->attach(__DIR__.'/IndexTest.php', 'file3')
-            ->attach(__DIR__.'/LaravelTest.php', 'file4')
-            ->attach(__DIR__.'/routes.php', 'file5')
-            ->attach(__DIR__.'/migrations/2016_11_22_093148_create_test_tables.php', 'file6')
-            ->press('Submit');
+        return $this->post('admin/files', [
+            'file1' => new \Illuminate\Http\UploadedFile(__DIR__.'/AuthTest.php', 'AuthTest.php'),
+            'file2' => new \Illuminate\Http\UploadedFile(__DIR__.'/InstallTest.php', 'InstallTest.php'),
+            'file3' => new \Illuminate\Http\UploadedFile(__DIR__.'/IndexTest.php', 'IndexTest.php'),
+            'file4' => new \Illuminate\Http\UploadedFile(__DIR__.'/LaravelTest.php', 'LaravelTest.php'),
+            'file5' => new \Illuminate\Http\UploadedFile(__DIR__.'/routes.php', 'routes.php'),
+            'file6' => new \Illuminate\Http\UploadedFile(__DIR__.'/migrations/2016_11_22_093148_create_test_tables.php', '2016_11_22_093148_create_test_tables.php'),
+        ]);
     }
 
     public function testUploadFile()

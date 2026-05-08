@@ -17,8 +17,9 @@ class UsersTest extends TestCase
 
     public function testUsersIndexPage()
     {
-        $this->visit('admin/auth/users')
-            ->see('Administrator');
+        $this->get('admin/auth/users')
+            ->assertOk()
+            ->assertSee('Administrator');
     }
 
     public function testCreateUser()

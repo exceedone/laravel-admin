@@ -30,14 +30,14 @@ class ImageUploadTest extends TestCase
 
     protected function uploadImages()
     {
-        return $this->visit('admin/images/create')
-            ->attach(__DIR__.'/assets/test.jpg', 'image1')
-            ->attach(__DIR__.'/assets/test.jpg', 'image2')
-            ->attach(__DIR__.'/assets/test.jpg', 'image3')
-            ->attach(__DIR__.'/assets/test.jpg', 'image4')
-            ->attach(__DIR__.'/assets/test.jpg', 'image5')
-            ->attach(__DIR__.'/assets/test.jpg', 'image6')
-            ->press('Submit');
+        return $this->post('admin/images', [
+            'image1' => new \Illuminate\Http\UploadedFile(__DIR__.'/assets/test.jpg', 'test.jpg', 'image/jpeg', null, true),
+            'image2' => new \Illuminate\Http\UploadedFile(__DIR__.'/assets/test.jpg', 'test.jpg', 'image/jpeg', null, true),
+            'image3' => new \Illuminate\Http\UploadedFile(__DIR__.'/assets/test.jpg', 'test.jpg', 'image/jpeg', null, true),
+            'image4' => new \Illuminate\Http\UploadedFile(__DIR__.'/assets/test.jpg', 'test.jpg', 'image/jpeg', null, true),
+            'image5' => new \Illuminate\Http\UploadedFile(__DIR__.'/assets/test.jpg', 'test.jpg', 'image/jpeg', null, true),
+            'image6' => new \Illuminate\Http\UploadedFile(__DIR__.'/assets/test.jpg', 'test.jpg', 'image/jpeg', null, true),
+        ]);
     }
 
     public function testUploadImage()

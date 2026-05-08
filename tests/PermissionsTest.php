@@ -17,8 +17,9 @@ class PermissionsTest extends TestCase
     {
         $this->assertTrue(Administrator::first()->isAdministrator());
 
-        $this->visit('admin/auth/permissions')
-            ->see('Permissions');
+        $this->get('admin/auth/permissions')
+            ->assertOk()
+            ->assertSee('Permissions');
     }
 
     public function testAddAndDeletePermissions()

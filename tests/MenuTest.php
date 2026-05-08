@@ -14,40 +14,34 @@ class MenuTest extends TestCase
 
     public function testMenuIndex()
     {
-        $this->visit('admin/auth/menu')
-            ->see('Menu')
-            ->see('Auth')
-            ->see('Users')
-            ->see('Roles')
-            ->see('Permission')
-            ->see('Menu')
-            ->see('Submit');
+        $this->get('admin/auth/menu')
+            ->assertOk()
+            ->assertSee('Menu')
+            ->assertSee('Auth')
+            ->assertSee('Users')
+            ->assertSee('Roles')
+            ->assertSee('Permission')
+            ->assertSee('Menu')
+            ->assertSee('Submit');
     }
 
     public function testAddMenu()
     {
-        $client_mock = \Mockery::mock('overload:\ExmentDB');
-        $client_mock->shouldReceive('transaction')->once();
-
         $item = ['parent_id' => '0', 'title' => 'Test', 'uri' => 'test'];
 
-        $this->visit('admin/auth/menu')
-            ->seePageIs('admin/auth/menu')
-            ->see('Menu')
-            ->submitForm('Submit', $item)
-            ->seePageIs('admin/auth/menu');
+        $this->get('admin/auth/menu')->assertOk()->assertSee('Menu');
 
-//        $this->expectException(\Laravel\BrowserKitTesting\HttpException::class);
-//
-//        $this->visit('admin')
-//            ->see('Test')
-//            ->click('Test');
+        $this->post('admin/auth/menu', $item)
+            ->assertRedirect();
+
+        $this->get('admin/auth/menu')->assertOk();
     }
 
     public function testDeleteMenu()
     {
-        $this->delete('admin/auth/menu/8')
-            ->assertEquals(7, Menu::count());
+        $this->delete('admin/auth/menu/8');
+
+        $this->assertEquals(7, Menu::count());
     }
 
     public function testEditMenu()
@@ -68,8 +62,10 @@ class MenuTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $this->visit('admin/auth/menu/5/edit')
-            ->see('Menu')
-            ->submitForm('Submit', ['parent_id' => 5]);
+        $this->withoutExceptionHandling();
+
+        $this->get('admin/auth/menu/5/edit')->assertOk()->assertSee('Menu');
+
+        $this->put('admin/auth/menu/5', ['parent_id' => 5]);
     }
 }

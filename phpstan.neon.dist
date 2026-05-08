@@ -17,4 +17,4 @@ parameters:
         - '#Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types#'
 
 includes:
-    - vendor/nunomaduro/larastan/extension.neon
+    - vendor/larastan/larastan/extension.neon

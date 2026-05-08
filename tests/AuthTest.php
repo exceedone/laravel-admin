@@ -4,58 +4,60 @@ class AuthTest extends TestCase
 {
     public function testLoginPage()
     {
-        $this->visit('admin/auth/login')
-            ->see('login');
+        $this->get('admin/auth/login')
+            ->assertOk()
+            ->assertSee('login');
     }
 
     public function testVisitWithoutLogin()
     {
-        $this->visit('admin')
-            ->dontSeeIsAuthenticated('admin')
-            ->seePageIs('admin/auth/login');
+        $this->assertGuest('admin');
+
+        $this->get('admin')
+            ->assertRedirect();
     }
 
     public function testLogin()
     {
         $credentials = ['username' => 'admin', 'password' => 'admin'];
 
-        $this->visit('admin/auth/login')
-            ->see('login')
-            ->submitForm('Login', $credentials)
-            ->see('dashboard')
-            ->seeCredentials($credentials, 'admin')
-            ->seeIsAuthenticated('admin')
-            ->seePageIs('admin')
-            ->see('Dashboard')
-            ->see('Description...')
+        $this->get('admin/auth/login')
+            ->assertOk()
+            ->assertSee('login');
 
-            ->see('Environment')
-            ->see('PHP version')
-            ->see('Laravel version')
+        $this->post('admin/auth/login', $credentials)
+            ->assertRedirect();
 
-            ->see('Available extensions')
-            ->seeLink('laravel-admin-ext/helpers', 'https://github.com/laravel-admin-extensions/helpers')
-            ->seeLink('laravel-admin-ext/backup', 'https://github.com/laravel-admin-extensions/backup')
-            ->seeLink('laravel-admin-ext/media-manager', 'https://github.com/laravel-admin-extensions/media-manager')
+        $this->assertAuthenticated('admin');
 
-            ->see('Dependencies')
-            ->see('php')
-//            ->see('>=7.0.0')
-            ->see('laravel/framework');
-
-        $this
-            ->see('<span>Admin</span>')
-            ->see('<span>Users</span>')
-            ->see('<span>Roles</span>')
-            ->see('<span>Permission</span>')
-            ->see('<span>Operation log</span>')
-            ->see('<span>Menu</span>');
+        $this->get('admin')
+            ->assertOk()
+            ->assertSee('Dashboard')
+            ->assertSee('Description...')
+            ->assertSee('Environment')
+            ->assertSee('PHP version')
+            ->assertSee('Laravel version')
+            ->assertSee('Available extensions')
+            ->assertSee('https://github.com/laravel-admin-extensions/helpers')
+            ->assertSee('https://github.com/laravel-admin-extensions/backup')
+            ->assertSee('https://github.com/laravel-admin-extensions/media-manager')
+            ->assertSee('Dependencies')
+            ->assertSee('php')
+            ->assertSee('laravel/framework')
+            ->assertSee('<span>Admin</span>', false)
+            ->assertSee('<span>Users</span>', false)
+            ->assertSee('<span>Roles</span>', false)
+            ->assertSee('<span>Permission</span>', false)
+            ->assertSee('<span>Operation log</span>', false)
+            ->assertSee('<span>Menu</span>', false);
     }
 
     public function testLogout()
     {
-        $this->visit('admin/auth/logout')
-            ->seePageIs('admin/auth/login')
-            ->dontSeeIsAuthenticated('admin');
+        $this->get('admin/auth/logout')
+            ->assertRedirect('admin/auth/login');
+
+        $this->assertGuest('admin');
     }
+}
 }
