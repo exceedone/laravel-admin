@@ -3,9 +3,7 @@
 namespace Encore\Admin\Form\Field;
 
 use Illuminate\Support\Str;
-use Intervention\Image\Constraint;
-use Intervention\Image\Facades\Image as InterventionImage;
-use Intervention\Image\ImageManagerStatic;
+use Intervention\Image\Laravel\Facades\Image as InterventionImage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 trait ImageField
@@ -44,14 +42,16 @@ trait ImageField
     public function callInterventionMethods($target)
     {
         if (!empty($this->interventionCalls)) {
-            $image = ImageManagerStatic::make($target);
+            $image = InterventionImage::read($target);
 
             foreach ($this->interventionCalls as $call) {
-                call_user_func_array(
+                $image = call_user_func_array(
                     [$image, $call['method']],
                     $call['arguments']
-                )->save($target);
+                );
             }
+
+            $image->save($target);
         }
 
         return $target;
@@ -73,7 +73,7 @@ trait ImageField
             return $this;
         }
 
-        if (!class_exists(ImageManagerStatic::class)) {
+        if (!class_exists(\Intervention\Image\ImageManager::class)) {
             throw new \Exception('To use image handling and manipulation, please install [intervention/image] first.');
         }
 
@@ -164,17 +164,17 @@ trait ImageField
             $path = $path.'-'.$name.'.'.$ext;
 
             /** @var \Intervention\Image\Image $image */
-            $image = InterventionImage::make($file);
+            $image = InterventionImage::read($file);
 
-            // Resize image with aspect ratio
-            $image->resize($size[0], $size[1], function (Constraint $constraint) {
-                $constraint->aspectRatio();
-            })->resizeCanvas($size[0], $size[1], 'center', false, '#ffffff');
+            // Resize image preserving aspect ratio and pad canvas to exact dimensions with white background.
+            $image->contain($size[0], $size[1], 'ffffff');
+
+            $encoded = (string) $image->encodeByPath($path);
 
             if (!is_null($this->storagePermission)) {
-                $this->storage->put("{$this->getDirectory()}/{$path}", $image->encode(), $this->storagePermission);
+                $this->storage->put("{$this->getDirectory()}/{$path}", $encoded, $this->storagePermission);
             } else {
-                $this->storage->put("{$this->getDirectory()}/{$path}", $image->encode());
+                $this->storage->put("{$this->getDirectory()}/{$path}", $encoded);
             }
         }
 

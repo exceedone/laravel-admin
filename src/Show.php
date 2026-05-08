@@ -2,7 +2,6 @@
 
 namespace Encore\Admin;
 
-use Doctrine\DBAL\Schema\View;
 use Encore\Admin\Exception\Handler;
 use Encore\Admin\Show\Divider;
 use Encore\Admin\Show\Field;

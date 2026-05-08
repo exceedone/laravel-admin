@@ -83,11 +83,8 @@ class AdminServiceProvider extends ServiceProvider
             $this->publishes([__DIR__.'/../resources/assets' => public_path('vendor/laravel-admin')], 'laravel-admin-assets');
         }
 
-        //remove default feature of double encoding enable in laravel 5.6 or later.
-        $bladeReflectionClass = new \ReflectionClass('\Illuminate\View\Compilers\BladeCompiler');
-        if ($bladeReflectionClass->hasMethod('withoutDoubleEncoding')) {
-            Blade::withoutDoubleEncoding();
-        }
+        // Disable double encoding — always enabled by default in Laravel 11+.
+        Blade::withoutDoubleEncoding();
     }
 
     /**

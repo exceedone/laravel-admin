@@ -2,8 +2,8 @@
 
 namespace Encore\Admin\Console;
 
-use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 
 class ResourceGenerator
 {
@@ -19,17 +19,6 @@ class ResourceGenerator
         'form_field'  => "\$form->%s('%s', __('%s'))",
         'show_field'  => "\$show->field('%s', __('%s'))",
         'grid_column' => "\$grid->column('%s', __('%s'))",
-    ];
-
-    /**
-     * @var array<string,array<string>>
-     */
-    private $doctrineTypeMapping = [
-        'string' => [
-            'enum', 'geometry', 'geometrycollection', 'linestring',
-            'polygon', 'multilinestring', 'multipoint', 'multipolygon',
-            'point',
-        ],
     ];
 
     /**
@@ -171,7 +160,7 @@ class ResourceGenerator
         $output = '';
 
         foreach ($this->getTableColumns() as $column) {
-            $name = $column->getName();
+            $name = $column['name'];
 
             // set column label
             $label = $this->formatLabel($name);
@@ -193,7 +182,7 @@ class ResourceGenerator
         $output = '';
 
         foreach ($this->getTableColumns() as $column) {
-            $name = $column->getName();
+            $name  = $column['name'];
             $label = $this->formatLabel($name);
 
             $output .= sprintf($this->formats['grid_column'], $name, $label);
@@ -217,42 +206,24 @@ class ResourceGenerator
     }
 
     /**
-     * Get columns of a giving model.
+     * Get columns of the model's table using Laravel's native schema builder.
      *
-     * @throws \Exception
+     * Each element is an associative array with keys:
+     *   name, type_name, type, collation, nullable, default, auto_increment, comment
      *
-     * @return \Doctrine\DBAL\Schema\Column[]
+     * @return array<int, array<string, mixed>>
      */
-    protected function getTableColumns()
+    protected function getTableColumns(): array
     {
-        if (!$this->model->getConnection()->isDoctrineAvailable()) {
-            throw new \Exception(
-                'You need to require doctrine/dbal: ~2.3 in your own composer.json to get database columns. '
-            );
+        $connection = $this->model->getConnection();
+        $table      = $connection->getTablePrefix().$this->model->getTable();
+
+        // Strip database prefix if table contains a dot (e.g. "database.table")
+        if (str_contains($table, '.')) {
+            [, $table] = explode('.', $table, 2);
         }
 
-        $table = $this->model->getConnection()->getTablePrefix().$this->model->getTable();
-        /**
-         * @var AbstractSchemaManager $schema
-         * @phpstan-ignore-next-line Maybe not use $table argument
-         */
-        $schema = $this->model->getConnection()->getDoctrineSchemaManager($table);
-
-        // custom mapping the types that doctrine/dbal does not support
-        $databasePlatform = $schema->getDatabasePlatform();
-
-        foreach ($this->doctrineTypeMapping as $doctrineType => $dbTypes) {
-            foreach ($dbTypes as $dbType) {
-                $databasePlatform->registerDoctrineTypeMapping($dbType, $doctrineType);
-            }
-        }
-
-        $database = null;
-        if (strpos($table, '.')) {
-            list($database, $table) = explode('.', $table);
-        }
-
-        return $schema->listTableColumns($table, $database);
+        return Schema::connection($connection->getName())->getColumns($table);
     }
 
     /**
