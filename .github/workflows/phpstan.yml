@@ -2,9 +2,9 @@ name: phpstan
 
 on:
   pull_request:
-    paths:
-      - 'src/**'
-      - 'tests/**'
+  push:
+    branches:
+      - master
 
 jobs:
   phpstan:
