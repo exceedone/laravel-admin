@@ -52,7 +52,6 @@
     },
     "scripts": {
         "test": "./vendor/bin/phpunit",
-        "phpstan": "./vendor/bin/phpstan analyse",
         "phpcsfixer": "./vendor/bin/php-cs-fixer fix --dry-run",
         "post-autoload-dump": [
             "@php vendor/bin/testbench package:discover --ansi"
