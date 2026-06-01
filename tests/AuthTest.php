@@ -2,7 +2,7 @@
 
 class AuthTest extends TestCase
 {
-    public function testLoginPage()
+    public function testLoginPage() 
     {
         $this->visit('admin/auth/login')
             ->see('login');
