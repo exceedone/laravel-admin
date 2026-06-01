@@ -2,7 +2,7 @@
 
 namespace Encore\Admin\Form;
 
-use Encore\Admin\Admin;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Form\Field\Hidden;
 use Encore\Admin\Grid\Model;
@@ -273,7 +273,7 @@ class Builder
     public function disablePjax()
     {
         $this->disablePjax = true;
-        \Admin::disablePjax();
+        Admin::disablePjax();
 
         return $this;
     }

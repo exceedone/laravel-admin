@@ -4,6 +4,8 @@ namespace Encore\Admin\Form\Field;
 
 class Decimal extends Text
 {
+    use HasCustomOptions;
+
     /**
      * @var array<string>
      */

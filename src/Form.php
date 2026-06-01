@@ -19,11 +19,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Validator;
 use Spatie\EloquentSortable\Sortable;
 use Symfony\Component\HttpFoundation\Response;
+
+use Illuminate\Support\Facades\File;
+use Exceedone\Exment\Model\File as ExmentFile;
+use Exceedone\Exment\Enums\FileType;
 
 /**
  * Class Form.
@@ -462,16 +467,31 @@ class Form implements Renderable
             $data = \request()->all();
         }
 
+        // AI-OCR
+        $this->inputs = array_merge($this->removeIgnoredFields($data), $this->inputs);
+        $tempPath = data_get($this->inputs, 'value.ai_ocr_temp_path');
+        $haveTempFiles = $tempPath && is_dir($tempPath);
+
         // Handle validation errors.
         if ($validationMessages = $this->validationMessages($data)) {
+            // AI-OCR
+            if ($haveTempFiles) {
+                $this->destroyTempFilesAiOcr($tempPath);
+            }
+
             return back()->withInput()->withErrors($validationMessages);
         }
 
         if (($response = $this->prepare($data)) instanceof Response) {
+            // AI-OCR
+            if ($haveTempFiles) {
+                $this->destroyTempFilesAiOcr($tempPath);
+            }
+
             return $response;
         }
 
-        \ExmentDB::transaction(function () {
+        \ExmentDB::transaction(function () use ($tempPath, $haveTempFiles) {
             $inserts = $this->prepareInsert($this->updates);
 
             foreach ($inserts as $column => $value) {
@@ -479,6 +499,12 @@ class Form implements Renderable
             }
 
             $this->model->save();
+
+            // AI-OCR
+            if ($haveTempFiles) {
+                $this->moveAiOcrFilesAndLink($this->model, $tempPath);
+            }
+
             $this->storeJancode($this->model);
 
             $this->updateRelation($this->relations);
@@ -486,10 +512,14 @@ class Form implements Renderable
             try{
                 if (($response = $this->callSavedInTransaction()) instanceof Response) {
                     return $response;
-                }    
+                }
             }catch(\Exception $ex){
                 \Log::error($ex);
                 DB::rollback();
+                // AI-OCR
+                if ($haveTempFiles) {
+                    $this->destroyTempFilesAiOcr($tempPath);
+                }
                 throw $ex;
             }
         });
@@ -503,6 +533,85 @@ class Form implements Renderable
         }
 
         return $this->redirectAfterStore();
+    }
+
+    // AI-OCR
+    // Move AI-OCR temporary files into their final folder, update their database records, and link them to the main record
+    protected function moveAiOcrFilesAndLink(object $custom_record, string $tempPath): void
+    {
+        $normalizedPath = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $tempPath);
+        $parts = explode(DIRECTORY_SEPARATOR, $normalizedPath);
+
+        $aiOcrIndex = array_search('ai_ocr_temp', $parts);
+        if ($aiOcrIndex === false || !isset($parts[$aiOcrIndex + 2])) {
+            return;
+        }
+
+        $baseParts = array_slice($parts, 0, $aiOcrIndex);
+        $subDir = $parts[$aiOcrIndex + 1];
+        $destinationBase = implode(DIRECTORY_SEPARATOR, array_merge($baseParts, [$subDir]));
+
+        if (!File::exists($destinationBase)) {
+            File::makeDirectory($destinationBase, 0777, true);
+        }
+
+        $files = File::files($tempPath);
+        foreach ($files as $fileObj) {
+            $tempFilename = $fileObj->getFilename();
+            $local_filename = pathinfo($tempFilename, PATHINFO_BASENAME);
+
+            $fileModel = ExmentFile::where('local_filename', $local_filename)->first();
+            if (!$fileModel) {
+                continue;
+            }
+
+            $newPath = $destinationBase . DIRECTORY_SEPARATOR . $tempFilename;
+            rename($fileObj->getPathname(), $newPath);
+
+            $fileModel->local_dirname = $subDir;
+            $fileModel->save();
+
+            $fileModel->saveCustomValue($custom_record->id, null, $custom_record->custom_table);
+            $fileModel->saveDocumentModel($custom_record, $tempFilename);
+        }
+
+        File::deleteDirectory($tempPath);
+    }
+
+    protected function deleteOldAiOcrFile(object $custom_record, int $custom_id): void
+    {
+        $fileModel = ExmentFile::where('file_type', FileType::AI_OCR)
+                                ->where('parent_type', $custom_record->custom_table->table_name)
+                                ->where('parent_id', $custom_id)
+                                ->first();
+        if (!$fileModel) {
+            return;
+        }
+
+        $path = $fileModel->path;
+        $fileModel->delete();
+
+        Storage::disk(config('admin.upload.disk'))->delete($path);
+    }
+
+    protected function destroyTempFilesAiOcr(string $tempPath): void
+    {
+        if (!File::isDirectory($tempPath)) {
+            return;
+        }
+
+        foreach (File::files($tempPath) as $fileObj) {
+            $tempFilename = $fileObj->getFilename();
+
+            $fileModel = ExmentFile::where('local_filename', $tempFilename)->first();
+            if (!$fileModel) {
+                continue;
+            }
+
+            $fileModel->delete();
+        }
+
+        File::deleteDirectory($tempPath);
     }
 
     /**
@@ -640,6 +749,10 @@ class Form implements Renderable
             return $data;
         }
 
+        // AI-OCR
+        $tempPath = data_get($data, 'value.ai_ocr_temp_path');
+        $haveTempFiles = $tempPath && is_dir($tempPath);
+
         /** @var SoftDeletableModel $builder */
         $builder = $this->model();
 
@@ -657,14 +770,24 @@ class Form implements Renderable
                 return back()->withInput()->withErrors($validationMessages);
             }
 
+            // AI-OCR
+            if ($haveTempFiles) {
+                $this->destroyTempFilesAiOcr($tempPath);
+            }
+
             return response()->json(['errors' => Arr::dot($validationMessages->getMessages())], 422);
         }
 
         if (($response = $this->prepare($data)) instanceof Response) {
+            // AI-OCR
+            if ($haveTempFiles) {
+                $this->destroyTempFilesAiOcr($tempPath);
+            }
+
             return $response;
         }
 
-        \ExmentDB::transaction(function () {
+        \ExmentDB::transaction(function () use ($tempPath, $haveTempFiles, $id) {
             $updates = $this->prepareUpdate($this->updates);
 
             foreach ($updates as $column => $value) {
@@ -674,12 +797,18 @@ class Form implements Renderable
 
             $this->model->save();
 
+            // AI-OCR
+            if ($haveTempFiles) {
+                $this->deleteOldAiOcrFile($this->model, $id);
+                $this->moveAiOcrFilesAndLink($this->model, $tempPath);
+            }
+
             $this->updateRelation($this->relations);
-            
+
             try{
                 if (($response = $this->callSavedInTransaction()) instanceof Response) {
                     return $response;
-                }    
+                }
             }catch(\Exception $ex){
                 DB::rollback();
                 throw $ex;
@@ -699,7 +828,7 @@ class Form implements Renderable
         return $this->redirectAfterUpdate($id);
     }
 
-    
+
     /**
      * validatorSavingCallback
      *
@@ -711,7 +840,7 @@ class Form implements Renderable
 
         return $this;
     }
-    
+
 
     /**
      * prepareCallback. Please return inputs array
@@ -779,11 +908,11 @@ class Form implements Renderable
             $this->model->save();
 
             $this->updateRelation($this->relations);
-            
+
             try{
                 if (($response = $this->callSavedInTransaction()) instanceof Response) {
                     return $response;
-                }    
+                }
             }catch(\Exception $ex){
                 DB::rollback();
                 throw $ex;
@@ -886,7 +1015,7 @@ class Form implements Renderable
         $redirect = $this->builder()->getFooter()->getRedirect($resourcesPath, $key, request('after-save'));
 
         admin_toastr(trans('admin.save_succeeded'));
-        
+
         if(isset($redirect)){
             return $redirect;
         }
@@ -1226,7 +1355,7 @@ class Form implements Renderable
             if (!$field->getInternal()) {
                 continue;
             }
-            
+
             $column = $field->column();
             $inserts[$column] = $field->prepare(null);
         }
@@ -1268,7 +1397,7 @@ class Form implements Renderable
             if (!$field->getInternal()) {
                 continue;
             }
-            
+
             $column = $field->column();
             $inserts[$column] = $field->prepareConfirm(null);
         }
@@ -1474,7 +1603,7 @@ class Form implements Renderable
 
         $relations = [];
         foreach ($inputs as $column => $value) {
-            
+
             if (!method_exists($this->model, $column)) {
                 continue;
             }
@@ -1484,13 +1613,13 @@ class Form implements Renderable
             if (!($relation instanceof Relations\Relation)) {
                 continue;
             }
-            
+
             $value = array_filter($value);
             if ($relation instanceof Relations\BelongsToMany || $relation instanceof Relations\MorphToMany) {
                 $relations[$column] = (clone $relation->getRelated())->query()->findMany($value);
                 continue;
             }
-            
+
             // create child model
             foreach($value as $v){
                 if(is_null($v)){
@@ -1600,7 +1729,7 @@ class Form implements Renderable
         }
         return true;
     }
-    
+
 
     /**
      * Get validation messages.
@@ -1947,7 +2076,7 @@ class Form implements Renderable
     /**
      * add footer check item.
      *
-     * $footerCheck : 
+     * $footerCheck :
      *     [
      *         'value': 'foo', // this check value name
      *         'label': 'FOO', // this check label
@@ -1984,7 +2113,7 @@ class Form implements Renderable
      * Set if true, not call default renderException, and \Closure.
      *
      * @return  self
-     */ 
+     */
     public function renderException(\Closure $renderException)
     {
         $this->renderException = $renderException;

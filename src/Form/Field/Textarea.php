@@ -6,6 +6,8 @@ use Encore\Admin\Form\Field;
 
 class Textarea extends Field
 {
+    use HasCustomOptions;
+
     /**
      * Default rows of textarea.
      *

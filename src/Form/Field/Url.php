@@ -4,6 +4,8 @@ namespace Encore\Admin\Form\Field;
 
 class Url extends Text
 {
+    use HasCustomOptions;
+
     /**
      * @var string
      */

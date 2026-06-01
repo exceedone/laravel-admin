@@ -6,6 +6,7 @@ use Encore\Admin\Form\Field;
 
 class Text extends Field
 {
+    use HasCustomOptions;
     use PlainInput;
 
     /**

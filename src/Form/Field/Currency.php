@@ -4,6 +4,8 @@ namespace Encore\Admin\Form\Field;
 
 class Currency extends Text
 {
+    use HasCustomOptions;
+
     /**
      * @var string
      */

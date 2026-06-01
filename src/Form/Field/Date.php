@@ -4,6 +4,8 @@ namespace Encore\Admin\Form\Field;
 
 class Date extends Text
 {
+    use HasCustomOptions;
+
     /**
      * @var array<string>
      */
