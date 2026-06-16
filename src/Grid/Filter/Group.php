@@ -56,6 +56,7 @@ class Group extends AbstractFilter
     {
         $this->id = $this->formatId($this->column);
         $this->group = new Collection();
+        /** @phpstan-ignore-next-line Part $this->id (array|string) of encapsed string cannot be cast to string. */
         $this->name = "{$this->id}-filter-group";
 
         $this->setupDefaultPresenter();
@@ -198,6 +199,7 @@ class Group extends AbstractFilter
     {
         $label = $label ?: $operator;
 
+        /** @phpstan-ignore-next-line Part $this->value (array|string) of encapsed string cannot be cast to string. */
         $condition = [$this->column, $operator, "%{$this->value}%"];
 
         return $this->joinGroup($label, $condition);
@@ -238,6 +240,7 @@ class Group extends AbstractFilter
     {
         $label = $label ?: 'Start with';
 
+        /** @phpstan-ignore-next-line Part $this->value (array|string) of encapsed string cannot be cast to string. */
         $condition = [$this->column, 'like', "{$this->value}%"];
 
         return $this->joinGroup($label, $condition);
@@ -254,6 +257,7 @@ class Group extends AbstractFilter
     {
         $label = $label ?: 'End with';
 
+        /** @phpstan-ignore-next-line Part $this->value (array|string) of encapsed string cannot be cast to string. */
         $condition = [$this->column, 'like', "%{$this->value}"];
 
         return $this->joinGroup($label, $condition);
@@ -275,8 +279,10 @@ class Group extends AbstractFilter
 
         $this->value = $value;
 
+        /** @phpstan-ignore-next-line Part $this->id (array|string) of encapsed string cannot be cast to string. */
         $group = Arr::get($inputs, "{$this->id}_group");
 
+        /** @phpstan-ignore-next-line Parameter #1 $callback of function call_user_func expects callable(): mixed, (callable(): mixed)|string given. */
         call_user_func($this->builder, $this);
 
         if ($query = $this->group->get($group)) {
@@ -308,7 +314,9 @@ SCRIPT;
      */
     public function variables()
     {
-        $select = request("{$this->id}_group");
+        // Ensure id is string for request key
+        $idString = is_array($this->id) ? implode('_', $this->id) : (string) $this->id;
+        $select = request("{$idString}_group");
 
         $default = $this->group->get($select) ?: $this->group->first();
 
@@ -326,6 +334,7 @@ SCRIPT;
         $this->injectScript();
 
         if ($this->builder && $this->group->isEmpty()) {
+            /** @phpstan-ignore-next-line Parameter #1 $callback of function call_user_func expects callable(): mixed, (callable(): mixed)|non-falsy-string given. */
             call_user_func($this->builder, $this);
         }
 

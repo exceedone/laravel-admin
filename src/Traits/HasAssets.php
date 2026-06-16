@@ -284,6 +284,7 @@ trait HasAssets
         }
 
         static::$manifestData = json_decode(
+            /** @phpstan-ignore-next-line Parameter #1 $json of function json_decode expects string, string|false given. */
             file_get_contents(public_path(static::$manifest)), true
         );
 

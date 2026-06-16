@@ -64,11 +64,15 @@ class Listbox extends MultipleSelect
             'url' => $url.'?'.http_build_query($parameters),
         ], $options));
 
+        // Ensure selector is string for heredoc usage
+        $selector = $this->getElementClassSelector();
+        $selectorString = is_array($selector) ? implode(',', $selector) : (string) $selector;
+        
         $this->script = <<<EOT
         
 $.ajax($ajaxOptions).done(function(data) {
 
-  var listbox = $("{$this->getElementClassSelector()}");
+  var listbox = $("{$selectorString}");
 
     var value = listbox.data('value') + '';
     
@@ -105,9 +109,13 @@ EOT;
 
         $settings = json_encode($settings);
 
+        // Ensure selector is string for heredoc usage
+        $selector = $this->getElementClassSelector();
+        $selectorString = is_array($selector) ? implode(',', $selector) : (string) $selector;
+        
         $this->script .= <<<SCRIPT
 
-        var dualListBox = $("{$this->getElementClassSelector()}");
+        var dualListBox = $("{$selectorString}");
         dualListBox.bootstrapDualListbox($settings);
         var isRequiredField = dualListBox.attr('required');
 

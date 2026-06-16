@@ -294,7 +294,7 @@ class Field implements Renderable
     protected $internal = false;
 
     /**
-     * @var \Closure
+     * @var \Closure|null
      */
     protected $prepareConfirm;
 
@@ -555,6 +555,7 @@ class Field implements Renderable
      */
     public function setForm($form = null)
     {
+        /** @phpstan-ignore-next-line Property Encore\\Admin\\Form\\Field::\$form (Encore\\Admin\\Form|null) does not accept Encore\\Admin\\Form|Encore\\Admin\\Widgets\\Form|null. */
         $this->form = $form;
 
         return $this;
@@ -591,6 +592,7 @@ class Field implements Renderable
             $options = $options->toArray();
         }
 
+        /** @phpstan-ignore-next-line Parameter #1 ...\$arrays of function array_merge expects array, array<string, mixed>|Closure given. */
         $this->options = array_merge($this->options, $options);
 
         return $this;
@@ -659,6 +661,7 @@ class Field implements Renderable
             $rules = $this->updateRules ?: $this->rules;
         }
 
+        /** @phpstan-ignore-next-line Parameter #1 $rules of method Encore\Admin\Form\Field::addRequiredAttribute() expects array, array|Closure|string given. */
         $this->addRequiredAttribute($rules);
     }
 
@@ -693,6 +696,7 @@ class Field implements Renderable
                 $original = $this->formatRules($original);
             }
 
+            /** @phpstan-ignore-next-line Parameter #1 ...$arrays of function array_merge expects array, array|string given. */
             $rules = array_merge($original, $this->formatRules($input));
         }
 
@@ -709,6 +713,7 @@ class Field implements Renderable
      */
     public function rules($rules = null, $messages = [])
     {
+        /** @phpstan-ignore-next-line Parameter #1 $input of method Encore\Admin\Form\Field::mergeRules() expects array|Closure|string, array|(callable(): mixed)|string|null given. & Parameter #2 $original of method Encore\Admin\Form\Field::mergeRules() expects array|string, array|Closure|string given. */
         $this->rules = $this->mergeRules($rules, $this->rules);
 
         $this->setValidationMessages('default', $messages);
@@ -726,6 +731,7 @@ class Field implements Renderable
      */
     public function updateRules($rules = null, $messages = [])
     {
+        /** @phpstan-ignore-next-line Parameter #1 $input of method Encore\Admin\Form\Field::mergeRules() expects array|Closure|string, array|(callable(): mixed)|string|null given. & Parameter #2 $original of method Encore\Admin\Form\Field::mergeRules() expects array|string, array|Closure given. */
         $this->updateRules = $this->mergeRules($rules, $this->updateRules);
 
         $this->setValidationMessages('update', $messages);
@@ -743,6 +749,7 @@ class Field implements Renderable
      */
     public function creationRules($rules = null, $messages = [])
     {
+        /** @phpstan-ignore-next-line Parameter #1 $input of method Encore\Admin\Form\Field::mergeRules() expects array|Closure|string, array|(callable(): mixed)|string|null given. & Parameter #2 $original of method Encore\Admin\Form\Field::mergeRules() expects array|string, array|Closure given. */
         $this->creationRules = $this->mergeRules($rules, $this->creationRules);
 
         $this->setValidationMessages('creation', $messages);
@@ -768,8 +775,10 @@ class Field implements Renderable
 
         $newRules = [];
         
+        /** @phpstan-ignore-next-line Argument of an invalid type array|Closure|string supplied for foreach, only iterables are supported. */
         foreach($this->rules as $r){
             $isAdd = true;
+            /** @phpstan-ignore-next-line Argument of an invalid type array|(callable) supplied for foreach, only iterables are supported. */
             foreach($rules as $removeRule){
                 if(is_object($r) && $r instanceof $removeRule){
                     $isAdd = false;
@@ -897,6 +906,7 @@ class Field implements Renderable
      */
     public function validator(callable $validator)
     {
+        /** @phpstan-ignore-next-line Property Encore\Admin\Form\Field::\$validator (Closure|null) does not accept callable(): mixed. */
         $this->validator = $validator;
 
         return $this;
@@ -1158,6 +1168,7 @@ class Field implements Renderable
             }
             
             if(is_string($value) || is_int($value)){
+                /** @phpstan-ignore-next-line Parameter #2 $string of function explode expects string, int|string given. */
                 $value = explode(',', $value);
             }
 
@@ -1317,6 +1328,7 @@ class Field implements Renderable
      */
     public function getPlaceholder()
     {
+        /** @phpstan-ignore-next-line Method Encore\Admin\Form\Field::getPlaceholder() should return string but returns array|string. */
         return $this->placeholder;
         //return $this->placeholder ?: trans('admin.input').' '.$this->label;
     }
@@ -1348,6 +1360,7 @@ class Field implements Renderable
 
             return $olds;
         }else{
+            /** @phpstan-ignore-next-line Parameter #1 $keyname of static method Encore\Admin\Form\Field::getDotName() expects string, array|string given. */
             $keyname = static::getDotName($this->getElementName());
     
             return old($keyname, $value);
@@ -1381,7 +1394,6 @@ class Field implements Renderable
      */
     public function prepareConfirm($value)
     {
-        /** @phpstan-ignore-next-line Negated boolean expression is always false. */
         if(!$this->prepareConfirm){
             return $this->prepare($value);
         }

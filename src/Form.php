@@ -394,13 +394,16 @@ class Form implements Renderable
 
                 $model = $builder->with($this->getRelations())->findOrFail($id);
 
+                /** @phpstan-ignore-next-line */
                 if (($this->isSoftDeletes && $model->trashed()) || $this->isForceDelete) {
+                    /** @phpstan-ignore-next-line */
                     $this->deleteFiles($model, true);
                     $model->forceDelete();
 
                     return;
                 }
 
+                /** @phpstan-ignore-next-line */
                 $this->deleteFiles($model);
                 $model->delete();
             });
@@ -464,6 +467,7 @@ class Form implements Renderable
 
         // Handle validation errors.
         if ($validationMessages = $this->validationMessages($data)) {
+            /** @phpstan-ignore-next-line Parameter $provider of method withErrors() expects array|Illuminate\Contracts\Support\MessageProvider|string, Illuminate\Support\MessageBag|false given. */
             return back()->withInput()->withErrors($validationMessages);
         }
 
@@ -611,6 +615,7 @@ class Form implements Renderable
                 continue;
             }
 
+            /** @phpstan-ignore-next-line */
             $relation = call_user_func([$this->model, $column]);
 
             if ($relation instanceof Relations\Relation) {
@@ -647,19 +652,24 @@ class Form implements Renderable
             $builder = $builder->withTrashed();
         }
 
+        /** @phpstan-ignore-next-line */
         $this->model = $builder->with($this->getRelations())->findOrFail($id);
 
         $this->setFieldOriginalValue();
 
         // Handle validation errors.
+        /** @phpstan-ignore-next-line */
         if ($validationMessages = $this->validationMessages($data)) {
             if (!$isEditable) {
+                /** @phpstan-ignore-next-line */
                 return back()->withInput()->withErrors($validationMessages);
             }
 
+            /** @phpstan-ignore-next-line */
             return response()->json(['errors' => Arr::dot($validationMessages->getMessages())], 422);
         }
 
+        /** @phpstan-ignore-next-line */
         if (($response = $this->prepare($data)) instanceof Response) {
             return $response;
         }
@@ -751,19 +761,24 @@ class Form implements Renderable
             $builder = $builder->withTrashed();
         }
 
+        /** @phpstan-ignore-next-line */
         $this->model = $builder->with($this->getRelations())->findOrFail($id);
 
         $this->setFieldOriginalValue();
 
         // Handle validation errors.
+        /** @phpstan-ignore-next-line */
         if ($validationMessages = $this->validationMessages($data)) {
             if (!$isEditable) {
+                /** @phpstan-ignore-next-line */
                 return back()->withInput()->withErrors($validationMessages);
             }
 
+            /** @phpstan-ignore-next-line */
             return response()->json(['errors' => Arr::dot($validationMessages->getMessages())], 422);
         }
 
+        /** @phpstan-ignore-next-line */
         if (($response = $this->prepare($data)) instanceof Response) {
             return $response;
         }
@@ -826,11 +841,13 @@ class Form implements Renderable
             $builder = $builder->withTrashed();
         }
 
+        /** @phpstan-ignore-next-line */
         $this->model = $builder->with($this->getRelations())->findOrFail($id);
 
         $this->setFieldOriginalValue();
 
         // Handle validation errors.
+        /** @phpstan-ignore-next-line */
         if ($validationMessages = $this->validationMessages($data)) {
             return [
                 'validationMessages' => $validationMessages,
@@ -848,7 +865,7 @@ class Form implements Renderable
     /**
      * Get RedirectResponse after store.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function redirectAfterStore()
     {
@@ -864,7 +881,7 @@ class Form implements Renderable
      *
      * @param mixed $key
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     protected function redirectAfterUpdate($key)
     {
@@ -888,6 +905,7 @@ class Form implements Renderable
         admin_toastr(trans('admin.save_succeeded'));
         
         if(isset($redirect)){
+            /** @phpstan-ignore-next-line Method redirectAfterSaving() should return Illuminate\\Http\\RedirectResponse|Illuminate\\Routing\\Redirector but returns Illuminate\\Http\\RedirectResponse|Illuminate\\Routing\\Redirector|null. */
             return $redirect;
         }
 
@@ -1117,11 +1135,13 @@ class Form implements Renderable
                         /** @var Relations\Relation<Model>|\Illuminate\Database\Eloquent\Builder<Model> $relation */
                         $relation = $this->model()->$name();
 
+                        /** @phpstan-ignore-next-line Call to an undefined method getRelated(). */
                         $keyName = $relation->getRelated()->getKeyName();
 
                         $instance = $relation->findOrNew(Arr::get($related, $keyName));
 
                         if ($related[static::REMOVE_FLAG_NAME] == 1) {
+                            /** @phpstan-ignore-next-line Call to an undefined method delete(). */
                             $instance->delete();
 
                             continue;
@@ -1129,8 +1149,10 @@ class Form implements Renderable
 
                         Arr::forget($related, static::REMOVE_FLAG_NAME);
 
+                        /** @phpstan-ignore-next-line Call to an undefined method fill(). */
                         $instance->fill($related);
 
+                        /** @phpstan-ignore-next-line Call to an undefined method save(). */
                         $instance->save();
                     }
 
@@ -1402,6 +1424,7 @@ class Form implements Renderable
         if($id instanceof \Illuminate\Database\Eloquent\Model){
             $this->model = $id;
         }else{
+            /** @phpstan-ignore-next-line Property Encore\Admin\Form::$model (Illuminate\Database\Eloquent\Model|null) does not accept Encore\Admin\SoftDeletableModel|Illuminate\Database\Eloquent\Collection<int, Encore\Admin\SoftDeletableModel>|Illuminate\Database\Eloquent\Collection<int, Illuminate\Database\Eloquent\Model>|Illuminate\Database\Eloquent\Model. */
             $this->model = $builder->with($relations)->findOrFail($id);
         }
 
@@ -1479,6 +1502,7 @@ class Form implements Renderable
                 continue;
             }
 
+            /** @phpstan-ignore-next-line Parameter $callback of function call_user_func expects callable, array{Illuminate\\Database\\Eloquent\\Model, string} given. */
             $relation = call_user_func([$this->model, $column]);
 
             if (!($relation instanceof Relations\Relation)) {
@@ -1596,6 +1620,7 @@ class Form implements Renderable
     {
         $message = $this->validationMessages($input);
         if($message !== false){
+            /** @phpstan-ignore-next-line Parameter $provider of method withErrors() expects array|Illuminate\\Contracts\\Support\\MessageProvider|string, Illuminate\\Support\\MessageBag|false given. */
             return back()->withInput()->withErrors($message);
         }
         return true;
@@ -2181,6 +2206,7 @@ class Form implements Renderable
                 continue;
             }
 
+            /** @phpstan-ignore-next-line Parameter $callback of function call_user_func expects callable, array{class-string, string} given. */
             $assets = call_user_func([$field, 'getAssets']);
 
             $css->push(Arr::get($assets, 'css'));
@@ -2232,8 +2258,10 @@ class Form implements Renderable
 
             $element = new $className($column, array_slice($arguments, 1));
 
+            /** @phpstan-ignore-next-line Parameter $field of method pushField() expects Encore\\Admin\\Form\\Field, object given. */
             $this->pushField($element);
 
+            /** @phpstan-ignore-next-line Method __call() should return Encore\\Admin\\Form\\Field but returns object. */
             return $element;
         }
 

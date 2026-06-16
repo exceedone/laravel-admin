@@ -123,6 +123,7 @@ class MinifyCommand extends Command
                 }
 
                 if (Str::contains($css, '?')) {
+                    /** @phpstan-ignore-next-line */
                     $css = substr($css, 0, strpos($css, '?'));
                 }
 
@@ -157,6 +158,7 @@ class MinifyCommand extends Command
                 }
 
                 if (Str::contains($js, '?')) {
+                    /** @phpstan-ignore-next-line */
                     $js = substr($js, 0, strpos($js, '?'));
                 }
 

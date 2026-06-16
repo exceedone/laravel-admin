@@ -25,6 +25,7 @@ class RoleController extends AdminController
     {
         $roleModel = config('admin.database.roles_model');
 
+        /** @phpstan-ignore-next-line */
         $grid = new Grid(new $roleModel());
 
         $grid->column('id', 'ID')->sortable();

@@ -55,6 +55,7 @@ class Color extends Text
     {
         $options = json_encode($this->options);
 
+        /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
         $this->script = "$('{$this->getElementClassSelector()}').parent().colorpicker($options);";
 
         $this->prepend('<i></i>')

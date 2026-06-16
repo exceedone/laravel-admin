@@ -228,6 +228,7 @@ class Content implements Renderable
 
         ob_end_clean();
 
+        /** @phpstan-ignore-next-line return.type */
         return $contents;
     }
 

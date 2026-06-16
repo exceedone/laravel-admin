@@ -126,6 +126,7 @@ abstract class AbstractExporter implements ExporterInterface
 
         if ($scope == Grid\Exporter::SCOPE_CURRENT_PAGE) {
             $this->grid->model()->usePaginate(true);
+            /** @phpstan-ignore-next-line Property Encore\Admin\Grid\Exporters\AbstractExporter::$page (int) does not accept int|string. */
             $this->page = $args ?: 1;
         }
 

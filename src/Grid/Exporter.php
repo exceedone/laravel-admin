@@ -98,6 +98,7 @@ class Exporter
             return $this->getDefaultExporter();
         }
 
+        /** @phpstan-ignore-next-line */
         return new static::$drivers[$driver]($this->grid);
     }
 

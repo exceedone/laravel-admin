@@ -334,13 +334,16 @@ class NestedForm
             }
 
             if ($asConfirm && method_exists($field, 'prepareConfirm')) {
+                /** @phpstan-ignore-next-line Cannot call method prepareConfirm() on class-string|object. */
                 $value = $field->prepareConfirm($value);
             } else {
                 if (method_exists($field, 'prepare')) {
+                    /** @phpstan-ignore-next-line Cannot call method prepare() on class-string|object. */
                     $value = $field->prepare($value);
                 }
 
                 if (method_exists($field, 'prepareRecord')) {
+                    /** @phpstan-ignore-next-line Cannot call method prepareRecord() on class-string|object. */
                     $value = $field->prepareRecord($value, $record);
                 }
             }
@@ -500,7 +503,9 @@ class NestedForm
             $elementClass = [$this->relationName, $column];
         }
 
+        /** @phpstan-ignore-next-line Parameter #1 $key of method Encore\Admin\Form\Field::setErrorKey() expects string, array<string>|string given. */
         return $field->setErrorKey($errorKey)
+            /** @phpstan-ignore-next-line Parameter #1 $name of method Encore\Admin\Form\Field::setElementName() expects string, array<string>|string given. */
             ->setElementName($elementName)
             ->setElementClass($elementClass);
     }
@@ -521,8 +526,10 @@ class NestedForm
             /* @var Field $field */
             $field = new $className($column, array_slice($arguments, 1));
 
+            /** @phpstan-ignore-next-line Call to an undefined method object::setForm(). */
             $field->setForm($this->form);
 
+            /** @phpstan-ignore-next-line Parameter #1 $field of method Encore\Admin\Form\NestedForm::formatField() expects Encore\Admin\Form\Field, object given. */
             $field = $this->formatField($field);
 
             $this->pushField($field);

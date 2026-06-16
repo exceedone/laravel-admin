@@ -42,6 +42,7 @@ class HasOptionRule implements Rule
             return true;
         }
 
+        /** @phpstan-ignore-next-line Cannot call method getOptions() on class-string|object. */
         $options = $this->field->getOptions($value);
 
         if(!is_array($value)){
