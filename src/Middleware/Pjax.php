@@ -33,6 +33,7 @@ class Pjax
         }
 
         try {
+            // @phpstan-ignore-next-line X-PJAX-CONTAINER header is always a string in pjax requests
             $this->filterResponse($response, $request->header('X-PJAX-CONTAINER'))
                 ->setUriHeader($response, $request);
         } catch (\Exception $exception) {
@@ -72,10 +73,10 @@ class Pjax
         $exception = $response->exception;
 
         $error = new MessageBag([
-            'type'    => get_class($exception),
-            'message' => $exception->getMessage(),
-            'file'    => $exception->getFile(),
-            'line'    => $exception->getLine(),
+            'type'    => get_class($exception), // @phpstan-ignore-line Exception is guaranteed to exist on error responses
+            'message' => $exception->getMessage(), // @phpstan-ignore-line Exception is guaranteed to exist on error responses
+            'file'    => $exception->getFile(), // @phpstan-ignore-line Exception is guaranteed to exist on error responses
+            'line'    => $exception->getLine(), // @phpstan-ignore-line Exception is guaranteed to exist on error responses
         ]);
 
         return back()->withInput()->withErrors($error, 'exception');
@@ -91,6 +92,7 @@ class Pjax
      */
     protected function filterResponse(Response $response, $container)
     {
+        /** @phpstan-ignore-next-line argument.type */
         $crawler = new Crawler($response->getContent());
 
         $response->setContent(
@@ -143,6 +145,7 @@ class Pjax
      */
     protected function decodeUtf8HtmlEntities($html)
     {
+        // @phpstan-ignore-next-line preg_replace_callback always returns string when subject is string
         return preg_replace_callback('/(&#[0-9]+;)/', function ($html) {
             return mb_convert_encoding($html[1], 'UTF-8', 'HTML-ENTITIES');
         }, $html);

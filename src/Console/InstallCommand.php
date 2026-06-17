@@ -93,6 +93,7 @@ class InstallCommand extends Command
         $homeController = $this->directory.'/Controllers/HomeController.php';
         $contents = $this->getStub('HomeController');
 
+        /** @phpstan-ignore-next-line */
         $this->laravel['files']->put(
             $homeController,
             str_replace('DummyNamespace', config('admin.route.namespace'), $contents)
@@ -110,6 +111,7 @@ class InstallCommand extends Command
         $authController = $this->directory.'/Controllers/AuthController.php';
         $contents = $this->getStub('AuthController');
 
+        /** @phpstan-ignore-next-line */
         $this->laravel['files']->put(
             $authController,
             str_replace('DummyNamespace', config('admin.route.namespace'), $contents)
@@ -127,6 +129,7 @@ class InstallCommand extends Command
         $exampleController = $this->directory.'/Controllers/ExampleController.php';
         $contents = $this->getStub('ExampleController');
 
+        /** @phpstan-ignore-next-line */
         $this->laravel['files']->put(
             $exampleController,
             str_replace('DummyNamespace', config('admin.route.namespace'), $contents)
@@ -144,6 +147,7 @@ class InstallCommand extends Command
         $file = $this->directory.'/bootstrap.php';
 
         $contents = $this->getStub('bootstrap');
+        /** @phpstan-ignore-next-line */
         $this->laravel['files']->put($file, $contents);
         $this->line('<info>Bootstrap file was created:</info> '.str_replace(base_path(), '', $file));
     }
@@ -158,6 +162,7 @@ class InstallCommand extends Command
         $file = $this->directory.'/routes.php';
 
         $contents = $this->getStub('routes');
+        /** @phpstan-ignore-next-line */
         $this->laravel['files']->put($file, str_replace('DummyNamespace', config('admin.route.namespace'), $contents));
         $this->line('<info>Routes file was created:</info> '.str_replace(base_path(), '', $file));
     }
@@ -171,6 +176,7 @@ class InstallCommand extends Command
      */
     protected function getStub($name)
     {
+        /** @phpstan-ignore-next-line */
         return $this->laravel['files']->get(__DIR__."/stubs/$name.stub");
     }
 
@@ -183,6 +189,7 @@ class InstallCommand extends Command
      */
     protected function makeDir($path = '')
     {
+        /** @phpstan-ignore-next-line */
         $this->laravel['files']->makeDirectory("{$this->directory}/$path", 0755, true, true);
     }
 }

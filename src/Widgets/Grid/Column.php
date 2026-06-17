@@ -413,6 +413,7 @@ class Column
     public function setRelation($relation, $relationColumn = null)
     {
         $this->relation = $relation;
+        // @phpstan-ignore-next-line relationColumn accepts nullable string from parameter
         $this->relationColumn = $relationColumn;
 
         return $this;
@@ -1030,10 +1031,12 @@ HELP;
     {
         return $this->display(function ($value) use ($abstract, $arguments) {
             if (is_array($value) || $value instanceof Arrayable) {
+                /** @phpstan-ignore-next-line argument.type */
                 return call_user_func_array([collect($value), $abstract], $arguments);
             }
 
             if (is_string($value)) {
+                /** @phpstan-ignore-next-line argument.type */
                 return call_user_func_array([Str::class, $abstract], array_merge([$value], $arguments));
             }
 

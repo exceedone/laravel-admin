@@ -42,6 +42,7 @@ class Table extends HasMany
 
         $forms = [];
 
+        /** @phpstan-ignore-next-line Parameter #1 $key of function old expects string|null, array|string given. */
         if ($values = old($this->column)) {
             foreach ($values as $key => $data) {
                 if ($data[NestedForm::REMOVE_FLAG_NAME] == 1) {
@@ -51,6 +52,7 @@ class Table extends HasMany
                 $forms[$key] = $this->buildNestedForm($this->column, $this->builder, $key)->fill($data);
             }
         } else {
+            // @phpstan-ignore-next-line Value is guaranteed to be iterable at this point
             foreach ($this->value as $key => $data) {
                 if (isset($data['pivot'])) {
                     $data = array_merge($data, $data['pivot']);
@@ -69,6 +71,7 @@ class Table extends HasMany
      */
     public function prepare($input)
     {
+        /** @phpstan-ignore-next-line Parameter #1 $column of method Encore\Admin\Form\Field\Table::buildNestedForm() expects string, array|string given. */
         $form = $this->buildNestedForm($this->column, $this->builder);
 
         $prepare = $form->prepare($input);

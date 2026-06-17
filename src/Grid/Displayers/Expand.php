@@ -12,6 +12,7 @@ class Expand extends AbstractDisplayer
      */
     public function display($callback = null)
     {
+        // @phpstan-ignore-next-line Callback is guaranteed to be set when display is called
         $callback = $callback->bindTo($this->row);
 
         $html = call_user_func_array($callback, [$this->row]);

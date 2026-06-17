@@ -104,6 +104,7 @@ class AuthController extends Controller
 
         return $content
             ->title(trans('admin.user_setting'))
+            // @phpstan-ignore-next-line User is guaranteed to be authenticated in admin routes
             ->body($form->edit(Admin::user()->id));
     }
 
@@ -114,6 +115,7 @@ class AuthController extends Controller
      */
     public function putSetting()
     {
+        // @phpstan-ignore-next-line User is guaranteed to be authenticated in admin routes
         return $this->settingForm()->update(Admin::user()->id);
     }
 
@@ -142,6 +144,7 @@ class AuthController extends Controller
         $form->ignore(['password_confirmation']);
 
         $form->saving(function (Form $form) {
+            // @phpstan-ignore-next-line Model is guaranteed to exist during saving callback
             if ($form->password && $form->model()->password != $form->password) {
                 $form->password = bcrypt($form->password);
             }

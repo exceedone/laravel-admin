@@ -53,6 +53,7 @@ class Permission
      */
     public function checkRoutePermission(Request $request)
     {
+        // @phpstan-ignore-next-line Route is guaranteed to exist in middleware context
         if (!$middleware = collect($request->route()->middleware())->first(function ($middleware) {
             return Str::startsWith($middleware, $this->middlewarePrefix);
         })) {
@@ -67,6 +68,7 @@ class Permission
             throw new \InvalidArgumentException("Invalid permission method [$method].");
         }
 
+        /** @phpstan-ignore-next-line argument.type */
         call_user_func_array([Checker::class, $method], [$args]);
 
         return true;

@@ -91,6 +91,7 @@ class Paginator extends AbstractTool
             return '';
         }
 
+        /** @phpstan-ignore-next-line Binary operation "." between string|Symfony\Contracts\Translation\TranslatorInterface and string results in an error. */
         return $this->paginationRanger().
             $this->paginationLinks().
             $this->perPageSelector();

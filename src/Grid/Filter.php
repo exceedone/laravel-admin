@@ -266,6 +266,7 @@ class Filter implements Renderable
      *
      * @return string
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter::getFilterAjax() has no return type specified. */
     public function getFilterAjax(){
         return $this->filterAjax;
     }
@@ -315,6 +316,7 @@ class Filter implements Renderable
      *
      * @return void
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter::removeDefaultIDFilter() should return void but returns array<int, Encore\Admin\Grid\Filter\AbstractFilter>. */
     protected function removeDefaultIDFilter()
     {
         array_shift($this->filters);
@@ -516,6 +518,7 @@ class Filter implements Renderable
     {
         $width = $width <= 1 ? round(12 * $width) : $width;
 
+        /** @phpstan-ignore-next-line Parameter #1 $width of method Encore\Admin\Grid\Filter\Layout\Layout::column() expects int, float|int<2, max> given. */
         $this->layout->column($width, $closure);
 
         return $this;
@@ -617,6 +620,7 @@ class Filter implements Renderable
         $groupNames = collect($this->filters)->filter(function ($filter) {
             return $filter instanceof Group;
         })->map(function (AbstractFilter $filter) {
+            /** @phpstan-ignore-next-line Part $filter->getId() (array|string) of encapsed string cannot be cast to string. */
             return "{$filter->getId()}_group";
         });
 

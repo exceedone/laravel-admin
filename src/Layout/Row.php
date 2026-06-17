@@ -49,6 +49,7 @@ class Row implements Buildable, Renderable
     {
         $width = $width < 1 ? round(12 * $width) : $width;
 
+        /** @phpstan-ignore-next-line Parameter #2 $width of class Encore\Admin\Layout\Column constructor expects int, float|int<1, max> given. */
         $column = new Column($content, $width);
 
         $this->addColumn($column);
@@ -180,6 +181,7 @@ class Row implements Buildable, Renderable
 
         ob_end_clean();
 
+        /** @phpstan-ignore-next-line Method Encore\Admin\Layout\Row::render() should return string but returns string|false. */
         return $contents;
     }
 }

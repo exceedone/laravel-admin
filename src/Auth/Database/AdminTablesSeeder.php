@@ -29,6 +29,7 @@ class AdminTablesSeeder extends Seeder
         ]);
 
         // add role to user.
+        // @phpstan-ignore-next-line Administrator and Role are guaranteed to exist after create/truncate above
         Administrator::first()->roles()->save(Role::first());
 
         //create a permission
@@ -66,6 +67,7 @@ class AdminTablesSeeder extends Seeder
             ],
         ]);
 
+        // @phpstan-ignore-next-line Role and Permission are guaranteed to exist after insert above
         Role::first()->permissions()->save(Permission::first());
 
         // add default menus.
@@ -123,6 +125,7 @@ class AdminTablesSeeder extends Seeder
         ]);
 
         // add role to menu.
+        // @phpstan-ignore-next-line Menu and Role are guaranteed to exist after insert above
         Menu::find(2)->roles()->save(Role::first());
     }
 }

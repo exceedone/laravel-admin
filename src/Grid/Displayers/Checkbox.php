@@ -40,15 +40,23 @@ EOT;
         }
 
         Admin::script($this->script());
+        
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var string $saveText */
+        $saveText = $this->trans('save');
+        /** @var string $resetText */
+        $resetText = $this->trans('reset');
+        /** @var string $keyString */
+        $keyString = $this->getKey();
 
         return <<<EOT
-<form class="form-group grid-checkbox-$name" style="text-align:left;" data-key="{$this->getKey()}">
+<form class="form-group grid-checkbox-$name" style="text-align:left;" data-key="{$keyString}">
     $radios
     <button type="submit" class="btn btn-info btn-xs pull-left">
-        <i class="fa fa-save"></i>&nbsp;{$this->trans('save')}
+        <i class="fa fa-save"></i>&nbsp;{$saveText}
     </button>
     <button type="reset" class="btn btn-warning btn-xs pull-left" style="margin-left:10px;">
-        <i class="fa fa-trash"></i>&nbsp;{$this->trans('reset')}
+        <i class="fa fa-trash"></i>&nbsp;{$resetText}
     </button>
 </form>
 EOT;

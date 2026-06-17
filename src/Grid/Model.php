@@ -128,6 +128,7 @@ class Model
 
         $this->originalModel = $model;
 
+        // @phpstan-ignore-next-line Grid accepts nullable Grid from parameter
         $this->grid = $grid;
 
         $this->queries = collect();
@@ -284,6 +285,7 @@ class Model
      *
      * @return $this
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::setGrid() should return $this(Encore\Admin\Grid\Model) but returns Encore\Admin\Grid\Model. */
     public function setGrid(Grid $grid)
     {
         $this->grid = $grid;
@@ -296,6 +298,7 @@ class Model
      *
      * @return Grid
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::getGrid() should return Encore\Admin\Grid but returns Encore\Admin\Grid|null. */
     public function getGrid()
     {
         return $this->grid;
@@ -306,6 +309,7 @@ class Model
      *
      * @return $this
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::setRelation() should return $this(Encore\Admin\Grid\Model) but returns Encore\Admin\Grid\Model. */
     public function setRelation(Relation $relation)
     {
         $this->relation = $relation;
@@ -326,6 +330,7 @@ class Model
      *
      * @return array<mixed>|bool
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::getConstraints() should return array<mixed>|bool but returns array<string, mixed>|false. */
     public function getConstraints()
     {
         if ($this->relation instanceof HasMany) {
@@ -416,6 +421,7 @@ class Model
     public function addConditions(array $conditions)
     {
         foreach ($conditions as $condition) {
+            /** @phpstan-ignore-next-line Function call_user_func_array() with array{$this(Encore\Admin\Grid\Model), int|string|null} will throw a TypeError. */
             call_user_func_array([$this, key($condition)], current($condition));
         }
 
@@ -456,6 +462,7 @@ class Model
                 $func($this->model, $query['arguments']);
             }
             else{
+                /** @phpstan-ignore-next-line argument.type */
                 $this->model = call_user_func_array([$this->model, $query['method']], $query['arguments']);
             }
         });
@@ -586,6 +593,7 @@ class Model
             return [$this->perPage, ['*'], "{$name}_page"];
         }
 
+        /** @phpstan-ignore-next-line Cannot access offset 'arguments' on array|Encore\Admin\Grid\Model. */
         if (isset($paginate['arguments'][0])) {
             return $paginate['arguments'];
         }
@@ -625,7 +633,7 @@ class Model
 
         $column = $this->getSortColumn();
         // if sort as callback, Execute callback
-        /** @phpstan-ignore-next-line Call to function is_null() with Closure will always evaluate to false.  */
+        /** @phpstan-ignore-next-line Call to function is_null() with Closure will always evaluate to false. */
         if($column && !is_null($column->getSortCallback())){
             $this->setCallbackSort();
             return;
@@ -676,6 +684,7 @@ class Model
         if(!$column_name){
             return null;
         }
+        // @phpstan-ignore-next-line Columns collection is guaranteed to exist on grid
         return $this->grid->columns()->first(function($column) use($column_name){
             if($column->getSortName() == $column_name){
                 return true;

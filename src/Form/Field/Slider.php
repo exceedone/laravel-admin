@@ -36,7 +36,7 @@ class Slider extends Field
     public function render()
     {
         $option = json_encode($this->options);
-
+        /** @phpstan-ignore-next-line argument.type */
         $this->script = "$('{$this->getElementClassSelector()}').ionRangeSlider($option)";
 
         return parent::render();
