@@ -2237,7 +2237,7 @@ class Form implements Renderable
             return $element;
         }
 
-        admin_error('Error', "Field type [$method] does not exist.");
+        admin_error('Error', 'Field type [' . e($method) . '] does not exist.');
 
         return new Field\Nullable();
     }
