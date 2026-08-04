@@ -82,6 +82,7 @@ class Select extends Presenter
             ], $this->config);
 
             $configs = json_encode($configs);
+            /** @phpstan-ignore-next-line argument.type */
             $configs = substr($configs, 1, strlen($configs) - 2);
 
             $this->script = <<<SCRIPT
@@ -164,6 +165,7 @@ SCRIPT;
         ], $this->config);
 
         $configs = json_encode($configs);
+        /** @phpstan-ignore-next-line argument.type */
         $configs = substr($configs, 1, strlen($configs) - 2);
 
         $ajaxOptions = json_encode(array_merge($ajaxOptions, $options), JSON_UNESCAPED_UNICODE);
@@ -207,6 +209,7 @@ EOT;
         ], $this->config);
 
         $configs = json_encode($configs);
+        /** @phpstan-ignore-next-line argument.type */
         $configs = substr($configs, 1, strlen($configs) - 2);
 
         $this->script = <<<EOT

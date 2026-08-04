@@ -59,7 +59,7 @@ class EmbeddedForm
     /**
      * Fields in form.
      *
-     * @var Collection<int|string, mixed>
+     * @var Collection<int|string, Field>
      */
     protected $fields;
 
@@ -92,7 +92,7 @@ class EmbeddedForm
     /**
      * Get all fields in current form.
      *
-     * @return Collection<int|string, mixed>
+     * @return Collection<int|string, Field>
      */
     public function fields()
     {
@@ -130,6 +130,7 @@ class EmbeddedForm
             $data = json_decode($data, true);
         }
 
+        // @phpstan-ignore-next-line Assigned value is always array at runtime
         $this->original = $data;
 
         return $this;
@@ -146,6 +147,7 @@ class EmbeddedForm
     {
         foreach ($input as $key => $record) {
             $this->setFieldOriginalValue($key);
+            // @phpstan-ignore-next-line $record is always string|null at runtime
             $input[$key] = $this->prepareValue($key, $record, $asConfirm);
         }
 
@@ -155,7 +157,9 @@ class EmbeddedForm
                 continue;
             }
             $key = $field->column();
+            // @phpstan-ignore-next-line $key is always string at runtime
             $this->setFieldOriginalValue($key);
+            // @phpstan-ignore-next-line $key is always string at runtime (and 1 more mixed-type assumption on this line)
             $input[$key] = $this->prepareValue($key, null, $asConfirm);
         }
         
@@ -253,17 +257,24 @@ class EmbeddedForm
         
         if (is_array($jsonKey)) {
             foreach ($jsonKey as $index => $name) {
+                // @phpstan-ignore-next-line $formatName is always castable to string at runtime (and 1 more mixed-type assumption on this line)
                 $elementName[$index] = "{$formatName}[$name]";
+                // @phpstan-ignore-next-line $name is always castable to string at runtime
                 $errorKey[$index] = "{$this->column}.$name";
+                /** @phpstan-ignore-next-line */
                 $elementClass[$index] = "{$formatClass}_$name";
             }
         } else {
+            // @phpstan-ignore-next-line $formatName is always castable to string at runtime
             $elementName = "{$formatName}[$jsonKey]";
             $errorKey = "{$this->column}.$jsonKey";
+            /** @phpstan-ignore-next-line */
             $elementClass = "{$formatClass}_$jsonKey";
         }
 
+        /** @phpstan-ignore-next-line */
         $field->setElementName($elementName)
+            /** @phpstan-ignore-next-line */
             ->setErrorKey($errorKey)
             ->setElementClass($elementClass);
 

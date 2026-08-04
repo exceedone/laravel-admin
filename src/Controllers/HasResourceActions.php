@@ -13,6 +13,7 @@ trait HasResourceActions
      */
     public function update($id)
     {
+        // @phpstan-ignore-next-line The value is always an object exposing update() at runtime (and 1 more mixed-type assumption on this line)
         return $this->form()->update($id);
     }
 
@@ -23,6 +24,7 @@ trait HasResourceActions
      */
     public function store()
     {
+        // @phpstan-ignore-next-line The value is always an object exposing store() at runtime
         return $this->form()->store();
     }
 
@@ -35,6 +37,7 @@ trait HasResourceActions
      */
     public function destroy($id)
     {
+        // @phpstan-ignore-next-line The value is always an object exposing destroy() at runtime (and 1 more mixed-type assumption on this line)
         return $this->form()->destroy($id);
     }
 }

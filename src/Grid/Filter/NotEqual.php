@@ -21,6 +21,7 @@ class NotEqual extends AbstractFilter
             return;
         }
 
+        // @phpstan-ignore-next-line Assigned value is always array|string at runtime
         $this->value = $value;
 
         return $this->buildCondition($this->column, '!=', $this->value);

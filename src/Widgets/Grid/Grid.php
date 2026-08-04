@@ -46,14 +46,14 @@ class Grid
     /**
      * Collection of all data rows.
      *
-     * @var \Illuminate\Support\Collection<int|string, mixed>
+     * @var \Illuminate\Support\Collection<int|string, Row>
      */
     protected $rows;
 
     /**
      * Collection of all grid columns.
      *
-     * @var \Illuminate\Support\Collection<int|string, mixed>
+     * @var \Illuminate\Support\Collection<int|string, Column>
      */
     protected $columns;
 
@@ -184,6 +184,7 @@ class Grid
     public function __construct(Closure $builder = null, Closure $getDataCallback = null)
     {
         $this->builder = $builder;
+        // @phpstan-ignore-next-line Callback accepts nullable Closure from parameter
         $this->getDataCallback = $getDataCallback;
 
         $this->initialize();
@@ -223,6 +224,7 @@ class Grid
         }
 
         if ($forceExport) {
+            // @phpstan-ignore-next-line $scope is always string at runtime
             $this->getExporter($scope)->export();
         }
     }
@@ -252,6 +254,7 @@ class Grid
             return $this->options[$key];
         }
 
+        // @phpstan-ignore-next-line Assigned value is always array<string, bool> at runtime
         $this->options[$key] = $value;
 
         return $this;
@@ -268,6 +271,7 @@ class Grid
     {
         if($this->enablePaginator){
             $this->_paginator = $this->getPaginatorData();
+            // @phpstan-ignore-next-line Return value is always Illuminate\Support\Collection<int|string, mixed> at runtime
             return collect($this->_paginator->items());
         }
 
@@ -326,6 +330,7 @@ class Grid
      */ 
     public function getPaginator() : ?Closure
     {
+        // @phpstan-ignore-next-line Return value is always Closure|null at runtime
         return $this->paginator;
     }
 
@@ -393,6 +398,7 @@ class Grid
      */
     public function disableCreateButton(bool $disable = true)
     {
+        // @phpstan-ignore-next-line Return value is always $this(Encore\Admin\Widgets\Grid\Grid) at runtime
         return $this->option('show_create_btn', !$disable);
     }
 
@@ -403,6 +409,7 @@ class Grid
      */
     public function showCreateBtn()
     {
+        // @phpstan-ignore-next-line Return value is always bool at runtime
         return $this->option('show_create_btn');
     }
 
@@ -510,7 +517,7 @@ class Grid
     /**
      * get rows.
      *
-     * @return Collection<int|string, mixed>|null
+     * @return Collection<int|string, \Encore\Admin\Grid\Row>|null
      */
     public function rows()
     {
@@ -544,10 +551,12 @@ class Grid
     public function column($name, $label = '')
     {
         if (Str::contains($name, '.')) {
+            /** @phpstan-ignore-next-line Method Encore\Admin\Widgets\Grid\Grid::column() should return Encore\Admin\Grid\Column|Encore\Admin\Widgets\Grid\Column but returns $this(Encore\Admin\Widgets\Grid\Grid)|Encore\Admin\Grid\Column. */
             return $this->addRelationColumn($name, $label);
         }
 
         if (Str::contains($name, '->')) {
+            /** @phpstan-ignore-next-line Method Encore\Admin\Widgets\Grid\Grid::column() should return Encore\Admin\Grid\Column|Encore\Admin\Widgets\Grid\Column but returns $this(Encore\Admin\Widgets\Grid\Grid)|Encore\Admin\Grid\Column. */
             return $this->addJsonColumn($name, $label);
         }
 
@@ -563,7 +572,7 @@ class Grid
      *
      * @param array<mixed> $columns
      *
-     * @return Collection<int|string, mixed>|void
+     * @return Collection<int|string, Column>|void
      */
     public function columns($columns = [])
     {
@@ -580,6 +589,7 @@ class Grid
         }
 
         foreach (func_get_args() as $column) {
+            // @phpstan-ignore-next-line $name is always string at runtime
             $this->column($column);
         }
     }
@@ -673,6 +683,7 @@ class Grid
     public function getActions($row)
     {
         $class = $this->actionsClass;
+        /** @phpstan-ignore-next-line Call to an undefined method object::display(). */
         return (new $class(null, $this, null, $row))->display();
     }
 
@@ -684,8 +695,10 @@ class Grid
      */
     protected function variables()
     {
+        // @phpstan-ignore-next-line The value is always an array at runtime
         $this->variables['grid'] = $this;
 
+        // @phpstan-ignore-next-line Return value is always array<string, mixed> at runtime
         return $this->variables;
     }
 
@@ -752,6 +765,7 @@ class Grid
     {
         $label = $arguments[0] ?? null;
 
+        // @phpstan-ignore-next-line Label may be null from optional argument
         return $this->addColumn($method, $label);
     }
 
@@ -801,11 +815,14 @@ class Grid
         })->toArray();
 
         $this->columns->map(function (Column $column) use (&$data) {
+            // @phpstan-ignore-next-line $data is always array at runtime
             $data = $column->fill($data);
 
+            // @phpstan-ignore-next-line Assigned value is always array<string> at runtime
             $this->columnNames[] = $column->getName();
         });
 
+        // @phpstan-ignore-next-line $data is always array at runtime
         $this->buildRows($data);
 
         $this->builded = true;

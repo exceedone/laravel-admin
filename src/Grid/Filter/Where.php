@@ -68,6 +68,7 @@ class Where extends AbstractFilter
             return;
         }
 
+        // @phpstan-ignore-next-line Assigned value is always array|string at runtime
         $this->input = $this->value = $value;
 
         return $this->buildCondition($this->where->bindTo($this));

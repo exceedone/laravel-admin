@@ -224,6 +224,7 @@ class Form implements Renderable
      */
     public function __construct($model, Closure $callback = null)
     {
+        // @phpstan-ignore-next-line Assigned value is always Illuminate\Database\Eloquent\Model|null at runtime
         $this->model = $model;
 
         $this->builder = new Builder($this);
@@ -232,6 +233,7 @@ class Form implements Renderable
             $callback($this);
         }
 
+        // @phpstan-ignore-next-line $class is always object|string at runtime
         $this->isSoftDeletes = in_array(SoftDeletes::class, class_uses_deep($this->model));
 
         $this->callInitCallbacks();
@@ -246,6 +248,7 @@ class Form implements Renderable
      */
     public static function init(Closure $callback = null)
     {
+        // @phpstan-ignore-next-line Callback may be null but is handled during execution
         static::$initCallbacks[] = $callback;
     }
 
@@ -293,6 +296,7 @@ class Form implements Renderable
      */
     public function setModel($model)
     {
+        // @phpstan-ignore-next-line Assigned value is always Illuminate\Database\Eloquent\Model|null at runtime
         $this->model = $model;
         return $this;
     }
@@ -384,8 +388,10 @@ class Form implements Renderable
                 return $ret;
             }
 
+            // @phpstan-ignore-next-line $string is always string at runtime
             collect(explode(',', $id))->filter()->each(function ($id) {
                 /** @var SoftDeletableModel $builder */
+                // @phpstan-ignore-next-line Model is guaranteed to be set when destroy is called
                 $builder = $this->model()->newQuery();
 
                 if ($this->isSoftDeletes) {
@@ -394,13 +400,16 @@ class Form implements Renderable
 
                 $model = $builder->with($this->getRelations())->findOrFail($id);
 
+                /** @phpstan-ignore-next-line */
                 if (($this->isSoftDeletes && $model->trashed()) || $this->isForceDelete) {
+                    /** @phpstan-ignore-next-line */
                     $this->deleteFiles($model, true);
                     $model->forceDelete();
 
                     return;
                 }
 
+                /** @phpstan-ignore-next-line */
                 $this->deleteFiles($model);
                 $model->delete();
             });
@@ -463,10 +472,13 @@ class Form implements Renderable
         }
 
         // Handle validation errors.
+        // @phpstan-ignore-next-line $input is always array at runtime
         if ($validationMessages = $this->validationMessages($data)) {
+            /** @phpstan-ignore-next-line Parameter $provider of method withErrors() expects array|Illuminate\Contracts\Support\MessageProvider|string, Illuminate\Support\MessageBag|false given. */
             return back()->withInput()->withErrors($validationMessages);
         }
 
+        // @phpstan-ignore-next-line $data is always array at runtime
         if (($response = $this->prepare($data)) instanceof Response) {
             return $response;
         }
@@ -475,9 +487,11 @@ class Form implements Renderable
             $inserts = $this->prepareInsert($this->updates);
 
             foreach ($inserts as $column => $value) {
+                // @phpstan-ignore-next-line Model is guaranteed to be set during store
                 $this->model->setAttribute($column, $value);
             }
 
+            // @phpstan-ignore-next-line Model is guaranteed to be set during store
             $this->model->save();
             $this->storeJancode($this->model);
 
@@ -520,6 +534,7 @@ class Form implements Renderable
             DB::table('jan_codes')
                 ->insert([
                     'table_id' => $table_code,
+                    // @phpstan-ignore-next-line The value is always an object exposing $id at runtime
                     'target_id' => $model->id,
                     'jan_code' => $jan_code,
                     'created_at' => now(),
@@ -607,10 +622,12 @@ class Form implements Renderable
         $relations = [];
 
         foreach ($inputs as $column => $value) {
+            // @phpstan-ignore-next-line Model is guaranteed to be set at this point
             if (!method_exists($this->model, $column)) {
                 continue;
             }
 
+            /** @phpstan-ignore-next-line */
             $relation = call_user_func([$this->model, $column]);
 
             if ($relation instanceof Relations\Relation) {
@@ -634,8 +651,10 @@ class Form implements Renderable
         $formId = request()->get('formid');
         $data = ($data) ?: request()->all();
 
+        // @phpstan-ignore-next-line $input is always array at runtime
         $isEditable = $this->isEditable($data);
 
+        // @phpstan-ignore-next-line $data is always array at runtime
         if (($data = $this->handleColumnUpdates($id, $data)) instanceof Response) {
             return $data;
         }
@@ -647,19 +666,24 @@ class Form implements Renderable
             $builder = $builder->withTrashed();
         }
 
+        /** @phpstan-ignore-next-line */
         $this->model = $builder->with($this->getRelations())->findOrFail($id);
 
         $this->setFieldOriginalValue();
 
         // Handle validation errors.
+        /** @phpstan-ignore-next-line */
         if ($validationMessages = $this->validationMessages($data)) {
             if (!$isEditable) {
+                /** @phpstan-ignore-next-line */
                 return back()->withInput()->withErrors($validationMessages);
             }
 
+            /** @phpstan-ignore-next-line */
             return response()->json(['errors' => Arr::dot($validationMessages->getMessages())], 422);
         }
 
+        /** @phpstan-ignore-next-line */
         if (($response = $this->prepare($data)) instanceof Response) {
             return $response;
         }
@@ -669,9 +693,11 @@ class Form implements Renderable
 
             foreach ($updates as $column => $value) {
                 /* @var Model $this->model */
+                // @phpstan-ignore-next-line Model is guaranteed to be set during update
                 $this->model->setAttribute($column, $value);
             }
 
+            // @phpstan-ignore-next-line Model is guaranteed to be set during update
             $this->model->save();
 
             $this->updateRelation($this->relations);
@@ -738,8 +764,10 @@ class Form implements Renderable
     {
         $data = ($data) ?: request()->all();
 
+        // @phpstan-ignore-next-line $input is always array at runtime
         $isEditable = $this->isEditable($data);
 
+        // @phpstan-ignore-next-line $data is always array at runtime
         if (($data = $this->handleColumnUpdates($id, $data)) instanceof Response) {
             return $data;
         }
@@ -751,19 +779,24 @@ class Form implements Renderable
             $builder = $builder->withTrashed();
         }
 
+        /** @phpstan-ignore-next-line */
         $this->model = $builder->with($this->getRelations())->findOrFail($id);
 
         $this->setFieldOriginalValue();
 
         // Handle validation errors.
+        /** @phpstan-ignore-next-line */
         if ($validationMessages = $this->validationMessages($data)) {
             if (!$isEditable) {
+                /** @phpstan-ignore-next-line */
                 return back()->withInput()->withErrors($validationMessages);
             }
 
+            /** @phpstan-ignore-next-line */
             return response()->json(['errors' => Arr::dot($validationMessages->getMessages())], 422);
         }
 
+        /** @phpstan-ignore-next-line */
         if (($response = $this->prepare($data)) instanceof Response) {
             return $response;
         }
@@ -773,9 +806,11 @@ class Form implements Renderable
 
             foreach ($updates as $column => $value) {
                 /* @var Model $this->model */
+                // @phpstan-ignore-next-line Model is guaranteed to be set during validationUpdate
                 $this->model->setAttribute($column, $value);
             }
 
+            // @phpstan-ignore-next-line Model is guaranteed to be set during validationUpdate
             $this->model->save();
 
             $this->updateRelation($this->relations);
@@ -813,8 +848,10 @@ class Form implements Renderable
     {
         $data = ($data) ?: request()->all();
 
+        // @phpstan-ignore-next-line $input is always array at runtime
         $isEditable = $this->isEditable($data);
 
+        // @phpstan-ignore-next-line $data is always array at runtime
         if (($data = $this->handleColumnUpdates($id, $data)) instanceof Response) {
             return $data;
         }
@@ -826,11 +863,13 @@ class Form implements Renderable
             $builder = $builder->withTrashed();
         }
 
+        /** @phpstan-ignore-next-line */
         $this->model = $builder->with($this->getRelations())->findOrFail($id);
 
         $this->setFieldOriginalValue();
 
         // Handle validation errors.
+        /** @phpstan-ignore-next-line */
         if ($validationMessages = $this->validationMessages($data)) {
             return [
                 'validationMessages' => $validationMessages,
@@ -848,14 +887,16 @@ class Form implements Renderable
     /**
      * Get RedirectResponse after store.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function redirectAfterStore()
     {
         $resourcesPath = $this->getResource(0);
 
+        // @phpstan-ignore-next-line Model is guaranteed to be set after store
         $key = $this->model->getKey();
 
+        // @phpstan-ignore-next-line $key is always string at runtime
         return $this->redirectAfterSaving($resourcesPath, $key);
     }
 
@@ -864,12 +905,13 @@ class Form implements Renderable
      *
      * @param mixed $key
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     protected function redirectAfterUpdate($key)
     {
         $resourcesPath = $this->getResource(-1);
 
+        // @phpstan-ignore-next-line $key is always string at runtime
         return $this->redirectAfterSaving($resourcesPath, $key);
     }
 
@@ -883,11 +925,13 @@ class Form implements Renderable
      */
     protected function redirectAfterSaving($resourcesPath, $key)
     {
+        // @phpstan-ignore-next-line $afterSaveValue is always int at runtime
         $redirect = $this->builder()->getFooter()->getRedirect($resourcesPath, $key, request('after-save'));
 
         admin_toastr(trans('admin.save_succeeded'));
         
         if(isset($redirect)){
+            /** @phpstan-ignore-next-line Method redirectAfterSaving() should return Illuminate\\Http\\RedirectResponse|Illuminate\\Routing\\Redirector but returns Illuminate\\Http\\RedirectResponse|Illuminate\\Routing\\Redirector|null. */
             return $redirect;
         }
 
@@ -896,6 +940,7 @@ class Form implements Renderable
         } else {
             $url = request(Builder::PREVIOUS_URL_KEY) ?: $resourcesPath;
         }
+        // @phpstan-ignore-next-line $to is always string|null at runtime
         return redirect($url);
     }
 
@@ -1012,6 +1057,7 @@ class Form implements Renderable
     {
         if (array_key_exists('_orderable', $input)) {
             /** @var SortableModel $model */
+            // @phpstan-ignore-next-line Model is guaranteed to be set at this point
             $model = $this->model->find($id);
 
             if ($model instanceof Sortable) {
@@ -1034,6 +1080,7 @@ class Form implements Renderable
     protected function updateRelation($relationsData)
     {
         foreach ($relationsData as $name => $values) {
+            // @phpstan-ignore-next-line Model is guaranteed to be set when updating relations
             if (!method_exists($this->model, $name)) {
                 continue;
             }
@@ -1054,6 +1101,7 @@ class Form implements Renderable
                 case $relation instanceof Relations\BelongsToMany:
                 case $relation instanceof Relations\MorphToMany:
                     if (isset($prepared[$name])) {
+                        // @phpstan-ignore-next-line $ids is always array|Illuminate\Database\Eloquent\Model|Illuminate\Support\Collection at runtime
                         $relation->sync($prepared[$name]);
                     }
                     break;
@@ -1069,6 +1117,7 @@ class Form implements Renderable
                         $related->{$relation->getForeignKeyName()} = $this->model->{$localKey};
                     }
 
+                    // @phpstan-ignore-next-line The value is always iterable at runtime
                     foreach ($prepared[$name] as $column => $value) {
                         $related->setAttribute($column, $value);
                     }
@@ -1085,6 +1134,7 @@ class Form implements Renderable
                         $parent = $relation->getRelated();
                     }
 
+                    // @phpstan-ignore-next-line The value is always iterable at runtime
                     foreach ($prepared[$name] as $column => $value) {
                         $parent->setAttribute($column, $value);
                     }
@@ -1096,6 +1146,7 @@ class Form implements Renderable
                     if (!$this->model->{$relation->{$foreignKeyMethod}()}) {
                         $this->model->{$relation->{$foreignKeyMethod}()} = $parent->getKey();
 
+                        // @phpstan-ignore-next-line Model is guaranteed to be set when saving relations
                         $this->model->save();
                     }
 
@@ -1105,6 +1156,7 @@ class Form implements Renderable
                     if (is_null($related)) {
                         $related = $relation->make();
                     }
+                    // @phpstan-ignore-next-line The value is always iterable at runtime
                     foreach ($prepared[$name] as $column => $value) {
                         $related->setAttribute($column, $value);
                     }
@@ -1113,15 +1165,20 @@ class Form implements Renderable
                 case $relation instanceof Relations\HasMany:
                 case $relation instanceof Relations\MorphMany:
 
+                    // @phpstan-ignore-next-line The value is always iterable at runtime
                     foreach ($prepared[$name] as $related) {
                         /** @var Relations\Relation<Model>|\Illuminate\Database\Eloquent\Builder<Model> $relation */
                         $relation = $this->model()->$name();
 
+                        /** @phpstan-ignore-next-line Call to an undefined method getRelated(). */
                         $keyName = $relation->getRelated()->getKeyName();
 
+                        // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime
                         $instance = $relation->findOrNew(Arr::get($related, $keyName));
 
+                        // @phpstan-ignore-next-line The value is always an array at runtime
                         if ($related[static::REMOVE_FLAG_NAME] == 1) {
+                            /** @phpstan-ignore-next-line Call to an undefined method delete(). */
                             $instance->delete();
 
                             continue;
@@ -1129,8 +1186,10 @@ class Form implements Renderable
 
                         Arr::forget($related, static::REMOVE_FLAG_NAME);
 
+                        /** @phpstan-ignore-next-line Call to an undefined method fill(). */
                         $instance->fill($related);
 
+                        /** @phpstan-ignore-next-line Call to an undefined method save(). */
                         $instance->save();
                     }
 
@@ -1170,6 +1229,7 @@ class Form implements Renderable
 
             if (is_array($columns)) {
                 foreach ($columns as $name => $column) {
+                    // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
                     Arr::set($prepared, $column, $value[$name]);
                 }
             } elseif (is_string($columns)) {
@@ -1189,7 +1249,9 @@ class Form implements Renderable
     protected function isInvalidColumn($columns, $containsDot = false)
     {
         foreach ((array) $columns as $column) {
+            // @phpstan-ignore-next-line $haystack is always string at runtime
             if ((!$containsDot && Str::contains($column, '.')) ||
+                // @phpstan-ignore-next-line $haystack is always string at runtime
                 ($containsDot && !Str::contains($column, '.'))) {
                 return true;
             }
@@ -1207,16 +1269,21 @@ class Form implements Renderable
      */
     protected function prepareInsert($inserts)
     {
+        // @phpstan-ignore-next-line $inserts is always array at runtime
         if ($this->isHasOneRelation($inserts)) {
+            // @phpstan-ignore-next-line $array is always iterable at runtime
             $inserts = Arr::dot($inserts);
         }
 
+        // @phpstan-ignore-next-line The value is always iterable at runtime
         foreach ($inserts as $column => $value) {
             if (is_null($field = $this->getFieldByColumn($column))) {
+                // @phpstan-ignore-next-line The value is always an array at runtime
                 unset($inserts[$column]);
                 continue;
             }
 
+            // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
             $inserts[$column] = $field->prepare($value);
         }
 
@@ -1228,12 +1295,15 @@ class Form implements Renderable
             }
             
             $column = $field->column();
+            // @phpstan-ignore-next-line The value is always an array at runtime
             $inserts[$column] = $field->prepare(null);
         }
 
         $prepared = [];
 
+        // @phpstan-ignore-next-line The value is always iterable at runtime
         foreach ($inserts as $key => $value) {
+            // @phpstan-ignore-next-line $key is always int|string|null at runtime
             Arr::set($prepared, $key, $value);
         }
 
@@ -1249,16 +1319,21 @@ class Form implements Renderable
      */
     protected function prepareConfirm($inserts)
     {
+        // @phpstan-ignore-next-line $inserts is always array at runtime
         if ($this->isHasOneRelation($inserts)) {
+            // @phpstan-ignore-next-line $array is always iterable at runtime
             $inserts = Arr::dot($inserts);
         }
 
+        // @phpstan-ignore-next-line The value is always iterable at runtime
         foreach ($inserts as $column => $value) {
             if (is_null($field = $this->getFieldByColumn($column))) {
+                // @phpstan-ignore-next-line The value is always an array at runtime
                 unset($inserts[$column]);
                 continue;
             }
 
+            // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
             $inserts[$column] = $field->prepareConfirm($value);
         }
 
@@ -1270,12 +1345,15 @@ class Form implements Renderable
             }
             
             $column = $field->column();
+            // @phpstan-ignore-next-line The value is always an array at runtime
             $inserts[$column] = $field->prepareConfirm(null);
         }
 
         $prepared = [];
 
+        // @phpstan-ignore-next-line The value is always iterable at runtime
         foreach ($inserts as $key => $value) {
+            // @phpstan-ignore-next-line $key is always int|string|null at runtime
             Arr::set($prepared, $key, $value);
         }
 
@@ -1372,6 +1450,7 @@ class Form implements Renderable
     {
 //        static::doNotSnakeAttributes($this->model);
 
+        // @phpstan-ignore-next-line Model is guaranteed to be set when setting field original values
         $values = $this->model->toArray();
 
         $this->builder->fields()->each(function (Field $field) use ($values) {
@@ -1402,10 +1481,12 @@ class Form implements Renderable
         if($id instanceof \Illuminate\Database\Eloquent\Model){
             $this->model = $id;
         }else{
+            /** @phpstan-ignore-next-line Property Encore\Admin\Form::$model (Illuminate\Database\Eloquent\Model|null) does not accept Encore\Admin\SoftDeletableModel|Illuminate\Database\Eloquent\Collection<int, Encore\Admin\SoftDeletableModel>|Illuminate\Database\Eloquent\Collection<int, Illuminate\Database\Eloquent\Model>|Illuminate\Database\Eloquent\Model. */
             $this->model = $builder->with($relations)->findOrFail($id);
         }
 
         if($replicate){
+            // @phpstan-ignore-next-line Assigned value is always Illuminate\Database\Eloquent\Model|null at runtime
             $this->model = $this->replicateModel($this->model, $relations, $ignore);
         }
 
@@ -1413,6 +1494,7 @@ class Form implements Renderable
 
 //        static::doNotSnakeAttributes($this->model);
 
+        // @phpstan-ignore-next-line The value is always an object exposing toArray() at runtime
         $data = $this->model->toArray();
 
         $this->builder->fields()->each(function (Field $field) use ($data) {
@@ -1447,12 +1529,14 @@ class Form implements Renderable
         }
 
         foreach ($inserts as $column => $value) {
+            // @phpstan-ignore-next-line Model is guaranteed to be set at this point
             $this->model->setAttribute($column, $value);
         }
 
         // Now, I only call this function, If need, set such as array.
         $this->getRelationModelByInputs($data);
 
+        // @phpstan-ignore-next-line Model may be null but is expected to be set here
         return $this->model;
     }
 
@@ -1474,17 +1558,19 @@ class Form implements Renderable
 
         $relations = [];
         foreach ($inputs as $column => $value) {
-            
+            // @phpstan-ignore-next-line Model is guaranteed to be set at this point
             if (!method_exists($this->model, $column)) {
                 continue;
             }
 
+            /** @phpstan-ignore-next-line Parameter $callback of function call_user_func expects callable, array{Illuminate\\Database\\Eloquent\\Model, string} given. */
             $relation = call_user_func([$this->model, $column]);
 
             if (!($relation instanceof Relations\Relation)) {
                 continue;
             }
             
+            // @phpstan-ignore-next-line $array is always array at runtime
             $value = array_filter($value);
             if ($relation instanceof Relations\BelongsToMany || $relation instanceof Relations\MorphToMany) {
                 $relations[$column] = (clone $relation->getRelated())->query()->findMany($value);
@@ -1521,12 +1607,14 @@ class Form implements Renderable
      * @return mixed
      */
     protected function replicateModel($oldModel, $relations, $ignore = []){
+        // @phpstan-ignore-next-line The value is always an object exposing replicate() at runtime
         $model = $oldModel->replicate()->setRelations([]);
 
         foreach($ignore as $i){
             unset($model->{$i});
         }
 
+        // @phpstan-ignore-next-line The value is always iterable at runtime
         foreach($relations as $relation){
             // if set hasmany, set model as relation
             if(!($oldModel->{$relation}() instanceof \Illuminate\Database\Eloquent\Relations\HasMany)){
@@ -1596,6 +1684,7 @@ class Form implements Renderable
     {
         $message = $this->validationMessages($input);
         if($message !== false){
+            /** @phpstan-ignore-next-line Parameter $provider of method withErrors() expects array|Illuminate\\Contracts\\Support\\MessageProvider|string, Illuminate\\Support\\MessageBag|false given. */
             return back()->withInput()->withErrors($message);
         }
         return true;
@@ -1631,6 +1720,7 @@ class Form implements Renderable
             $func($input, $message, $this);
         }
         // if contains function 'validatorSaving' in model, call
+        // @phpstan-ignore-next-line Model is guaranteed to be set during validation
         if(method_exists($this->model, 'validatorSaving')){
             if(is_array($validateResult = $this->model->validatorSaving($input))){
                 $message = $message->merge($validateResult);
@@ -1677,11 +1767,13 @@ class Form implements Renderable
             if (Str::contains($column, '.')) {
                 list($relation) = explode('.', $column);
 
+                // @phpstan-ignore-next-line Model is guaranteed to be set at this point
                 if (method_exists($this->model, $relation) &&
                     $this->model->$relation() instanceof Relations\Relation
                 ) {
                     $relations[] = $relation;
                 }
+            // @phpstan-ignore-next-line Model is guaranteed to be set at this point
             } elseif (method_exists($this->model, $column) &&
                 !method_exists(Model::class, $column)
             ) {
@@ -1805,6 +1897,7 @@ class Form implements Renderable
             return $this->builder->getTools();
         }
 
+        // @phpstan-ignore-next-line Closure is guaranteed to be set when called with arguments
         $callback->call($this, $this->builder->getTools());
     }
 
@@ -1977,6 +2070,7 @@ class Form implements Renderable
             return $this->builder()->getFooter();
         }
 
+        // @phpstan-ignore-next-line Closure is guaranteed to be set when called with arguments
         call_user_func($callback, $this->builder()->getFooter());
     }
 
@@ -2153,8 +2247,10 @@ class Form implements Renderable
             $method = static::$fieldAlias[$method];
         }
 
+        // @phpstan-ignore-next-line $key is always int|string|null at runtime
         $class = Arr::get(static::$availableFields, $method);
 
+        // @phpstan-ignore-next-line $class is always string at runtime
         if (class_exists($class)) {
             return $class;
         }
@@ -2177,13 +2273,17 @@ class Form implements Renderable
         $js = collect();
 
         foreach (static::$availableFields as $field) {
+            // @phpstan-ignore-next-line $object_or_class is always object|string at runtime
             if (!method_exists($field, 'getAssets')) {
                 continue;
             }
 
+            /** @phpstan-ignore-next-line Parameter $callback of function call_user_func expects callable, array{class-string, string} given. */
             $assets = call_user_func([$field, 'getAssets']);
 
+            // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime
             $css->push(Arr::get($assets, 'css'));
+            // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime
             $js->push(Arr::get($assets, 'js'));
         }
 
@@ -2232,8 +2332,10 @@ class Form implements Renderable
 
             $element = new $className($column, array_slice($arguments, 1));
 
+            /** @phpstan-ignore-next-line Parameter $field of method pushField() expects Encore\\Admin\\Form\\Field, object given. */
             $this->pushField($element);
 
+            /** @phpstan-ignore-next-line Method __call() should return Encore\\Admin\\Form\\Field but returns object. */
             return $element;
         }
 

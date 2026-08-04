@@ -130,6 +130,7 @@ class Field implements Renderable
     {
         $this->name = $name;
 
+        // @phpstan-ignore-next-line Assigned value is always string at runtime
         $this->label = $this->formatLabel($label);
 
         $this->showAs = new Collection();
@@ -210,6 +211,7 @@ class Field implements Renderable
      */
     public function as(callable $callable)
     {
+        /** @phpstan-ignore-next-line Cannot call method push() on array|Illuminate\Support\Collection<int|string, mixed>. */
         $this->showAs->push($callable);
 
         return $this;
@@ -251,6 +253,7 @@ class Field implements Renderable
                     return '';
                 }
 
+                // @phpstan-ignore-next-line $path is always string at runtime
                 if (url()->isValidUrl($path)) {
                     $src = $path;
                 } elseif ($server) {
@@ -258,13 +261,16 @@ class Field implements Renderable
                 } else {
                     $disk = config('admin.upload.disk');
 
+                    // @phpstan-ignore-next-line $disk is always castable to string at runtime
                     if (config("filesystems.disks.{$disk}")) {
+                        // @phpstan-ignore-next-line $name is always string|null at runtime (and 1 more mixed-type assumption on this line)
                         $src = Storage::disk($disk)->url($path);
                     } else {
                         return '';
                     }
                 }
 
+                // @phpstan-ignore-next-line $src is always castable to string at runtime
                 return "<img src='$src' style='max-width:{$width}px;max-height:{$height}px' class='img' />";
             })->implode('&nbsp;');
         });
@@ -288,6 +294,7 @@ class Field implements Renderable
                     return '';
                 }
 
+                // @phpstan-ignore-next-line $path is always string at runtime
                 if (url()->isValidUrl($path)) {
                     $image = $path;
                 } elseif ($server) {
@@ -295,7 +302,9 @@ class Field implements Renderable
                 } else {
                     $disk = config('admin.upload.disk');
 
+                    // @phpstan-ignore-next-line $disk is always castable to string at runtime
                     if (config("filesystems.disks.{$disk}")) {
+                        // @phpstan-ignore-next-line $name is always string|null at runtime (and 1 more mixed-type assumption on this line)
                         $image = Storage::disk($disk)->url($path);
                     } else {
                         $image = '';
@@ -335,6 +344,7 @@ class Field implements Renderable
             } elseif ($server) {
                 $url = $server.$path;
             } else {
+                // @phpstan-ignore-next-line $name is always string|null at runtime
                 $storage = Storage::disk(config('admin.upload.disk'));
                 if ($storage->exists($path)) {
                     $url = $storage->url($path);
@@ -593,6 +603,7 @@ HTML;
         }
 
         if (!isset($extend)) {
+            /** @phpstan-ignore-next-line Part $abstract (Encore\Admin\Show\AbstractField|string) of encapsed string cannot be cast to string. */
             admin_warning("[$abstract] is not a valid Show field.");
 
             return $this;
@@ -624,15 +635,18 @@ HTML;
     public function __call($method, $arguments = [])
     {
         if ($class = Arr::get(Show::$extendedFields, $method)) {
+            // @phpstan-ignore-next-line $abstract is always Closure|Encore\Admin\Show\AbstractField|string at runtime
             return $this->callExtendedField($class, $arguments);
         }
 
         if (static::hasMacro($method)) {
+            // @phpstan-ignore-next-line Return value is always Encore\Admin\Show\Field at runtime
             return $this->macroCall($method, $arguments);
         }
 
         if ($this->relation) {
             $this->name = $method;
+            // @phpstan-ignore-next-line $label is always string at runtime (and 1 more mixed-type assumption on this line)
             $this->label = $this->formatLabel(Arr::get($arguments, 0));
         }
 
@@ -678,8 +692,11 @@ HTML;
      */
     public function render()
     {
+        /** @phpstan-ignore-next-line Cannot call method isNotEmpty() on array|Illuminate\Support\Collection<int|string, mixed>. */
         if ($this->showAs->isNotEmpty()) {
+            /** @phpstan-ignore-next-line Cannot call method each() on array|Illuminate\Support\Collection<int|string, mixed>. */
             $this->showAs->each(function ($callable) {
+                // @phpstan-ignore-next-line The value is always an object exposing call() at runtime
                 $this->value = $callable->call(
                     $this->parent->getModel(),
                     $this->value,

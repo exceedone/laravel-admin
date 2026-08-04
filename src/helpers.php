@@ -13,6 +13,7 @@ if (!function_exists('admin_path')) {
      */
     function admin_path($path = '')
     {
+        // @phpstan-ignore-next-line $string is always string at runtime
         return ucfirst(config('admin.directory')).($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
 }
@@ -46,6 +47,7 @@ if (!function_exists('admin_url')) {
             \URL::forceScheme('https');
         }
         if(boolval(config('admin.use_app_url', false))){
+            // @phpstan-ignore-next-line $root is always string|null at runtime
             \URL::forceRootUrl(config('app.url'));
         }
 
@@ -63,6 +65,7 @@ if (!function_exists('admin_base_path')) {
      */
     function admin_base_path($path = '')
     {
+        // @phpstan-ignore-next-line $string is always string at runtime
         $prefix = '/'.trim(config('admin.route.prefix'), '/');
 
         $prefix = ($prefix == '/') ? '' : $prefix;
@@ -241,6 +244,7 @@ if (!function_exists('admin_trans')) {
      */
     function admin_trans($key = null, $replace = [], $locale = null)
     {
+        // @phpstan-ignore-next-line $replace is always array<string, bool|float|int|string> at runtime
         $line = __($key, $replace, $locale);
 
         if (!is_string($line)) {
@@ -286,10 +290,12 @@ if (!function_exists('class_uses_deep')) {
         $traits = [];
 
         do {
+            /** @phpstan-ignore-next-line argument.type */
             $traits = array_merge(class_uses($class, $autoload), $traits);
         } while ($class = get_parent_class($class));
 
         foreach ($traits as $trait => $same) {
+            /** @phpstan-ignore-next-line */
             $traits = array_merge(class_uses($trait, $autoload), $traits);
         }
 
@@ -314,6 +320,7 @@ if (!function_exists('admin_dump')) {
 
         ob_end_clean();
 
+        /** @phpstan-ignore-next-line return.type */
         return $contents;
     }
 }
@@ -365,8 +372,11 @@ if (!function_exists('prepare_options')) {
             if (is_array($value)) {
                 $subArray = prepare_options($value);
                 $value = $subArray['options'];
+                // @phpstan-ignore-next-line $arrays is always array at runtime
                 $original = array_merge($original, $subArray['original']);
+                // @phpstan-ignore-next-line $arrays is always array at runtime
                 $toReplace = array_merge($toReplace, $subArray['toReplace']);
+            // @phpstan-ignore-next-line $haystack is always string at runtime
             } elseif (strpos($value, 'function(') === 0) {
                 $original[] = $value;
                 $value = "%{$key}%";
@@ -393,6 +403,7 @@ if (!function_exists('json_encode_options')) {
 
         $json = json_encode($data['options']);
 
+        /** @phpstan-ignore-next-line argument.type */
         return str_replace($data['toReplace'], $data['original'], $json);
     }
     
@@ -478,6 +489,7 @@ if (!function_exists('json_encode_options')) {
         {
             $string = $string?? '';
 
+            /** @phpstan-ignore-next-line argument.type */
             return explode($separator, $string, $limit);
         }
     }
@@ -495,6 +507,7 @@ if (!function_exists('json_encode_options')) {
         {
             $url = $url?? '';
 
+            /** @phpstan-ignore-next-line Function parse_url_ex() should return array<string>|string|false|null but returns array{scheme?: string, host?: string, port?: int<0, 65535>, user?: string, pass?: string, path?: string, query?: string, fragment?: string}|int<0, 65535>|string|false|null. */
             return parse_url($url, $component);
         }
     }

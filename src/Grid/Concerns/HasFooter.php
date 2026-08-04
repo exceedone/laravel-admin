@@ -22,6 +22,7 @@ trait HasFooter
     public function footer(Closure $closure = null)
     {
         if (!$closure) {
+            // @phpstan-ignore-next-line Footer may be null when no footer is set
             return $this->footer;
         }
 

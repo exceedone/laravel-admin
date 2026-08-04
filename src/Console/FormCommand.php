@@ -35,6 +35,7 @@ class FormCommand extends GeneratorCommand
     {
         $stub = parent::replaceClass($stub, $name);
 
+        /** @phpstan-ignore-next-line */
         return str_replace('DummyTitle', $this->option('title'), $stub);
     }
 
@@ -62,9 +63,11 @@ class FormCommand extends GeneratorCommand
     protected function getDefaultNamespace($rootNamespace)
     {
         if ($namespace = $this->option('namespace')) {
+            /** @phpstan-ignore-next-line Method Encore\Admin\Console\FormCommand::getDefaultNamespace() should return string but returns array|string|true. */
             return $namespace;
         }
 
+        // @phpstan-ignore-next-line $subject is always array|string at runtime
         return str_replace('Controllers', 'Forms', config('admin.route.namespace'));
     }
 
@@ -75,6 +78,7 @@ class FormCommand extends GeneratorCommand
      */
     protected function getNameInput()
     {
+        /** @phpstan-ignore-next-line */
         $name = trim($this->argument('name'));
 
         $this->type = $this->qualifyClass($name);

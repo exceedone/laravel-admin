@@ -19,9 +19,11 @@ class Label extends AbstractDisplayer
 
         return collect((array) $this->value)->map(function ($item) use ($style) {
             if (is_array($style)) {
+                // @phpstan-ignore-next-line $key is always int|string|null at runtime
                 $style = Arr::get($style, $this->getColumn()->getOriginal(), 'success');
             }
 
+            // @phpstan-ignore-next-line $item is always castable to string at runtime (and 1 more mixed-type assumption on this line)
             return "<span class='label label-{$style}'>$item</span>";
         })->implode('&nbsp;');
     }

@@ -148,6 +148,7 @@ class Tree implements Renderable
     {
         if (is_null($this->branchCallback)) {
             $this->branchCallback = function ($branch) {
+                // @phpstan-ignore-next-line Model is guaranteed to be set in Tree
                 $key = $branch[$this->model->getKeyName()];
                 /** @phpstan-ignore-next-line Call to an undefined method Illuminate\Database\Eloquent\Model::getTitleColumn(). */
                 $title = $branch[$this->model->getTitleColumn()];
@@ -190,6 +191,7 @@ class Tree implements Renderable
      */
     public function getCallback(\Closure $get = null)
     {
+        // @phpstan-ignore-next-line Callback accepts nullable Closure to reset get callback
         $this->getCallback = $get;
 
         return $this;
@@ -467,6 +469,7 @@ SCRIPT;
 
         view()->share([
             'path'           => $this->path,
+            // @phpstan-ignore-next-line Model is guaranteed to be set in Tree
             'keyName'        => $this->model->getKeyName(),
             'branchView'     => $this->view['branch'],
             'branchCallback' => $this->branchCallback,

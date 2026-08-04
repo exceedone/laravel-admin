@@ -32,15 +32,18 @@ class CsvExporter extends AbstractExporter
                     $titles = $this->getHeaderRowFromRecords($records);
 
                     // Add CSV headers
+                    /** @phpstan-ignore-next-line Parameter #1 $stream of function fputcsv expects resource, resource|false given. */
                     fputcsv($handle, $titles);
                 }
 
                 foreach ($records as $record) {
+                    /** @phpstan-ignore-next-line Parameter #1 $stream of function fputcsv expects resource, resource|false given. */
                     fputcsv($handle, $this->getFormattedRecord($record));
                 }
             });
 
             // Close the output stream
+            /** @phpstan-ignore-next-line Parameter #1 $stream of function fclose expects resource, resource|false given. */
             fclose($handle);
         }, 200, $headers)->send();
 
@@ -54,6 +57,7 @@ class CsvExporter extends AbstractExporter
      */
     public function getHeaderRowFromRecords(Collection $records): array
     {
+        // @phpstan-ignore-next-line The value is always an object exposing toArray() at runtime
         $titles = collect(Arr::dot($records->first()->toArray()))->keys()->map(
             function ($key) {
                 $key = str_replace('.', ' ', $key);

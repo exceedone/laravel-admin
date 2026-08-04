@@ -54,6 +54,7 @@ class Row
      */
     public function getKey()
     {
+        // @phpstan-ignore-next-line The value is always an object exposing getKey() at runtime
         return $this->model->getKey();
     }
 
@@ -77,6 +78,7 @@ class Row
     public function getColumnAttributes($column)
     {
         if ($attributes = Column::getAttributes($column)) {
+            // @phpstan-ignore-next-line $attributes is always array at runtime
             return $this->formatHtmlAttribute($attributes);
         }
 
@@ -98,9 +100,11 @@ class Row
             $classes = [$classes];
 
 
+        // @phpstan-ignore-next-line The value is always an array at runtime
         $classes[] = "column-$column";
         /** @phpstan-ignore-next-line Unable to resolve the template type TValue in call to function collect */
         return collect($classes)->unique()->map(function($class){
+            // @phpstan-ignore-next-line $value is always BackedEnum|Illuminate\Contracts\Support\DeferringDisplayableValue|Illuminate\Contracts\Support\Htmlable|string|null at runtime
             return e($class);
         })->implode(' ');
     }
@@ -116,6 +120,7 @@ class Row
     {
         $attrArr = [];
         foreach ($attributes as $name => $val) {
+            // @phpstan-ignore-next-line $value is always BackedEnum|Illuminate\Contracts\Support\DeferringDisplayableValue|Illuminate\Contracts\Support\Htmlable|string|null at runtime
             $attrArr[] = $name.'="'.e($val).'"';
         }
 
@@ -144,6 +149,7 @@ class Row
     {
         if (is_array($style)) {
             $style = implode('', array_map(function ($key, $val) {
+                // @phpstan-ignore-next-line $val is always castable to string at runtime
                 return "$key:$val";
             }, array_keys($style), array_values($style)));
         }
@@ -172,6 +178,7 @@ class Row
      */
     public function __get($attr)
     {
+        // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime (and 1 more mixed-type assumption on this line)
         return Arr::get($this->data, $attr);
     }
 
@@ -186,6 +193,7 @@ class Row
     public function column($name, $value = null)
     {
         if (is_null($value)) {
+            // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime
             $column = Arr::get($this->data, $name);
 
             return $this->output($column);

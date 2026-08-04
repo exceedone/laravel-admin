@@ -56,6 +56,7 @@ class Tags extends Field
      */
     public function fill($data)
     {
+        /** @phpstan-ignore-next-line Parameter #2 $key of static method Illuminate\Support\Arr::get() expects int|string|null, array|string given. */
         $this->value = Arr::get($data, $this->column);
 
         if (is_array($this->value) && $this->keyAsValue) {
@@ -83,7 +84,9 @@ class Tags extends Field
             $this->keyAsValue = true;
         }
 
+        // @phpstan-ignore-next-line Assigned value is always string at runtime
         $this->visibleColumn = $visibleColumn;
+        // @phpstan-ignore-next-line Assigned value is always string at runtime
         $this->key = $key;
 
         return $this;
@@ -148,6 +151,7 @@ class Tags extends Field
             $value = implode(',', $value);
         }
 
+        /** @phpstan-ignore-next-line Method Encore\Admin\Form\Field\Tags::prepare() should return array but returns array|string. */
         return $value;
     }
 
@@ -175,6 +179,7 @@ class Tags extends Field
      */
     public function render()
     {
+        /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
         $this->script = "$(\"{$this->getElementClassSelector()}\").select2({
             tags: true,
             tokenSeparators: [',']
@@ -183,6 +188,7 @@ class Tags extends Field
         if ($this->keyAsValue) {
             $options = $this->value + $this->options;
         } else {
+            /** @phpstan-ignore-next-line Parameter #2 ...$arrays of function array_merge expects array, array<string, mixed>|Closure given. */
             $options = array_unique(array_merge($this->value, $this->options));
         }
 

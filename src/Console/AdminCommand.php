@@ -66,6 +66,7 @@ LOGO;
             return [];
         })->toArray();
 
+        // @phpstan-ignore-next-line $commands is always array<Illuminate\Console\Command|string> at runtime
         $width = $this->getColumnWidth($commands);
 
         /** @var Command $command */
@@ -84,7 +85,9 @@ LOGO;
         $widths = [];
 
         foreach ($commands as $command) {
+            /** @phpstan-ignore-next-line Cannot call method getName() on Illuminate\Console\Command|string. */
             $widths[] = static::strlen($command->getName());
+            /** @phpstan-ignore-next-line Cannot call method getAliases() on Illuminate\Console\Command|string. */
             foreach ($command->getAliases() as $alias) {
                 $widths[] = static::strlen($alias);
             }

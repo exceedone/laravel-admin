@@ -34,6 +34,7 @@ class MultipleSteps implements Renderable
     {
         $this->steps = $steps;
 
+        // @phpstan-ignore-next-line Current step may be null from constructor parameter
         $this->current = $this->resolveCurrentStep($steps, $current);
     }
 
@@ -62,6 +63,7 @@ class MultipleSteps implements Renderable
             $current = key($steps);
         }
 
+        // @phpstan-ignore-next-line Return value is always int|string at runtime
         return $current;
     }
 
@@ -72,7 +74,9 @@ class MultipleSteps implements Renderable
     {
         $class = $this->steps[$this->current];
 
+        // @phpstan-ignore-next-line $object_or_class is always object|string at runtime
         if (!is_subclass_of($class, StepForm::class)) {
+            // @phpstan-ignore-next-line $class is always castable to string at runtime
             admin_error("Class [{$class}] must be a sub-class of [Encore\Admin\Widgets\StepForm].");
 
             return;

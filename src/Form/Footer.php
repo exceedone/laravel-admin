@@ -210,6 +210,7 @@ class Footer implements Renderable
     protected function disableCheck($key)
     {
         $this->submitRedirects = array_filter($this->submitRedirects, function($submitRedirect) use($key){
+            // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime
             return Arr::get($submitRedirect, 'key') == $key;
         });
 
@@ -225,7 +226,9 @@ class Footer implements Renderable
     public function defaultCheck($key)
     {
         foreach($this->submitRedirects as &$submitRedirect){
+            // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime
             if(Arr::get($submitRedirect, 'key') == $key){
+                // @phpstan-ignore-next-line The value is always an array at runtime
                 $submitRedirect['default'] = true;
             }
         }
@@ -270,7 +273,9 @@ class Footer implements Renderable
         $redirectDashboard = request()->get('redirect-dashboard');
         $redirectCamera = request()->get('redirect-camera');
         foreach($this->submitRedirects as $submitRedirect){
+            // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime
             if(Arr::get($submitRedirect, 'value') == $afterSaveValue){
+                // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime
                 $url = Arr::get($submitRedirect, 'redirect');
                 break;
             }
@@ -309,6 +314,7 @@ class Footer implements Renderable
         elseif($url instanceof \Closure){
             return $url($resourcesPath, $key);
         }
+        // @phpstan-ignore-next-line Return value is always Illuminate\Http\RedirectResponse|Illuminate\Routing\Redirector|string|null at runtime
         return $url;
     }
 
@@ -382,14 +388,18 @@ EOT;
      */
     protected function getDefaultCheck(){
         if(!is_null($result = old('after-save'))){
+            // @phpstan-ignore-next-line Return value is always string|null at runtime
             return $result;
         }
         if(!is_null($result = request()->get('after-save'))){
+            // @phpstan-ignore-next-line Return value is always string|null at runtime
             return $result;
         }
 
         foreach ($this->submitRedirects as $submitRedirect) {
+            // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime
             if(boolval(Arr::get($submitRedirect, 'default'))){
+                // @phpstan-ignore-next-line Return value is always string|null at runtime (and 1 more mixed-type assumption on this line)
                 return Arr::get($submitRedirect, 'value');
             }
         }

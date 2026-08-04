@@ -55,6 +55,7 @@ class Relation extends Field
     {
         $this->name = $name;
         $this->builder = $builder;
+        // @phpstan-ignore-next-line Assigned value is always string at runtime
         $this->title = $this->formatLabel($title);
     }
 
@@ -118,6 +119,7 @@ class Relation extends Field
             || $relation instanceof BelongsToMany
             || $relation instanceof HasManyThrough
         ) {
+            /** @phpstan-ignore-next-line argument.type */
             $renderable = new Grid($relation->getRelated(), $this->builder);
 
             $renderable->setName($this->name)

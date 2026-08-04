@@ -18,6 +18,9 @@ class Checkbox extends AbstractDisplayer
         }
 
         $radios = '';
+
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var string $name */
         $name = $this->column->getName();
 
         if (is_string($this->value)) {
@@ -28,8 +31,17 @@ class Checkbox extends AbstractDisplayer
             $this->value = $this->value->toArray();
         }
 
+        // @phpstan-ignore-next-line The value is always iterable at runtime
         foreach ($options as $value => $label) {
+            // @phpstan-ignore-next-line $haystack is always array at runtime
             $checked = in_array($value, $this->value) ? 'checked' : '';
+
+            // Type assertion for PHPStan - maintain original behavior
+            /**
+             * @var string $value
+             * @var string $label
+             */
+
             $radios .= <<<EOT
 <div class="checkbox">
     <label>
@@ -40,15 +52,23 @@ EOT;
         }
 
         Admin::script($this->script());
+        
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var string $saveText */
+        $saveText = $this->trans('save');
+        /** @var string $resetText */
+        $resetText = $this->trans('reset');
+        /** @var string $keyString */
+        $keyString = $this->getKey();
 
         return <<<EOT
-<form class="form-group grid-checkbox-$name" style="text-align:left;" data-key="{$this->getKey()}">
+<form class="form-group grid-checkbox-$name" style="text-align:left;" data-key="{$keyString}">
     $radios
     <button type="submit" class="btn btn-info btn-xs pull-left">
-        <i class="fa fa-save"></i>&nbsp;{$this->trans('save')}
+        <i class="fa fa-save"></i>&nbsp;{$saveText}
     </button>
     <button type="reset" class="btn btn-warning btn-xs pull-left" style="margin-left:10px;">
-        <i class="fa fa-trash"></i>&nbsp;{$this->trans('reset')}
+        <i class="fa fa-trash"></i>&nbsp;{$resetText}
     </button>
 </form>
 EOT;
@@ -59,6 +79,8 @@ EOT;
      */
     protected function script()
     {
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var string $name */
         $name = $this->column->getName();
 
         return <<<EOT

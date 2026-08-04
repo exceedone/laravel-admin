@@ -153,7 +153,7 @@ class Panel implements Renderable
 
     /**
      * Fill fields to panel.
-     * @param Field[]|Collection<int|string, mixed> $fields
+     * @param Field[]|Collection<int|string, Field> $fields
      * @return $this
      */
     public function fill($fields)

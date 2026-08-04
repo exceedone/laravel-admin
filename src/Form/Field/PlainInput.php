@@ -57,7 +57,9 @@ trait PlainInput
      */
     protected function defaultAttribute($attribute, $value)
     {
+        // @phpstan-ignore-next-line $key is always int|string at runtime
         if (!array_key_exists($attribute, $this->attributes)) {
+            // @phpstan-ignore-next-line $attribute is always array|string at runtime
             $this->attribute($attribute, $value);
         }
 

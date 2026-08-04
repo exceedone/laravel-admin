@@ -23,7 +23,7 @@ class SwitchField extends Field
     ];
 
     /**
-     * @var array<string, mixed>
+     * @var array<string, array{value: mixed, text: string, color: string}>
      */
     protected $states = [
         'on'  => ['value' => 1, 'text' => 'ON', 'color' => 'primary'],
@@ -88,6 +88,7 @@ class SwitchField extends Field
     public function prepare($value)
     {
         if (isset($this->states[$value])) {
+            // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
             return $this->states[$value]['value'];
         }
 
@@ -110,9 +111,13 @@ class SwitchField extends Field
             }
         }
 
+        // Ensure selector is string for heredoc usage
+        $selector = $this->getElementClassSelector();
+        $selectorString = is_array($selector) ? implode(',', $selector) : (string) $selector;
+        
         $this->script = <<<EOT
 
-$('{$this->getElementClassSelector()}.la_checkbox').bootstrapSwitch({
+$('{$selectorString}.la_checkbox').bootstrapSwitch({
     size:'{$this->size}',
     onText: '{$this->states['on']['text']}',
     offText: '{$this->states['off']['text']}',

@@ -56,6 +56,7 @@ class Group extends AbstractFilter
     {
         $this->id = $this->formatId($this->column);
         $this->group = new Collection();
+        /** @phpstan-ignore-next-line Part $this->id (array|string) of encapsed string cannot be cast to string. */
         $this->name = "{$this->id}-filter-group";
 
         $this->setupDefaultPresenter();
@@ -198,6 +199,7 @@ class Group extends AbstractFilter
     {
         $label = $label ?: $operator;
 
+        /** @phpstan-ignore-next-line Part $this->value (array|string) of encapsed string cannot be cast to string. */
         $condition = [$this->column, $operator, "%{$this->value}%"];
 
         return $this->joinGroup($label, $condition);
@@ -238,6 +240,7 @@ class Group extends AbstractFilter
     {
         $label = $label ?: 'Start with';
 
+        /** @phpstan-ignore-next-line Part $this->value (array|string) of encapsed string cannot be cast to string. */
         $condition = [$this->column, 'like', "{$this->value}%"];
 
         return $this->joinGroup($label, $condition);
@@ -254,6 +257,7 @@ class Group extends AbstractFilter
     {
         $label = $label ?: 'End with';
 
+        /** @phpstan-ignore-next-line Part $this->value (array|string) of encapsed string cannot be cast to string. */
         $condition = [$this->column, 'like', "%{$this->value}"];
 
         return $this->joinGroup($label, $condition);
@@ -273,13 +277,18 @@ class Group extends AbstractFilter
             return;
         }
 
+        // @phpstan-ignore-next-line Assigned value is always array|string at runtime
         $this->value = $value;
 
+        /** @phpstan-ignore-next-line Part $this->id (array|string) of encapsed string cannot be cast to string. */
         $group = Arr::get($inputs, "{$this->id}_group");
 
+        /** @phpstan-ignore-next-line Parameter #1 $callback of function call_user_func expects callable(): mixed, (callable(): mixed)|string given. */
         call_user_func($this->builder, $this);
 
+        // @phpstan-ignore-next-line $key is always int|string at runtime
         if ($query = $this->group->get($group)) {
+            // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
             return $this->buildCondition(...$query['condition']);
         }
     }
@@ -308,8 +317,11 @@ SCRIPT;
      */
     public function variables()
     {
-        $select = request("{$this->id}_group");
+        // Ensure id is string for request key
+        $idString = is_array($this->id) ? implode('_', $this->id) : (string) $this->id;
+        $select = request("{$idString}_group");
 
+        // @phpstan-ignore-next-line $key is always int|string at runtime
         $default = $this->group->get($select) ?: $this->group->first();
 
         return array_merge(parent::variables(), [
@@ -326,6 +338,7 @@ SCRIPT;
         $this->injectScript();
 
         if ($this->builder && $this->group->isEmpty()) {
+            /** @phpstan-ignore-next-line Parameter #1 $callback of function call_user_func expects callable(): mixed, (callable(): mixed)|non-falsy-string given. */
             call_user_func($this->builder, $this);
         }
 

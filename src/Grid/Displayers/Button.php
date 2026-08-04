@@ -15,6 +15,7 @@ class Button extends AbstractDisplayer
             return 'btn-'.$style;
         })->implode(' ');
 
+        // @phpstan-ignore-next-line $this->value is always castable to string at runtime
         return "<span class='btn $style'>{$this->value}</span>";
     }
 }

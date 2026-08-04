@@ -36,12 +36,15 @@ trait ContainsForms
         }
 
         foreach ($forms as $name => $class) {
+            // @phpstan-ignore-next-line $object_or_class is always object|string at runtime
             if (!is_subclass_of($class, Form::class)) {
+                // @phpstan-ignore-next-line $class is always castable to string at runtime
                 admin_error("Class [{$class}] must be a sub-class of [Encore\Admin\Widgets\Form].");
                 continue;
             }
 
             /** @var Form $form */
+            /** @phpstan-ignore-next-line Parameter #1 $abstract of method Illuminate\Foundation\Application::make() expects string, class-string<Encore\Admin\Widgets\Form>|Encore\Admin\Widgets\Form given. */
             $form = app()->make($class);
 
             if ($name == $active) {

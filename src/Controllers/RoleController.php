@@ -25,6 +25,7 @@ class RoleController extends AdminController
     {
         $roleModel = config('admin.database.roles_model');
 
+        /** @phpstan-ignore-next-line */
         $grid = new Grid(new $roleModel());
 
         $grid->column('id', 'ID')->sortable();
@@ -37,6 +38,7 @@ class RoleController extends AdminController
         $grid->column('updated_at', trans('admin.updated_at'));
 
         $grid->actions(function (Grid\Displayers\Actions $actions) {
+            // @phpstan-ignore-next-line The value is always an object exposing $slug at runtime
             if ($actions->row->slug == 'administrator') {
                 $actions->disableDelete();
             }
@@ -62,6 +64,7 @@ class RoleController extends AdminController
     {
         $roleModel = config('admin.database.roles_model');
 
+        // @phpstan-ignore-next-line The value is always an object exposing findOrFail() at runtime
         $show = new Show($roleModel::findOrFail($id));
 
         $show->field('id', 'ID');
@@ -92,6 +95,7 @@ class RoleController extends AdminController
 
         $form->text('slug', trans('admin.slug'))->rules('required');
         $form->text('name', trans('admin.name'))->rules('required');
+        // @phpstan-ignore-next-line The value is always an object exposing all() at runtime
         $form->listbox('permissions', trans('admin.permissions'))->options($permissionModel::all()->pluck('name', 'id'));
 
         $form->display('created_at', trans('admin.created_at'));

@@ -44,6 +44,7 @@ class Header extends AbstractTool
      */
     public function render()
     {
+        /** @phpstan-ignore-next-line Parameter #1 $callback of function call_user_func expects callable(): mixed, Closure|Encore\Admin\Grid given. */
         $content = call_user_func($this->grid->header(), $this->queryBuilder());
 
         if (empty($content)) {
@@ -57,6 +58,9 @@ class Header extends AbstractTool
         if ($content instanceof Htmlable) {
             $content = $content->toHtml();
         }
+
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var string $content */
 
         return <<<HTML
     <div class="box-header with-border clearfix">

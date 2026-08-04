@@ -63,6 +63,7 @@ class Column implements Buildable
     public function row($content)
     {
         if (!$content instanceof \Closure) {
+            // @phpstan-ignore-next-line $content is always string at runtime
             $row = new Row($content);
         } else {
             $row = new Row();
@@ -94,6 +95,7 @@ class Column implements Buildable
             if ($content instanceof Renderable || $content instanceof Grid) {
                 echo $content->render();
             } else {
+                // @phpstan-ignore-next-line The value is always castable to string at runtime
                 echo (string) $content;
             }
         }

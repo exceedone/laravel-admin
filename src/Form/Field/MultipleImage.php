@@ -31,9 +31,10 @@ class MultipleImage extends MultipleFile
     {
         $this->name = $this->getStoreName($image);
 
+        // @phpstan-ignore-next-line Image is guaranteed to be set when preparing upload
         $this->callInterventionMethods($image->getRealPath());
 
-        return tap($this->upload($image), function () {
+        return tap($this->upload($image), function () { // @phpstan-ignore-line Image is guaranteed to be set when preparing upload
             $this->name = null;
         });
     }

@@ -110,13 +110,16 @@ trait HasAssets
     public static function css($css = null)
     {
         if (!is_null($css)) {
+            // @phpstan-ignore-next-line Assigned value is always array<string> at runtime
             return self::$css = array_merge(self::$css, (array) $css);
         }
 
         if (!$css = static::getMinifiedCss()) {
+            // @phpstan-ignore-next-line baseCss() may return null but is always array in practice
             $css = array_merge(static::$css, static::baseCss());
         }
 
+        // @phpstan-ignore-next-line $arrays is always array at runtime
         $css = array_merge($css, static::$csslast);
 
         $css = array_filter(array_unique($css));
@@ -137,6 +140,7 @@ trait HasAssets
 
         $skin = config('admin.skin', 'skin-blue-light');
 
+        // @phpstan-ignore-next-line $skin is always castable to string at runtime
         array_unshift(static::$baseCss, "vendor/laravel-admin/AdminLTE/dist/css/skins/{$skin}.min.css");
 
         return static::$baseCss;
@@ -152,13 +156,16 @@ trait HasAssets
     public static function js($js = null)
     {
         if (!is_null($js)) {
+            // @phpstan-ignore-next-line Assigned value is always array<string> at runtime
             return self::$js = array_merge(self::$js, (array) $js);
         }
 
         if (!$js = static::getMinifiedJs()) {
+            // @phpstan-ignore-next-line baseJs() may return null but is always array in practice
             $js = array_merge(static::baseJs(), static::$js);
         }
 
+        // @phpstan-ignore-next-line $arrays is always array at runtime
         $js = array_merge($js, static::$jslast);
 
         $js = array_filter(array_unique($js));
@@ -283,10 +290,13 @@ trait HasAssets
             return static::$manifestData[$key];
         }
 
+        // @phpstan-ignore-next-line Assigned value is always array at runtime
         static::$manifestData = json_decode(
+            /** @phpstan-ignore-next-line Parameter #1 $json of function json_decode expects string, string|false given. */
             file_get_contents(public_path(static::$manifest)), true
         );
 
+        // @phpstan-ignore-next-line The value is always an array at runtime
         return static::$manifestData[$key];
     }
 

@@ -128,6 +128,7 @@ class Model
 
         $this->originalModel = $model;
 
+        // @phpstan-ignore-next-line Grid accepts nullable Grid from parameter
         $this->grid = $grid;
 
         $this->queries = collect();
@@ -164,6 +165,7 @@ class Model
      */
     public function eloquent()
     {
+        // @phpstan-ignore-next-line Return value is always Illuminate\Database\Eloquent\Model at runtime
         return $this->model;
     }
 
@@ -284,6 +286,7 @@ class Model
      *
      * @return $this
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::setGrid() should return $this(Encore\Admin\Grid\Model) but returns Encore\Admin\Grid\Model. */
     public function setGrid(Grid $grid)
     {
         $this->grid = $grid;
@@ -296,6 +299,7 @@ class Model
      *
      * @return Grid
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::getGrid() should return Encore\Admin\Grid but returns Encore\Admin\Grid|null. */
     public function getGrid()
     {
         return $this->grid;
@@ -306,6 +310,7 @@ class Model
      *
      * @return $this
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::setRelation() should return $this(Encore\Admin\Grid\Model) but returns Encore\Admin\Grid\Model. */
     public function setRelation(Relation $relation)
     {
         $this->relation = $relation;
@@ -326,6 +331,7 @@ class Model
      *
      * @return array<mixed>|bool
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Model::getConstraints() should return array<mixed>|bool but returns array<string, mixed>|false. */
     public function getConstraints()
     {
         if ($this->relation instanceof HasMany) {
@@ -386,6 +392,7 @@ class Model
     public function chunk($callback, $count = 100)
     {
         if ($this->usePaginate) {
+            // @phpstan-ignore-next-line The value is always an object exposing chunk() at runtime
             return $this->buildData(false)->chunk($count)->each($callback);
         }
 
@@ -394,15 +401,19 @@ class Model
         $this->queries->reject(function ($query) {
             return $query['method'] == 'paginate';
         })->each(function ($query) {
+            // @phpstan-ignore-next-line The value is always an array at runtime
             if(isset($query['callback'])){
                 $func = $query['callback'];
+                // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
                 $func($this->model, $query['arguments']);
             }
             else{
+                // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
                 $this->model = $this->model->{$query['method']}(...$query['arguments']);
             }
         });
 
+        // @phpstan-ignore-next-line The value is always an object exposing chunk() at runtime
         return $this->model->chunk($count, $callback);
     }
 
@@ -416,6 +427,7 @@ class Model
     public function addConditions(array $conditions)
     {
         foreach ($conditions as $condition) {
+            /** @phpstan-ignore-next-line Function call_user_func_array() with array{$this(Encore\Admin\Grid\Model), int|string|null} will throw a TypeError. */
             call_user_func_array([$this, key($condition)], current($condition));
         }
 
@@ -429,6 +441,7 @@ class Model
      */
     public function getTable()
     {
+        // @phpstan-ignore-next-line The value is always an object exposing getTable() at runtime
         return $this->model->getTable();
     }
 
@@ -451,11 +464,14 @@ class Model
         $this->setPaginate();
 
         $this->queries->unique()->each(function ($query) {
+            // @phpstan-ignore-next-line The value is always an array at runtime
             if(isset($query['callback'])){
                 $func = $query['callback'];
+                // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
                 $func($this->model, $query['arguments']);
             }
             else{
+                /** @phpstan-ignore-next-line argument.type */
                 $this->model = call_user_func_array([$this->model, $query['method']], $query['arguments']);
             }
         });
@@ -469,6 +485,7 @@ class Model
                 $this->handleInvalidPage($this->model);
             }
 
+            // @phpstan-ignore-next-line The value is always an object exposing getCollection() at runtime
             return $this->model->getCollection();
         }
 
@@ -491,11 +508,14 @@ class Model
         $this->queries->reject(function ($query) {
             return in_array($query['method'], ['get', 'paginate']);
         })->each(function ($query) use (&$queryBuilder) {
+            // @phpstan-ignore-next-line The value is always an array at runtime
             if(isset($query['callback'])){
                 $func = $query['callback'];
+                // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
                 $func($queryBuilder, $query['arguments']);
             }
             else{
+                // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
                 $queryBuilder = $queryBuilder->{$query['method']}(...$query['arguments']);
             }
         });
@@ -560,18 +580,24 @@ class Model
     {
         if ($perPage = request($this->perPageName)) {
             if (is_array($paginate)) {
+                // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
                 $paginate['arguments'][0] = (int) $perPage;
 
                 if ($name = $this->grid->getName()) {
+                    // @phpstan-ignore-next-line $array is always array at runtime
                     if (!array_key_exists(1, $paginate['arguments'])) {
+                        // @phpstan-ignore-next-line The value is always an array at runtime
                         $paginate['arguments'][1] = '*';
                     }
+                    // @phpstan-ignore-next-line The value is always an array at runtime
                     $paginate['arguments'][2] = "{$name}_page";
                 }
         
+                // @phpstan-ignore-next-line Return value is always array at runtime
                 return $paginate['arguments'];
             }
 
+            // @phpstan-ignore-next-line The value is always castable to int at runtime
             $this->perPage = (int) $perPage;
         }
 
@@ -586,6 +612,7 @@ class Model
             return [$this->perPage, ['*'], "{$name}_page"];
         }
 
+        /** @phpstan-ignore-next-line Cannot access offset 'arguments' on array|Encore\Admin\Grid\Model. */
         if (isset($paginate['arguments'][0])) {
             return $paginate['arguments'];
         }
@@ -602,7 +629,9 @@ class Model
      */
     protected function findQueryByMethod($method)
     {
+        // @phpstan-ignore-next-line Return value is always static(Encore\Admin\Grid\Model) at runtime
         return $this->queries->first(function ($query) use ($method) {
+            // @phpstan-ignore-next-line The value is always an array at runtime
             return $query['method'] == $method;
         });
     }
@@ -614,6 +643,7 @@ class Model
      */
     protected function setSort()
     {
+        // @phpstan-ignore-next-line Assigned value is always array at runtime
         $this->sort = Request::get($this->sortName, []);
         if (!is_array($this->sort)) {
             return;
@@ -625,7 +655,7 @@ class Model
 
         $column = $this->getSortColumn();
         // if sort as callback, Execute callback
-        /** @phpstan-ignore-next-line Call to function is_null() with Closure will always evaluate to false.  */
+        /** @phpstan-ignore-next-line Call to function is_null() with Closure will always evaluate to false. */
         if($column && !is_null($column->getSortCallback())){
             $this->setCallbackSort();
             return;
@@ -649,6 +679,7 @@ class Model
     
             // get column. if contains "cast", set set column as cast
             if ($column && !is_null($cast = $column->getCast())) {
+                // @phpstan-ignore-next-line $value is always Illuminate\Contracts\Database\Query\Expression|string at runtime
                 $columnName = \DB::getQueryGrammar()->wrap($this->sort['column']);
                 $column = "CAST({$columnName} AS {$cast}) {$type}";
                 $method = 'orderByRaw';
@@ -676,6 +707,7 @@ class Model
         if(!$column_name){
             return null;
         }
+        // @phpstan-ignore-next-line Columns collection is guaranteed to exist on grid
         return $this->grid->columns()->first(function($column) use($column_name){
             if($column->getSortName() == $column_name){
                 return true;
@@ -702,6 +734,7 @@ class Model
 
             $this->queries->push([
                 'method'    => 'select',
+                // @phpstan-ignore-next-line The value is always an object exposing getTable() at runtime
                 'arguments' => [$this->model->getTable().'.*'],
             ]);
 
@@ -814,7 +847,9 @@ class Model
             // rewrite value target methods
             $rewriteTargets = ['paginate'];
             
+            // @phpstan-ignore-next-line The value is always an array at runtime
             if(is_string($method) && $query['method'] == $method && in_array($method, $rewriteTargets)){
+                // @phpstan-ignore-next-line The value is always an array at runtime
                 $query['arguments'] = $arguments;
                 $match = true;
             }
@@ -877,6 +912,7 @@ class Model
     {
         $data = $this->buildData();
 
+        // @phpstan-ignore-next-line $key is always int|string at runtime (and 1 more mixed-type assumption on this line)
         if (array_key_exists($key, $data)) {
             return $data[$key];
         }

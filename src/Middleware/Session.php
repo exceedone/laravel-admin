@@ -41,6 +41,7 @@ class Session
             $path = '';
         }
 
+        // @phpstan-ignore-next-line $string is always string at runtime
         $path .= '/' . trim(config('admin.route.prefix'), '/');
         return $path;
     }

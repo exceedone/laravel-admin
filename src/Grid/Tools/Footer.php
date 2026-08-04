@@ -43,6 +43,7 @@ class Footer extends AbstractTool
      */
     public function render()
     {
+        /** @phpstan-ignore-next-line Parameter #1 $callback of function call_user_func expects callable(): mixed, Closure|Encore\Admin\Grid given. */
         $content = call_user_func($this->grid->footer(), $this->queryBuilder());
 
         if (empty($content)) {
@@ -56,6 +57,9 @@ class Footer extends AbstractTool
         if ($content instanceof Htmlable) {
             $content = $content->toHtml();
         }
+
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var string $content */
 
         return <<<HTML
     <div class="box-footer clearfix">

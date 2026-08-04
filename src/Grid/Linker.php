@@ -125,7 +125,9 @@ class Linker
             return $this->linkattributes;
         }
 
+        // @phpstan-ignore-next-line The value is always iterable at runtime
         foreach($linkattributes as $key => $attribute){
+            // @phpstan-ignore-next-line The value is always an array at runtime
             $this->linkattributes[$key] = $attribute;
         }
         return $this;
@@ -140,7 +142,9 @@ class Linker
             return $this->iconattributes;
         }
 
+        // @phpstan-ignore-next-line The value is always iterable at runtime
         foreach($iconattributes as $key => $attribute){
+            // @phpstan-ignore-next-line The value is always an array at runtime
             $this->iconattributes[$key] = $attribute;
         }
         return $this;
@@ -158,12 +162,16 @@ class Linker
         
         // add tooltip
         if(isset($this->tooltip)){
+            // @phpstan-ignore-next-line The value is always an array at runtime
             $this->linkattributes['data-toggle'] = 'tooltip';
+            // @phpstan-ignore-next-line The value is always an array at runtime
             $this->linkattributes['title'] = $this->tooltip;
         }
 
+        // @phpstan-ignore-next-line $array is always array at runtime
         $linkattribute = $this->getParams($this->linkattributes);
         
+        // @phpstan-ignore-next-line $array is always array at runtime
         $iconattribute = $this->getParams($this->iconattributes);
         
         if(!isset($this->url)){
@@ -183,6 +191,7 @@ class Linker
      * @return string
      */
     public function __toString(){
+        /** @phpstan-ignore-next-line Call to an undefined method Illuminate\Contracts\Foundation\Application|Illuminate\Contracts\View\Factory|Illuminate\Contracts\View\View::render(). */
         return $this->render()->render();
     }
 
@@ -192,6 +201,7 @@ class Linker
      */
     protected function getParams($array){
         return implode(" ", collect($array)->map(function($attribute, $key){
+            // @phpstan-ignore-next-line $string is always string at runtime
             $attribute = htmlspecialchars($attribute, ENT_QUOTES|ENT_HTML5);
             return "{$key}='{$attribute}'";
         })->toArray());

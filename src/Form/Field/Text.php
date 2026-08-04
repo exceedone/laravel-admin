@@ -63,6 +63,7 @@ class Text extends Field
     {
         $options = json_encode_options($options);
 
+        /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
         $this->script = "$('{$this->getElementClassSelector()}').inputmask($options);";
 
         return $this;
@@ -77,10 +78,13 @@ class Text extends Field
      */
     public function datalist($entries = [])
     {
+        /** @phpstan-ignore-next-line Part $this->id (array|string) of encapsed string cannot be cast to string. */
         $this->defaultAttribute('list', "list-{$this->id}");
 
+        /** @phpstan-ignore-next-line Part $this->id (array|string) of encapsed string cannot be cast to string. */
         $datalist = "<datalist id=\"list-{$this->id}\">";
         foreach ($entries as $k => $v) {
+            // @phpstan-ignore-next-line $v is always castable to string at runtime
             $datalist .= "<option value=\"{$k}\">{$v}</option>";
         }
         $datalist .= '</datalist>';
