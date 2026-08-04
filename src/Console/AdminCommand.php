@@ -66,6 +66,7 @@ LOGO;
             return [];
         })->toArray();
 
+        // @phpstan-ignore-next-line $commands is always array<Illuminate\Console\Command|string> at runtime
         $width = $this->getColumnWidth($commands);
 
         /** @var Command $command */

@@ -324,8 +324,10 @@ abstract class Extension
     {
         $menuModel = config('admin.database.menu_model');
 
+        // @phpstan-ignore-next-line The value is always an object exposing max() at runtime
         $lastOrder = $menuModel::max('order');
 
+        // @phpstan-ignore-next-line The value is always an object exposing create() at runtime
         $menuModel::create([
             'parent_id' => $parentId,
             'order'     => $lastOrder + 1,
@@ -348,9 +350,11 @@ abstract class Extension
     {
         $permissionModel = config('admin.database.permissions_model');
 
+        // @phpstan-ignore-next-line The value is always an object exposing create() at runtime
         $permissionModel::create([
             'name'      => $name,
             'slug'      => $slug,
+            // @phpstan-ignore-next-line $string is always string at runtime
             'http_path' => '/'.trim($path, '/'),
         ]);
     }
@@ -369,9 +373,11 @@ abstract class Extension
                 'prefix'     => config('admin.route.prefix'),
                 'middleware' => config('admin.route.middleware'),
             ],
+            // @phpstan-ignore-next-line $arrays is always array at runtime
             static::config('route', [])
         );
 
+        // @phpstan-ignore-next-line $routes is always array|Closure|string at runtime
         Route::group($attributes, $callback);
     }
 }

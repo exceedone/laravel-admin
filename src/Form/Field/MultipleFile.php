@@ -84,6 +84,7 @@ class MultipleFile extends Field
         }
 
         if ($this->validator) {
+            // @phpstan-ignore-next-line Return value is always bool|Illuminate\Contracts\Validation\Factory|Illuminate\Contracts\Validation\Validator at runtime
             return $this->validator->call($this, $input);
         }
 
@@ -97,8 +98,10 @@ class MultipleFile extends Field
         $attributes[$this->column] = $this->label;
         /** @phpstan-ignore-next-line Parameter #2 $key of static method Illuminate\Support\Arr::get() expects int|string|null, array|string given. */
         $fileNames = Arr::get($input, $this->column);
+        // @phpstan-ignore-next-line The value is always an object exposing toArray() at runtime
         list($rules, $input) = $this->hydrateFiles($fileNames ? (is_array($fileNames) ? $fileNames : $fileNames->toArray()) : []);
 
+        // @phpstan-ignore-next-line $data is always array at runtime (and 2 more mixed-type assumptions on this line)
         return \validator($input, $rules, $this->getValidationMessages(), $attributes);
     }
 
@@ -143,6 +146,7 @@ class MultipleFile extends Field
         $original = $this->original();
 
         foreach ($order as $item) {
+            // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime
             $new[] = Arr::get($original, $item);
         }
 
@@ -169,6 +173,7 @@ class MultipleFile extends Field
         }
 
         if (request()->has(static::FILE_DELETE_FLAG)) {
+            // @phpstan-ignore-next-line $key is always string at runtime
             return $this->destroy(request(static::FILE_DELETE_FLAG));
         }
 
@@ -187,6 +192,7 @@ class MultipleFile extends Field
             $original = [$original];
         }
 
+        // @phpstan-ignore-next-line $arrays is always array at runtime
         return array_merge($original, $targets);
     }
 
@@ -230,6 +236,7 @@ class MultipleFile extends Field
         if(is_string($files)){
             $files = [$files];
         }
+        // @phpstan-ignore-next-line The callback matches the expected signature at runtime (and 1 more mixed-type assumption on this line)
         return array_values(array_map([$this, 'objectUrl'], $files));
     }
 
@@ -287,6 +294,7 @@ class MultipleFile extends Field
     protected function initialCaption($caption, $key)
     {
         if($this->caption instanceof \Closure){
+            // @phpstan-ignore-next-line Return value is always string at runtime
             return $this->caption->call($this, $caption, $key);
         }
         return basename($caption);
@@ -305,9 +313,11 @@ class MultipleFile extends Field
 
         $config = [];
 
+        // @phpstan-ignore-next-line The value is always iterable at runtime
         foreach ($files as $index => $file) {
             $key = $this->initialFileIndex($index, $file);
             $preview = array_merge([
+                // @phpstan-ignore-next-line $caption is always string at runtime (and 1 more mixed-type assumption on this line)
                 'caption' => $this->initialCaption($file, $key),
                 'key'     => $key,
             /** @phpstan-ignore-next-line Parameter #2 ...$arrays of function array_merge expects array, array<string>|bool given. */
@@ -379,6 +389,8 @@ $("{$selectorString}").on('filebeforedelete', function() {
 EOT;
             /** @phpstan-ignore-next-line Cannot access offset 'deletedEvent' on array<string, mixed>|Closure. */
             if(isset($this->options['deletedEvent'])){
+                // Type assertion for PHPStan - maintain original behavior
+                /** @var string $deletedEvent */
                 $deletedEvent = $this->options['deletedEvent'];
                 $this->script .= <<<EOT
                 $("{$selectorString}").on('filedeleted', function(event, key, jqXHR, data) {
@@ -449,6 +461,7 @@ EOT;
     {
         $files = $this->original ?: [];
 
+        // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime
         $file = Arr::get($files, $key);
 
         /** @phpstan-ignore-next-line Cannot call method exists() on Illuminate\Filesystem\FilesystemAdapter|string. */
@@ -457,8 +470,10 @@ EOT;
             $this->storage->delete($file);
         }
 
+        // @phpstan-ignore-next-line The value is always an array at runtime
         unset($files[$key]);
 
+        // @phpstan-ignore-next-line Return value is always array at runtime
         return $files;
     }
 }

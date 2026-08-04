@@ -115,8 +115,10 @@ class BatchActions extends AbstractTool
         Admin::script($this->script());
 
         foreach ($this->actions as $action) {
+            // @phpstan-ignore-next-line The value is always an object exposing setGrid() at runtime
             $action->setGrid($this->grid);
 
+            // @phpstan-ignore-next-line The value is always an object exposing script() at runtime
             Admin::script($action->script());
         }
     }

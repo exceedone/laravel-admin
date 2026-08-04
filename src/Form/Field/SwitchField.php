@@ -23,7 +23,7 @@ class SwitchField extends Field
     ];
 
     /**
-     * @var array<string, mixed>
+     * @var array<string, array{value: mixed, text: string, color: string}>
      */
     protected $states = [
         'on'  => ['value' => 1, 'text' => 'ON', 'color' => 'primary'],
@@ -88,6 +88,7 @@ class SwitchField extends Field
     public function prepare($value)
     {
         if (isset($this->states[$value])) {
+            // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
             return $this->states[$value]['value'];
         }
 

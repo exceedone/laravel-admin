@@ -48,10 +48,12 @@ trait ImageField
 
             foreach ($this->interventionCalls as $call) {
                 /** @var callable $callable */
+                // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
                 $callable = [$image, $call['method']];
                 /** @var \Intervention\Image\Image $result */
                 $result = call_user_func_array(
                     $callable,
+                    // @phpstan-ignore-next-line The value is always an array at runtime (and 3 more mixed-type assumptions on this line)
                     $call['arguments']
                 );
                 $result->save($target);
@@ -110,6 +112,7 @@ trait ImageField
     {
         if (func_num_args() == 1 && is_array($name)) {
             foreach ($name as $key => $size) {
+                // @phpstan-ignore-next-line $value is always array|Countable at runtime (and 1 more mixed-type assumption on this line)
                 if (count($size) == 2) {
                     $this->thumbnails[$key] = $size;
                 }
@@ -135,9 +138,11 @@ trait ImageField
 
         foreach ($this->thumbnails as $name => $_) {
             // We need to get extension type ( .jpeg , .png ...)
+            // @phpstan-ignore-next-line $path is always string at runtime (and 1 more mixed-type assumption on this line)
             $ext = pathinfo($this->original, PATHINFO_EXTENSION);
 
             // We remove extension from file name so we can append thumbnail type
+            // @phpstan-ignore-next-line $subject is always string at runtime (and 1 more mixed-type assumption on this line)
             $path = Str::replaceLast('.'.$ext, '', $this->original);
 
             // We merge original name + thumbnail name + extension
@@ -162,9 +167,11 @@ trait ImageField
     {
         foreach ($this->thumbnails as $name => $size) {
             // We need to get extension type ( .jpeg , .png ...)
+            // @phpstan-ignore-next-line $path is always string at runtime (and 1 more mixed-type assumption on this line)
             $ext = pathinfo($this->name, PATHINFO_EXTENSION);
 
             // We remove extension from file name so we can append thumbnail type
+            // @phpstan-ignore-next-line $subject is always string at runtime (and 1 more mixed-type assumption on this line)
             $path = Str::replaceLast('.'.$ext, '', $this->name);
 
             // We merge original name + thumbnail name + extension
@@ -174,8 +181,10 @@ trait ImageField
             $image = InterventionImage::make($file);
 
             // Resize image with aspect ratio
+            // @phpstan-ignore-next-line The value is always an array at runtime (and 7 more mixed-type assumptions on this line)
             $image->resize($size[0], $size[1], function (Constraint $constraint) {
                 $constraint->aspectRatio();
+            // @phpstan-ignore-next-line The value is always an array at runtime (and 7 more mixed-type assumptions on this line)
             })->resizeCanvas($size[0], $size[1], 'center', false, '#ffffff');
 
             if (!is_null($this->storagePermission)) {

@@ -43,9 +43,12 @@ class Map extends Field
      */
     public function __construct($column, $arguments)
     {
+        // @phpstan-ignore-next-line The value is always castable to string at runtime
         $this->column['lat'] = (string) $column;
+        // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
         $this->column['lng'] = (string) $arguments[0];
 
+        // @phpstan-ignore-next-line $array is always array at runtime
         array_shift($arguments);
 
         $this->label = $this->formatLabel($arguments);

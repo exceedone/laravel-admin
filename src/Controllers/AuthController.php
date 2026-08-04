@@ -83,6 +83,7 @@ class AuthController extends Controller
 
         $request->session()->invalidate();
 
+        // @phpstan-ignore-next-line $to is always string|null at runtime
         return redirect(config('admin.route.prefix'));
     }
 

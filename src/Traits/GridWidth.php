@@ -36,6 +36,7 @@ trait GridWidth
             /** @phpstan-ignore-next-line offsetAccess.notFound */
             $this->width['sm'] = $width;
         } else {
+            // @phpstan-ignore-next-line Assigned value is always array<string, int>|int at runtime
             $this->width = $width;
         }
 

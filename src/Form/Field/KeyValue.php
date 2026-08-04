@@ -40,6 +40,7 @@ class KeyValue extends Field
     public function getValidator(array $input)
     {
         if ($this->validator) {
+            // @phpstan-ignore-next-line Return value is always bool|Illuminate\Contracts\Validation\Factory|Illuminate\Contracts\Validation\Validator at runtime
             return $this->validator->call($this, $input);
         }
 
@@ -62,6 +63,7 @@ class KeyValue extends Field
         $attributes["{$this->column}.keys.*"] = __('Key');
         $attributes["{$this->column}.values.*"] = __('Value');
 
+        // @phpstan-ignore-next-line $messages is always array at runtime
         return validator($input, $rules, $this->getValidationMessages(), $attributes);
     }
 
@@ -94,6 +96,7 @@ SCRIPT;
      */
     public function prepare($value)
     {
+        // @phpstan-ignore-next-line $keys is always array<int|string> at runtime (and 1 more mixed-type assumption on this line)
         return array_combine($value['keys'], $value['values']);
     }
 

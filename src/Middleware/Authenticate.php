@@ -17,6 +17,7 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
+        // @phpstan-ignore-next-line $path is always string|null at runtime
         $redirectTo = admin_base_path(config('admin.auth.redirect_to', 'auth/login'));
 
         if (Auth::guard('admin')->guest() && !$this->shouldPassThrough($request)) {
@@ -41,6 +42,7 @@ class Authenticate
         ]);
         /** @phpstan-ignore-next-line Unable to resolve the template type TKey in call to function collect */
         return collect($excepts)
+            // @phpstan-ignore-next-line The callback matches the expected signature at runtime
             ->map('admin_base_path')
             ->contains(function ($except) use ($request) {
                 if ($except !== '/') {

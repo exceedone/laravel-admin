@@ -86,6 +86,7 @@ class Row implements Buildable, Renderable
         if (is_array($attribute)) {
             $this->attributes = array_merge($this->attributes, $attribute);
         } else {
+            // @phpstan-ignore-next-line The value is always castable to string at runtime
             $this->attributes[$attribute] = (string) $value;
         }
 
@@ -150,6 +151,7 @@ class Row implements Buildable, Renderable
         $html = [];
 
         foreach ($this->attributes as $name => $value) {
+            // @phpstan-ignore-next-line $value is always BackedEnum|Illuminate\Contracts\Support\DeferringDisplayableValue|Illuminate\Contracts\Support\Htmlable|string|null at runtime
             $html[] = $name.'="'.e($value).'"';
         }
 

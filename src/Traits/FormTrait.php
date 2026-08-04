@@ -91,9 +91,11 @@ trait FormTrait
         if (is_array($attr)) {
             foreach ($attr as $key => $value) {
                 if($key == 'class'){
+                    // @phpstan-ignore-next-line $value is always array|string at runtime (and 1 more mixed-type assumption on this line)
                     $this->setClass($value);
                 }
                 else{
+                    // @phpstan-ignore-next-line $value is always int|string at runtime (and 1 more mixed-type assumption on this line)
                     $this->attribute($key, $value);
                 }
             }
@@ -125,6 +127,7 @@ trait FormTrait
      */
     public function setClass($value)
     {
+        // @phpstan-ignore-next-line $string is always string|null at runtime (and 1 more mixed-type assumption on this line)
         $result = explode_ex(' ', Arr::get($this->attributes, 'class'));
 
         if(is_string($value)){

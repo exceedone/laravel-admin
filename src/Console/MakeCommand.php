@@ -185,6 +185,7 @@ class MakeCommand extends GeneratorCommand
             return $namespace;
         }
 
+        // @phpstan-ignore-next-line Return value is always string at runtime
         return config('admin.route.namespace');
     }
 

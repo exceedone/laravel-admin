@@ -84,7 +84,9 @@ class Tags extends Field
             $this->keyAsValue = true;
         }
 
+        // @phpstan-ignore-next-line Assigned value is always string at runtime
         $this->visibleColumn = $visibleColumn;
+        // @phpstan-ignore-next-line Assigned value is always string at runtime
         $this->key = $key;
 
         return $this;

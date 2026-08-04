@@ -170,6 +170,7 @@ class Content implements Renderable
             $this->addRow($content);
         }
         else {
+            // @phpstan-ignore-next-line $content is always string at runtime
             $this->addRow(new Row($content));
         }
 

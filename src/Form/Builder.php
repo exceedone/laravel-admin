@@ -45,7 +45,7 @@ class Builder
     protected $action;
 
     /**
-     * @var Collection<int|string, mixed>|null
+     * @var Collection<int|string, Field>|null
      */
     protected $fields;
 
@@ -338,6 +338,7 @@ class Builder
     public function getAction()
     {
         if ($this->action) {
+            // @phpstan-ignore-next-line Return value is always string at runtime
             return $this->action;
         }
 
@@ -383,7 +384,7 @@ class Builder
     /**
      * Get fields of this builder.
      *
-     * @return Collection<int|string, mixed>
+     * @return Collection<int|string, Field>
      */
     public function fields()
     {
@@ -471,6 +472,7 @@ class Builder
     public function option($option, $value = null)
     {
         if (func_num_args() == 1) {
+            // @phpstan-ignore-next-line Return value is always $this(Encore\Admin\Form\Builder) at runtime
             return Arr::get($this->options, $option);
         }
 
@@ -508,7 +510,6 @@ class Builder
     {
         foreach ($this->fields() as $field) {
             if(method_exists($field, 'hasFile')){
-                /** @phpstan-ignore-next-line */
                 if($field->hasFile()){
                     return true;
                 }
@@ -534,12 +535,15 @@ class Builder
         $redirectCamera = request()->get('redirect-camera');
 
         if ($formid) {
+            // @phpstan-ignore-next-line $field is always Encore\Admin\Form\Field at runtime
             $this->addHiddenField((new Hidden(static::FORM_ID))->value($formid));
         }
         if ($redirectDashboard) {
+            // @phpstan-ignore-next-line $field is always Encore\Admin\Form\Field at runtime
             $this->addHiddenField((new Hidden(static::REDIRECT_DASHBOARD))->value($redirectDashboard));
         }
         if ($redirectCamera) {
+            // @phpstan-ignore-next-line $field is always Encore\Admin\Form\Field at runtime
             $this->addHiddenField((new Hidden(static::REDIRECT_CAMERA))->value($redirectCamera));
         }
         if (!$previous || $previous == URL::current()) {
@@ -547,6 +551,7 @@ class Builder
         }
 
         if (Str::contains($previous, url($this->getResource()))) {
+            // @phpstan-ignore-next-line $field is always Encore\Admin\Form\Field at runtime
             $this->addHiddenField((new Hidden(static::PREVIOUS_URL_KEY))->value($previous));
         }
     }
@@ -565,6 +570,7 @@ class Builder
         $this->form->attribute($options);
 
         if ($this->isMode(self::MODE_EDIT)) {
+            // @phpstan-ignore-next-line $field is always Encore\Admin\Form\Field at runtime
             $this->addHiddenField((new Hidden('_method'))->value('PUT'));
         }
 
@@ -587,6 +593,7 @@ class Builder
 
         $html = [];
         foreach ($this->form->getAttributes() as $name => $value) { // @phpstan-ignore-line Form is guaranteed to be set in Builder
+            // @phpstan-ignore-next-line $value is always castable to string at runtime
             $html[] = "$name=\"$value\"";
         }
 

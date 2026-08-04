@@ -69,6 +69,8 @@ SCRIPT;
             'selected_rows' => trans('admin.selected_rows'),
         ];
 
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var string $page */
         $page = request('page', 1);
 
         return <<<EOT

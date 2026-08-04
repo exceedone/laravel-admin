@@ -68,6 +68,7 @@ class MultipleSelect extends Select
         // MultipleSelect value store as an ont-to-many relationship.
         } elseif (is_array($first)) {
             foreach ($relations as $relation) {
+                // @phpstan-ignore-next-line The value is always an array at runtime
                 $this->value[] = Arr::get($relation, "pivot.{$this->getOtherKey()}");
             }
 
@@ -102,6 +103,7 @@ class MultipleSelect extends Select
         // MultipleSelect value store as an ont-to-many relationship.
         } elseif (is_array($first)) {
             foreach ($relations as $relation) {
+                // @phpstan-ignore-next-line The value is always an array at runtime
                 $this->original[] = Arr::get($relation, "pivot.{$this->getOtherKey()}");
             }
 

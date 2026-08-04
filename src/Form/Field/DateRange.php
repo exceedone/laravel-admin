@@ -57,10 +57,13 @@ class DateRange extends Field
     public function value($value = null)
     {
         if (is_null($value)) {
+            // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
             if (!isset($this->value['start']) && !isset($this->value['end'])) {
+                // @phpstan-ignore-next-line Return value is always $this(Encore\Admin\Form\Field\DateRange) at runtime
                 return $this->getDefault();
             }
 
+            // @phpstan-ignore-next-line Return value is always $this(Encore\Admin\Form\Field\DateRange) at runtime
             return $this->value;
         }
 

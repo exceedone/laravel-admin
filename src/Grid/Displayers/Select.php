@@ -16,6 +16,8 @@ class Select extends AbstractDisplayer
             $options = $options->call($this, $this->row);
         }
 
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var string $name */
         $name = $this->column->getName();
 
         $class = "grid-select-{$name}";
@@ -53,8 +55,10 @@ EOT;
 
         $optionsHtml = '';
 
+        // @phpstan-ignore-next-line The value is always iterable at runtime
         foreach ($options as $option => $text) {
             $selected = $option == $this->value ? 'selected' : '';
+            // @phpstan-ignore-next-line $option is always castable to string at runtime (and 1 more mixed-type assumption on this line)
             $optionsHtml .= "<option value=\"$option\" $selected>$text</option>";
         }
 

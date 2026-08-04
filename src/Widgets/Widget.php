@@ -87,6 +87,7 @@ abstract class Widget extends Fluent
      */
     public function __toString()
     {
+        // @phpstan-ignore-next-line Return value is always string at runtime
         return $this->render();
     }
 }

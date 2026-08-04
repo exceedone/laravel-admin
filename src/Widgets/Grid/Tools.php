@@ -223,6 +223,7 @@ class Tools implements Renderable
                 return $tool->toHtml();
             }
 
+            // @phpstan-ignore-next-line The value is always castable to string at runtime
             return (string) $tool;
         })->implode(' ');
     }

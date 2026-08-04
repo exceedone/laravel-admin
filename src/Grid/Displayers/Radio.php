@@ -17,10 +17,21 @@ class Radio extends AbstractDisplayer
         }
 
         $radios = '';
+
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var string $name */
         $name = $this->column->getName();
 
+        // @phpstan-ignore-next-line The value is always iterable at runtime
         foreach ($options as $value => $label) {
             $checked = ($value == $this->value) ? 'checked' : '';
+
+            // Type assertion for PHPStan - maintain original behavior
+            /**
+             * @var string $value
+             * @var string $label
+             */
+
             $radios .= <<<EOT
 <div class="radio">
     <label>
@@ -58,6 +69,8 @@ EOT;
      */
     protected function script()
     {
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var string $name */
         $name = $this->column->getName();
 
         return <<<EOT

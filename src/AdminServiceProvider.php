@@ -112,6 +112,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function loadAdminAuthConfig()
     {
+        // @phpstan-ignore-next-line $array is always iterable at runtime
         config(Arr::dot(config('admin.auth', []), 'auth.'));
         
         $this->mergeConfigFrom(
@@ -129,6 +130,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         // register route middleware.
         foreach ($this->routeMiddleware as $key => $middleware) {
+            // @phpstan-ignore-next-line $class is always string at runtime
             app('router')->aliasMiddleware($key, $middleware);
         }
 

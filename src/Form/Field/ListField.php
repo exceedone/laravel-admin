@@ -80,6 +80,7 @@ class ListField extends Field
     public function getValidator(array $input)
     {
         if ($this->validator) {
+            // @phpstan-ignore-next-line Return value is always bool|Illuminate\Contracts\Validation\Validator at runtime
             return $this->validator->call($this, $input);
         }
 
@@ -113,6 +114,7 @@ class ListField extends Field
 
         $attributes["{$this->column}.values"] = $this->label;
 
+        // @phpstan-ignore-next-line $messages is always array at runtime
         return validator($input, $rules, $this->getValidationMessages(), $attributes);
     }
 
@@ -147,6 +149,7 @@ SCRIPT;
      */
     public function prepare($value)
     {
+        // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
         return array_values($value['values']);
     }
 

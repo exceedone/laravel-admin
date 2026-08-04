@@ -69,6 +69,7 @@ class LogOperation
         }
 
         return $allowedMethods->map(function ($method) {
+            // @phpstan-ignore-next-line $string is always string at runtime
             return strtoupper($method);
         })->contains($method);
     }
@@ -82,8 +83,10 @@ class LogOperation
      */
     protected function inExceptArray($request)
     {
+        // @phpstan-ignore-next-line The value is always iterable at runtime
         foreach (config('admin.operation_log.except') as $except) {
             if ($except !== '/') {
+                // @phpstan-ignore-next-line $string is always string at runtime
                 $except = trim($except, '/');
             }
 

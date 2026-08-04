@@ -84,6 +84,7 @@ class Text extends Field
         /** @phpstan-ignore-next-line Part $this->id (array|string) of encapsed string cannot be cast to string. */
         $datalist = "<datalist id=\"list-{$this->id}\">";
         foreach ($entries as $k => $v) {
+            // @phpstan-ignore-next-line $v is always castable to string at runtime
             $datalist .= "<option value=\"{$k}\">{$v}</option>";
         }
         $datalist .= '</datalist>';

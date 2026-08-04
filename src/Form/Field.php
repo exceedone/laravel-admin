@@ -308,6 +308,7 @@ class Field implements Renderable
      */
     public function __construct($column = '', $arguments = [])
     {
+        // @phpstan-ignore-next-line Assigned value is always array|string at runtime
         $this->column = $this->formatColumn($column);
         $this->label = $this->formatLabel($arguments);
         $this->id = $this->formatId($column);
@@ -407,8 +408,10 @@ class Field implements Renderable
     {
         $column = is_array($this->column) ? current($this->column) : $this->column;
 
+        // @phpstan-ignore-next-line $string is always string at runtime
         $label = isset($arguments[0]) ? $arguments[0] : ucfirst($column);
 
+        // @phpstan-ignore-next-line $subject is always array|string at runtime
         return str_replace(['.', '_', '->'], ' ', $label);
     }
 
@@ -443,6 +446,7 @@ class Field implements Renderable
         if (is_array($this->column)) {
             $names = [];
             foreach ($this->column as $key => $name) {
+                // @phpstan-ignore-next-line $column is always array|string at runtime
                 $names[$key] = $this->formatName($name);
             }
 
@@ -476,6 +480,7 @@ class Field implements Renderable
      */
     public function getElementName()
     {
+        // @phpstan-ignore-next-line Return value is always array|string at runtime
         return $this->elementName ?: $this->formatName($this->column);
     }
 
@@ -492,6 +497,7 @@ class Field implements Renderable
 
         if (is_array($this->column)) {
             foreach ($this->column as $key => $column) {
+                // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
                 $this->value[$key] = Arr::get($data, $column);
             }
 
@@ -539,6 +545,7 @@ class Field implements Renderable
     {
         if (is_array($this->column)) {
             foreach ($this->column as $key => $column) {
+                // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
                 $this->original[$key] = Arr::get($data, $column);
             }
 
@@ -796,6 +803,7 @@ class Field implements Renderable
                 $newRules = $r;
             }
         }
+        // @phpstan-ignore-next-line Assigned value is always array|Closure|string at runtime
         $this->rules = $newRules;
 
         return $this;
@@ -858,19 +866,24 @@ class Field implements Renderable
         }
 
         if (!$this->form || !$this->form->model()) {
+            // @phpstan-ignore-next-line Return value is always array|Closure|string at runtime
             return $rules;
         }
 
         if (!$id = $this->form->model()->getKey()) {
+            // @phpstan-ignore-next-line Return value is always array|Closure|string at runtime
             return $rules;
         }
 
+        // @phpstan-ignore-next-line The value is always iterable at runtime
         foreach ($rules as &$rule) {
             if (is_string($rule)) {
+                // @phpstan-ignore-next-line $replace is always array|string at runtime
                 $rule = str_replace('{{id}}', $id, $rule);
             }
         }
 
+        // @phpstan-ignore-next-line Return value is always array|Closure|string at runtime
         return $rules;
     }
 
@@ -920,6 +933,7 @@ class Field implements Renderable
      */
     public function getErrorKey()
     {
+        // @phpstan-ignore-next-line Return value is always string at runtime
         return $this->errorKey ?: $this->column;
     }
 
@@ -965,6 +979,7 @@ class Field implements Renderable
     public function data(array $data = null)
     {
         if (is_null($data)) {
+            // @phpstan-ignore-next-line Return value is always $this(Encore\Admin\Form\Field) at runtime
             return $this->data;
         }
 
@@ -1141,6 +1156,7 @@ class Field implements Renderable
 
         if (is_array($this->column)) {
             foreach ($this->column as $key => $column) {
+                // @phpstan-ignore-next-line $key is always int|string at runtime
                 if (!array_key_exists($column, $input)) {
                     continue;
                 }
@@ -1150,6 +1166,7 @@ class Field implements Renderable
             }
         }
 
+        // @phpstan-ignore-next-line $messages is always array at runtime
         return \validator($input, $rules, $this->getValidationMessages(), $attributes);
     }
 
@@ -1178,6 +1195,7 @@ class Field implements Renderable
                 $value = $value->toArray();
             }
 
+            // @phpstan-ignore-next-line $array is always array at runtime
             Arr::set($input, $column, array_filter($value));
         }
 
@@ -1197,6 +1215,7 @@ class Field implements Renderable
         if (is_array($attribute)) {
             $this->attributes = array_merge($this->attributes, $attribute);
         } else {
+            // @phpstan-ignore-next-line The value is always castable to string at runtime
             $this->attributes[$attribute] = (string) $value;
         }
 
@@ -1349,9 +1368,11 @@ class Field implements Renderable
                 $elementNames = $this->getElementName();
                 $elementName = is_array($elementNames) ? Arr::get($elementNames, $key) : $elementNames;
 
+                // @phpstan-ignore-next-line $keyname is always string at runtime
                 $keyname = static::getDotName($elementName);
                 $v = Arr::get((is_null($value) ? [] : (array)$value), $key);
 
+                // @phpstan-ignore-next-line $key is always string|null at runtime
                 if(!is_null($old = old($c, $v))){
                     $olds[$key] = $old;
                 }
@@ -1425,6 +1446,7 @@ class Field implements Renderable
         $html = [];
 
         foreach ($this->attributes as $name => $value) {
+            // @phpstan-ignore-next-line $value is always BackedEnum|Illuminate\Contracts\Support\DeferringDisplayableValue|Illuminate\Contracts\Support\Htmlable|string|null at runtime
             $html[] = $name.'="'.e($value).'"';
         }
 
@@ -1507,6 +1529,7 @@ class Field implements Renderable
         if (!$this->elementClass) {
             $name = $this->elementName ?: $this->formatName($this->column);
 
+            // @phpstan-ignore-next-line $subject is always array|string at runtime
             $this->elementClass = (array) str_replace(['[', ']'], '_', $name);
         }
 

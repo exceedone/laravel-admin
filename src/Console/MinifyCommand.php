@@ -110,6 +110,7 @@ class MinifyCommand extends Command
         /** @phpstan-ignore-next-line  Unable to resolve the template type TValue in call to function collect  */
         $css = collect(array_merge(Admin::$css, Admin::baseCss()))
             ->unique()->map(function ($css) {
+                // @phpstan-ignore-next-line $path is always string at runtime
                 if (url()->isValidUrl($css)) {
                     $this->assets['css'][] = $css;
 
@@ -122,11 +123,13 @@ class MinifyCommand extends Command
                     return;
                 }
 
+                // @phpstan-ignore-next-line $haystack is always string at runtime
                 if (Str::contains($css, '?')) {
                     /** @phpstan-ignore-next-line */
                     $css = substr($css, 0, strpos($css, '?'));
                 }
 
+                // @phpstan-ignore-next-line $path is always string at runtime
                 return public_path($css);
             })->filter();
 
@@ -145,6 +148,7 @@ class MinifyCommand extends Command
         /** @phpstan-ignore-next-line  Unable to resolve the template type TValue in call to function collect  */
         $js = collect(array_merge(Admin::$js, Admin::baseJs()))
             ->unique()->map(function ($js) {
+                // @phpstan-ignore-next-line $path is always string at runtime
                 if (url()->isValidUrl($js)) {
                     $this->assets['js'][] = $js;
 
@@ -157,11 +161,13 @@ class MinifyCommand extends Command
                     return;
                 }
 
+                // @phpstan-ignore-next-line $haystack is always string at runtime
                 if (Str::contains($js, '?')) {
                     /** @phpstan-ignore-next-line */
                     $js = substr($js, 0, strpos($js, '?'));
                 }
 
+                // @phpstan-ignore-next-line $path is always string at runtime
                 return public_path($js);
             })->filter();
 

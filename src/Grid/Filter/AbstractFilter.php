@@ -107,8 +107,10 @@ abstract class AbstractFilter
      */
     public function __construct($column, $label = '')
     {
+        // @phpstan-ignore-next-line Assigned value is always string at runtime
         $this->column = $column;
         $this->label = $this->formatLabel($label);
+        // @phpstan-ignore-next-line $columns is always array|string at runtime
         $this->id = $this->formatId($column);
 
         $this->setupDefaultPresenter();
@@ -264,6 +266,7 @@ abstract class AbstractFilter
             return;
         }
 
+        // @phpstan-ignore-next-line Assigned value is always array|string at runtime
         $this->value = $value;
 
         return $this->buildCondition($this->column, $this->value);

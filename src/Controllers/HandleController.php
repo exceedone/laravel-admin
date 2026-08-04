@@ -22,7 +22,9 @@ class HandleController extends Controller
 
         $formClass = $request->get('_form_');
 
+        // @phpstan-ignore-next-line $class is always string at runtime
         if (!class_exists($formClass)) {
+            // @phpstan-ignore-next-line $formClass is always castable to string at runtime
             throw new Exception("Form [{$formClass}] not exists.");
         }
 

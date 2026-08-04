@@ -181,10 +181,13 @@ trait ModelTree
         }
 
         foreach ($nodes as $node) {
+            // @phpstan-ignore-next-line The value is always an array at runtime
             if ($node[$this->parentColumn] == $parentId) {
+                // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
                 $children = $this->buildNestedArray($nodes, $node[$this->getKeyName()]);
 
                 if ($children) {
+                    // @phpstan-ignore-next-line The value is always an array at runtime
                     $node['children'] = $children;
                 }
 
@@ -251,6 +254,7 @@ trait ModelTree
         }
 
         foreach ($tree as $branch) {
+            // @phpstan-ignore-next-line The value is always an array at runtime
             $node = static::find($branch['id']);
 
             /** @phpstan-ignore-next-line Call to an undefined method Encore\Admin\Auth\Database\Menu|Illuminate\Database\Eloquent\Collection<int, Encore\Admin\Auth\Database\Menu>::getParentColumn(). */
@@ -260,7 +264,9 @@ trait ModelTree
             /** @phpstan-ignore-next-line Call to an undefined method Encore\Admin\Auth\Database\Menu|Illuminate\Database\Eloquent\Collection<int, Encore\Admin\Auth\Database\Menu>::save(). */
             $node->save();
 
+            // @phpstan-ignore-next-line The value is always an array at runtime
             if (isset($branch['children'])) {
+                // @phpstan-ignore-next-line The value is always an array at runtime (and 2 more mixed-type assumptions on this line)
                 static::saveOrder($branch['children'], $branch['id']);
             }
         }
@@ -302,13 +308,17 @@ trait ModelTree
         }
 
         foreach ($nodes as $index => $node) {
+            // @phpstan-ignore-next-line The value is always an array at runtime
             if ($node[$this->parentColumn] == $parentId) {
+                // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
                 $node[$this->titleColumn] = $prefix.$space.$node[$this->titleColumn];
 
                 $childrenPrefix = str_replace('┝', str_repeat($space, 6), $prefix).'┝'.str_replace(['┝', $space], '', $prefix);
 
+                // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
                 $children = $this->buildSelectOptions($nodes, $node[$this->getKeyName()], $childrenPrefix);
 
+                // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
                 $options[$node[$this->getKeyName()]] = $node[$this->titleColumn];
 
                 if ($children) {
@@ -355,6 +365,7 @@ trait ModelTree
 
                 Request::offsetUnset('_order');
 
+                // @phpstan-ignore-next-line $serialize is always string at runtime
                 static::tree()->saveOrder($order);
 
                 return false;

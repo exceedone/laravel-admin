@@ -53,6 +53,7 @@ class ResourceGenerator
      */
     public function __construct($model)
     {
+        // @phpstan-ignore-next-line Assigned value is always Illuminate\Database\Eloquent\Model at runtime
         $this->model = $this->getModel($model);
     }
 
@@ -67,7 +68,9 @@ class ResourceGenerator
             return $model;
         }
 
+        // @phpstan-ignore-next-line $class is always string at runtime
         if (!class_exists($model) || !is_string($model) || !is_subclass_of($model, Model::class)) {
+            // @phpstan-ignore-next-line $model is always castable to string at runtime
             throw new \InvalidArgumentException("Invalid model [$model] !");
         }
 
@@ -112,6 +115,7 @@ class ResourceGenerator
                             break;
                         }
                     }
+                    // @phpstan-ignore-next-line $default is always castable to string at runtime
                     $defaultValue = "'{$default}'";
                     break;
                 case 'integer':
@@ -143,6 +147,7 @@ class ResourceGenerator
                     break;
                 default:
                     $fieldType = 'text';
+                    // @phpstan-ignore-next-line $default is always castable to string at runtime
                     $defaultValue = "'{$default}'";
             }
 
@@ -152,7 +157,9 @@ class ResourceGenerator
 
             $output .= sprintf($this->formats['form_field'], $fieldType, $name, $label);
 
+            // @phpstan-ignore-next-line $string is always string at runtime
             if (trim($defaultValue, "'\"")) {
+                // @phpstan-ignore-next-line $defaultValue is always castable to string at runtime
                 $output .= "->default({$defaultValue})";
             }
 

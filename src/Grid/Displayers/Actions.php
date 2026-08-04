@@ -64,6 +64,7 @@ class Actions extends AbstractDisplayer
      */
     public function getRouteKey()
     {
+        // @phpstan-ignore-next-line The value is always an object exposing getRouteKeyName() at runtime
         return $this->row->{$this->row->getRouteKeyName()};
     }
 
@@ -175,6 +176,7 @@ class Actions extends AbstractDisplayer
     {
         $uri = url($this->getResource());
 
+        // @phpstan-ignore-next-line The value is always an object exposing icon() at runtime (and 1 more mixed-type assumption on this line)
         return (new Linker)->url("{$uri}/{$this->getRouteKey()}")->icon('fa-eye')->tooltip(trans('admin.show'))
             ->linkattributes(['class' => "{$this->grid->getGridRowName()}-view"]);
     }
@@ -187,6 +189,7 @@ class Actions extends AbstractDisplayer
     protected function renderEdit()
     {
         $uri = url($this->getResource());
+        // @phpstan-ignore-next-line The value is always an object exposing icon() at runtime (and 1 more mixed-type assumption on this line)
         return (new Linker)->url("{$uri}/{$this->getRouteKey()}/edit")->icon('fa-edit')->tooltip(trans('admin.edit'))
             ->linkattributes(['class' => "{$this->grid->getGridRowName()}-edit"]);
     }
@@ -200,6 +203,7 @@ class Actions extends AbstractDisplayer
     {
         $this->setupDeleteScript();
 
+        // @phpstan-ignore-next-line The value is always an object exposing linkattributes() at runtime
         return (new Linker)
             ->script(true)
             ->linkattributes(['class' => "{$this->grid->getGridRowName()}-delete", 'data-id' => $this->getKey() ])

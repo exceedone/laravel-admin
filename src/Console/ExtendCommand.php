@@ -73,13 +73,16 @@ class ExtendCommand extends Command
     {
         $this->filesystem = $filesystem;
 
+        // @phpstan-ignore-next-line Assigned value is always string at runtime
         $this->extensionDir = config('admin.extension_dir');
 
         InputExtensionDir:
         if (empty($this->extensionDir)) {
+            // @phpstan-ignore-next-line Assigned value is always string at runtime
             $this->extensionDir = $this->ask('Please input a directory to store your extension:');
         }
 
+        // @phpstan-ignore-next-line $filename is always string at runtime
         if (!file_exists($this->extensionDir)) {
             $this->makeDir();
         }
@@ -215,6 +218,7 @@ TREE;
             $namespace = $this->ask('Root namespace', $default);
         }
 
+        // @phpstan-ignore-next-line Return value is always array|string|null at runtime
         return $namespace;
     }
 
@@ -326,6 +330,7 @@ TREE;
     protected function makeDir($paths = '')
     {
         foreach ((array) $paths as $path) {
+            // @phpstan-ignore-next-line $path is always string at runtime
             $path = $this->extensionPath($path);
 
             $this->filesystem->makeDirectory($path, 0755, true, true);

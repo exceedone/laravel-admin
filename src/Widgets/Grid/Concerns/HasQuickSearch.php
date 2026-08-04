@@ -67,6 +67,7 @@ trait HasQuickSearch
             $this->search = $search;
         }
 
+        // @phpstan-ignore-next-line $position is always string|null at runtime
         $this->tools->append(new Tools\QuickSearch(), $position);
 
         return $this;
@@ -96,6 +97,7 @@ trait HasQuickSearch
                 $this->addWhereLikeBinding($column, true, '%'.$query.'%');
             }
         } elseif (is_null($this->search)) {
+            // @phpstan-ignore-next-line $query is always string at runtime
             $this->addWhereBindings($query);
         }
     }
@@ -113,36 +115,42 @@ trait HasQuickSearch
 
         /** @phpstan-ignore-next-line argument.type */
         foreach ($this->parseQueryBindings($queries) as list($column, $condition, $or)) {
+            // @phpstan-ignore-next-line $subject is always string at runtime
             if (preg_match('/(?<not>!?)\((?<values>.+)\)/', $condition, $match) !== 0) {
                 /** @phpstan-ignore-next-line offsetAccess.notFound */
                 $this->addWhereInBinding($column, $or, (bool) $match['not'], $match['values']);
                 continue;
             }
 
+            // @phpstan-ignore-next-line $subject is always string at runtime
             if (preg_match('/\[(?<start>.*?),(?<end>.*?)]/', $condition, $match) !== 0) {
                 /** @phpstan-ignore-next-line offsetAccess.notFound */
                 $this->addWhereBetweenBinding($column, $or, $match['start'], $match['end']);
                 continue;
             }
 
+            // @phpstan-ignore-next-line $subject is always string at runtime
             if (preg_match('/(?<function>date|time|day|month|year),(?<value>.*)/', $condition, $match) !== 0) {
                 /** @phpstan-ignore-next-line offsetAccess.notFound */
                 $this->addWhereDatetimeBinding($column, $or, $match['function'], $match['value']);
                 continue;
             }
 
+            // @phpstan-ignore-next-line $subject is always string at runtime
             if (preg_match('/(?<pattern>%[^%]+%)/', $condition, $match) !== 0) {
                 /** @phpstan-ignore-next-line offsetAccess.notFound */
                 $this->addWhereLikeBinding($column, $or, $match['pattern']);
                 continue;
             }
 
+            // @phpstan-ignore-next-line $subject is always string at runtime
             if (preg_match('/\/(?<value>.*)\//', $condition, $match) !== 0) {
                 /** @phpstan-ignore-next-line offsetAccess.notFound */
                 $this->addWhereBasicBinding($column, $or, 'REGEXP', $match['value']);
                 continue;
             }
 
+            // @phpstan-ignore-next-line $subject is always string at runtime
             if (preg_match('/(?<operator>>=?|<=?|!=|%){0,1}(?<value>.*)/', $condition, $match) !== 0) {
                 /** @phpstan-ignore-next-line offsetAccess.notFound */
                 $this->addWhereBasicBinding($column, $or, $match['operator'], $match['value']);
@@ -168,6 +176,7 @@ trait HasQuickSearch
         });
 
         return collect($queries)->map(function ($query) use ($columnMap) {
+            // @phpstan-ignore-next-line $string is always string at runtime
             $segments = explode(':', $query, 2);
 
             if (count($segments) != 2) {

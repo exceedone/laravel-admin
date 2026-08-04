@@ -36,6 +36,7 @@ trait HasTools
      */
     public function disableTools(bool $disable = true)
     {
+        // @phpstan-ignore-next-line Return value is always $this(Encore\Admin\Widgets\Grid\Grid) at runtime
         return $this->option('show_tools', !$disable);
     }
 
@@ -69,6 +70,7 @@ trait HasTools
      */
     public function showTools()
     {
+        // @phpstan-ignore-next-line Return value is always bool at runtime
         return $this->option('show_tools');
     }
 }

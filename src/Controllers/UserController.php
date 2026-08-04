@@ -61,6 +61,7 @@ class UserController extends AdminController
     {
         $userModel = config('admin.database.users_model');
 
+        // @phpstan-ignore-next-line The value is always an object exposing findOrFail() at runtime
         $show = new Show($userModel::findOrFail($id));
 
         $show->field('id', 'ID');
@@ -95,7 +96,9 @@ class UserController extends AdminController
 
         $form->display('id', 'ID');
         $form->text('username', trans('admin.username'))
+            // @phpstan-ignore-next-line $userTable is always castable to string at runtime
             ->creationRules(['required', "unique:{$userTable}"])
+            // @phpstan-ignore-next-line $userTable is always castable to string at runtime
             ->updateRules(['required', "unique:{$userTable},username,{{id}}"]);
 
         $form->text('name', trans('admin.name'))->rules('required');
@@ -108,7 +111,9 @@ class UserController extends AdminController
 
         $form->ignore(['password_confirmation']);
 
+        // @phpstan-ignore-next-line The value is always an object exposing all() at runtime
         $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));
+        // @phpstan-ignore-next-line The value is always an object exposing all() at runtime
         $form->multipleSelect('permissions', trans('admin.permissions'))->options($permissionModel::all()->pluck('name', 'id'));
 
         $form->display('created_at', trans('admin.created_at'));

@@ -67,6 +67,7 @@ class FormCommand extends GeneratorCommand
             return $namespace;
         }
 
+        // @phpstan-ignore-next-line $subject is always array|string at runtime
         return str_replace('Controllers', 'Forms', config('admin.route.namespace'));
     }
 

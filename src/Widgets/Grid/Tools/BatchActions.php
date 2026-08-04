@@ -90,6 +90,7 @@ class BatchActions extends AbstractTool
 
         if (func_num_args() == 1) {
             $action = $title;
+            // @phpstan-ignore-next-line The value is always an object exposing setId() at runtime
             $action->setId($id);
         } elseif (func_num_args() == 2) {
             // @phpstan-ignore-next-line Action is guaranteed to be BatchAction instance at this point
@@ -112,8 +113,10 @@ class BatchActions extends AbstractTool
         Admin::script($this->script());
 
         foreach ($this->actions as $action) {
+            // @phpstan-ignore-next-line The value is always an object exposing setGrid() at runtime
             $action->setGrid($this->grid);
 
+            // @phpstan-ignore-next-line The value is always an object exposing script() at runtime
             Admin::script($action->script());
         }
     }

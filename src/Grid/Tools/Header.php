@@ -59,6 +59,9 @@ class Header extends AbstractTool
             $content = $content->toHtml();
         }
 
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var string $content */
+
         return <<<HTML
     <div class="box-header with-border clearfix">
         {$content}

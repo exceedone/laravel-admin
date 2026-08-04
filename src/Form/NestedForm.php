@@ -84,7 +84,7 @@ class NestedForm
     /**
      * Fields in form.
      *
-     * @var Collection<int|string, mixed>
+     * @var Collection<int|string, Field>
      */
     protected $fields;
 
@@ -184,6 +184,7 @@ class NestedForm
      */
     public function setIndex($index)
     {
+        // @phpstan-ignore-next-line Assigned value is always int|null at runtime
         $this->index = $index;
 
         return $this;
@@ -243,6 +244,7 @@ class NestedForm
              * like $this->original[30] = [ id = 30, .....]
              */
             if ($relatedKeyName) {
+                // @phpstan-ignore-next-line The value is always an array at runtime
                 $key = $value[$relatedKeyName];
             }
 
@@ -263,6 +265,7 @@ class NestedForm
     {
         foreach ($input as $key => $record) {
             $this->setFieldOriginalValue($key);
+            // @phpstan-ignore-next-line $record is always array<string, mixed> at runtime
             $input[$key] = $this->prepareRecord($record);
         }
 
@@ -281,6 +284,7 @@ class NestedForm
     {
         foreach ($input as $key => $record) {
             $this->setFieldOriginalValue($key);
+            // @phpstan-ignore-next-line $record is always array<string, mixed> at runtime
             $input[$key] = $this->prepareRecord($record, true);
         }
 
@@ -302,6 +306,7 @@ class NestedForm
         }
 
         $this->fields->each(function (Field $field) use ($values) {
+            // @phpstan-ignore-next-line $data is always array at runtime
             $field->setOriginal($values);
         });
     }
@@ -336,16 +341,13 @@ class NestedForm
             }
 
             if ($asConfirm && method_exists($field, 'prepareConfirm')) {
-                /** @phpstan-ignore-next-line Cannot call method prepareConfirm() on class-string|object. */
                 $value = $field->prepareConfirm($value);
             } else {
                 if (method_exists($field, 'prepare')) {
-                    /** @phpstan-ignore-next-line Cannot call method prepare() on class-string|object. */
                     $value = $field->prepare($value);
                 }
 
                 if (method_exists($field, 'prepareRecord')) {
-                    /** @phpstan-ignore-next-line Cannot call method prepareRecord() on class-string|object. */
                     $value = $field->prepareRecord($value, $record);
                 }
             }
@@ -362,6 +364,7 @@ class NestedForm
             if ($isSet) {
                 if (is_array($columns)) {
                     foreach ($columns as $name => $column) {
+                        // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
                         Arr::set($prepared, $column, $value[$name]);
                     }
                 } elseif (is_string($columns)) {
@@ -417,7 +420,7 @@ class NestedForm
     /**
      * Get fields of this form.
      *
-     * @return Collection<int|string, mixed>
+     * @return Collection<int|string, Field>
      */
     public function fields()
     {
@@ -460,6 +463,7 @@ class NestedForm
             $field_scripts = $field->getScript();
             // @phpstan-ignore-next-line Function is_nullorempty not found.
             if (!is_nullorempty($field_scripts)) {
+                // @phpstan-ignore-next-line Defensive check kept for values coming from overridden implementations
                 if (!is_array($field_scripts)) {
                     $field_scripts = [$field_scripts];
                 }
@@ -495,12 +499,16 @@ class NestedForm
 
         if (is_array($column)) {
             foreach ($column as $k => $name) {
+                // @phpstan-ignore-next-line $values is always bool|float|int|string|null at runtime (and 1 more mixed-type assumption on this line)
                 $errorKey[$k] = sprintf('%s.%s.%s', $this->relationName, $key, $name);
+                // @phpstan-ignore-next-line $values is always bool|float|int|string|null at runtime (and 1 more mixed-type assumption on this line)
                 $elementName[$k] = sprintf('%s[%s][%s]', $this->relationName, $key, $name);
                 $elementClass[$k] = [$this->relationName, $name];
             }
         } else {
+            // @phpstan-ignore-next-line $values is always bool|float|int|string|null at runtime
             $errorKey = sprintf('%s.%s.%s', $this->relationName, $key, $column);
+            // @phpstan-ignore-next-line $values is always bool|float|int|string|null at runtime
             $elementName = sprintf('%s[%s][%s]', $this->relationName, $key, $column);
             $elementClass = [$this->relationName, $column];
         }

@@ -101,6 +101,7 @@ abstract class AbstractExporter implements ExporterInterface
             $scope = (clone $queryBuilder)
                 ->select([$keyName])
                 ->setEagerLoads([])
+                // @phpstan-ignore-next-line $perPage is always int at runtime
                 ->forPage($this->page, $perPage)->get();
 
             $queryBuilder->whereIn($keyName, $scope->pluck($keyName));

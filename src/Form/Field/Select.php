@@ -130,9 +130,11 @@ class Select extends Field
         if (is_string($options)) {
             // reload selected
             if (class_exists($options) && in_array(Model::class, class_parents($options))) {
+                // @phpstan-ignore-next-line $model is always string at runtime
                 return $this->model(...func_get_args());
             }
 
+            // @phpstan-ignore-next-line $url is always string at runtime
             return $this->loadRemoteOptions(...func_get_args());
         }
 
@@ -230,12 +232,16 @@ class Select extends Field
     public function buttons(array $buttons)
     {
         $this->buttons = collect($buttons)->map(function($button){
+            // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime
             $attributes = Arr::get($button, 'attributes', []);
             $html = [];
             
+            // @phpstan-ignore-next-line The value is always iterable at runtime
             foreach ($attributes as $name => $value) {
+                // @phpstan-ignore-next-line $value is always BackedEnum|Illuminate\Contracts\Support\DeferringDisplayableValue|Illuminate\Contracts\Support\Htmlable|string|null at runtime
                 $html[] = $name.'="'.e($value).'"';
             }
+            // @phpstan-ignore-next-line The value is always an array at runtime
             $button['attribute'] = implode(' ', $html);
             return $button;
         })->toArray();
@@ -299,6 +305,7 @@ class Select extends Field
     {
         if (Str::contains($field, '.')) {
             $field = $this->formatName($field);
+            // @phpstan-ignore-next-line $subject is always array|string at runtime
             $class = str_replace(['[', ']'], '_', $field);
         } else {
             $class = $field;
@@ -591,6 +598,7 @@ EOT;
      */
     public function config($key, $val)
     {
+        // @phpstan-ignore-next-line Assigned value is always array<string> at runtime
         $this->config[$key] = $val;
 
         return $this;

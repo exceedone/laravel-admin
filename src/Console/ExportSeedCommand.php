@@ -47,11 +47,16 @@ class ExportSeedCommand extends Command
             'TableRoleMenu'        => config('admin.database.role_menu_table'),
             'TableRolePermissions' => config('admin.database.role_permissions_table'),
 
+            // @phpstan-ignore-next-line $table is always string at runtime
             'ArrayMenu'       => $this->getTableDataArrayAsString(config('admin.database.menu_table'), $exceptFields),
+            // @phpstan-ignore-next-line $table is always string at runtime
             'ArrayPermission' => $this->getTableDataArrayAsString(config('admin.database.permissions_table'), $exceptFields),
+            // @phpstan-ignore-next-line $table is always string at runtime
             'ArrayRole'       => $this->getTableDataArrayAsString(config('admin.database.roles_table'), $exceptFields),
 
+            // @phpstan-ignore-next-line $table is always string at runtime
             'ArrayPivotRoleMenu'        => $this->getTableDataArrayAsString(config('admin.database.role_menu_table'), $exceptFields),
+            // @phpstan-ignore-next-line $table is always string at runtime
             'ArrayPivotRolePermissions' => $this->getTableDataArrayAsString(config('admin.database.role_permissions_table'), $exceptFields),
         ];
 
@@ -61,8 +66,11 @@ class ExportSeedCommand extends Command
                 'TableRoleUsers'        => config('admin.database.role_users_table'),
                 'TablePermissionsUsers' => config('admin.database.user_permissions_table'),
 
+                // @phpstan-ignore-next-line $table is always string at runtime
                 'ArrayUsers'                 => $this->getTableDataArrayAsString(config('admin.database.users_table'), $exceptFields),
+                // @phpstan-ignore-next-line $table is always string at runtime
                 'ArrayPivotRoleUsers'        => $this->getTableDataArrayAsString(config('admin.database.role_users_table'), $exceptFields),
+                // @phpstan-ignore-next-line $table is always string at runtime
                 'ArrayPivotPermissionsUsers' => $this->getTableDataArrayAsString(config('admin.database.user_permissions_table'), $exceptFields),
             ]);
         } else {
@@ -139,6 +147,7 @@ class ExportSeedCommand extends Command
                     $r[] = "$indent    "
                         /** @phpstan-ignore-next-line */
                         .($indexed ? '' : $this->varExport($key).' => ')
+                        // @phpstan-ignore-next-line $var is always array|bool|float|int|string at runtime
                         .$this->varExport($value, "{$indent}    ");
                 }
 

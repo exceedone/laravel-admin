@@ -57,6 +57,7 @@ class CsvExporter extends AbstractExporter
      */
     public function getHeaderRowFromRecords(Collection $records): array
     {
+        // @phpstan-ignore-next-line The value is always an object exposing toArray() at runtime
         $titles = collect(Arr::dot($records->first()->toArray()))->keys()->map(
             function ($key) {
                 $key = str_replace('.', ' ', $key);

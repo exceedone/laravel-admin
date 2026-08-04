@@ -47,12 +47,14 @@ class PermissionController extends AdminController
                 }
                 /** @phpstan-ignore-next-line Unable to resolve the template type TKey in call to function collect */
                 $method = collect($method)->map(function ($name) {
+                    // @phpstan-ignore-next-line $string is always string at runtime
                     return strtoupper($name);
                 })->map(function ($name) {
                     return "<span class='label label-primary'>{$name}</span>";
                 })->implode('&nbsp;');
 
                 if (!empty(config('admin.route.prefix'))) {
+                    // @phpstan-ignore-next-line $string is always string at runtime
                     $path = '/'.trim(config('admin.route.prefix'), '/').$path;
                 }
 
@@ -83,6 +85,7 @@ class PermissionController extends AdminController
     {
         $permissionModel = config('admin.database.permissions_model');
 
+        // @phpstan-ignore-next-line The value is always an object exposing findOrFail() at runtime
         $show = new Show($permissionModel::findOrFail($id));
 
         $show->field('id', 'ID');
@@ -100,12 +103,14 @@ class PermissionController extends AdminController
 
                 /** @phpstan-ignore-next-line Unable to resolve the template type TKey in call to function collect */
                 $method = collect($method)->map(function ($name) {
+                    // @phpstan-ignore-next-line $string is always string at runtime
                     return strtoupper($name);
                 })->map(function ($name) {
                     return "<span class='label label-primary'>{$name}</span>";
                 })->implode('&nbsp;');
 
                 if (!empty(config('admin.route.prefix'))) {
+                    // @phpstan-ignore-next-line $string is always string at runtime
                     $path = '/'.trim(config('admin.route.prefix'), '/').$path;
                 }
 
@@ -135,6 +140,7 @@ class PermissionController extends AdminController
         $form->text('slug', trans('admin.slug'))->rules('required');
         $form->text('name', trans('admin.name'))->rules('required');
 
+        // @phpstan-ignore-next-line The value is always an object exposing help() at runtime
         $form->multipleSelect('http_method', trans('admin.http.method'))
             ->options($this->getHttpMethodsOptions())
             ->help(trans('admin.all_methods_if_empty'));
@@ -155,6 +161,7 @@ class PermissionController extends AdminController
     {
         $model = config('admin.database.permissions_model');
 
+        // @phpstan-ignore-next-line The value is always a class exposing $httpMethods at runtime (and 1 more mixed-type assumption on this line)
         return array_combine($model::$httpMethods, $model::$httpMethods);
     }
 }

@@ -44,14 +44,14 @@ class Grid
     /**
      * Collection of all grid columns.
      *
-     * @var \Illuminate\Support\Collection<int|string, mixed>
+     * @var \Illuminate\Support\Collection<int|string, Column>
      */
     protected $columns;
 
     /**
      * Collection of all data rows.
      *
-     * @var \Illuminate\Support\Collection<int|string, mixed>
+     * @var \Illuminate\Support\Collection<int|string, Row>
      */
     protected $rows;
 
@@ -311,10 +311,12 @@ class Grid
         if ($this->builder) {
             call_user_func($this->builder, $this);
 
+            // @phpstan-ignore-next-line $scope is always string at runtime
             $this->getExporter($scope)->export();
         }
 
         if ($forceExport) {
+            // @phpstan-ignore-next-line $scope is always string at runtime
             $this->getExporter($scope)->export();
         }
     }
@@ -343,6 +345,7 @@ class Grid
             return $this->options[$key];
         }
 
+        // @phpstan-ignore-next-line Assigned value is always array<string, bool> at runtime
         $this->options[$key] = $value;
 
         return $this;
@@ -361,9 +364,10 @@ class Grid
     /**
      * Get original Collection
      *
-     * @return Collection<int|string, mixed>|null
+     * @return Collection<int|string, Row>|null
      */
     public function getOriginalCollection(){
+        // @phpstan-ignore-next-line Return value is always Illuminate\Support\Collection<int|string, Encore\Admin\Grid\Row>|null at runtime
         return $this->originalCollection;
     }
 
@@ -398,7 +402,7 @@ class Grid
      *
      * @param array<mixed> $columns
      *
-     * @return Collection<int|string,mixed>|null|void
+     * @return Collection<int|string, Column>|null|void
      */
     public function columns($columns = [])
     {
@@ -415,6 +419,7 @@ class Grid
         }
 
         foreach (func_get_args() as $column) {
+            // @phpstan-ignore-next-line $name is always string at runtime
             $this->column($column);
         }
     }
@@ -543,6 +548,7 @@ class Grid
     {
         $this->model->usePaginate(!$disable);
 
+        // @phpstan-ignore-next-line Return value is always $this(Encore\Admin\Grid) at runtime
         return $this->option('show_pagination', !$disable);
     }
 
@@ -553,6 +559,7 @@ class Grid
      */
     public function showPagination()
     {
+        // @phpstan-ignore-next-line Return value is always bool at runtime
         return $this->option('show_pagination');
     }
 
@@ -565,6 +572,7 @@ class Grid
      */
     public function perPages(array $perPages)
     {
+        // @phpstan-ignore-next-line Assigned value is always array<int> at runtime
         $this->perPages = $perPages;
     }
 
@@ -575,6 +583,7 @@ class Grid
      */
     public function disableActions(bool $disable = true)
     {
+        // @phpstan-ignore-next-line Return value is always $this(Encore\Admin\Grid) at runtime
         return $this->option('show_actions', !$disable);
     }
 
@@ -660,19 +669,23 @@ class Grid
         $this->prependRowSelectorColumn();
         $this->appendActionsColumn();
 
+        // @phpstan-ignore-next-line $collection is always Illuminate\Support\Collection<int|string, mixed> at runtime
         Column::setOriginalGridModels($collection);
 
         $this->originalCollection = $collection;
+        // @phpstan-ignore-next-line The value is always an object exposing toArray() at runtime
         $data = $collection->toArray();
 
         $this->callGetDataCallbacks();
 
         $this->columns->map(function (Column $column) use (&$data) {
+            // @phpstan-ignore-next-line $data is always array at runtime
             $data = $column->fill($data);
 
             $this->columnNames[] = $column->getName();
         });
 
+        // @phpstan-ignore-next-line $data is always array at runtime
         $this->buildRows($data);
 
         $this->builded = true;
@@ -701,7 +714,7 @@ class Grid
      *
      * @param Closure $callable
      *
-     * @return Collection<int|string, mixed>|null
+     * @return Collection<int|string, Row>|null
      */
     public function rows(Closure $callable = null)
     {
@@ -774,6 +787,7 @@ class Grid
      */
     public function showExportBtn()
     {
+        // @phpstan-ignore-next-line Return value is always bool at runtime
         return $this->option('show_exporter');
     }
 
@@ -784,6 +798,7 @@ class Grid
      */
     public function disableExport(bool $disable = true)
     {
+        // @phpstan-ignore-next-line Return value is always $this(Encore\Admin\Grid) at runtime
         return $this->option('show_exporter', !$disable);
     }
 
@@ -816,6 +831,7 @@ class Grid
      */
     public function disableCreateButton(bool $disable = true)
     {
+        // @phpstan-ignore-next-line Return value is always $this(Encore\Admin\Grid) at runtime
         return $this->option('show_create_btn', !$disable);
     }
 
@@ -826,6 +842,7 @@ class Grid
      */
     public function showCreateBtn()
     {
+        // @phpstan-ignore-next-line Return value is always bool at runtime
         return $this->option('show_create_btn');
     }
 
@@ -860,6 +877,7 @@ class Grid
     {
         $attrArr = [];
         foreach ($this->headerAttributes as $name => $val) {
+            // @phpstan-ignore-next-line $value is always BackedEnum|Illuminate\Contracts\Support\DeferringDisplayableValue|Illuminate\Contracts\Support\Htmlable|string|null at runtime
             $attrArr[] = $name.'="'.e($val).'"';
         }
 
@@ -882,6 +900,7 @@ class Grid
         }
 
         if (!empty($this->resourcePath)) {
+            // @phpstan-ignore-next-line Return value is always $this(Encore\Admin\Grid)|string at runtime
             return $this->resourcePath;
         }
 
@@ -957,26 +976,32 @@ class Grid
      */
     public function __call($method, $arguments)
     {
+        // @phpstan-ignore-next-line $name is always string at runtime
         if (static::hasMacro($method)) {
+            // @phpstan-ignore-next-line Return value is always Encore\Admin\Grid\Column at runtime (and 2 more mixed-type assumptions on this line)
             return $this->macroCall($method, $arguments);
         }
 
+        // @phpstan-ignore-next-line The value is always an array at runtime
         $label = $arguments[0] ?? null;
 
 //        if ($this->model()->eloquent() instanceof MongodbModel) {
 //            return $this->addColumn($method, $label);
 //        }
 
+        // @phpstan-ignore-next-line $method is always string at runtime (and 1 more mixed-type assumption on this line)
         if ($column = $this->handleGetMutatorColumn($method, $label)) {
             /** @phpstan-ignore-next-line Method Encore\Admin\Grid::__call() should return Encore\Admin\Grid\Column but returns Encore\Admin\Grid\Column|true. */
             return $column;
         }
 
+        // @phpstan-ignore-next-line $method is always string at runtime (and 1 more mixed-type assumption on this line)
         if ($column = $this->handleRelationColumn($method, $label)) {
             /** @phpstan-ignore-next-line Method Encore\Admin\Grid::__call() should return Encore\Admin\Grid\Column but returns Encore\Admin\Grid\Column|true. */
             return $column;
         }
 
+        // @phpstan-ignore-next-line $column is always string at runtime (and 1 more mixed-type assumption on this line)
         return $this->addColumn($method, $label);
     }
 

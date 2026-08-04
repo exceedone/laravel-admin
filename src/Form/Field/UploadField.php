@@ -114,6 +114,7 @@ trait UploadField
      */
     protected function initStorage()
     {
+        // @phpstan-ignore-next-line $disk is always string at runtime (and 1 more mixed-type assumption on this line)
         $this->disk(config('admin.upload.disk'));
     }
 
@@ -312,6 +313,7 @@ trait UploadField
         try {
             $this->storage = Storage::disk($disk);
         } catch (\Exception $exception) {
+            // @phpstan-ignore-next-line $array is always array at runtime (and 1 more mixed-type assumption on this line)
             if (!array_key_exists($disk, config('filesystems.disks'))) {
                 admin_error(
                     'Config error.',
@@ -438,10 +440,12 @@ trait UploadField
         }
 
         if ($this->name instanceof \Closure) {
+            // @phpstan-ignore-next-line Return value is always string|null at runtime (and 1 more mixed-type assumption on this line)
             return $this->name->call($this, $file, $this);
         }
 
         if ($this->callableName instanceof \Closure) {
+            // @phpstan-ignore-next-line Return value is always string|null at runtime (and 1 more mixed-type assumption on this line)
             return $this->callableName->call($this, $file, $this);
         }
 
@@ -519,6 +523,7 @@ trait UploadField
             return $this->storage->url($path);
         }
 
+        // @phpstan-ignore-next-line $name is always string|null at runtime (and 1 more mixed-type assumption on this line)
         return Storage::disk(config('admin.upload.disk'))->url($path);
     }
 

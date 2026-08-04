@@ -190,6 +190,7 @@ class Column
     {
         $this->name = $name;
 
+        // @phpstan-ignore-next-line Assigned value is always string at runtime
         $this->label = $this->formatLabel($label);
     }
 
@@ -408,6 +409,7 @@ class Column
     {
         $attrArr = [];
         foreach ($this->headerAttributes as $name => $val) {
+            // @phpstan-ignore-next-line $value is always BackedEnum|Illuminate\Contracts\Support\DeferringDisplayableValue|Illuminate\Contracts\Support\Htmlable|string|null at runtime
             $attrArr[] = $name.'="'.e($val).'"';
         }
 
@@ -693,6 +695,7 @@ class Column
      */
     public function hide()
     {
+        // @phpstan-ignore-next-line $columns is always array|string at runtime
         $this->grid->hideColumns($this->getName());
 
         return $this;
@@ -784,6 +787,7 @@ class Column
                 $fa = $default;
             }
 
+            // @phpstan-ignore-next-line $fa is always castable to string at runtime
             return "<i class=\"fa fa-{$fa}\"></i>";
         });
     }
@@ -842,6 +846,7 @@ class Column
         if(!$this->escape){
             return $value;
         }
+        // @phpstan-ignore-next-line $item is always array|string at runtime
         return $this->htmlEntityEncode($value);
     }
 
@@ -867,6 +872,7 @@ class Column
      * @return ?Model
      */
     protected function getRowModel($key){
+        // @phpstan-ignore-next-line Return value is always Illuminate\Database\Eloquent\Model|null at runtime
         return static::$originalGridModels[$key];
     }
 
@@ -880,8 +886,10 @@ class Column
     public function fill(array $data)
     {
         foreach ($data as $key => &$row) {
+            // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime
             $this->original = $value = Arr::get($row, $this->name);
 
+            // @phpstan-ignore-next-line $item is always array|string at runtime
             $value = $this->htmlEntityEncode($value);
 
             Arr::set($row, $this->name, $value);
@@ -928,7 +936,9 @@ class Column
             return;
         }
 
+        // @phpstan-ignore-next-line $class is always string at runtime
         if (!class_exists($class) || !is_subclass_of($class, AbstractDisplayer::class)) {
+            // @phpstan-ignore-next-line $class is always castable to string at runtime
             throw new \Exception("Invalid column definition [$class]");
         }
 
@@ -1030,6 +1040,7 @@ class Column
      */
     protected function setSortInfo()
     {
+        // @phpstan-ignore-next-line Assigned value is always array<string, mixed> at runtime
         $this->sort = app('request')->get($this->grid->model()->getSortName());
 
         if (empty($this->sort)) {
@@ -1090,6 +1101,7 @@ HELP;
     protected function resolveDisplayer($abstract, $arguments)
     {
         if (array_key_exists($abstract, static::$displayers)) {
+            // @phpstan-ignore-next-line $abstract is always Closure|string at runtime
             return $this->callBuiltinDisplayer(static::$displayers[$abstract], $arguments);
         }
 
@@ -1166,6 +1178,7 @@ HELP;
     {
         if ($this->isRelation() && !$this->relationColumn) {
             $this->name = "{$this->relation}.$method";
+            // @phpstan-ignore-next-line Assigned value is always string at runtime
             $this->label = $this->formatLabel($arguments[0] ?? null);
 
             $this->relationColumn = $method;

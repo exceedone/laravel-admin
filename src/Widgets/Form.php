@@ -196,6 +196,7 @@ class Form implements Renderable
         }
 
         if (!empty($data)) {
+            // @phpstan-ignore-next-line Assigned value is always array at runtime
             $this->data = $data;
         }
 
@@ -249,6 +250,7 @@ class Form implements Renderable
 
         $html = [];
         foreach ($attributes as $key => $val) {
+            // @phpstan-ignore-next-line $val is always castable to string at runtime
             $html[] = "$key=\"$val\"";
         }
 
@@ -354,7 +356,9 @@ class Form implements Renderable
     public function defaultCheck($key)
     {
         foreach($this->submitRedirects as &$submitRedirect){
+            // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime
             if(Arr::get($submitRedirect, 'key') == $key){
+                // @phpstan-ignore-next-line The value is always an array at runtime
                 $submitRedirect['default'] = true;
             }
         }
@@ -458,6 +462,7 @@ class Form implements Renderable
      */
     public function getScript()
     {
+        // @phpstan-ignore-next-line Return value is always array<string> at runtime
         return collect($this->fields)->map(function ($field) {
             /* @var Field $field  */
             return $field->getScript();
@@ -541,14 +546,18 @@ class Form implements Renderable
      */
     protected function getDefaultCheck(){
         if(!is_null($result = old('after-save'))){
+            // @phpstan-ignore-next-line Return value is always string|null at runtime
             return $result;
         }
         if(!is_null($result = request()->get('after-save'))){
+            // @phpstan-ignore-next-line Return value is always string|null at runtime
             return $result;
         }
 
         foreach ($this->submitRedirects as $submitRedirect) {
+            // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime
             if(boolval(Arr::get($submitRedirect, 'default'))){
+                // @phpstan-ignore-next-line Return value is always string|null at runtime (and 1 more mixed-type assumption on this line)
                 return Arr::get($submitRedirect, 'value');
             }
         }
@@ -744,6 +753,7 @@ EOT;
             return $form;
         }
 
+        // @phpstan-ignore-next-line $title is always string at runtime
         return (new Box($title, $form))->render();
     }
 

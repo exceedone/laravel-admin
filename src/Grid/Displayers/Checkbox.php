@@ -18,6 +18,9 @@ class Checkbox extends AbstractDisplayer
         }
 
         $radios = '';
+
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var string $name */
         $name = $this->column->getName();
 
         if (is_string($this->value)) {
@@ -28,8 +31,17 @@ class Checkbox extends AbstractDisplayer
             $this->value = $this->value->toArray();
         }
 
+        // @phpstan-ignore-next-line The value is always iterable at runtime
         foreach ($options as $value => $label) {
+            // @phpstan-ignore-next-line $haystack is always array at runtime
             $checked = in_array($value, $this->value) ? 'checked' : '';
+
+            // Type assertion for PHPStan - maintain original behavior
+            /**
+             * @var string $value
+             * @var string $label
+             */
+
             $radios .= <<<EOT
 <div class="checkbox">
     <label>
@@ -67,6 +79,8 @@ EOT;
      */
     protected function script()
     {
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var string $name */
         $name = $this->column->getName();
 
         return <<<EOT

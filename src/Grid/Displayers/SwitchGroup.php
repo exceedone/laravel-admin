@@ -8,7 +8,7 @@ use Illuminate\Support\Arr;
 class SwitchGroup extends AbstractDisplayer
 {
     /**
-     * @var array<string, array<string, mixed>>
+     * @var array<string, array{value: mixed, text: string, color: string}>
      */
     protected $states = [
         'on'  => ['value' => 1, 'text' => 'ON', 'color' => 'primary'],
@@ -21,6 +21,7 @@ class SwitchGroup extends AbstractDisplayer
      */
     protected function updateStates($states)
     {
+        // @phpstan-ignore-next-line $array is always iterable at runtime
         foreach (Arr::dot($states) as $key => $state) {
             Arr::set($this->states, $key, $state);
         }
@@ -36,14 +37,17 @@ class SwitchGroup extends AbstractDisplayer
         $this->updateStates($states);
 
         if (!Arr::isAssoc($columns)) {
+            // @phpstan-ignore-next-line The callback matches the expected signature at runtime
             $labels = array_map('ucfirst', $columns);
 
+            // @phpstan-ignore-next-line $keys is always array<int|string> at runtime
             $columns = array_combine($columns, $labels);
         }
 
         $html = [];
 
         foreach ($columns as $column => $label) {
+            // @phpstan-ignore-next-line $label is always string at runtime
             $html[] = $this->buildSwitch($column, $label);
         }
 

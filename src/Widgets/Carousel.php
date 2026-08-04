@@ -29,6 +29,7 @@ class Carousel extends Widget implements Renderable
      */
     public function __construct($items = [])
     {
+        // @phpstan-ignore-next-line Assigned value is always array at runtime
         $this->items = $items;
 
         $this->id('carousel-'.uniqid());

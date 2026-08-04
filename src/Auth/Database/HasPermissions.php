@@ -17,6 +17,7 @@ trait HasPermissions
      */
     public function allPermissions() : Collection
     {
+        // @phpstan-ignore-next-line $items is always Illuminate\Contracts\Support\Arrayable<TKey of (int|string), TValue>|iterable<TKey of (int|string), TValue> at runtime
         return $this->roles()->with('permissions')->get()->pluck('permissions')->flatten()->merge($this->permissions);
     }
 
@@ -34,6 +35,7 @@ trait HasPermissions
             return true;
         }
 
+        // @phpstan-ignore-next-line The value is always an object exposing pluck() at runtime
         if ($this->permissions->pluck('slug')->contains($ability)) {
             return true;
         }

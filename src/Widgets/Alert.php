@@ -40,6 +40,7 @@ class Alert extends Widget implements Renderable
      */
     public function __construct($content, $title = '', $style = 'danger')
     {
+        // @phpstan-ignore-next-line The value is always castable to string at runtime
         $this->content = (string) $content;
 
         $this->title = $title ?: trans('admin.alert');

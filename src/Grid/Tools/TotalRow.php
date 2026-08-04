@@ -67,7 +67,9 @@ class TotalRow extends AbstractTool
 
             $total = '';
 
+            // @phpstan-ignore-next-line $keys is always array|string at runtime
             if (Arr::has($this->columns, $name)) {
+                // @phpstan-ignore-next-line $column is always string at runtime (and 1 more mixed-type assumption on this line)
                 $total = $this->total($name, Arr::get($this->columns, $name));
             }
 

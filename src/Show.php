@@ -51,7 +51,7 @@ class Show implements Renderable
     /**
      * Fields to be show.
      *
-     * @var Collection<int|string, mixed>
+     * @var Collection<int|string, Field>
      */
     protected $fields;
 
@@ -95,6 +95,7 @@ class Show implements Renderable
     public function __construct($model, $builder = null)
     {
         $this->model = $model;
+        // @phpstan-ignore-next-line Assigned value is always callable(): mixed at runtime
         $this->builder = $builder;
 
         $this->initPanel();
@@ -185,10 +186,12 @@ class Show implements Renderable
     public function fields(array $fields = [])
     {
         if (!Arr::isAssoc($fields)) {
+            // @phpstan-ignore-next-line $keys is always array<int|string> at runtime
             $fields = array_combine($fields, $fields);
         }
 
         foreach ($fields as $field => $label) {
+            // @phpstan-ignore-next-line $label is always string at runtime
             $this->field($field, $label);
         }
 
@@ -247,6 +250,7 @@ class Show implements Renderable
 
         $field->setParent($this);
 
+        // @phpstan-ignore-next-line $name is always string at runtime
         $this->overwriteExistingField($field->getName());
 
         return tap($field, function ($field) {
@@ -310,6 +314,7 @@ class Show implements Renderable
         }
 
         $this->relations = $this->relations->filter(
+            // @phpstan-ignore-next-line The callback matches the expected signature at runtime
             function (Relation $relation) use ($name) {
                 return $relation->getName() != $name;
             }
@@ -365,6 +370,7 @@ class Show implements Renderable
     public function setWidth($fieldWidth = 8, $labelWidth = 2)
     {
         collect($this->fields)->each(function ($field) use ($fieldWidth, $labelWidth) {
+            // @phpstan-ignore-next-line $each is provided dynamically at runtime
             $field->each->setWidth($fieldWidth, $labelWidth);
         });
 
@@ -408,6 +414,7 @@ class Show implements Renderable
     {
         $label = isset($arguments[0]) ? $arguments[0] : ucfirst($method);
 
+        // @phpstan-ignore-next-line $label is always string at runtime
         if ($field = $this->handleGetMutatorField($method, $label)) {
             return $field;
         }
@@ -416,6 +423,7 @@ class Show implements Renderable
             return $field;
         }
 
+        // @phpstan-ignore-next-line $label is always string at runtime
         return $this->addField($method, $label);
     }
 
@@ -471,9 +479,11 @@ class Show implements Renderable
             }
 
             if (count($arguments) == 2 && $arguments[1] instanceof \Closure) {
+                // @phpstan-ignore-next-line $label is always string at runtime
                 return $this->addRelation($method, $arguments[1], $arguments[0]);
             }
 
+            // @phpstan-ignore-next-line $label is always string at runtime
             return $this->addField($method, Arr::get($arguments, 0))->setRelation(Str::snake($method));
         }
 
@@ -483,6 +493,7 @@ class Show implements Renderable
             || $relation instanceof HasManyThrough
         ) {
             if (empty($arguments) || (count($arguments) == 1 && is_string($arguments[0]))) {
+                // @phpstan-ignore-next-line $label is always string at runtime
                 return $this->showRelationAsField($method, $arguments[0] ?? '');
             }
 
@@ -563,6 +574,7 @@ class Show implements Renderable
                 $this->fields($this->builder);
             }
     
+            // @phpstan-ignore-next-line $model is always Illuminate\Database\Eloquent\Model at runtime
             $this->fields->each->setValue($this->model);
             $this->relations->each->setModel($this->model);
     

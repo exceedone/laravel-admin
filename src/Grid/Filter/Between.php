@@ -73,8 +73,10 @@ class Between extends AbstractFilter
             return;
         }
 
+        // @phpstan-ignore-next-line Assigned value is always array|string at runtime
         $this->value = Arr::get($inputs, $this->column);
 
+        // @phpstan-ignore-next-line $array is always array at runtime
         $value = array_filter($this->value, function ($val) {
             return $val !== '';
         });

@@ -38,13 +38,16 @@ class MenuController extends Controller
                     $permissionModel = config('admin.database.permissions_model');
                     $roleModel = config('admin.database.roles_model');
 
+                    // @phpstan-ignore-next-line The value is always an object exposing selectOptions() at runtime
                     $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions());
                     $form->text('title', trans('admin.title'))->rules('required');
                     $form->icon('icon', trans('admin.icon'))->default('fa-bars')->rules('required')->help($this->iconHelp());
                     $form->text('uri', trans('admin.uri'));
+                    // @phpstan-ignore-next-line The value is always an object exposing all() at runtime
                     $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));
                     /** @phpstan-ignore-next-line */
                     if ((new $menuModel())->withPermission()) {
+                        // @phpstan-ignore-next-line The value is always an object exposing pluck() at runtime
                         $form->select('permission', trans('admin.permission'))->options($permissionModel::pluck('name', 'slug'));
                     }
                     $form->hidden('_token')->default(csrf_token());
@@ -73,6 +76,7 @@ class MenuController extends Controller
     {
         $menuModel = config('admin.database.menu_model');
 
+        // @phpstan-ignore-next-line The value is always an object exposing tree() at runtime
         return $menuModel::tree(function (Tree $tree) {
             $tree->disableCreate();
 
@@ -127,14 +131,17 @@ class MenuController extends Controller
 
         $form->display('id', 'ID');
 
+        // @phpstan-ignore-next-line The value is always an object exposing selectOptions() at runtime
         $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions());
         $form->text('title', trans('admin.title'))->rules('required');
         $form->icon('icon', trans('admin.icon'))->default('fa-bars')->rules('required')->help($this->iconHelp());
         $form->text('uri', trans('admin.uri'));
+        // @phpstan-ignore-next-line The value is always an object exposing all() at runtime
         $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));
         /** @var Menu $menu */
         $menu = $form->model();
         if ($menu->withPermission()) {
+            // @phpstan-ignore-next-line The value is always an object exposing pluck() at runtime
             $form->select('permission', trans('admin.permission'))->options($permissionModel::pluck('name', 'slug'));
         }
 

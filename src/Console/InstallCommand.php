@@ -50,6 +50,7 @@ class InstallCommand extends Command
 
         $userModel = config('admin.database.users_model');
 
+        // @phpstan-ignore-next-line The value is always an object exposing count() at runtime
         if ($userModel::count() == 0) {
             $this->call('db:seed', ['--class' => \Encore\Admin\Auth\Database\AdminTablesSeeder::class]);
         }
@@ -62,9 +63,12 @@ class InstallCommand extends Command
      */
     protected function initAdminDirectory()
     {
+        // @phpstan-ignore-next-line Assigned value is always string at runtime
         $this->directory = config('admin.directory');
 
+        // @phpstan-ignore-next-line $filename is always string at runtime
         if (is_dir($this->directory)) {
+            // @phpstan-ignore-next-line $this->directory is always castable to string at runtime
             $this->line("<error>{$this->directory} directory already exists !</error> ");
 
             return;
@@ -96,6 +100,7 @@ class InstallCommand extends Command
         /** @phpstan-ignore-next-line */
         $this->laravel['files']->put(
             $homeController,
+            // @phpstan-ignore-next-line $replace is always array|string at runtime
             str_replace('DummyNamespace', config('admin.route.namespace'), $contents)
         );
         $this->line('<info>HomeController file was created:</info> '.str_replace(base_path(), '', $homeController));
@@ -114,6 +119,7 @@ class InstallCommand extends Command
         /** @phpstan-ignore-next-line */
         $this->laravel['files']->put(
             $authController,
+            // @phpstan-ignore-next-line $replace is always array|string at runtime
             str_replace('DummyNamespace', config('admin.route.namespace'), $contents)
         );
         $this->line('<info>AuthController file was created:</info> '.str_replace(base_path(), '', $authController));
@@ -132,6 +138,7 @@ class InstallCommand extends Command
         /** @phpstan-ignore-next-line */
         $this->laravel['files']->put(
             $exampleController,
+            // @phpstan-ignore-next-line $replace is always array|string at runtime
             str_replace('DummyNamespace', config('admin.route.namespace'), $contents)
         );
         $this->line('<info>ExampleController file was created:</info> '.str_replace(base_path(), '', $exampleController));

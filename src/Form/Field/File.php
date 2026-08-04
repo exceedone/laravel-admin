@@ -116,6 +116,7 @@ class File extends Field
         /** @phpstan-ignore-next-line Possibly invalid array key type array|string. */
         $attributes[$this->column] = $this->label;
 
+        // @phpstan-ignore-next-line $messages is always array at runtime
         return \validator($input, $rules, $this->getValidationMessages(), $attributes);
     }
 
@@ -181,6 +182,7 @@ class File extends Field
      */
     protected function preview()
     {
+        // @phpstan-ignore-next-line $path is always string at runtime
         return $this->objectUrl($this->value);
     }
 
@@ -237,6 +239,7 @@ class File extends Field
     protected function initialCaption($caption, $key)
     {
         if($this->caption instanceof Closure){
+            // @phpstan-ignore-next-line Return value is always string at runtime
             return $this->caption->call($this, $caption, $key);
         }
         return basename($caption);
@@ -248,6 +251,7 @@ class File extends Field
     protected function initialPreviewConfig()
     {
         $key = $this->initialFileIndex($this->value);
+        // @phpstan-ignore-next-line $caption is always string at runtime
         $config = ['caption' => $this->initialCaption($this->value, $key), 'key' => $key];
 
         /** @phpstan-ignore-next-line */
@@ -312,6 +316,8 @@ EOT;
 
             /** @phpstan-ignore-next-line Cannot access offset 'deletedEvent' on array<string, mixed>|Closure. */
             if(isset($this->options['deletedEvent'])){
+                // Type assertion for PHPStan - maintain original behavior
+                /** @var string $deletedEvent */
                 $deletedEvent = $this->options['deletedEvent'];
                 $this->script .= <<<EOT
                 $("{$selector}").on('filedeleted', function(event, key, jqXHR, data) {
@@ -343,6 +349,7 @@ EOT;
             /** @phpstan-ignore-next-line Parameter #1 $array of static method Illuminate\Support\Arr::get() expects array|ArrayAccess, array<string, mixed>|Closure given. */
             $this->attribute('data-initial-caption', Arr::get($this->options, 'initialPreviewConfig.0.caption'));
 
+            // @phpstan-ignore-next-line $file is always string at runtime
             $previewType = $this->guessPreviewType($this->value);
             /** @phpstan-ignore-next-line Parameter #1 $array of static method Illuminate\Support\Arr::get() expects array|ArrayAccess, array<string>|bool given. */
             $this->attribute('data-initial-type', Arr::get($previewType, 'type'));

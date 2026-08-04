@@ -19,9 +19,11 @@ class Badge extends AbstractDisplayer
 
         return collect((array) $this->value)->map(function ($name) use ($style) {
             if (is_array($style)) {
+                // @phpstan-ignore-next-line $key is always int|string|null at runtime
                 $style = Arr::get($style, $this->getColumn()->getOriginal(), 'red');
             }
 
+            // @phpstan-ignore-next-line $name is always castable to string at runtime (and 1 more mixed-type assumption on this line)
             return "<span class='badge bg-{$style}'>$name</span>";
         })->implode('&nbsp;');
     }

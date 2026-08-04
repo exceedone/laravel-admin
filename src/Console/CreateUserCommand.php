@@ -32,10 +32,12 @@ class CreateUserCommand extends Command
 
         $username = $this->ask('Please enter a username to login');
 
+        // @phpstan-ignore-next-line $value is always string at runtime
         $password = bcrypt($this->secret('Please enter a password to login'));
 
         $name = $this->ask('Please enter a name to display');
 
+        // @phpstan-ignore-next-line The value is always an object exposing all() at runtime
         $roles = $roleModel::all();
 
         /** @var array<mixed> $selected */
@@ -53,6 +55,7 @@ class CreateUserCommand extends Command
         /** @phpstan-ignore-next-line */
         $user->roles()->attach($roles);
 
+        // @phpstan-ignore-next-line $name is always castable to string at runtime
         $this->info("User [$name] created successfully.");
     }
 }

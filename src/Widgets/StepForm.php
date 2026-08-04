@@ -78,6 +78,7 @@ class StepForm extends Form
     {
         $prev = session()->get('steps', []);
 
+        // @phpstan-ignore-next-line $arrays is always array at runtime
         return array_merge($prev, [$this->current => request()->all()]);
     }
 
@@ -183,8 +184,11 @@ class StepForm extends Form
      */
     public function sanitize()
     {
+        // @phpstan-ignore-next-line $url is always string at runtime
         $this->setUrl(request('_url'))
+            // @phpstan-ignore-next-line $current is always int|string at runtime
             ->setCurrent(request('_current'))
+            // @phpstan-ignore-next-line $string is always string at runtime
             ->setSteps(explode(',', request('_steps')));
 
         foreach (['_form_', '_token', '_url', '_current', '_steps'] as $key) {

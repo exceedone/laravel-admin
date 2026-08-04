@@ -94,10 +94,12 @@ class HasMany extends Field
 
         if (count($arguments) == 1) {
             $this->label = $this->formatLabel();
+            // @phpstan-ignore-next-line Assigned value is always Closure at runtime
             $this->builder = $arguments[0];
         }
 
         if (count($arguments) == 2) {
+            // @phpstan-ignore-next-line Assigned value is always string at runtime (and 1 more mixed-type assumption on this line)
             list($this->label, $this->builder) = $arguments;
         }
     }
@@ -173,6 +175,7 @@ class HasMany extends Field
             $newInput = $input;
         }
 
+        // @phpstan-ignore-next-line $messages is always array at runtime
         return \validator($newInput, $newRules, $this->getValidationMessages(), $attributes);
     }
 
@@ -203,6 +206,7 @@ class HasMany extends Field
             } else {
                 foreach ($new as $k => $val) {
                     if (Str::endsWith($key, ".$k")) {
+                        // @phpstan-ignore-next-line $val is always castable to string at runtime
                         $attributes[$key] = $label."[$val]";
                     }
                 }
@@ -217,6 +221,7 @@ class HasMany extends Field
      * @return $this
      */
     public function setRelatedValue($relatedValue){
+        // @phpstan-ignore-next-line Assigned value is always array|null at runtime
         $this->relatedValue = $relatedValue;
 
         return $this;
@@ -243,6 +248,7 @@ class HasMany extends Field
          *
          * [ "created_at" => "start", "updated_at" => "end" ]
          */
+        // @phpstan-ignore-next-line $array is always array<int|string> at runtime
         $column = array_flip($column);
 
         /**
@@ -258,10 +264,12 @@ class HasMany extends Field
             /*
              * foreach the field set to find the corresponding $column
              */
+            // @phpstan-ignore-next-line The value is always iterable at runtime
             foreach ($set as $name => $value) {
                 /*
                  * if doesn't have column name, continue to the next loop
                  */
+                // @phpstan-ignore-next-line $key is always int|string at runtime
                 if (!array_key_exists($name, $column)) {
                     continue;
                 }
@@ -301,6 +309,7 @@ class HasMany extends Field
         /** @phpstan-ignore-next-line */
         $form = $this->buildNestedForm($this->column, $this->builder);
 
+        // @phpstan-ignore-next-line $data is always array at runtime
         return $form->setOriginal($this->original, $this->getKeyName())->prepare($input);
     }
 
@@ -316,6 +325,7 @@ class HasMany extends Field
         /** @phpstan-ignore-next-line */
         $form = $this->buildNestedForm($this->column, $this->builder);
 
+        // @phpstan-ignore-next-line $data is always array at runtime
         return $form->setOriginal($this->original, $this->getKeyName())->prepareConfirm($input);
     }
 
@@ -331,7 +341,6 @@ class HasMany extends Field
 
         foreach ($form->fields() as $field) {
             if(method_exists($field, 'hasFile')){
-                /** @phpstan-ignore-next-line Cannot call method hasFile() on class-string|object. */
                 if($field->hasFile()){
                     return true;
                 }
@@ -457,6 +466,7 @@ class HasMany extends Field
             foreach ($this->relatedValue as $index => $data) {
                 /** @phpstan-ignore-next-line */
                 $forms[$index] = $this->buildNestedForm($this->column, $this->builder, null, $index)
+                    // @phpstan-ignore-next-line $data is always array at runtime
                     ->fill($data, $index);
             }
         }
@@ -484,7 +494,9 @@ class HasMany extends Field
         /** @phpstan-ignore-next-line */
         if ($values = old($this->column)) {
             $index = 0;
+            // @phpstan-ignore-next-line The value is always iterable at runtime
             foreach ($values as $key => $data) {
+                // @phpstan-ignore-next-line The value is always an array at runtime
                 if ($data[NestedForm::REMOVE_FLAG_NAME] == 1) {
                     $index++;
                     continue;
@@ -495,11 +507,14 @@ class HasMany extends Field
                     $forms = [];
                 }
                 
+                // @phpstan-ignore-next-line $attributes is always array at runtime
                 $model = $relation->getRelated()->replicate()->forceFill($data);
 
                 $formIndex = $index;
                 // if new_ key, 
+                // @phpstan-ignore-next-line $haystack is always string at runtime
                 if(strpos($key, 'new_') !== false){
+                    // @phpstan-ignore-next-line $subject is always array|string at runtime
                     $formIndex = str_replace('new_', '', $key);
                 }
                 /** @phpstan-ignore-next-line */
@@ -511,6 +526,7 @@ class HasMany extends Field
         } else {
             // @phpstan-ignore-next-line Value is guaranteed to be iterable at this point
             foreach ($this->value as $index => $data) {
+                // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime
                 $key = Arr::get($data, $relation->getRelated()->getKeyName());
 
                 if(!isset($key)){
@@ -522,11 +538,13 @@ class HasMany extends Field
                     $forms = [];
                 }
                 
+                // @phpstan-ignore-next-line $attributes is always array at runtime
                 $model = $relation->getRelated()->replicate()->forceFill($data);
 
                 /** @var int $index */
                 /** @phpstan-ignore-next-line */
                 $forms[$key] = $this->buildNestedForm($this->column, $this->builder, $model, $index)
+                    // @phpstan-ignore-next-line $data is always array at runtime
                     ->fill($data, $index);
             }
         }

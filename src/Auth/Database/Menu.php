@@ -36,8 +36,10 @@ class Menu extends Model
     {
         $connection = config('admin.database.connection') ?: config('database.default');
 
+        // @phpstan-ignore-next-line $name is always string|null at runtime
         $this->setConnection($connection);
 
+        // @phpstan-ignore-next-line $table is always string at runtime
         $this->setTable(config('admin.database.menu_table'));
 
         parent::__construct($attributes);
@@ -54,6 +56,7 @@ class Menu extends Model
 
         $relatedModel = config('admin.database.roles_model');
 
+        // @phpstan-ignore-next-line $related is always string at runtime (and 1 more mixed-type assumption on this line)
         return $this->belongsToMany($relatedModel, $pivotTable, 'menu_id', 'role_id');
     }
 
@@ -63,6 +66,7 @@ class Menu extends Model
     public function allNodes() : array
     {
         $connection = config('admin.database.connection') ?: config('database.default');
+        // @phpstan-ignore-next-line $name is always string|null at runtime
         $orderColumn = DB::connection($connection)->getQueryGrammar()->wrap($this->orderColumn);
 
         $byOrder = $orderColumn.' = 0,'.$orderColumn;

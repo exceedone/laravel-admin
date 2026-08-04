@@ -30,12 +30,14 @@ class LogController extends AdminController
         $grid->column('method')->display(function ($method) {
             $color = Arr::get(OperationLog::$methodColors, $method, 'grey');
 
+            // @phpstan-ignore-next-line $color is always castable to string at runtime
             return "<span class=\"badge bg-$color\">$method</span>";
         });
         $grid->column('path')->label('info');
         $grid->column('ip')->label('primary');
         $grid->column('input')->display(function ($input) {
             $input = json_decode($input, true);
+            // @phpstan-ignore-next-line $array is always array at runtime
             $input = Arr::except($input, ['_pjax', '_token', '_method', '_previous_']);
             if (empty($input)) {
                 return '<code>{}</code>';
@@ -56,6 +58,7 @@ class LogController extends AdminController
         $grid->filter(function (Grid\Filter $filter) {
             $userModel = config('admin.database.users_model');
 
+            // @phpstan-ignore-next-line The value is always an object exposing all() at runtime
             $filter->equal('user_id', 'User')->select($userModel::all()->pluck('name', 'id'));
             $filter->equal('method')->select(array_combine(OperationLog::$methods, OperationLog::$methods));
             $filter->like('path');

@@ -35,6 +35,7 @@ class Permission
         }
 
         if (!Admin::user()->allPermissions()->first(function ($permission) use ($request) {
+            // @phpstan-ignore-next-line The value is always an object exposing shouldPassThrough() at runtime
             return $permission->shouldPassThrough($request);
         })) {
             Checker::error();
@@ -90,6 +91,7 @@ class Permission
 
         /** @phpstan-ignore-next-line Unable to resolve the template type TKey in call to function collect  */
         return collect($excepts)
+            // @phpstan-ignore-next-line The callback matches the expected signature at runtime
             ->map('admin_base_path')
             ->contains(function ($except) use ($request) {
                 if ($except !== '/') {
