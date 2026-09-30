@@ -87,6 +87,11 @@ class Form implements Renderable
     const REMOVE_FLAG_NAME = '_remove_';
 
     /**
+     * Input keys not to flash to the session when redirecting with input.
+     */
+    const DONT_FLASH_INPUT_KEYS = ['password', 'password_confirmation', 'current_password'];
+
+    /**
      * Eloquent model of the form.
      *
      * @var Model|null
@@ -451,6 +456,17 @@ class Form implements Renderable
     }
 
     /**
+     * Get request input to flash to the session when redirecting back. Passwords are removed.
+     * Same input as withInput() flashes: input(), not all(), so that empty file inputs are not flashed as null.
+     *
+     * @return array<mixed>
+     */
+    protected function getFlashInput()
+    {
+        return Arr::except(\request()->input(), static::DONT_FLASH_INPUT_KEYS);
+    }
+
+    /**
      * Store a new record.
      * @param null|mixed $data
      *
@@ -464,7 +480,7 @@ class Form implements Renderable
 
         // Handle validation errors.
         if ($validationMessages = $this->validationMessages($data)) {
-            return back()->withInput()->withErrors($validationMessages);
+            return back()->withInput($this->getFlashInput())->withErrors($validationMessages);
         }
 
         if (($response = $this->prepare($data)) instanceof Response) {
@@ -654,7 +670,7 @@ class Form implements Renderable
         // Handle validation errors.
         if ($validationMessages = $this->validationMessages($data)) {
             if (!$isEditable) {
-                return back()->withInput()->withErrors($validationMessages);
+                return back()->withInput($this->getFlashInput())->withErrors($validationMessages);
             }
 
             return response()->json(['errors' => Arr::dot($validationMessages->getMessages())], 422);
@@ -758,7 +774,7 @@ class Form implements Renderable
         // Handle validation errors.
         if ($validationMessages = $this->validationMessages($data)) {
             if (!$isEditable) {
-                return back()->withInput()->withErrors($validationMessages);
+                return back()->withInput($this->getFlashInput())->withErrors($validationMessages);
             }
 
             return response()->json(['errors' => Arr::dot($validationMessages->getMessages())], 422);
@@ -1596,7 +1612,7 @@ class Form implements Renderable
     {
         $message = $this->validationMessages($input);
         if($message !== false){
-            return back()->withInput()->withErrors($message);
+            return back()->withInput($this->getFlashInput())->withErrors($message);
         }
         return true;
     }
