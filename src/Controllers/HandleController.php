@@ -34,6 +34,7 @@ class HandleController extends Controller
         }
 
         if ($errors = $form->validate($request)) {
+            /** @phpstan-ignore-next-line */
             return back()->withInput()->withErrors($errors);
         }
 

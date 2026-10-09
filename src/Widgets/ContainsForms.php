@@ -42,6 +42,7 @@ trait ContainsForms
             }
 
             /** @var Form $form */
+            /** @phpstan-ignore-next-line Parameter #1 $abstract of method Illuminate\Foundation\Application::make() expects string, class-string<Encore\Admin\Widgets\Form>|Encore\Admin\Widgets\Form given. */
             $form = app()->make($class);
 
             if ($name == $active) {

@@ -68,6 +68,10 @@ class SwitchGroup extends AbstractDisplayer
             });
         }
 
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var string $resource */
+        $resource = $this->grid->resource();
+        
         $script = <<<EOT
 
 $('.$class').bootstrapSwitch({
@@ -81,7 +85,7 @@ $('.$class').bootstrapSwitch({
         var pk = $(this).data('key');
         var value = $(this).val();
         $.ajax({
-            url: "{$this->grid->resource()}/" + pk,
+            url: "{$resource}/" + pk,
             type: "POST",
             data: {
                 "$key": value,

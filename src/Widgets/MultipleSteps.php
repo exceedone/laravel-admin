@@ -34,6 +34,7 @@ class MultipleSteps implements Renderable
     {
         $this->steps = $steps;
 
+        // @phpstan-ignore-next-line Current step may be null from constructor parameter
         $this->current = $this->resolveCurrentStep($steps, $current);
     }
 

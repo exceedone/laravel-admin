@@ -28,8 +28,9 @@ class MultipleSelect extends Select
             return $this->otherKey;
         }
 
+        // @phpstan-ignore-next-line Form and Model are guaranteed to be set at this point
         if (is_callable([$this->form->model(), $this->column]) &&
-            ($relation = $this->form->model()->{$this->column}()) instanceof BelongsToMany
+            ($relation = $this->form->model()->{$this->column}()) instanceof BelongsToMany // @phpstan-ignore-line Form is guaranteed to be set
         ) {
             /* @var BelongsToMany $relation */
             $fullKey = $relation->getQualifiedRelatedPivotKeyName();
@@ -48,6 +49,7 @@ class MultipleSelect extends Select
     {
         $this->data = $data;
         
+        /** @phpstan-ignore-next-line Parameter #2 $key of static method Illuminate\Support\Arr::get() expects int|string|null, array|string given. */
         $relations = Arr::get($data, $this->column);
 
         if (is_string($relations)) {
@@ -80,6 +82,7 @@ class MultipleSelect extends Select
      */
     public function setOriginal($data)
     {
+        /** @phpstan-ignore-next-line Parameter #2 $key of static method Illuminate\Support\Arr::get() expects int|string|null, array|string given. */
         $relations = Arr::get($data, $this->column);
 
         if (is_string($relations)) {
@@ -116,8 +119,10 @@ class MultipleSelect extends Select
         $rules = parent::getRules();
 
         // if contains required rule, set select option rule
+        /** @phpstan-ignore-next-line Argument of an invalid type array|Closure|string supplied for foreach, only iterables are supported. */
         foreach($rules as $rule){
             if(is_string($rule) && $rule == 'required'){
+                /** @phpstan-ignore-next-line Cannot access an offset on array|Closure|string. */
                 $rules[] = new CheckboxRequiredRule;
             }
         }

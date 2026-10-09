@@ -47,10 +47,14 @@ trait ImageField
             $image = ImageManagerStatic::make($target);
 
             foreach ($this->interventionCalls as $call) {
-                call_user_func_array(
-                    [$image, $call['method']],
+                /** @var callable $callable */
+                $callable = [$image, $call['method']];
+                /** @var \Intervention\Image\Image $result */
+                $result = call_user_func_array(
+                    $callable,
                     $call['arguments']
-                )->save($target);
+                );
+                $result->save($target);
             }
         }
 
@@ -111,6 +115,7 @@ trait ImageField
                 }
             }
         } elseif (func_num_args() == 3) {
+            /** @phpstan-ignore-next-line Possibly invalid array key type array|string. */
             $this->thumbnails[$name] = [$width, $height];
         }
 
@@ -138,7 +143,9 @@ trait ImageField
             // We merge original name + thumbnail name + extension
             $path = $path.'-'.$name.'.'.$ext;
 
+            /** @phpstan-ignore-next-line Cannot call method exists() on Illuminate\Filesystem\FilesystemAdapter|string. */
             if ($this->storage->exists($path)) {
+                /** @phpstan-ignore-next-line Cannot call method delete() on Illuminate\Filesystem\FilesystemAdapter|string. */
                 $this->storage->delete($path);
             }
         }
@@ -172,8 +179,10 @@ trait ImageField
             })->resizeCanvas($size[0], $size[1], 'center', false, '#ffffff');
 
             if (!is_null($this->storagePermission)) {
+                /** @phpstan-ignore-next-line Cannot call method put() on Illuminate\Filesystem\FilesystemAdapter|string. */
                 $this->storage->put("{$this->getDirectory()}/{$path}", $image->encode(), $this->storagePermission);
             } else {
+                /** @phpstan-ignore-next-line Cannot call method put() on Illuminate\Filesystem\FilesystemAdapter|string. */
                 $this->storage->put("{$this->getDirectory()}/{$path}", $image->encode());
             }
         }

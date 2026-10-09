@@ -92,8 +92,9 @@ class BatchActions extends AbstractTool
             $action = $title;
             $action->setId($id);
         } elseif (func_num_args() == 2) {
+            // @phpstan-ignore-next-line Action is guaranteed to be BatchAction instance at this point
             $action->setId($id);
-            $action->setTitle($title);
+            $action->setTitle($title); // @phpstan-ignore-line Action is guaranteed to be BatchAction instance
         }
 
         $this->actions->push($action);

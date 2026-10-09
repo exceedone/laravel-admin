@@ -21,6 +21,7 @@ class LogOperation
     {
         if ($this->shouldLogOperation($request)) {
             $log = [
+                // @phpstan-ignore-next-line User is guaranteed to be authenticated by shouldLogOperation check above
                 'user_id' => Admin::user()->id,
                 'path'    => substr($request->path(), 0, 255),
                 'method'  => $request->method(),

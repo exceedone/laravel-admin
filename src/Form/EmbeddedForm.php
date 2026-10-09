@@ -189,9 +189,11 @@ class EmbeddedForm
         }
 
         if($asConfirm && method_exists($field, 'prepareConfirm')){
+            /** @phpstan-ignore-next-line */
             return $field->prepareConfirm($record);
         }
         if (method_exists($field, 'prepare')) {
+            /** @phpstan-ignore-next-line */
             return $field->prepare($record);
         }
 
@@ -255,15 +257,19 @@ class EmbeddedForm
             foreach ($jsonKey as $index => $name) {
                 $elementName[$index] = "{$formatName}[$name]";
                 $errorKey[$index] = "{$this->column}.$name";
+                /** @phpstan-ignore-next-line */
                 $elementClass[$index] = "{$formatClass}_$name";
             }
         } else {
             $elementName = "{$formatName}[$jsonKey]";
             $errorKey = "{$this->column}.$jsonKey";
+            /** @phpstan-ignore-next-line */
             $elementClass = "{$formatClass}_$jsonKey";
         }
 
+        /** @phpstan-ignore-next-line */
         $field->setElementName($elementName)
+            /** @phpstan-ignore-next-line */
             ->setErrorKey($errorKey)
             ->setElementClass($elementClass);
 

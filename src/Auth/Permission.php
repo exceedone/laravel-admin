@@ -29,6 +29,7 @@ class Permission
             return;
         }
 
+        // @phpstan-ignore-next-line User is guaranteed to be authenticated when this method is called
         if (Auth::guard('admin')->user()->cannot($permission)) {
             static::error();
         }

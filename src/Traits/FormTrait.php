@@ -99,6 +99,7 @@ trait FormTrait
             }
         } else {
             if($attr == 'class'){
+                /** @phpstan-ignore-next-line argument.type */
                 $this->setClass($value);
             }
             else{

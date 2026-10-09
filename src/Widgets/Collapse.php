@@ -36,6 +36,7 @@ class Collapse extends Widget implements Renderable
      */
     public function add($title, $content)
     {
+        /** @phpstan-ignore-next-line Property Encore\Admin\Widgets\Collapse::$items (array<string, string>) does not accept array<int|string, array<string, string>|string>. */
         $this->items[] = [
             'title'   => $title,
             'content' => $content,

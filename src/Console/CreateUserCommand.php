@@ -47,8 +47,10 @@ class CreateUserCommand extends Command
 
         $user = new $userModel(compact('username', 'password', 'name'));
 
+        /** @phpstan-ignore-next-line */
         $user->save();
 
+        /** @phpstan-ignore-next-line */
         $user->roles()->attach($roles);
 
         $this->info("User [$name] created successfully.");

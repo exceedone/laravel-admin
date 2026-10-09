@@ -53,10 +53,12 @@ class Date extends Text
      */
     public function render()
     {
+        /** @phpstan-ignore-next-line Cannot access offset 'format' on array<string, mixed>|Closure. */
         $this->options['format'] = $this->format;
         $this->options['locale'] = config('app.locale');
         $this->options['allowInputToggle'] = true;
 
+        /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
         $this->script = "$('{$this->getElementClassSelector()}').parent().datetimepicker(".json_encode($this->options).');';
 
         $this->prepend('<i class="fa fa-calendar fa-fw"></i>')

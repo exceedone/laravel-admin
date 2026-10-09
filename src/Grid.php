@@ -239,6 +239,7 @@ class Grid
      */
     public static function init(Closure $callback = null)
     {
+        // @phpstan-ignore-next-line Callback may be null but is handled during execution
         static::$initCallbacks[] = $callback;
     }
 
@@ -283,6 +284,7 @@ class Grid
      */
     public static function getDataCallback(Closure $callback = null)
     {
+        // @phpstan-ignore-next-line Callback may be null but is handled during execution
         static::$getDataCallbacks[] = $callback;
     }
 
@@ -376,6 +378,7 @@ class Grid
     public function column($name, $label = '')
     {
         if (Str::contains($name, '.')) {
+            /** @phpstan-ignore-next-line Method Encore\Admin\Grid::column() should return Encore\Admin\Grid\Column but returns $this(Encore\Admin\Grid)|Encore\Admin\Grid\Column. */
             return $this->addRelationColumn($name, $label);
         }
 
@@ -733,12 +736,14 @@ class Grid
      */
     public function getExportUrl($scope = 1, $args = null)
     {
+        /** @phpstan-ignore-next-line Parameter #1 $scope of static method Encore\Admin\Grid\Exporter::formatExportQuery() expects string, int|string given. */
         $input = array_merge(Request::all(), Exporter::formatExportQuery($scope, $args));
 
         if ($constraints = $this->model()->getConstraints()) {
             $input = array_merge($input, $constraints);
         }
 
+        /** @phpstan-ignore-next-line Parameter #1 $path of function url expects string|null, $this(Encore\Admin\Grid)|string given. */
         return url($this->resource()).'?'.http_build_query($input);
     }
 
@@ -756,6 +761,7 @@ class Grid
         }
 
         return sprintf('%s/create%s',
+            /** @phpstan-ignore-next-line Parameter #1 $path of function url expects string|null, $this(Encore\Admin\Grid)|string given. */
             url($this->resource()),
             $queryString ? ('?'.$queryString) : ''
         );
@@ -962,10 +968,12 @@ class Grid
 //        }
 
         if ($column = $this->handleGetMutatorColumn($method, $label)) {
+            /** @phpstan-ignore-next-line Method Encore\Admin\Grid::__call() should return Encore\Admin\Grid\Column but returns Encore\Admin\Grid\Column|true. */
             return $column;
         }
 
         if ($column = $this->handleRelationColumn($method, $label)) {
+            /** @phpstan-ignore-next-line Method Encore\Admin\Grid::__call() should return Encore\Admin\Grid\Column but returns Encore\Admin\Grid\Column|true. */
             return $column;
         }
 

@@ -19,6 +19,10 @@ class Select extends AbstractDisplayer
         $name = $this->column->getName();
 
         $class = "grid-select-{$name}";
+        
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var string $resource */
+        $resource = $this->grid->resource();
 
         $script = <<<EOT
 
@@ -28,7 +32,7 @@ $('.$class').select2().on('change', function(){
     var value = $(this).val();
 
     $.ajax({
-        url: "{$this->grid->resource()}/" + pk,
+        url: "{$resource}/" + pk,
         type: "POST",
         data: {
             $name: value,

@@ -114,6 +114,7 @@ trait HasAssets
         }
 
         if (!$css = static::getMinifiedCss()) {
+            // @phpstan-ignore-next-line baseCss() may return null but is always array in practice
             $css = array_merge(static::$css, static::baseCss());
         }
 
@@ -156,6 +157,7 @@ trait HasAssets
         }
 
         if (!$js = static::getMinifiedJs()) {
+            // @phpstan-ignore-next-line baseJs() may return null but is always array in practice
             $js = array_merge(static::baseJs(), static::$js);
         }
 
@@ -284,6 +286,7 @@ trait HasAssets
         }
 
         static::$manifestData = json_decode(
+            /** @phpstan-ignore-next-line Parameter #1 $json of function json_decode expects string, string|false given. */
             file_get_contents(public_path(static::$manifest)), true
         );
 

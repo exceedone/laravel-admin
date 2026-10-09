@@ -89,11 +89,13 @@ abstract class Extension
     {
         $class = get_called_class();
 
+        /** @phpstan-ignore-next-line Cannot access offset class-string<static(Encore\\Admin\\Extension)> on Encore\\Admin\\Extension. */
         if (!isset(self::$instance[$class]) || !self::$instance[$class] instanceof $class) {
             /** @phpstan-ignore-next-line https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static */
             self::$instance[$class] = new static();
         }
 
+        /** @phpstan-ignore-next-line */
         return static::$instance[$class];
     }
 
@@ -222,8 +224,10 @@ abstract class Extension
         $name = array_search(get_called_class(), Admin::$extensions);
 
         if (is_null($key)) {
+            /** @phpstan-ignore-next-line */
             $key = sprintf('admin.extensions.%s', strtolower($name));
         } else {
+            /** @phpstan-ignore-next-line */
             $key = sprintf('admin.extensions.%s.%s', strtolower($name), $key);
         }
 

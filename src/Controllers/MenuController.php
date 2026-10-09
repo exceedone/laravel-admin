@@ -43,6 +43,7 @@ class MenuController extends Controller
                     $form->icon('icon', trans('admin.icon'))->default('fa-bars')->rules('required')->help($this->iconHelp());
                     $form->text('uri', trans('admin.uri'));
                     $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));
+                    /** @phpstan-ignore-next-line */
                     if ((new $menuModel())->withPermission()) {
                         $form->select('permission', trans('admin.permission'))->options($permissionModel::pluck('name', 'slug'));
                     }

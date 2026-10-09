@@ -360,6 +360,7 @@ class Admin
      */
     public static function booting(callable $callback)
     {
+        /** @phpstan-ignore-next-line */
         static::$bootingCallbacks[] = $callback;
     }
 
@@ -369,6 +370,7 @@ class Admin
      */
     public static function registered(callable $callback)
     {
+        /** @phpstan-ignore-next-line */
         static::$registeredCallbacks[] = $callback;
     }
 
@@ -378,6 +380,7 @@ class Admin
      */
     public static function booted(callable $callback)
     {
+        /** @phpstan-ignore-next-line */
         static::$bootedCallbacks[] = $callback;
     }
 

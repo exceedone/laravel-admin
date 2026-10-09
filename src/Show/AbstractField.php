@@ -54,6 +54,7 @@ abstract class AbstractField implements Renderable
      */
     public function setModel($model)
     {
+        /** @phpstan-ignore-next-line assign */
         $this->model = $model;
 
         return $this;

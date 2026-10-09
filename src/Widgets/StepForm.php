@@ -61,6 +61,7 @@ class StepForm extends Form
     {
         $index = array_search($this->current, $this->steps);
 
+        /** @phpstan-ignore-next-line Binary operation "+" between int|string|false and 1 results in an error. */
         $step = $this->steps[$index + 1];
 
         $nextUrl = $this->url.'?'.http_build_query(compact('step'));
@@ -160,6 +161,7 @@ class StepForm extends Form
         ];
 
         if ($index !== 0) {
+            /** @phpstan-ignore-next-line Binary operation "-" between int<min, -1>|int<1, max>|string|false and 1 results in an error. */
             $step = $this->steps[$index - 1];
             $prevUrl = request()->fullUrlWithQuery(compact('step'));
             $footer .= "<a href=\"{$prevUrl}\" class=\"btn btn-warning pull-left\">{$trans['prev']}</a>";

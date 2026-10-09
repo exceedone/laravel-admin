@@ -17,10 +17,14 @@ class Number extends Text
     public function render()
     {
         $this->default($this->default);
-
+        
+        // Ensure selector is string for heredoc usage
+        $selector = $this->getElementClassSelector();
+        $selectorString = is_array($selector) ? implode(',', $selector) : (string) $selector;
+        
         $this->script = <<<EOT
 
-$('{$this->getElementClassSelector()}:not(.initialized)')
+$('{$selectorString}:not(.initialized)')
     .addClass('initialized')
     .bootstrapNumber({
         upClass: 'success',

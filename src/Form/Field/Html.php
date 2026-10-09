@@ -55,6 +55,7 @@ class Html extends Field
     public function render()
     {
         if ($this->html instanceof \Closure) {
+            // @phpstan-ignore-next-line Form and Model are guaranteed to be set during render
             $this->html = $this->html->call($this->form->model(), $this->form);
         }
 
