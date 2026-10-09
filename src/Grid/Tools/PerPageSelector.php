@@ -39,6 +39,7 @@ class PerPageSelector extends AbstractTool
     {
         $this->perPageName = $this->grid->model()->getPerPageName();
 
+        // @phpstan-ignore-next-line The value is always castable to int at runtime
         $this->perPage = (int) app('request')->input(
             $this->perPageName,
             $this->grid->perPage

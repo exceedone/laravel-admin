@@ -26,10 +26,12 @@ class Embeds extends Field
 
         if (count($arguments) == 1) {
             $this->label = $this->formatLabel();
+            // @phpstan-ignore-next-line Assigned value is always Closure at runtime
             $this->builder = $arguments[0];
         }
 
         if (count($arguments) == 2) {
+            // @phpstan-ignore-next-line Assigned value is always string at runtime (and 1 more mixed-type assumption on this line)
             list($this->label, $this->builder) = $arguments;
         }
     }
@@ -45,6 +47,7 @@ class Embeds extends Field
     {
         $form = $this->buildEmbeddedForm();
 
+        // @phpstan-ignore-next-line Return value is always array at runtime (and 1 more mixed-type assumption on this line)
         return $form->setOriginal($this->original)->prepare($input);
     }
 
@@ -59,6 +62,7 @@ class Embeds extends Field
     {
         $form = $this->buildEmbeddedForm();
 
+        // @phpstan-ignore-next-line Return value is always array at runtime (and 1 more mixed-type assumption on this line)
         return $form->setOriginal($this->original)->prepare($input, true);
     }
 
@@ -69,6 +73,7 @@ class Embeds extends Field
      */
     public function getValidator(array $input)
     {
+        /** @phpstan-ignore-next-line Parameter #1 $key of function array_key_exists expects int|string, array|string given. */
         if (!array_key_exists($this->column, $input)) {
             return false;
         }
@@ -107,11 +112,13 @@ class Embeds extends Field
              */
             if (is_array($column)) {
                 foreach ($column as $key => $name) {
+                    /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
                     $rules["{$this->column}.$name$key"] = $fieldRules;
                 }
 
                 $this->resetInputKey($input, $column);
             } else {
+                /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
                 $rules["{$this->column}.$column"] = $fieldRules;
             }
 
@@ -144,6 +151,7 @@ class Embeds extends Field
             return false;
         }
 
+        // @phpstan-ignore-next-line $messages is always array at runtime
         return \validator($input, $rules, $this->getValidationMessages(), $attributes);
     }
 
@@ -196,6 +204,7 @@ class Embeds extends Field
             } else {
                 foreach ($new as $k => $val) {
                     if (Str::endsWith($key, ".$k")) {
+                        // @phpstan-ignore-next-line $val is always castable to string at runtime
                         $attributes[$key] = $label."[$val]";
                     }
                 }
@@ -215,9 +224,12 @@ class Embeds extends Field
      */
     public function resetInputKey(array &$input, array $column)
     {
+        // @phpstan-ignore-next-line $array is always array<int|string> at runtime
         $column = array_flip($column);
 
+        /** @phpstan-ignore-next-line Possibly invalid array key type array|string. */
         foreach ($input[$this->column] as $key => $value) {
+            // @phpstan-ignore-next-line $key is always int|string at runtime
             if (!array_key_exists($key, $column)) {
                 continue;
             }
@@ -227,10 +239,12 @@ class Embeds extends Field
             /*
              * set new key
              */
+            /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
             Arr::set($input, "{$this->column}.$newKey", $value);
             /*
              * forget the old key and value
              */
+            /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
             Arr::forget($input, "{$this->column}.$key");
         }
     }
@@ -246,7 +260,9 @@ class Embeds extends Field
      */
     protected function getEmbeddedData()
     {
+        /** @phpstan-ignore-next-line Parameter #1 $key of function old expects string|null, array|string given. */
         if ($old = old($this->column)) {
+            // @phpstan-ignore-next-line Return value is always array at runtime
             return $old;
         }
 
@@ -255,6 +271,7 @@ class Embeds extends Field
         }
 
         if (is_string($this->value)) {
+            // @phpstan-ignore-next-line Return value is always array at runtime
             return json_decode($this->value, true);
         }
 
@@ -268,8 +285,10 @@ class Embeds extends Field
      */
     protected function buildEmbeddedForm()
     {
+        /** @phpstan-ignore-next-line Parameter #1 $column of class Encore\Admin\Form\EmbeddedForm constructor expects string, array|string given. */
         $form = new EmbeddedForm($this->column);
 
+        // @phpstan-ignore-next-line Form is guaranteed to be set when building embedded form
         $form->setParent($this->form);
 
         call_user_func($this->builder, $form);

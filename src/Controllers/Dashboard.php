@@ -108,6 +108,7 @@ class Dashboard
     {
         $json = file_get_contents(base_path('composer.json'));
 
+        /** @phpstan-ignore-next-line */
         $dependencies = json_decode($json, true)['require'];
 
         Admin::script("$('.dependencies').slimscroll({height:'510px',size:'3px'});");

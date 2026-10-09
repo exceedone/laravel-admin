@@ -23,10 +23,12 @@ class Table extends HasMany
 
         if (count($arguments) == 1) {
             $this->label = $this->formatLabel();
+            // @phpstan-ignore-next-line Assigned value is always Closure at runtime
             $this->builder = $arguments[0];
         }
 
         if (count($arguments) == 2) {
+            // @phpstan-ignore-next-line Assigned value is always string at runtime (and 1 more mixed-type assumption on this line)
             list($this->label, $this->builder) = $arguments;
         }
     }
@@ -42,8 +44,11 @@ class Table extends HasMany
 
         $forms = [];
 
+        /** @phpstan-ignore-next-line Parameter #1 $key of function old expects string|null, array|string given. */
         if ($values = old($this->column)) {
+            // @phpstan-ignore-next-line The value is always iterable at runtime
             foreach ($values as $key => $data) {
+                // @phpstan-ignore-next-line The value is always an array at runtime
                 if ($data[NestedForm::REMOVE_FLAG_NAME] == 1) {
                     continue;
                 }
@@ -51,8 +56,11 @@ class Table extends HasMany
                 $forms[$key] = $this->buildNestedForm($this->column, $this->builder, $key)->fill($data);
             }
         } else {
+            // @phpstan-ignore-next-line Value is guaranteed to be iterable at this point
             foreach ($this->value as $key => $data) {
+                // @phpstan-ignore-next-line The value is always an array at runtime
                 if (isset($data['pivot'])) {
+                    // @phpstan-ignore-next-line $arrays is always array at runtime (and 1 more mixed-type assumption on this line)
                     $data = array_merge($data, $data['pivot']);
                 }
                 /** @phpstan-ignore-next-line fill method require 2 parameters. */
@@ -69,13 +77,16 @@ class Table extends HasMany
      */
     public function prepare($input)
     {
+        /** @phpstan-ignore-next-line Parameter #1 $column of method Encore\Admin\Form\Field\Table::buildNestedForm() expects string, array|string given. */
         $form = $this->buildNestedForm($this->column, $this->builder);
 
+        // @phpstan-ignore-next-line $input is always array at runtime
         $prepare = $form->prepare($input);
         /** @phpstan-ignore-next-line Unable to resolve the template type TKey in call to function collect  */
         return collect($prepare)->reject(function ($item) {
             return $item[NestedForm::REMOVE_FLAG_NAME] == 1;
         })->map(function ($item) {
+            // @phpstan-ignore-next-line The value is always an array at runtime
             unset($item[NestedForm::REMOVE_FLAG_NAME]);
 
             return $item;

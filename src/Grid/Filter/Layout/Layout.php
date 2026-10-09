@@ -93,6 +93,7 @@ class Layout
      */
     public function removeDefaultIDFilter()
     {
+        // @phpstan-ignore-next-line The value is always an object exposing filters() at runtime
         $this->columns()
             ->first()
             ->filters()

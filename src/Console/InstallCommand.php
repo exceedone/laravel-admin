@@ -50,6 +50,7 @@ class InstallCommand extends Command
 
         $userModel = config('admin.database.users_model');
 
+        // @phpstan-ignore-next-line The value is always an object exposing count() at runtime
         if ($userModel::count() == 0) {
             $this->call('db:seed', ['--class' => \Encore\Admin\Auth\Database\AdminTablesSeeder::class]);
         }
@@ -62,9 +63,12 @@ class InstallCommand extends Command
      */
     protected function initAdminDirectory()
     {
+        // @phpstan-ignore-next-line Assigned value is always string at runtime
         $this->directory = config('admin.directory');
 
+        // @phpstan-ignore-next-line $filename is always string at runtime
         if (is_dir($this->directory)) {
+            // @phpstan-ignore-next-line $this->directory is always castable to string at runtime
             $this->line("<error>{$this->directory} directory already exists !</error> ");
 
             return;
@@ -93,8 +97,10 @@ class InstallCommand extends Command
         $homeController = $this->directory.'/Controllers/HomeController.php';
         $contents = $this->getStub('HomeController');
 
+        /** @phpstan-ignore-next-line */
         $this->laravel['files']->put(
             $homeController,
+            // @phpstan-ignore-next-line $replace is always array|string at runtime
             str_replace('DummyNamespace', config('admin.route.namespace'), $contents)
         );
         $this->line('<info>HomeController file was created:</info> '.str_replace(base_path(), '', $homeController));
@@ -110,8 +116,10 @@ class InstallCommand extends Command
         $authController = $this->directory.'/Controllers/AuthController.php';
         $contents = $this->getStub('AuthController');
 
+        /** @phpstan-ignore-next-line */
         $this->laravel['files']->put(
             $authController,
+            // @phpstan-ignore-next-line $replace is always array|string at runtime
             str_replace('DummyNamespace', config('admin.route.namespace'), $contents)
         );
         $this->line('<info>AuthController file was created:</info> '.str_replace(base_path(), '', $authController));
@@ -127,8 +135,10 @@ class InstallCommand extends Command
         $exampleController = $this->directory.'/Controllers/ExampleController.php';
         $contents = $this->getStub('ExampleController');
 
+        /** @phpstan-ignore-next-line */
         $this->laravel['files']->put(
             $exampleController,
+            // @phpstan-ignore-next-line $replace is always array|string at runtime
             str_replace('DummyNamespace', config('admin.route.namespace'), $contents)
         );
         $this->line('<info>ExampleController file was created:</info> '.str_replace(base_path(), '', $exampleController));
@@ -144,6 +154,7 @@ class InstallCommand extends Command
         $file = $this->directory.'/bootstrap.php';
 
         $contents = $this->getStub('bootstrap');
+        /** @phpstan-ignore-next-line */
         $this->laravel['files']->put($file, $contents);
         $this->line('<info>Bootstrap file was created:</info> '.str_replace(base_path(), '', $file));
     }
@@ -158,6 +169,7 @@ class InstallCommand extends Command
         $file = $this->directory.'/routes.php';
 
         $contents = $this->getStub('routes');
+        /** @phpstan-ignore-next-line */
         $this->laravel['files']->put($file, str_replace('DummyNamespace', config('admin.route.namespace'), $contents));
         $this->line('<info>Routes file was created:</info> '.str_replace(base_path(), '', $file));
     }
@@ -171,6 +183,7 @@ class InstallCommand extends Command
      */
     protected function getStub($name)
     {
+        /** @phpstan-ignore-next-line */
         return $this->laravel['files']->get(__DIR__."/stubs/$name.stub");
     }
 
@@ -183,6 +196,7 @@ class InstallCommand extends Command
      */
     protected function makeDir($path = '')
     {
+        /** @phpstan-ignore-next-line */
         $this->laravel['files']->makeDirectory("{$this->directory}/$path", 0755, true, true);
     }
 }

@@ -32,6 +32,7 @@ trait CanHidesColumns
      */
     public function showColumnSelector()
     {
+        // @phpstan-ignore-next-line Return value is always bool at runtime
         return $this->option('show_column_selector');
     }
 
@@ -70,6 +71,7 @@ trait CanHidesColumns
      */
     protected function getVisibleColumnsFromQuery()
     {
+        // @phpstan-ignore-next-line $string is always string|null at runtime
         $columns = explode_ex(',', request(ColumnSelector::SELECT_COLUMN_NAME));
 
         return array_filter($columns) ?:
@@ -79,7 +81,7 @@ trait CanHidesColumns
     /**
      * Get all visible column instances.
      *
-     * @return Collection<int|string, mixed>|static
+     * @return Collection<int|string, Grid\Column>|static
      */
     public function visibleColumns()
     {

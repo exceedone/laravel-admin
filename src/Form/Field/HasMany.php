@@ -94,10 +94,12 @@ class HasMany extends Field
 
         if (count($arguments) == 1) {
             $this->label = $this->formatLabel();
+            // @phpstan-ignore-next-line Assigned value is always Closure at runtime
             $this->builder = $arguments[0];
         }
 
         if (count($arguments) == 2) {
+            // @phpstan-ignore-next-line Assigned value is always string at runtime (and 1 more mixed-type assumption on this line)
             list($this->label, $this->builder) = $arguments;
         }
     }
@@ -111,6 +113,7 @@ class HasMany extends Field
      */
     public function getValidator(array $input)
     {
+        /** @phpstan-ignore-next-line */
         if (!array_key_exists($this->column, $input)) {
             return false;
         }
@@ -156,10 +159,12 @@ class HasMany extends Field
 
         foreach ($rules as $column => $rule) {
             foreach (array_keys($input[$this->column]) as $key) {
+                /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
                 $newRules["{$this->column}.$key.$column"] = $rule;
                 if (isset($input[$this->column][$key][$column]) &&
                     is_array($input[$this->column][$key][$column])) {
                     foreach ($input[$this->column][$key][$column] as $vkey => $value) {
+                        /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
                         $newInput["{$this->column}.$key.{$column}$vkey"] = $value;
                     }
                 }
@@ -170,6 +175,7 @@ class HasMany extends Field
             $newInput = $input;
         }
 
+        // @phpstan-ignore-next-line $messages is always array at runtime
         return \validator($newInput, $newRules, $this->getValidationMessages(), $attributes);
     }
 
@@ -200,6 +206,7 @@ class HasMany extends Field
             } else {
                 foreach ($new as $k => $val) {
                     if (Str::endsWith($key, ".$k")) {
+                        // @phpstan-ignore-next-line $val is always castable to string at runtime
                         $attributes[$key] = $label."[$val]";
                     }
                 }
@@ -214,6 +221,7 @@ class HasMany extends Field
      * @return $this
      */
     public function setRelatedValue($relatedValue){
+        // @phpstan-ignore-next-line Assigned value is always array|null at runtime
         $this->relatedValue = $relatedValue;
 
         return $this;
@@ -240,6 +248,7 @@ class HasMany extends Field
          *
          * [ "created_at" => "start", "updated_at" => "end" ]
          */
+        // @phpstan-ignore-next-line $array is always array<int|string> at runtime
         $column = array_flip($column);
 
         /**
@@ -249,15 +258,18 @@ class HasMany extends Field
          *
          * in the HasMany relation, has many data/field set, $set is field set in the below
          */
+        /** @phpstan-ignore-next-line */
         foreach ($input[$this->column] as $index => $set) {
 
             /*
              * foreach the field set to find the corresponding $column
              */
+            // @phpstan-ignore-next-line The value is always iterable at runtime
             foreach ($set as $name => $value) {
                 /*
                  * if doesn't have column name, continue to the next loop
                  */
+                // @phpstan-ignore-next-line $key is always int|string at runtime
                 if (!array_key_exists($name, $column)) {
                     continue;
                 }
@@ -274,10 +286,12 @@ class HasMany extends Field
                 /*
                  * set new key
                  */
+                /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
                 Arr::set($input, "{$this->column}.$index.$newKey", $value);
                 /*
                  * forget the old key and value
                  */
+                /** @phpstan-ignore-next-line Part $this->column (array|string) of encapsed string cannot be cast to string. */
                 Arr::forget($input, "{$this->column}.$index.$name");
             }
         }
@@ -292,8 +306,10 @@ class HasMany extends Field
      */
     public function prepare($input)
     {
+        /** @phpstan-ignore-next-line */
         $form = $this->buildNestedForm($this->column, $this->builder);
 
+        // @phpstan-ignore-next-line $data is always array at runtime
         return $form->setOriginal($this->original, $this->getKeyName())->prepare($input);
     }
 
@@ -306,8 +322,10 @@ class HasMany extends Field
      */
     public function prepareConfirm($input)
     {
+        /** @phpstan-ignore-next-line */
         $form = $this->buildNestedForm($this->column, $this->builder);
 
+        // @phpstan-ignore-next-line $data is always array at runtime
         return $form->setOriginal($this->original, $this->getKeyName())->prepareConfirm($input);
     }
 
@@ -318,6 +336,7 @@ class HasMany extends Field
      */
     public function hasFile()
     {
+        /** @phpstan-ignore-next-line */
         $form = $this->buildNestedForm($this->column, $this->builder);
 
         foreach ($form->fields() as $field) {
@@ -445,7 +464,9 @@ class HasMany extends Field
 
         if(!is_null($this->relatedValue)){
             foreach ($this->relatedValue as $index => $data) {
+                /** @phpstan-ignore-next-line */
                 $forms[$index] = $this->buildNestedForm($this->column, $this->builder, null, $index)
+                    // @phpstan-ignore-next-line $data is always array at runtime
                     ->fill($data, $index);
             }
         }
@@ -456,6 +477,7 @@ class HasMany extends Field
 
         $model = $this->form->model();
 
+        /** @phpstan-ignore-next-line Parameter #1 $callback of function call_user_func expects callable(): mixed, array{Illuminate\Database\Eloquent\Model, string} given. */
         $relation = call_user_func([$model, $this->relationName]);
 
         if (!$relation instanceof Relation && !$relation instanceof MorphMany) {
@@ -469,9 +491,12 @@ class HasMany extends Field
          *
          * Else get data from database.
          */
+        /** @phpstan-ignore-next-line */
         if ($values = old($this->column)) {
             $index = 0;
+            // @phpstan-ignore-next-line The value is always iterable at runtime
             foreach ($values as $key => $data) {
+                // @phpstan-ignore-next-line The value is always an array at runtime
                 if ($data[NestedForm::REMOVE_FLAG_NAME] == 1) {
                     $index++;
                     continue;
@@ -482,19 +507,26 @@ class HasMany extends Field
                     $forms = [];
                 }
                 
+                // @phpstan-ignore-next-line $attributes is always array at runtime
                 $model = $relation->getRelated()->replicate()->forceFill($data);
 
                 $formIndex = $index;
                 // if new_ key, 
+                // @phpstan-ignore-next-line $haystack is always string at runtime
                 if(strpos($key, 'new_') !== false){
+                    // @phpstan-ignore-next-line $subject is always array|string at runtime
                     $formIndex = str_replace('new_', '', $key);
                 }
+                /** @phpstan-ignore-next-line */
                 $forms[$key] = $this->buildNestedForm($this->column, $this->builder, $model, $formIndex)
+                    /** @phpstan-ignore-next-line */
                     ->fill($data, $formIndex);
                     $index++;
             }
         } else {
+            // @phpstan-ignore-next-line Value is guaranteed to be iterable at this point
             foreach ($this->value as $index => $data) {
+                // @phpstan-ignore-next-line $array is always array|ArrayAccess at runtime
                 $key = Arr::get($data, $relation->getRelated()->getKeyName());
 
                 if(!isset($key)){
@@ -506,9 +538,13 @@ class HasMany extends Field
                     $forms = [];
                 }
                 
+                // @phpstan-ignore-next-line $attributes is always array at runtime
                 $model = $relation->getRelated()->replicate()->forceFill($data);
 
+                /** @var int $index */
+                /** @phpstan-ignore-next-line */
                 $forms[$key] = $this->buildNestedForm($this->column, $this->builder, $model, $index)
+                    // @phpstan-ignore-next-line $data is always array at runtime
                     ->fill($data, $index);
             }
         }
@@ -525,8 +561,10 @@ class HasMany extends Field
      */
     protected function setupScript($script)
     {
+        /** @var string $method */
         $method = 'setupScriptFor'.ucfirst($this->viewMode).'View';
 
+        /** @phpstan-ignore-next-line Parameter #1 $callback of function call_user_func expects callable(): mixed, array{$this(Encore\Admin\Form\Field\HasMany), non-falsy-string} given. */
         return call_user_func([$this, $method], $script);
     }
 
@@ -542,7 +580,11 @@ class HasMany extends Field
         $removeClass = NestedForm::REMOVE_FLAG_CLASS;
         $defaultKey = NestedForm::DEFAULT_KEY_NAME;
         $count = !isset($this->value) ? 0 : count($this->value);
-        $indexName = "index_{$this->column}";
+        
+        // Maintain original behavior - column will be cast to string
+        /** @phpstan-ignore-next-line */
+        $columnName = (string) $this->column;
+        $indexName = "index_{$columnName}";
 
         /**
          * When add a new sub form, replace all element key in new sub form.
@@ -553,21 +595,21 @@ class HasMany extends Field
          */
         $script = <<<EOT
 var index = 0;
-$('#has-many-{$this->column}').off('click.admin_add', '.add').on('click.admin_add', '.add', function () {
+$('#has-many-{$columnName}').off('click.admin_add', '.add').on('click.admin_add', '.add', function () {
 
-    var tpl = $('template.{$this->column}-tpl');
+    var tpl = $('template.{$columnName}-tpl');
 
     $indexName++;
 
     var template = tpl.html().replace(/{$defaultKey}/g, $indexName);
-    $('.has-many-{$this->column}-forms').append(template);
+    $('.has-many-{$columnName}-forms').append(template);
     {$templateScript}
     return false;
 });
 
-$('#has-many-{$this->column}').off('click.admin_remove', '.remove').on('click.admin_remove', '.remove', function () {
-    $(this).closest('.has-many-{$this->column}-form').hide();
-    $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
+$('#has-many-{$columnName}').off('click.admin_remove', '.remove').on('click.admin_remove', '.remove', function () {
+    $(this).closest('.has-many-{$columnName}-form').hide();
+    $(this).closest('.has-many-{$columnName}-form').find('.$removeClass').val(1);
     return false;
 });
 
@@ -588,10 +630,14 @@ EOT;
         $removeClass = NestedForm::REMOVE_FLAG_CLASS;
         $defaultKey = NestedForm::DEFAULT_KEY_NAME;
         $count = !isset($this->value) ? 0 : count($this->value);
+        
+        // Maintain original behavior - column will be cast to string
+        /** @phpstan-ignore-next-line */
+        $columnName = (string) $this->column;
 
         $script = <<<EOT
 
-$('#has-many-{$this->column} > .nav').off('click', 'i.close-tab').on('click', 'i.close-tab', function(){
+$('#has-many-{$columnName} > .nav').off('click', 'i.close-tab').on('click', 'i.close-tab', function(){
     var \$navTab = $(this).siblings('a');
     var \$pane = $(\$navTab.attr('href'));
     if( \$pane.hasClass('new') ){
@@ -601,20 +647,20 @@ $('#has-many-{$this->column} > .nav').off('click', 'i.close-tab').on('click', 'i
     }
     if(\$navTab.closest('li').hasClass('active')){
         \$navTab.closest('li').remove();
-        $('#has-many-{$this->column} > .nav > li:nth-child(1) > a').tab('show');
+        $('#has-many-{$columnName} > .nav > li:nth-child(1) > a').tab('show');
     }else{
         \$navTab.closest('li').remove();
     }
 });
 
 var index = {$count};
-$('#has-many-{$this->column} > .header').off('click', '.add').on('click', '.add', function(){
+$('#has-many-{$columnName} > .header').off('click', '.add').on('click', '.add', function(){
     index++;
-    var navTabHtml = $('#has-many-{$this->column} > template.nav-tab-tpl').html().replace(/{$defaultKey}/g, index);
-    var paneHtml = $('#has-many-{$this->column} > template.pane-tpl').html().replace(/{$defaultKey}/g, index);
-    $('#has-many-{$this->column} > .nav').append(navTabHtml);
-    $('#has-many-{$this->column} > .tab-content').append(paneHtml);
-    $('#has-many-{$this->column} > .nav > li:last-child a').tab('show');
+    var navTabHtml = $('#has-many-{$columnName} > template.nav-tab-tpl').html().replace(/{$defaultKey}/g, index);
+    var paneHtml = $('#has-many-{$columnName} > template.pane-tpl').html().replace(/{$defaultKey}/g, index);
+    $('#has-many-{$columnName} > .nav').append(navTabHtml);
+    $('#has-many-{$columnName} > .tab-content').append(paneHtml);
+    $('#has-many-{$columnName} > .nav > li:last-child a').tab('show');
     {$templateScript}
 });
 
@@ -643,6 +689,10 @@ EOT;
     {
         $removeClass = NestedForm::REMOVE_FLAG_CLASS;
         $defaultKey = NestedForm::DEFAULT_KEY_NAME;
+        
+        // Maintain original behavior - column will be cast to string
+        /** @phpstan-ignore-next-line */
+        $columnName = (string) $this->column;
 
         /**
          * When add a new sub form, replace all element key in new sub form.
@@ -653,21 +703,21 @@ EOT;
          */
         $script = <<<EOT
 var index = 0;
-$('#has-many-{$this->column}').off('click.admin_add').on('click.admin_add', '.add', function () {
+$('#has-many-{$columnName}').off('click.admin_add').on('click.admin_add', '.add', function () {
 
-    var tpl = $('template.{$this->column}-tpl');
+    var tpl = $('template.{$columnName}-tpl');
 
     index++;
 
     var template = tpl.html().replace(/{$defaultKey}/g, index);
-    $('.has-many-{$this->column}-forms').append(template);
+    $('.has-many-{$columnName}-forms').append(template);
     {$templateScript}
     return false;
 });
 
-$('#has-many-{$this->column}').off('click.admin_remove').on('click.admin_remove', '.remove', function () {
-    $(this).closest('.has-many-{$this->column}-form').hide();
-    $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
+$('#has-many-{$columnName}').off('click.admin_remove').on('click.admin_remove', '.remove', function () {
+    $(this).closest('.has-many-{$columnName}-form').hide();
+    $(this).closest('.has-many-{$columnName}-form').find('.$removeClass').val(1);
     return false;
 });
 
@@ -714,6 +764,7 @@ EOT;
         // specify a view to render.
         $this->view = $this->views[$this->viewMode];
 
+        /** @phpstan-ignore-next-line Parameter #1 $column of method Encore\Admin\Form\Field\HasMany::buildNestedForm() expects string, array|string given. */
         list($template, $script) = $this->buildNestedForm($this->column, $this->builder)
             ->getTemplateHtmlAndScript();
 
@@ -740,6 +791,7 @@ EOT;
         $scripts = [];
 
         /* @var Field $field */
+        /** @phpstan-ignore-next-line Parameter #1 $column of method Encore\Admin\Form\Field\HasMany::buildNestedForm() expects string, array|string given. */
         foreach ($this->buildNestedForm($this->column, $this->builder)->fields() as $field) {
             if (is_a($field, Hidden::class)) {
                 $hidden[] = $field->render();

@@ -25,6 +25,7 @@ trait HasHooks
      */
     protected function registerHook($name, Closure $callback)
     {
+        // @phpstan-ignore-next-line The value is always an array at runtime
         $this->hooks[$name][] = $callback;
 
         return $this;
@@ -42,6 +43,7 @@ trait HasHooks
     {
         $hooks = Arr::get($this->hooks, $name, []);
 
+        // @phpstan-ignore-next-line The value is always iterable at runtime
         foreach ($hooks as $func) {
             if (!$func instanceof Closure) {
                 continue;
@@ -194,6 +196,7 @@ trait HasHooks
      */
     protected function callDeleting($id)
     {
+        // @phpstan-ignore-next-line $parameters is always array at runtime
         return $this->callHooks('deleting', $id);
     }
 

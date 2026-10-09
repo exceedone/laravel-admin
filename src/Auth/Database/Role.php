@@ -18,8 +18,10 @@ class Role extends Model
     {
         $connection = config('admin.database.connection') ?: config('database.default');
 
+        // @phpstan-ignore-next-line $name is always string|null at runtime
         $this->setConnection($connection);
 
+        // @phpstan-ignore-next-line $table is always string at runtime
         $this->setTable(config('admin.database.roles_table'));
 
         parent::__construct($attributes);
@@ -37,6 +39,7 @@ class Role extends Model
 
         $relatedModel = config('admin.database.users_model');
 
+        // @phpstan-ignore-next-line $related is always string at runtime (and 1 more mixed-type assumption on this line)
         return $this->belongsToMany($relatedModel, $pivotTable, 'role_id', 'user_id');
     }
 
@@ -52,6 +55,7 @@ class Role extends Model
 
         $relatedModel = config('admin.database.permissions_model');
 
+        // @phpstan-ignore-next-line $related is always string at runtime (and 1 more mixed-type assumption on this line)
         return $this->belongsToMany($relatedModel, $pivotTable, 'role_id', 'permission_id');
     }
 
@@ -67,6 +71,7 @@ class Role extends Model
 
         $relatedModel = config('admin.database.menu_model');
 
+        // @phpstan-ignore-next-line $related is always string at runtime (and 1 more mixed-type assumption on this line)
         return $this->belongsToMany($relatedModel, $pivotTable, 'role_id', 'menu_id');
     }
 

@@ -114,6 +114,7 @@ trait UploadField
      */
     protected function initStorage()
     {
+        // @phpstan-ignore-next-line $disk is always string at runtime (and 1 more mixed-type assumption on this line)
         $this->disk(config('admin.upload.disk'));
     }
 
@@ -187,6 +188,7 @@ trait UploadField
         ];
 
         if ($this->form instanceof Form) {
+            // @phpstan-ignore-next-line Model is guaranteed to be set when Form is instance of Form
             $defaults['deleteUrl'] = $this->form->resource().'/'.$this->form->model()->getKey();
         }
 
@@ -291,6 +293,7 @@ trait UploadField
      */
     public function options($options = [])
     {
+        /** @phpstan-ignore-next-line Parameter #2 ...$arrays of function array_merge expects array, array<string, mixed>|Closure given. */
         $this->options = array_merge($options, $this->options);
 
         return $this;
@@ -310,6 +313,7 @@ trait UploadField
         try {
             $this->storage = Storage::disk($disk);
         } catch (\Exception $exception) {
+            // @phpstan-ignore-next-line $array is always array at runtime (and 1 more mixed-type assumption on this line)
             if (!array_key_exists($disk, config('filesystems.disks'))) {
                 admin_error(
                     'Config error.',
@@ -337,6 +341,7 @@ trait UploadField
     {
         $this->dir($directory);
 
+        // @phpstan-ignore-next-line Name may be null which is valid for auto-generated names
         $this->name($name);
 
         return $this;
@@ -435,10 +440,12 @@ trait UploadField
         }
 
         if ($this->name instanceof \Closure) {
+            // @phpstan-ignore-next-line Return value is always string|null at runtime (and 1 more mixed-type assumption on this line)
             return $this->name->call($this, $file, $this);
         }
 
         if ($this->callableName instanceof \Closure) {
+            // @phpstan-ignore-next-line Return value is always string|null at runtime (and 1 more mixed-type assumption on this line)
             return $this->callableName->call($this, $file, $this);
         }
 
@@ -475,9 +482,11 @@ trait UploadField
         $this->renameIfExists($file);
 
         if (!is_null($this->storagePermission)) {
+            /** @phpstan-ignore-next-line Cannot call method putFileAs() on Illuminate\Filesystem\FilesystemAdapter|string. */
             return $this->storage->putFileAs($this->getDirectory(), $file, $this->name, $this->storagePermission);
         }
 
+        /** @phpstan-ignore-next-line Cannot call method putFileAs() on Illuminate\Filesystem\FilesystemAdapter|string. */
         return $this->storage->putFileAs($this->getDirectory(), $file, $this->name);
     }
 
@@ -490,6 +499,7 @@ trait UploadField
      */
     public function renameIfExists(UploadedFile $file)
     {
+        /** @phpstan-ignore-next-line Cannot call method exists() on Illuminate\Filesystem\FilesystemAdapter|string. */
         if ($this->storage->exists("{$this->getDirectory()}/$this->name")) {
             $this->name = $this->generateUniqueName($file);
         }
@@ -509,9 +519,11 @@ trait UploadField
         }
 
         if ($this->storage) {
+            /** @phpstan-ignore-next-line Cannot call method url() on Illuminate\Filesystem\FilesystemAdapter|string. */
             return $this->storage->url($path);
         }
 
+        // @phpstan-ignore-next-line $name is always string|null at runtime (and 1 more mixed-type assumption on this line)
         return Storage::disk(config('admin.upload.disk'))->url($path);
     }
 
@@ -541,6 +553,7 @@ trait UploadField
         $original = $file->getClientOriginalName();
         $new = sprintf('%s_%s.%s', $original, $index, $extension);
 
+        /** @phpstan-ignore-next-line Cannot call method exists() on Illuminate\Filesystem\FilesystemAdapter|string. */
         while ($this->storage->exists("{$this->getDirectory()}/$new")) {
             $index++;
             $new = sprintf('%s_%s.%s', $original, $index, $extension);
@@ -568,7 +581,9 @@ trait UploadField
             return;
         }
 
+        /** @phpstan-ignore-next-line Cannot call method exists() on Illuminate\Filesystem\FilesystemAdapter|string. */
         if ($this->storage->exists($this->original)) {
+            /** @phpstan-ignore-next-line Cannot call method delete() on Illuminate\Filesystem\FilesystemAdapter|string. */
             $this->storage->delete($this->original);
         }
     }

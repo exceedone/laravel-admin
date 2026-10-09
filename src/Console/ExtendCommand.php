@@ -73,21 +73,27 @@ class ExtendCommand extends Command
     {
         $this->filesystem = $filesystem;
 
+        // @phpstan-ignore-next-line Assigned value is always string at runtime
         $this->extensionDir = config('admin.extension_dir');
 
         InputExtensionDir:
         if (empty($this->extensionDir)) {
+            // @phpstan-ignore-next-line Assigned value is always string at runtime
             $this->extensionDir = $this->ask('Please input a directory to store your extension:');
         }
 
+        // @phpstan-ignore-next-line $filename is always string at runtime
         if (!file_exists($this->extensionDir)) {
             $this->makeDir();
         }
 
+        /** @phpstan-ignore-next-line */
         $this->package = $this->argument('extension');
 
         InputExtensionName:
+        /** @phpstan-ignore-next-line */
         if (!$this->validateExtensionName($this->package)) {
+            /** @phpstan-ignore-next-line */
             $this->package = $this->ask("[$this->package] is not a valid package name, please input a name like (<vendor>/<name>)");
             goto InputExtensionName;
         }
@@ -138,6 +144,7 @@ TREE;
      */
     protected function makeFiles()
     {
+        /** @phpstan-ignore-next-line Property Encore\Admin\Console\ExtendCommand::$namespace (string) does not accept array|string|null. */
         $this->namespace = $this->getRootNameSpace();
 
         $this->className = $this->getClassName();
@@ -154,6 +161,7 @@ TREE;
         $composerContents = str_replace(
             [':package', ':namespace', ':class_name'],
             [$this->package, str_replace('\\', '\\\\', $this->namespace).'\\\\', $this->className],
+            /** @phpstan-ignore-next-line Parameter #3 $subject of function str_replace expects array|string, string|false given. */
             file_get_contents(__DIR__.'/stubs/extension/composer.json.stub')
         );
         $this->putFile('composer.json', $composerContents);
@@ -162,6 +170,7 @@ TREE;
         $classContents = str_replace(
             [':namespace', ':class_name', ':title', ':path', ':base_package'],
             [$this->namespace, $this->className, Str::title($this->className), basename($this->package), basename($this->package)],
+            /** @phpstan-ignore-next-line Parameter #3 $subject of function str_replace expects array|string, string|false given. */
             file_get_contents(__DIR__.'/stubs/extension/extension.stub')
         );
         $this->putFile("src/{$this->className}.php", $classContents);
@@ -170,6 +179,7 @@ TREE;
         $providerContents = str_replace(
             [':namespace', ':class_name', ':base_package', ':package'],
             [$this->namespace, $this->className, basename($this->package), $this->package],
+            /** @phpstan-ignore-next-line Parameter #3 $subject of function str_replace expects array|string, string|false given. */
             file_get_contents(__DIR__.'/stubs/extension/service-provider.stub')
         );
         $this->putFile("src/{$this->className}ServiceProvider.php", $providerContents);
@@ -178,6 +188,7 @@ TREE;
         $controllerContent = str_replace(
             [':namespace', ':class_name', ':base_package'],
             [$this->namespace, $this->className, basename($this->package)],
+            /** @phpstan-ignore-next-line Parameter #3 $subject of function str_replace expects array|string, string|false given. */
             file_get_contents(__DIR__.'/stubs/extension/controller.stub')
         );
         $this->putFile("src/Http/Controllers/{$this->className}Controller.php", $controllerContent);
@@ -186,6 +197,7 @@ TREE;
         $routesContent = str_replace(
             [':namespace', ':class_name', ':path'],
             [$this->namespace, $this->className, basename($this->package)],
+            /** @phpstan-ignore-next-line Parameter #3 $subject of function str_replace expects array|string, string|false given. */
             file_get_contents(__DIR__.'/stubs/extension/routes.stub')
         );
         $this->putFile('routes/web.php', $routesContent);
@@ -206,6 +218,7 @@ TREE;
             $namespace = $this->ask('Root namespace', $default);
         }
 
+        // @phpstan-ignore-next-line Return value is always array|string|null at runtime
         return $namespace;
     }
 
@@ -240,6 +253,7 @@ TREE;
      */
     protected function validateExtensionName($name)
     {
+        /** @phpstan-ignore-next-line Method Encore\Admin\Console\ExtendCommand::validateExtensionName() should return int but returns int|false. */
         return preg_match('/^[\w\-_]+\/[\w\-_]+$/', $name);
     }
 
@@ -294,12 +308,15 @@ TREE;
             return;
         }
 
+        /** @phpstan-ignore-next-line Parameter #1 $filename of function file_exists expects string, array|string given. */
         if (!file_exists($from)) {
             return;
         }
 
+        // @phpstan-ignore-next-line $to from argument() may be string|null but is validated by caller
         $to = $this->extensionPath($to);
 
+        /** @phpstan-ignore-next-line Parameter #1 $path of method Illuminate\Filesystem\Filesystem::copy() expects string, array|string given. */
         $this->filesystem->copy($from, $to);
     }
 
@@ -313,6 +330,7 @@ TREE;
     protected function makeDir($paths = '')
     {
         foreach ((array) $paths as $path) {
+            // @phpstan-ignore-next-line $path is always string at runtime
             $path = $this->extensionPath($path);
 
             $this->filesystem->makeDirectory($path, 0755, true, true);

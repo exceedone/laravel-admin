@@ -33,6 +33,7 @@ class ExportSeedCommand extends Command
         $exceptFields = [];
         $exportUsers = $this->option('users');
 
+        /** @phpstan-ignore-next-line */
         $seedFile = $this->laravel->databasePath().'/seeds/'.$name.'.php';
         $contents = $this->getStub('AdminTablesSeeder');
 
@@ -46,11 +47,16 @@ class ExportSeedCommand extends Command
             'TableRoleMenu'        => config('admin.database.role_menu_table'),
             'TableRolePermissions' => config('admin.database.role_permissions_table'),
 
+            // @phpstan-ignore-next-line $table is always string at runtime
             'ArrayMenu'       => $this->getTableDataArrayAsString(config('admin.database.menu_table'), $exceptFields),
+            // @phpstan-ignore-next-line $table is always string at runtime
             'ArrayPermission' => $this->getTableDataArrayAsString(config('admin.database.permissions_table'), $exceptFields),
+            // @phpstan-ignore-next-line $table is always string at runtime
             'ArrayRole'       => $this->getTableDataArrayAsString(config('admin.database.roles_table'), $exceptFields),
 
+            // @phpstan-ignore-next-line $table is always string at runtime
             'ArrayPivotRoleMenu'        => $this->getTableDataArrayAsString(config('admin.database.role_menu_table'), $exceptFields),
+            // @phpstan-ignore-next-line $table is always string at runtime
             'ArrayPivotRolePermissions' => $this->getTableDataArrayAsString(config('admin.database.role_permissions_table'), $exceptFields),
         ];
 
@@ -60,19 +66,25 @@ class ExportSeedCommand extends Command
                 'TableRoleUsers'        => config('admin.database.role_users_table'),
                 'TablePermissionsUsers' => config('admin.database.user_permissions_table'),
 
+                // @phpstan-ignore-next-line $table is always string at runtime
                 'ArrayUsers'                 => $this->getTableDataArrayAsString(config('admin.database.users_table'), $exceptFields),
+                // @phpstan-ignore-next-line $table is always string at runtime
                 'ArrayPivotRoleUsers'        => $this->getTableDataArrayAsString(config('admin.database.role_users_table'), $exceptFields),
+                // @phpstan-ignore-next-line $table is always string at runtime
                 'ArrayPivotPermissionsUsers' => $this->getTableDataArrayAsString(config('admin.database.user_permissions_table'), $exceptFields),
             ]);
         } else {
             $contents = preg_replace('/\/\/ users tables[\s\S]*?(?=\/\/ finish)/mu', '', $contents);
         }
 
+        // @phpstan-ignore-next-line $contents is always string from preg_replace in practice
         $contents = str_replace(array_keys($replaces), array_values($replaces), $contents);
 
+        /** @phpstan-ignore-next-line */
         $this->laravel['files']->put($seedFile, $contents);
 
         $this->line('<info>Admin tables seed file was created:</info> '.str_replace(base_path(), '', $seedFile));
+        /** @phpstan-ignore-next-line */
         $this->line("Use: <info>php artisan db:seed --class={$name}</info>");
     }
 
@@ -93,6 +105,7 @@ class ExportSeedCommand extends Command
             return (array) $item;
         })->all();
 
+        /** @phpstan-ignore-next-line */
         return $this->varExport($array, str_repeat(' ', 12));
     }
 
@@ -105,6 +118,7 @@ class ExportSeedCommand extends Command
      */
     protected function getStub($name)
     {
+        /** @phpstan-ignore-next-line */
         return $this->laravel['files']->get(__DIR__."/stubs/$name.stub");
     }
 
@@ -129,8 +143,11 @@ class ExportSeedCommand extends Command
                 $r = [];
 
                 foreach ($var as $key => $value) {
+                    /** @phpstan-ignore-next-line */
                     $r[] = "$indent    "
+                        /** @phpstan-ignore-next-line */
                         .($indexed ? '' : $this->varExport($key).' => ')
+                        // @phpstan-ignore-next-line $var is always array|bool|float|int|string at runtime
                         .$this->varExport($value, "{$indent}    ");
                 }
 

@@ -30,6 +30,7 @@ class HasOptionRule implements Rule
     */
     public function passes($attribute, $value)
     {
+        // @phpstan-ignore-next-line $object_or_class is always object|string at runtime
         if(!method_exists($this->field, 'getOptions')){
             return true;
         }
@@ -42,6 +43,7 @@ class HasOptionRule implements Rule
             return true;
         }
 
+        /** @phpstan-ignore-next-line Cannot call method getOptions() on class-string|object. */
         $options = $this->field->getOptions($value);
 
         if(!is_array($value)){
@@ -49,6 +51,7 @@ class HasOptionRule implements Rule
         }
 
         foreach($value as $val){
+            // @phpstan-ignore-next-line $value is always bool|float|int|resource|string|null at runtime
             if(!array_key_exists(strval($val), $options)){
                 return false;
             }

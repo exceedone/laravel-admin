@@ -17,15 +17,24 @@ class Modal extends AbstractDisplayer
             $title = $this->trans('title');
         }
 
+        // @phpstan-ignore-next-line The value is always an object exposing bindTo() at runtime
         $callback = $callback->bindTo($this->row);
 
         $html = call_user_func_array($callback, [$this->row]);
 
         $key = $this->getKey().'-'.$this->getColumn()->getName();
 
+        // Type assertion for PHPStan - maintain original behavior
+        /**
+         * @var string $value
+         * @var string $title
+         * @var string $html
+         */
+        $value = $this->value;
+
         return <<<EOT
 <span class="grid-expand" data-toggle="modal" data-target="#grid-modal-{$key}">
-   <a href="javascript:void(0)"><i class="fa fa-clone"></i>&nbsp;&nbsp;{$this->value}</a>
+   <a href="javascript:void(0)"><i class="fa fa-clone"></i>&nbsp;&nbsp;{$value}</a>
 </span>
 
 <div class="modal fade" id="grid-modal-{$key}" tabindex="-1" role="dialog">

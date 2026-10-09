@@ -47,6 +47,7 @@ class Paginator extends AbstractTool
      */
     protected function paginationLinks()
     {
+        // @phpstan-ignore-next-line The value is always an object exposing render() at runtime
         return $this->paginator->render('admin::pagination');
     }
 
@@ -68,8 +69,11 @@ class Paginator extends AbstractTool
     protected function paginationRanger()
     {
         $parameters = [
+            // @phpstan-ignore-next-line The value is always an object exposing firstItem() at runtime
             'first' => $this->paginator->firstItem(),
+            // @phpstan-ignore-next-line The value is always an object exposing lastItem() at runtime
             'last'  => $this->paginator->lastItem(),
+            // @phpstan-ignore-next-line The value is always an object exposing total() at runtime
             'total' => $this->paginator->total(),
         ];
 
@@ -91,6 +95,7 @@ class Paginator extends AbstractTool
             return '';
         }
 
+        /** @phpstan-ignore-next-line Binary operation "." between string|Symfony\Contracts\Translation\TranslatorInterface and string results in an error. */
         return $this->paginationRanger().
             $this->paginationLinks().
             $this->perPageSelector();

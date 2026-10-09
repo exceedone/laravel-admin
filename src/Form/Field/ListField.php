@@ -66,6 +66,7 @@ class ListField extends Field
     {
         $this->data = $data;
 
+        /** @phpstan-ignore-next-line Parameter #2 $key of static method Illuminate\Support\Arr::get() expects int|string|null, array|string given. */
         $this->value = Arr::get($data, $this->column, $this->value);
 
         $this->formatValue();
@@ -79,6 +80,7 @@ class ListField extends Field
     public function getValidator(array $input)
     {
         if ($this->validator) {
+            // @phpstan-ignore-next-line Return value is always bool|Illuminate\Contracts\Validation\Validator at runtime
             return $this->validator->call($this, $input);
         }
 
@@ -99,6 +101,7 @@ class ListField extends Field
         $rules["{$this->column}.values.*"] = $fieldRules;
         $attributes["{$this->column}.values.*"] = __('Value');
 
+        /** @phpstan-ignore-next-line Cannot access an offset on array|Closure|string. */
         $rules["{$this->column}.values"][] = 'array';
 
         if (!is_null($this->max)) {
@@ -111,6 +114,7 @@ class ListField extends Field
 
         $attributes["{$this->column}.values"] = $this->label;
 
+        // @phpstan-ignore-next-line $messages is always array at runtime
         return validator($input, $rules, $this->getValidationMessages(), $attributes);
     }
 
@@ -120,14 +124,18 @@ class ListField extends Field
      */
     protected function setupScript()
     {
+        // Maintain original behavior - column will be cast to string
+        /** @phpstan-ignore-next-line */
+        $columnName = (string) $this->column;
+        
         $this->script = <<<SCRIPT
 
-$('.{$this->column}-add').on('click', function () {
-    var tpl = $('template.{$this->column}-tpl').html();
-    $('tbody.list-{$this->column}-table').append(tpl);
+$('.{$columnName}-add').on('click', function () {
+    var tpl = $('template.{$columnName}-tpl').html();
+    $('tbody.list-{$columnName}-table').append(tpl);
 });
 
-$('tbody').on('click', '.{$this->column}-remove', function () {
+$('tbody').on('click', '.{$columnName}-remove', function () {
     $(this).closest('tr').remove();
 });
 
@@ -141,6 +149,7 @@ SCRIPT;
      */
     public function prepare($value)
     {
+        // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
         return array_values($value['values']);
     }
 

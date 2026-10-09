@@ -13,8 +13,12 @@ class RowSelector extends AbstractDisplayer
     {
         Admin::script($this->script());
 
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var string $key */
+        $key = $this->getKey();
+
         return <<<EOT
-<input type="checkbox" class="{$this->grid->getGridRowName()}-checkbox" data-id="{$this->getKey()}" />
+<input type="checkbox" class="{$this->grid->getGridRowName()}-checkbox" data-id="{$key}" />
 EOT;
     }
 

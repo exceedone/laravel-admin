@@ -28,8 +28,10 @@ class Captcha extends Text
 
     public function setForm($form = null)
     {
+        /** @phpstan-ignore-next-line Property Encore\Admin\Form\Field::$form (Encore\Admin\Form|null) does not accept Encore\Admin\Form|Encore\Admin\Widgets\Form|null. */
         $this->form = $form;
 
+        /** @phpstan-ignore-next-line Call to an undefined method Encore\Admin\Form|Encore\Admin\Widgets\Form::ignore(). */
         $this->form->ignore($this->column);
 
         return $this;
@@ -37,9 +39,11 @@ class Captcha extends Text
 
     public function render()
     {
+        /** @var string $column */
+        $column = $this->column;
         $this->script = <<<EOT
 
-$('#{$this->column}-captcha').click(function () {
+$('#{$column}-captcha').click(function () {
     $(this).attr('src', $(this).attr('src')+'?'+Math.random());
 });
 

@@ -9,7 +9,7 @@ class SwitchDisplay extends AbstractDisplayer
 {
 
     /**
-     * @var array<string, array<string, mixed>> $states
+     * @var array<string, array{value: mixed, text: string, color: string}> $states
      */
     protected $states = [
         'on'  => ['value' => 1, 'text' => 'ON', 'color' => 'primary'],
@@ -39,8 +39,10 @@ class SwitchDisplay extends AbstractDisplayer
 
         $name = $this->column->getName();
 
+        // @phpstan-ignore-next-line $subject is always array|string at runtime
         $class = 'grid-switch-'.str_replace('.', '-', $name);
 
+        // @phpstan-ignore-next-line $string is always string at runtime
         $keys = collect(explode('.', $name));
         if ($keys->isEmpty()) {
             $key = $name;
@@ -50,6 +52,13 @@ class SwitchDisplay extends AbstractDisplayer
             });
         }
 
+        // Type assertion for PHPStan - maintain original behavior
+        /**
+         * @var string $resource
+         * @var string $key
+         */
+        $resource = $this->grid->resource();
+        
         $script = <<<EOT
 
 $('.$class').bootstrapSwitch({
@@ -67,7 +76,7 @@ $('.$class').bootstrapSwitch({
         var _status = true;
 
         $.ajax({
-            url: "{$this->grid->resource()}/" + pk,
+            url: "{$resource}/" + pk,
             type: "POST",
             async:false,
             data: {

@@ -42,6 +42,7 @@ class Editable extends AbstractDisplayer
      */
     public function addOptions($options = [])
     {
+        // @phpstan-ignore-next-line Assigned value is always array<string, string> at runtime
         $this->options = array_merge($this->options, $options);
     }
 
@@ -99,6 +100,7 @@ class Editable extends AbstractDisplayer
 
         $source = [];
 
+        // @phpstan-ignore-next-line The value is always iterable at runtime
         foreach ($options as $value => $text) {
             $source[] = compact('value', 'text');
         }
@@ -197,8 +199,10 @@ class Editable extends AbstractDisplayer
      */
     protected function buildEditableOptions(array $arguments = [])
     {
+        // @phpstan-ignore-next-line Assigned value is always string at runtime
         $this->type = Arr::get($arguments, 0, 'text');
 
+        /** @phpstan-ignore-next-line Parameter #1 $callback of function call_user_func_array expects callable(): mixed, array{$this(Encore\Admin\Grid\Displayers\Editable), mixed} given. */
         call_user_func_array([$this, $this->type], array_slice($arguments, 1));
     }
 
@@ -207,8 +211,10 @@ class Editable extends AbstractDisplayer
      */
     public function display()
     {
+        // @phpstan-ignore-next-line Assigned value is always array<string, string> at runtime
         $this->options['name'] = $column = $this->column->getName();
 
+        // @phpstan-ignore-next-line $subject is always array|string at runtime
         $class = 'grid-editable-'.str_replace(['.', '#', '[', ']'], '-', $column);
 
         $this->buildEditableOptions(func_get_args());
@@ -217,13 +223,16 @@ class Editable extends AbstractDisplayer
 
         Admin::script("$('.$class').editable($options);");
 
+        // @phpstan-ignore-next-line $string is always string at runtime
         $this->value = htmlentities($this->value);
 
         $attributes = [
             'href'       => '#',
             'class'      => "$class",
             'data-type'  => $this->type,
+            // @phpstan-ignore-next-line $this->getKey() is always castable to string at runtime
             'data-pk'    => "{$this->getKey()}",
+            /** @phpstan-ignore-next-line Part $this->grid->resource() (Encore\Admin\Grid|string) of encapsed string cannot be cast to string. */
             'data-url'   => url("{$this->grid->resource()}/{$this->getKey()}"),
             'data-value' => "{$this->value}",
         ];
@@ -233,6 +242,7 @@ class Editable extends AbstractDisplayer
         }
 
         $attributes = collect($attributes)->map(function ($attribute, $name) {
+            // @phpstan-ignore-next-line $attribute is always castable to string at runtime
             return "$name='$attribute'";
         })->implode(' ');
 

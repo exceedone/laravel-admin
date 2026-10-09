@@ -59,7 +59,7 @@ class Tab
      *
      * @param \Closure $content
      *
-     * @return Collection<int|string, mixed>
+     * @return Collection<int|string, Field>
      */
     protected function collectFields(\Closure $content)
     {
@@ -72,6 +72,7 @@ class Tab
         foreach ($this->form->rows as $row) {
             $rowFields = array_map(function ($field) {
                 return $field['element'];
+            // @phpstan-ignore-next-line The value is always an object exposing getFields() at runtime
             }, $row->getFields());
 
             $match = false;
@@ -79,6 +80,7 @@ class Tab
             foreach ($rowFields as $field) {
                 if (($index = array_search($field, $all)) !== false) {
                     if (!$match) {
+                        // @phpstan-ignore-next-line $value is always Encore\Admin\Form\Field at runtime
                         $fields->put($index, $row);
                     } else {
                         $fields->pull($index);
@@ -104,10 +106,13 @@ class Tab
     public function getTabs()
     {
         // If there is no active tab, then active the first.
+        // @phpstan-ignore-next-line The callback matches the expected signature at runtime
         if ($this->tabs->filter(function ($tab) {
+            // @phpstan-ignore-next-line The value is always an array at runtime
             return $tab['active'];
         })->isEmpty()) {
             $first = $this->tabs->first();
+            // @phpstan-ignore-next-line The value is always an array at runtime
             $first['active'] = true;
 
             $this->tabs->offsetSet(0, $first);

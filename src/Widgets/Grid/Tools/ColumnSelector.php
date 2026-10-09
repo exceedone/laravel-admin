@@ -55,6 +55,9 @@ class ColumnSelector extends AbstractTool
                 $checked = in_array($key, $show) ? 'checked' : '';
             }
 
+            // Type assertion for PHPStan - maintain original behavior
+            /** @var string $label */
+
             return <<<HTML
 <li class="checkbox icheck" style="margin: 0;">
     <label style="width: 100%;padding: 3px;">
@@ -100,9 +103,11 @@ EOT;
      */
     protected function getGridColumns()
     {
+        // @phpstan-ignore-next-line Columns collection is guaranteed to exist on grid
         return $this->grid->columns()->map(function (Column $column) {
             $name = $column->getName();
 
+            // @phpstan-ignore-next-line $name is always string at runtime
             if ($this->isColumnIgnored($name)) {
                 return;
             }

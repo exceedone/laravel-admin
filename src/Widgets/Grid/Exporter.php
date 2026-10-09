@@ -100,6 +100,7 @@ class Exporter
             return $this->getDefaultExporter();
         }
 
+        /** @phpstan-ignore-next-line Method Encore\Admin\Widgets\Grid\Exporter::getExporter() should return Encore\Admin\Widgets\Grid\Exporters\CsvExporter but returns object. */
         return new static::$drivers[$driver]($this->grid);
     }
 

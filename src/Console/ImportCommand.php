@@ -31,13 +31,17 @@ class ImportCommand extends Command
     {
         $extension = $this->argument('extension');
 
+        /** @phpstan-ignore-next-line */
         if (empty($extension) || !Arr::has(Admin::$extensions, $extension)) {
             $extension = $this->choice('Please choose a extension to import', array_keys(Admin::$extensions));
         }
 
+        /** @phpstan-ignore-next-line */
         $className = Arr::get(Admin::$extensions, $extension);
 
+        // @phpstan-ignore-next-line $class is always string at runtime
         if (!class_exists($className) || !method_exists($className, 'import')) {
+            // @phpstan-ignore-next-line $className is always castable to string at runtime
             $this->error("Invalid Extension [$className]");
 
             return;

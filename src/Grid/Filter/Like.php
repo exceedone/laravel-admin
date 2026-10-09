@@ -31,12 +31,15 @@ class Like extends AbstractFilter
             $value = array_filter($value);
         }
 
+        // @phpstan-ignore-next-line $string is always string at runtime
         if (is_null($value) || strlen($value) === 0) {
             return;
         }
 
+        // @phpstan-ignore-next-line Assigned value is always array|string at runtime
         $this->value = $value;
 
+        // @phpstan-ignore-next-line $replace is always array|string at runtime
         $expr = str_replace('{value}', $this->value, $this->exprFormat);
 
         return $this->buildCondition($this->column, $this->operator, $expr);

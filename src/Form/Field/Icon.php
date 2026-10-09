@@ -28,9 +28,11 @@ class Icon extends Text
      */
     public function render()
     {
+        /** @var string $selector */
+        $selector = $this->getElementClassSelector();
         $this->script = <<<EOT
 
-$('{$this->getElementClassSelector()}').iconpicker({placement:'bottomLeft'});
+$('{$selector}').iconpicker({placement:'bottomLeft'});
 
 EOT;
 

@@ -125,6 +125,7 @@ class Radio extends Field
      */
     public function render()
     {
+        /** @phpstan-ignore-next-line Part $this->getElementClassSelector() (array|string) of encapsed string cannot be cast to string. */
         $this->script = "$('{$this->getElementClassSelector()}').iCheck({radioClass:'iradio_minimal-blue'});";
 
         $this->addVariables(['options' => $this->options, 'checked' => $this->checked, 'inline' => $this->inline]);

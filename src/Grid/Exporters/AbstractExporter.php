@@ -101,6 +101,7 @@ abstract class AbstractExporter implements ExporterInterface
             $scope = (clone $queryBuilder)
                 ->select([$keyName])
                 ->setEagerLoads([])
+                // @phpstan-ignore-next-line $perPage is always int at runtime
                 ->forPage($this->page, $perPage)->get();
 
             $queryBuilder->whereIn($keyName, $scope->pluck($keyName));
@@ -126,6 +127,7 @@ abstract class AbstractExporter implements ExporterInterface
 
         if ($scope == Grid\Exporter::SCOPE_CURRENT_PAGE) {
             $this->grid->model()->usePaginate(true);
+            /** @phpstan-ignore-next-line Property Encore\Admin\Grid\Exporters\AbstractExporter::$page (int) does not accept int|string. */
             $this->page = $args ?: 1;
         }
 

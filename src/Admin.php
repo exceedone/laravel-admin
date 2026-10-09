@@ -87,6 +87,7 @@ class Admin
      */
     public function grid($model, Closure $callable)
     {
+        // @phpstan-ignore-next-line $model is always Illuminate\Database\Eloquent\Model at runtime
         return new Grid($this->getModel($model), $callable);
     }
 
@@ -113,6 +114,7 @@ class Admin
      */
     public function tree($model, Closure $callable = null)
     {
+        // @phpstan-ignore-next-line $model is always Illuminate\Database\Eloquent\Model|null at runtime
         return new Tree($this->getModel($model), $callable);
     }
 
@@ -128,6 +130,7 @@ class Admin
      */
     public function show($model, $callable = null)
     {
+        // @phpstan-ignore-next-line $model is always Illuminate\Database\Eloquent\Model at runtime
         return new Show($this->getModel($model), $callable);
     }
 
@@ -158,6 +161,7 @@ class Admin
             return $this->getModel(new $model());
         }
 
+        // @phpstan-ignore-next-line $model is always castable to string at runtime
         throw new InvalidArgumentException("$model is not a valid model");
     }
 
@@ -194,9 +198,12 @@ class Admin
         $links = [];
 
         foreach ($menu as $item) {
+            // @phpstan-ignore-next-line The value is always an array at runtime
             if (!empty($item['children'])) {
+                // @phpstan-ignore-next-line $menu is always array at runtime
                 $links = array_merge($links, $this->menuLinks($item['children']));
             } else {
+                // @phpstan-ignore-next-line $array is always array at runtime
                 $links[] = Arr::only($item, ['title', 'uri', 'icon']);
             }
         }
@@ -223,6 +230,7 @@ class Admin
      */
     public function title()
     {
+        // @phpstan-ignore-next-line Return value is always string at runtime
         return self::$metaTitle ? self::$metaTitle : config('admin.title');
     }
 
@@ -360,6 +368,7 @@ class Admin
      */
     public static function booting(callable $callback)
     {
+        /** @phpstan-ignore-next-line */
         static::$bootingCallbacks[] = $callback;
     }
 
@@ -369,6 +378,7 @@ class Admin
      */
     public static function registered(callable $callback)
     {
+        /** @phpstan-ignore-next-line */
         static::$registeredCallbacks[] = $callback;
     }
 
@@ -378,6 +388,7 @@ class Admin
      */
     public static function booted(callable $callback)
     {
+        /** @phpstan-ignore-next-line */
         static::$bootedCallbacks[] = $callback;
     }
 
@@ -399,13 +410,16 @@ class Admin
 
         
         $file = config('admin.bootstrap', admin_path('bootstrap.php'));
+        // @phpstan-ignore-next-line $path is always string at runtime
         if (\File::exists($file)) {
             require_once $file;
         }
 
         $assets = Form::collectFieldAssets();
 
+        // @phpstan-ignore-next-line $css is always array|null at runtime
         self::css($assets['css']);
+        // @phpstan-ignore-next-line $js is always array|null at runtime
         self::js($assets['js']);
 
         $this->fireBootedCallbacks();

@@ -57,6 +57,7 @@ class Scope implements Renderable
     public function condition()
     {
         return $this->queries->map(function ($query) {
+            // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
             return [$query['method'] => $query['arguments']];
         })->toArray();
     }

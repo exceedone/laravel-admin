@@ -28,6 +28,7 @@ class ResetPasswordCommand extends Command
     {
         $userModel = config('admin.database.users_model');
 
+        // @phpstan-ignore-next-line The value is always an object exposing all() at runtime
         $users = $userModel::all();
 
         askForUserName:
@@ -50,6 +51,7 @@ class ResetPasswordCommand extends Command
             goto enterPassword;
         }
 
+        // @phpstan-ignore-next-line $value is always string at runtime
         $user->password = bcrypt($password);
 
         $user->save();

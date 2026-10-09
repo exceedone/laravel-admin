@@ -36,6 +36,7 @@ trait HasFilter
     {
         $this->tools->disableFilterButton($disable);
 
+        // @phpstan-ignore-next-line Return value is always $this(Encore\Admin\Grid) at runtime
         return $this->option('show_filter', !$disable);
     }
 

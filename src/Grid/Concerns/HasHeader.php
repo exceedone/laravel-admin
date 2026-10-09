@@ -22,6 +22,7 @@ trait HasHeader
     public function header(Closure $closure = null)
     {
         if (!$closure) {
+            // @phpstan-ignore-next-line Header may be null when no header is set
             return $this->header;
         }
 

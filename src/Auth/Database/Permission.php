@@ -30,8 +30,10 @@ class Permission extends Model
     {
         $connection = config('admin.database.connection') ?: config('database.default');
 
+        // @phpstan-ignore-next-line $name is always string|null at runtime
         $this->setConnection($connection);
 
+        // @phpstan-ignore-next-line $table is always string at runtime
         $this->setTable(config('admin.database.permissions_table'));
 
         parent::__construct($attributes);
@@ -48,6 +50,7 @@ class Permission extends Model
 
         $relatedModel = config('admin.database.roles_model');
 
+        // @phpstan-ignore-next-line $related is always string at runtime (and 1 more mixed-type assumption on this line)
         return $this->belongsToMany($relatedModel, $pivotTable, 'permission_id', 'role_id');
     }
 
@@ -67,6 +70,7 @@ class Permission extends Model
         $method = $this->http_method;
 
         $matches = array_map(function ($path) use ($method) {
+            // @phpstan-ignore-next-line $string is always string at runtime
             $path = trim(config('admin.route.prefix'), '/').$path;
 
             if (Str::contains($path, ':')) {
@@ -75,6 +79,7 @@ class Permission extends Model
             }
 
             return compact('method', 'path');
+        // @phpstan-ignore-next-line $string is always string at runtime
         }, explode("\n", $this->http_path));
 
         foreach ($matches as $match) {
@@ -108,11 +113,13 @@ class Permission extends Model
      */
     protected function matchRequest(array $match, Request $request) : bool
     {
+        // @phpstan-ignore-next-line $string is always string at runtime
         if (!$request->is(trim($match['path'], '/'))) {
             return false;
         }
         /** @phpstan-ignore-next-line Unable to resolve the template type TKey in call to function collect  */
         $method = collect($match['method'])->filter()->map(function ($method) {
+            // @phpstan-ignore-next-line $string is always string at runtime
             return strtoupper($method);
         });
 

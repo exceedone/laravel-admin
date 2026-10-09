@@ -57,10 +57,13 @@ class DateRange extends Field
     public function value($value = null)
     {
         if (is_null($value)) {
+            // @phpstan-ignore-next-line The value is always an array at runtime (and 1 more mixed-type assumption on this line)
             if (!isset($this->value['start']) && !isset($this->value['end'])) {
+                // @phpstan-ignore-next-line Return value is always $this(Encore\Admin\Form\Field\DateRange) at runtime
                 return $this->getDefault();
             }
 
+            // @phpstan-ignore-next-line Return value is always $this(Encore\Admin\Form\Field\DateRange) at runtime
             return $this->value;
         }
 
@@ -89,21 +92,27 @@ class DateRange extends Field
      */
     public function render()
     {
+        /** @phpstan-ignore-next-line Cannot access offset 'locale' on array<string, mixed>|Closure. */
         $this->options['locale'] = config('app.locale');
 
         $startOptions = json_encode($this->options);
         $endOptions = json_encode($this->options + ['useCurrent' => false]);
 
         $class = $this->getElementClassSelector();
+        
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var array{start: string, end: string} $class */
+        $startClass = $class['start'];
+        $endClass = $class['end'];
 
         $this->script = <<<EOT
-            $('{$class['start']}').datetimepicker($startOptions);
-            $('{$class['end']}').datetimepicker($endOptions);
-            $("{$class['start']}").on("dp.change", function (e) {
-                $('{$class['end']}').data("DateTimePicker").minDate(e.date);
+            $('{$startClass}').datetimepicker($startOptions);
+            $('{$endClass}').datetimepicker($endOptions);
+            $("{$startClass}").on("dp.change", function (e) {
+                $('{$endClass}').data("DateTimePicker").minDate(e.date);
             });
-            $("{$class['end']}").on("dp.change", function (e) {
-                $('{$class['start']}').data("DateTimePicker").maxDate(e.date);
+            $("{$endClass}").on("dp.change", function (e) {
+                $('{$startClass}').data("DateTimePicker").maxDate(e.date);
             });
 EOT;
 

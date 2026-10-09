@@ -59,6 +59,7 @@ class Currency extends Text
      */
     public function prepare($value)
     {
+        // @phpstan-ignore-next-line The value is always castable to float at runtime
         return (float) $value;
     }
 

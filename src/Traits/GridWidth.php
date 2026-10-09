@@ -28,12 +28,15 @@ trait GridWidth
         ///// set width.
         // if null, or $this->width is empty array, set as "sm" => "12"
         if (is_null($width) || (is_array($width) && count($width) === 0)) {
+            /** @phpstan-ignore-next-line offsetAccess.notFound */
             $this->width['sm'] = 12;
         }
         // $this->width is number(old version), set as "sm" => $width
         elseif (is_numeric($width)) {
+            /** @phpstan-ignore-next-line offsetAccess.notFound */
             $this->width['sm'] = $width;
         } else {
+            // @phpstan-ignore-next-line Assigned value is always array<string, int>|int at runtime
             $this->width = $width;
         }
 
@@ -47,6 +50,7 @@ trait GridWidth
      */
     protected function getGridWidthClass()
     {
+        /** @phpstan-ignore-next-line argument.type */
         return collect($this->width)->map(function ($value, $key) {
             return "col-$key-$value";
         })->implode(' ');

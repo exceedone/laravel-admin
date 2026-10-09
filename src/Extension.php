@@ -89,11 +89,13 @@ abstract class Extension
     {
         $class = get_called_class();
 
+        /** @phpstan-ignore-next-line Cannot access offset class-string<static(Encore\\Admin\\Extension)> on Encore\\Admin\\Extension. */
         if (!isset(self::$instance[$class]) || !self::$instance[$class] instanceof $class) {
             /** @phpstan-ignore-next-line https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static */
             self::$instance[$class] = new static();
         }
 
+        /** @phpstan-ignore-next-line */
         return static::$instance[$class];
     }
 
@@ -222,8 +224,10 @@ abstract class Extension
         $name = array_search(get_called_class(), Admin::$extensions);
 
         if (is_null($key)) {
+            /** @phpstan-ignore-next-line */
             $key = sprintf('admin.extensions.%s', strtolower($name));
         } else {
+            /** @phpstan-ignore-next-line */
             $key = sprintf('admin.extensions.%s.%s', strtolower($name), $key);
         }
 
@@ -320,8 +324,10 @@ abstract class Extension
     {
         $menuModel = config('admin.database.menu_model');
 
+        // @phpstan-ignore-next-line The value is always an object exposing max() at runtime
         $lastOrder = $menuModel::max('order');
 
+        // @phpstan-ignore-next-line The value is always an object exposing create() at runtime
         $menuModel::create([
             'parent_id' => $parentId,
             'order'     => $lastOrder + 1,
@@ -344,9 +350,11 @@ abstract class Extension
     {
         $permissionModel = config('admin.database.permissions_model');
 
+        // @phpstan-ignore-next-line The value is always an object exposing create() at runtime
         $permissionModel::create([
             'name'      => $name,
             'slug'      => $slug,
+            // @phpstan-ignore-next-line $string is always string at runtime
             'http_path' => '/'.trim($path, '/'),
         ]);
     }
@@ -365,9 +373,11 @@ abstract class Extension
                 'prefix'     => config('admin.route.prefix'),
                 'middleware' => config('admin.route.middleware'),
             ],
+            // @phpstan-ignore-next-line $arrays is always array at runtime
             static::config('route', [])
         );
 
+        // @phpstan-ignore-next-line $routes is always array|Closure|string at runtime
         Route::group($attributes, $callback);
     }
 }

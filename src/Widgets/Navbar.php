@@ -31,6 +31,7 @@ class Navbar implements Renderable
      */
     public function left($element)
     {
+        // @phpstan-ignore-next-line The value is always an object exposing push() at runtime
         $this->elements['left']->push($element);
 
         return $this;
@@ -43,6 +44,7 @@ class Navbar implements Renderable
      */
     public function right($element)
     {
+        // @phpstan-ignore-next-line The value is always an object exposing push() at runtime
         $this->elements['right']->push($element);
 
         return $this;
@@ -71,10 +73,12 @@ class Navbar implements Renderable
             $this->right(new RefreshButton());
         }
 
+        // @phpstan-ignore-next-line The value is always an object exposing isEmpty() at runtime
         if (!isset($this->elements[$part]) || $this->elements[$part]->isEmpty()) {
             return '';
         }
 
+        // @phpstan-ignore-next-line The value is always an object exposing map() at runtime
         return $this->elements[$part]->map(function ($element) {
             if ($element instanceof Htmlable) {
                 return $element->toHtml();

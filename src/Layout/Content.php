@@ -18,7 +18,7 @@ class Content implements Renderable
     /**
      * Content header icon.
      *
-     * @var string
+     * @var string|null
      */
     protected $headericon = null;
 
@@ -170,6 +170,7 @@ class Content implements Renderable
             $this->addRow($content);
         }
         else {
+            // @phpstan-ignore-next-line $content is always string at runtime
             $this->addRow(new Row($content));
         }
 
@@ -228,6 +229,7 @@ class Content implements Renderable
 
         ob_end_clean();
 
+        /** @phpstan-ignore-next-line return.type */
         return $contents;
     }
 

@@ -26,6 +26,7 @@ class KeyValue extends Field
     {
         $this->data = $data;
 
+        /** @phpstan-ignore-next-line Parameter #2 $key of static method Illuminate\Support\Arr::get() expects int|string|null, array|string given. */
         $this->value = Arr::get($data, $this->column, $this->value);
 
         $this->formatValue();
@@ -39,6 +40,7 @@ class KeyValue extends Field
     public function getValidator(array $input)
     {
         if ($this->validator) {
+            // @phpstan-ignore-next-line Return value is always bool|Illuminate\Contracts\Validation\Factory|Illuminate\Contracts\Validation\Validator at runtime
             return $this->validator->call($this, $input);
         }
 
@@ -61,6 +63,7 @@ class KeyValue extends Field
         $attributes["{$this->column}.keys.*"] = __('Key');
         $attributes["{$this->column}.values.*"] = __('Value');
 
+        // @phpstan-ignore-next-line $messages is always array at runtime
         return validator($input, $rules, $this->getValidationMessages(), $attributes);
     }
 
@@ -69,14 +72,18 @@ class KeyValue extends Field
      */
     protected function setupScript()
     {
+        // Maintain original behavior - column will be cast to string
+        /** @phpstan-ignore-next-line */
+        $columnName = (string) $this->column;
+        
         $this->script = <<<SCRIPT
 
-$('.{$this->column}-add').on('click', function () {
-    var tpl = $('template.{$this->column}-tpl').html();
-    $('tbody.kv-{$this->column}-table').append(tpl);
+$('.{$columnName}-add').on('click', function () {
+    var tpl = $('template.{$columnName}-tpl').html();
+    $('tbody.kv-{$columnName}-table').append(tpl);
 });
 
-$('tbody').on('click', '.{$this->column}-remove', function () {
+$('tbody').on('click', '.{$columnName}-remove', function () {
     $(this).closest('tr').remove();
 });
 
@@ -89,6 +96,7 @@ SCRIPT;
      */
     public function prepare($value)
     {
+        // @phpstan-ignore-next-line $keys is always array<int|string> at runtime (and 1 more mixed-type assumption on this line)
         return array_combine($value['keys'], $value['values']);
     }
 

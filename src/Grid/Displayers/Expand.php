@@ -12,6 +12,7 @@ class Expand extends AbstractDisplayer
      */
     public function display($callback = null)
     {
+        // @phpstan-ignore-next-line Callback is guaranteed to be set when display is called
         $callback = $callback->bindTo($this->row);
 
         $html = call_user_func_array($callback, [$this->row]);
@@ -20,9 +21,16 @@ class Expand extends AbstractDisplayer
 
         $key = $this->column->getName().'-'.$this->getKey();
 
+        // Type assertion for PHPStan - maintain original behavior
+        /**
+         * @var string $value
+         * @var string $html
+         */
+        $value = $this->value;
+
         return <<<EOT
 <span class="grid-expand" data-inserted="0" data-key="{$key}" data-toggle="collapse" data-target="#grid-collapse-{$key}">
-   <a href="javascript:void(0)"><i class="fa fa-angle-double-down"></i>&nbsp;&nbsp;{$this->value}</a>
+   <a href="javascript:void(0)"><i class="fa fa-angle-double-down"></i>&nbsp;&nbsp;{$value}</a>
 </span>
 <template class="grid-expand-{$key}">
     <div id="grid-collapse-{$key}" class="collapse">

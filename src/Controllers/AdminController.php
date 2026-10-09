@@ -87,6 +87,7 @@ class AdminController extends Controller
         return $content
             ->title($this->title())
             ->description($this->description['edit'] ?? trans('admin.edit'))
+            // @phpstan-ignore-next-line The value is always an object exposing edit() at runtime
             ->body($this->form()->edit($id));
     }
 

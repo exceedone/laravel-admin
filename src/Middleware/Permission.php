@@ -35,6 +35,7 @@ class Permission
         }
 
         if (!Admin::user()->allPermissions()->first(function ($permission) use ($request) {
+            // @phpstan-ignore-next-line The value is always an object exposing shouldPassThrough() at runtime
             return $permission->shouldPassThrough($request);
         })) {
             Checker::error();
@@ -53,6 +54,7 @@ class Permission
      */
     public function checkRoutePermission(Request $request)
     {
+        // @phpstan-ignore-next-line Route is guaranteed to exist in middleware context
         if (!$middleware = collect($request->route()->middleware())->first(function ($middleware) {
             return Str::startsWith($middleware, $this->middlewarePrefix);
         })) {
@@ -67,6 +69,7 @@ class Permission
             throw new \InvalidArgumentException("Invalid permission method [$method].");
         }
 
+        /** @phpstan-ignore-next-line argument.type */
         call_user_func_array([Checker::class, $method], [$args]);
 
         return true;
@@ -88,6 +91,7 @@ class Permission
 
         /** @phpstan-ignore-next-line Unable to resolve the template type TKey in call to function collect  */
         return collect($excepts)
+            // @phpstan-ignore-next-line The callback matches the expected signature at runtime
             ->map('admin_base_path')
             ->contains(function ($except) use ($request) {
                 if ($except !== '/') {

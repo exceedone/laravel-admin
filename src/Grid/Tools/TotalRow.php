@@ -27,6 +27,7 @@ class TotalRow extends AbstractTool
      */
     public function __construct($query, array $columns)
     {
+        /** @phpstan-ignore-next-line Property Encore\Admin\Grid\Tools\TotalRow::$query (Illuminate\Database\Query\Builder) does not accept Illuminate\Database\Eloquent\Builder<Illuminate\Database\Eloquent\Model>|Illuminate\Database\Query\Builder. */
         $this->query = $query;
 
         $this->columns = $columns;
@@ -60,12 +61,15 @@ class TotalRow extends AbstractTool
      */
     public function render()
     {
+        /** @phpstan-ignore-next-line Call to an undefined method Encore\Admin\Grid|Illuminate\Support\Collection<int|string, mixed>::flatMap(). */
         $columns = $this->getGrid()->visibleColumns()->flatMap(function (Column $column) {
             $name = $column->getName();
 
             $total = '';
 
+            // @phpstan-ignore-next-line $keys is always array|string at runtime
             if (Arr::has($this->columns, $name)) {
+                // @phpstan-ignore-next-line $column is always string at runtime (and 1 more mixed-type assumption on this line)
                 $total = $this->total($name, Arr::get($this->columns, $name));
             }
 

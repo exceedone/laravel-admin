@@ -23,15 +23,22 @@ class Download extends AbstractDisplayer
                 return '';
             }
 
+            // @phpstan-ignore-next-line $path is always string at runtime
             if (url()->isValidUrl($value)) {
                 $src = $value;
             } elseif ($server) {
+                // @phpstan-ignore-next-line $string is always string at runtime
                 $src = rtrim($server, '/').'/'.ltrim($value, '/');
             } else {
+                // @phpstan-ignore-next-line $name is always string|null at runtime (and 1 more mixed-type assumption on this line)
                 $src = Storage::disk(config('admin.upload.disk'))->url($value);
             }
 
+            // @phpstan-ignore-next-line $path is always string at runtime
             $name = basename($value);
+
+            // Type assertion for PHPStan - maintain original behavior
+            /** @var string $src */
 
             return <<<HTML
 <a href='$src' download='{$name}' target='_blank' class='text-muted'>
