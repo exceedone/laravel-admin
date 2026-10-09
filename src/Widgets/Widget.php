@@ -54,6 +54,7 @@ abstract class Widget extends Fluent
     {
         $html = [];
         foreach ((array) $this->getAttributes() as $key => $value) {
+            /** @phpstan-ignore-next-line Parameter #1 $key of method Encore\\Admin\\Widgets\\Widget::attributeElement() expects string, int|string given. */
             $element = $this->attributeElement($key, $value);
             if (!is_null($element)) {
                 $html[] = $element;

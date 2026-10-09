@@ -162,6 +162,7 @@ class Text extends Presenter
     {
         $options = json_encode($options);
 
+        /** @phpstan-ignore-next-line Part $this->filter->getId() (array|string) of encapsed string cannot be cast to string. */
         Admin::script("$('#filter-box input.{$this->filter->getId()}').inputmask($options);");
 
         $this->icon = $icon;

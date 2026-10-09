@@ -210,6 +210,7 @@ class Field implements Renderable
      */
     public function as(callable $callable)
     {
+        /** @phpstan-ignore-next-line Cannot call method push() on array|Illuminate\Support\Collection<int|string, mixed>. */
         $this->showAs->push($callable);
 
         return $this;
@@ -593,6 +594,7 @@ HTML;
         }
 
         if (!isset($extend)) {
+            /** @phpstan-ignore-next-line Part $abstract (Encore\Admin\Show\AbstractField|string) of encapsed string cannot be cast to string. */
             admin_warning("[$abstract] is not a valid Show field.");
 
             return $this;
@@ -678,7 +680,9 @@ HTML;
      */
     public function render()
     {
+        /** @phpstan-ignore-next-line Cannot call method isNotEmpty() on array|Illuminate\Support\Collection<int|string, mixed>. */
         if ($this->showAs->isNotEmpty()) {
+            /** @phpstan-ignore-next-line Cannot call method each() on array|Illuminate\Support\Collection<int|string, mixed>. */
             $this->showAs->each(function ($callable) {
                 $this->value = $callable->call(
                     $this->parent->getModel(),

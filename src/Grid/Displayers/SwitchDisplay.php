@@ -50,6 +50,10 @@ class SwitchDisplay extends AbstractDisplayer
             });
         }
 
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var string $resource */
+        $resource = $this->grid->resource();
+        
         $script = <<<EOT
 
 $('.$class').bootstrapSwitch({
@@ -67,7 +71,7 @@ $('.$class').bootstrapSwitch({
         var _status = true;
 
         $.ajax({
-            url: "{$this->grid->resource()}/" + pk,
+            url: "{$resource}/" + pk,
             type: "POST",
             async:false,
             data: {

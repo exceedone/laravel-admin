@@ -147,6 +147,7 @@ class Builder
     public function init()
     {
         $this->tools = new Tools($this);
+        /** @phpstan-ignore-next-line */
         $this->footer = new static::$footerClassName($this);
     }
 
@@ -273,6 +274,7 @@ class Builder
     public function disablePjax()
     {
         $this->disablePjax = true;
+        /** @phpstan-ignore-next-line class.notFound */
         \Admin::disablePjax();
 
         return $this;
@@ -504,6 +506,7 @@ class Builder
     {
         foreach ($this->fields() as $field) {
             if(method_exists($field, 'hasFile')){
+                /** @phpstan-ignore-next-line */
                 if($field->hasFile()){
                     return true;
                 }

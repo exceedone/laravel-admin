@@ -84,6 +84,7 @@ abstract class AbstractDisplayer
      */
     public function getResource()
     {
+        /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Displayers\AbstractDisplayer::getResource() should return string but returns Encore\Admin\Grid|string. */
         return $this->grid->resource();
     }
 

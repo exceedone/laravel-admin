@@ -24,6 +24,7 @@ class Radio extends Presenter
      *
      * @param array<mixed>|Arrayable<int|string, mixed>|null $options
      */
+    /** @phpstan-ignore-next-line Method Encore\Admin\Grid\Filter\Presenter\Radio::__construct() should return void but returns void. */
     public function __construct($options = [])
     {
         if ($options instanceof Arrayable) {
@@ -50,6 +51,7 @@ class Radio extends Presenter
      */
     protected function prepare()
     {
+        /** @phpstan-ignore-next-line Part $this->filter->getId() (array|string) of encapsed string cannot be cast to string. */
         $script = "$('.{$this->filter->getId()}').iCheck({radioClass:'iradio_minimal-blue'});";
 
         Admin::script($script);

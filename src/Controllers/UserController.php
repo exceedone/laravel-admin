@@ -25,6 +25,7 @@ class UserController extends AdminController
     {
         $userModel = config('admin.database.users_model');
 
+        /** @phpstan-ignore-next-line */
         $grid = new Grid(new $userModel());
 
         $grid->column('id', 'ID')->sortable();

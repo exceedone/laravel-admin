@@ -44,6 +44,7 @@ class Tab extends Widget implements Renderable
      */
     public function add($title, $content, $active = false)
     {
+        /** @phpstan-ignore-next-line Cannot access an offset on array|int|string. */
         $this->data['tabs'][] = [
             'id'      => mt_rand(),
             'title'   => $title,
@@ -69,6 +70,7 @@ class Tab extends Widget implements Renderable
      */
     public function addLink($title, $href, $active = false)
     {
+        /** @phpstan-ignore-next-line Cannot access an offset on array|int|string. */
         $this->data['tabs'][] = [
             'id'      => mt_rand(),
             'title'   => $title,
@@ -112,6 +114,7 @@ class Tab extends Widget implements Renderable
             return $this;
         }
 
+        /** @phpstan-ignore-next-line Cannot access an offset on array|int|string. */
         $this->data['dropDown'][] = [
             'name' => $links[0],
             'href' => $links[1],

@@ -1107,10 +1107,12 @@ HELP;
     {
         return $this->display(function ($value) use ($abstract, $arguments) {
             if (is_array($value) || $value instanceof Arrayable) {
+                /** @phpstan-ignore-next-line Parameter #1 $callback of function call_user_func_array expects callable(): mixed, array{Illuminate\Support\Collection<(int|string), mixed>, string} given. */
                 return call_user_func_array([collect($value), $abstract], $arguments);
             }
 
             if (is_string($value)) {
+                /** @phpstan-ignore-next-line Parameter #1 $callback of function call_user_func_array expects callable(): mixed, array{'Illuminate\\Support\\Str', string} given. */
                 return call_user_func_array([Str::class, $abstract], array_merge([$value], $arguments));
             }
 

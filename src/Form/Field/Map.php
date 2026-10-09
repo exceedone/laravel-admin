@@ -75,11 +75,17 @@ class Map extends Field
      */
     public function useGoogleMap()
     {
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var array{lat: string, lng: string} $idArray */
+        $idArray = $this->id;
+        $latId = $idArray['lat'];
+        $lngId = $idArray['lng'];
+        
         $this->script = <<<EOT
         (function() {
             function initGoogleMap(name) {
-                var lat = $('#{$this->id['lat']}');
-                var lng = $('#{$this->id['lng']}');
+                var lat = $('#{$latId}');
+                var lng = $('#{$lngId}');
     
                 var LatLng = new google.maps.LatLng(lat.val(), lng.val());
     
@@ -108,7 +114,7 @@ class Map extends Field
                 });
             }
     
-            initGoogleMap('{$this->id['lat']}{$this->id['lng']}');
+            initGoogleMap('{$latId}{$lngId}');
         })();
 EOT;
     }
@@ -118,11 +124,17 @@ EOT;
      */
     public function useTencentMap()
     {
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var array{lat: string, lng: string} $idArray */
+        $idArray = $this->id;
+        $latId = $idArray['lat'];
+        $lngId = $idArray['lng'];
+        
         $this->script = <<<EOT
         (function() {
             function initTencentMap(name) {
-                var lat = $('#{$this->id['lat']}');
-                var lng = $('#{$this->id['lng']}');
+                var lat = $('#{$latId}');
+                var lng = $('#{$lngId}');
     
                 var center = new qq.maps.LatLng(lat.val(), lng.val());
     
@@ -160,7 +172,7 @@ EOT;
                 });
             }
     
-            initTencentMap('{$this->id['lat']}{$this->id['lng']}');
+            initTencentMap('{$latId}{$lngId}');
         })();
 EOT;
     }
@@ -170,13 +182,19 @@ EOT;
      */
     public function useYandexMap()
     {
+        // Type assertion for PHPStan - maintain original behavior
+        /** @var array{lat: string, lng: string} $idArray */
+        $idArray = $this->id;
+        $latId = $idArray['lat'];
+        $lngId = $idArray['lng'];
+        
         $this->script = <<<EOT
         (function() {
             function initYandexMap(name) {
                 ymaps.ready(function(){
         
-                    var lat = $('#{$this->id['lat']}');
-                    var lng = $('#{$this->id['lng']}');
+                    var lat = $('#{$latId}');
+                    var lng = $('#{$lngId}');
         
                     var myMap = new ymaps.Map("map_"+name, {
                         center: [lat.val(), lng.val()],
@@ -199,7 +217,7 @@ EOT;
     
             }
             
-            initYandexMap('{$this->id['lat']}{$this->id['lng']}');
+            initYandexMap('{$latId}{$lngId}');
         })();
 EOT;
     }

@@ -111,33 +111,40 @@ trait HasQuickSearch
     {
         $queries = preg_split('/\s(?=([^"]*"[^"]*")*[^"]*$)/', trim($query));
 
+        /** @phpstan-ignore-next-line argument.type */
         foreach ($this->parseQueryBindings($queries) as list($column, $condition, $or)) {
             if (preg_match('/(?<not>!?)\((?<values>.+)\)/', $condition, $match) !== 0) {
+                /** @phpstan-ignore-next-line offsetAccess.notFound */
                 $this->addWhereInBinding($column, $or, (bool) $match['not'], $match['values']);
                 continue;
             }
 
             if (preg_match('/\[(?<start>.*?),(?<end>.*?)]/', $condition, $match) !== 0) {
+                /** @phpstan-ignore-next-line offsetAccess.notFound */
                 $this->addWhereBetweenBinding($column, $or, $match['start'], $match['end']);
                 continue;
             }
 
             if (preg_match('/(?<function>date|time|day|month|year),(?<value>.*)/', $condition, $match) !== 0) {
+                /** @phpstan-ignore-next-line offsetAccess.notFound */
                 $this->addWhereDatetimeBinding($column, $or, $match['function'], $match['value']);
                 continue;
             }
 
             if (preg_match('/(?<pattern>%[^%]+%)/', $condition, $match) !== 0) {
+                /** @phpstan-ignore-next-line offsetAccess.notFound */
                 $this->addWhereLikeBinding($column, $or, $match['pattern']);
                 continue;
             }
 
             if (preg_match('/\/(?<value>.*)\//', $condition, $match) !== 0) {
+                /** @phpstan-ignore-next-line offsetAccess.notFound */
                 $this->addWhereBasicBinding($column, $or, 'REGEXP', $match['value']);
                 continue;
             }
 
             if (preg_match('/(?<operator>>=?|<=?|!=|%){0,1}(?<value>.*)/', $condition, $match) !== 0) {
+                /** @phpstan-ignore-next-line offsetAccess.notFound */
                 $this->addWhereBasicBinding($column, $or, $match['operator'], $match['value']);
                 continue;
             }

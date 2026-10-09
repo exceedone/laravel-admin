@@ -110,9 +110,13 @@ class SwitchField extends Field
             }
         }
 
+        // Ensure selector is string for heredoc usage
+        $selector = $this->getElementClassSelector();
+        $selectorString = is_array($selector) ? implode(',', $selector) : (string) $selector;
+        
         $this->script = <<<EOT
 
-$('{$this->getElementClassSelector()}.la_checkbox').bootstrapSwitch({
+$('{$selectorString}.la_checkbox').bootstrapSwitch({
     size:'{$this->size}',
     onText: '{$this->states['on']['text']}',
     offText: '{$this->states['off']['text']}',

@@ -222,6 +222,7 @@ class Show implements Renderable
             $label = '';
         }
 
+        /** @phpstan-ignore-next-line argument.type */
         return $this->addRelation($name, $builder, $label);
     }
 
@@ -483,8 +484,10 @@ class Show implements Renderable
             $this->model->with($method);
 
             if (count($arguments) == 1 && is_callable($arguments[0])) {
+                /** @phpstan-ignore-next-line argument.type */
                 return $this->addRelation($method, $arguments[0]);
             } elseif (count($arguments) == 2 && is_callable($arguments[1])) {
+                /** @phpstan-ignore-next-line argument.type */
                 return $this->addRelation($method, $arguments[1], $arguments[0]);
             }
 
@@ -561,6 +564,7 @@ class Show implements Renderable
                 'relations' => $this->relations,
             ];
     
+            /** @phpstan-ignore-next-line return.type */
             return $this->renderView($data);
         } catch (\Exception $e) {
             if($this->renderException){

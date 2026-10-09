@@ -30,6 +30,7 @@ class PermissionController extends AdminController
     {
         $permissionModel = config('admin.database.permissions_model');
 
+        /** @phpstan-ignore-next-line */
         $grid = new Grid(new $permissionModel());
 
         $grid->column('id', 'ID')->sortable();

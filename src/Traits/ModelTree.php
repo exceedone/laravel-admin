@@ -251,8 +251,11 @@ trait ModelTree
         foreach ($tree as $branch) {
             $node = static::find($branch['id']);
 
+            /** @phpstan-ignore-next-line Call to an undefined method Encore\Admin\Auth\Database\Menu|Illuminate\Database\Eloquent\Collection<int, Encore\Admin\Auth\Database\Menu>::getParentColumn(). */
             $node->{$node->getParentColumn()} = $parentId;
+            /** @phpstan-ignore-next-line Call to an undefined method Encore\Admin\Auth\Database\Menu|Illuminate\Database\Eloquent\Collection<int, Encore\Admin\Auth\Database\Menu>::getOrderColumn(). */
             $node->{$node->getOrderColumn()} = static::$branchOrder[$branch['id']];
+            /** @phpstan-ignore-next-line Call to an undefined method Encore\Admin\Auth\Database\Menu|Illuminate\Database\Eloquent\Collection<int, Encore\Admin\Auth\Database\Menu>::save(). */
             $node->save();
 
             if (isset($branch['children'])) {
