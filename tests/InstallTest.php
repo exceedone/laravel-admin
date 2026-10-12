@@ -1,7 +1,16 @@
 <?php
 
+/**
+ * Tests for the result of the "admin:install" command run in TestCase::setUp().
+ */
 class InstallTest extends TestCase
 {
+    /**
+     * "admin:install" creates the admin directory with its controllers, routes and
+     * bootstrap files, and "vendor:publish" publishes the config file and the assets.
+     *
+     * @return void
+     */
     public function testInstalledDirectories()
     {
         $this->assertFileExists(admin_path());

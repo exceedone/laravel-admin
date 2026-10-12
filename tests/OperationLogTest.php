@@ -3,6 +3,11 @@
 use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Auth\Database\OperationLog;
 
+/**
+ * Tests for the operation log (admin/auth/logs), logged in as the admin user.
+ * Requests to admin/auth/logs* are excluded from logging in tests/config/admin.php,
+ * so visiting the log page itself does not add a log.
+ */
 class OperationLogTest extends TestCase
 {
     public function setUp(): void
@@ -12,6 +17,11 @@ class OperationLogTest extends TestCase
         $this->be(Administrator::first(), 'admin');
     }
 
+    /**
+     * The operation log page can be opened.
+     *
+     * @return void
+     */
     public function testOperationLogIndex()
     {
         $this->visit('admin/auth/logs')
@@ -21,6 +31,11 @@ class OperationLogTest extends TestCase
             ->see('admin/auth/logs');
     }
 
+    /**
+     * Visiting admin pages records one GET log for each page, and the log page is not recorded.
+     *
+     * @return void
+     */
     public function testGenerateLogs()
     {
         $table = config('admin.database.operation_log_table');
@@ -43,6 +58,11 @@ class OperationLogTest extends TestCase
         $this->assertEquals(4, OperationLog::count());
     }
 
+    /**
+     * Visiting a page records a log, and deleting it by id removes it.
+     *
+     * @return void
+     */
     public function testDeleteLogs()
     {
         $table = config('admin.database.operation_log_table');
@@ -59,6 +79,11 @@ class OperationLogTest extends TestCase
             ->assertEquals(0, OperationLog::count());
     }
 
+    /**
+     * Several logs can be deleted at once by passing comma-separated ids.
+     *
+     * @return void
+     */
     public function testDeleteMultipleLogs()
     {
         $table = config('admin.database.operation_log_table');

@@ -6,6 +6,18 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Laravel\BrowserKitTesting\TestCase as BaseTestCase;
 
+/**
+ * Base class for the laravel-admin tests.
+ *
+ * Every test boots the laravel/laravel skeleton installed under vendor/, registers
+ * laravel-admin, and installs it into the MySQL database "laravel_admin_test"
+ * (host: MYSQL_HOST, default 127.0.0.1). "admin:install" seeds the admin user
+ * (username "admin", password "admin"), its roles, permissions and the default menu.
+ * All tables are dropped again in tearDown(), so each test starts from the same state.
+ *
+ * Tests run as browser-kit tests: pages are requested through the application and
+ * checked with assertions such as see() and seePageIs(), without a real browser.
+ */
 class TestCase extends BaseTestCase
 {
     protected $baseUrl = 'http://localhost:8000';
@@ -31,6 +43,12 @@ class TestCase extends BaseTestCase
         return $app;
     }
 
+    /**
+     * Configure the database and laravel-admin, install laravel-admin, create the
+     * test tables, and load the admin routes and the test routes (tests/routes.php).
+     *
+     * @return void
+     */
     public function setUp(): void
     {
         parent::setUp();
@@ -65,6 +83,12 @@ class TestCase extends BaseTestCase
         require __DIR__.'/routes.php';
     }
 
+    /**
+     * Drop the admin tables and the test tables, and remove the admin migration record
+     * so that "admin:install" can run again in the next test.
+     *
+     * @return void
+     */
     public function tearDown(): void
     {
         (new CreateAdminTables())->down();
