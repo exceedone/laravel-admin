@@ -1,13 +1,26 @@
 <?php
 
+/**
+ * Tests for login and logout of the admin panel.
+ */
 class AuthTest extends TestCase
 {
+    /**
+     * The login page can be opened without logging in.
+     *
+     * @return void
+     */
     public function testLoginPage()
     {
         $this->visit('admin/auth/login')
             ->see('login');
     }
 
+    /**
+     * A guest who opens the admin top page is redirected to the login page.
+     *
+     * @return void
+     */
     public function testVisitWithoutLogin()
     {
         $this->visit('admin')
@@ -15,6 +28,13 @@ class AuthTest extends TestCase
             ->seePageIs('admin/auth/login');
     }
 
+    /**
+     * Logging in with the seeded admin account (admin / admin) opens the dashboard.
+     * The dashboard shows the environment, extensions and dependencies boxes, and the
+     * sidebar shows the default admin menu.
+     *
+     * @return void
+     */
     public function testLogin()
     {
         $credentials = ['username' => 'admin', 'password' => 'admin'];
@@ -52,6 +72,11 @@ class AuthTest extends TestCase
             ->see('<span>Menu</span>');
     }
 
+    /**
+     * Logging out redirects to the login page and the user is no longer authenticated.
+     *
+     * @return void
+     */
     public function testLogout()
     {
         $this->visit('admin/auth/logout')

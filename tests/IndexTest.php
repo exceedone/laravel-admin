@@ -2,6 +2,9 @@
 
 use Encore\Admin\Auth\Database\Administrator;
 
+/**
+ * Tests for the admin top page (dashboard) and the sidebar menu, logged in as the admin user.
+ */
 class IndexTest extends TestCase
 {
     public function setUp(): void
@@ -11,6 +14,11 @@ class IndexTest extends TestCase
         $this->be(Administrator::first(), 'admin');
     }
 
+    /**
+     * The dashboard shows the environment, extensions and dependencies boxes.
+     *
+     * @return void
+     */
     public function testIndex()
     {
         $this->visit('admin/')
@@ -32,6 +40,11 @@ class IndexTest extends TestCase
             ->see('laravel/framework');
     }
 
+    /**
+     * Each item of the default sidebar menu opens its page.
+     *
+     * @return void
+     */
     public function testClickMenu()
     {
         $this->visit('admin/')

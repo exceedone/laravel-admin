@@ -3,6 +3,10 @@
 use Encore\Admin\Auth\Database\Administrator;
 use Tests\Models\User as UserModel;
 
+/**
+ * Tests for the form of the test resource admin/users (Tests\Controllers\UserController),
+ * logged in as the admin user.
+ */
 class UserFormTest extends TestCase
 {
     public function setUp(): void
@@ -12,6 +16,13 @@ class UserFormTest extends TestCase
         $this->be(Administrator::first(), 'admin');
     }
 
+    /**
+     * The create page shows the form fields.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testCreatePage()
     {
         $this->markTestIncomplete(
@@ -19,6 +30,13 @@ class UserFormTest extends TestCase
         );
     }
 
+    /**
+     * Submitting the create form saves the user, the profile and the tags.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testSubmitForm()
     {
         $this->markTestIncomplete(
@@ -26,6 +44,11 @@ class UserFormTest extends TestCase
         );
     }
 
+    /**
+     * Create test users, each with a profile and 5 tags.
+     *
+     * @return void
+     */
     protected function seedsTable($count = 100)
     {
         UserModel::factory()
@@ -35,6 +58,13 @@ class UserFormTest extends TestCase
             ->create();
     }
 
+    /**
+     * The edit page shows the saved values.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testEditForm()
     {
         $this->markTestIncomplete(
@@ -42,6 +72,13 @@ class UserFormTest extends TestCase
         );
     }
 
+    /**
+     * Submitting the edit form updates the user.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testUpdateForm()
     {
         $this->markTestIncomplete(
@@ -49,6 +86,13 @@ class UserFormTest extends TestCase
         );
     }
 
+    /**
+     * Validation rules are applied when updating.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testUpdateFormWithRule()
     {
         $this->markTestIncomplete(
@@ -56,6 +100,13 @@ class UserFormTest extends TestCase
         );
     }
 
+    /**
+     * The form header shows the expected tools.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testFormHeader()
     {
         $this->markTestIncomplete(
@@ -63,6 +114,13 @@ class UserFormTest extends TestCase
         );
     }
 
+    /**
+     * The form footer shows the expected buttons.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testFormFooter()
     {
         $this->markTestIncomplete(

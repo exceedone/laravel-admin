@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\File;
 use Tests\Models\Image;
 use Tests\Models\MultipleImage;
 
+/**
+ * Tests for the image upload fields, using the test resources admin/images and
+ * admin/multiple-images, logged in as the admin user.
+ */
 class ImageUploadTest extends TestCase
 {
     public function setUp(): void
@@ -14,6 +18,13 @@ class ImageUploadTest extends TestCase
         $this->be(Administrator::first(), 'admin');
     }
 
+    /**
+     * The grid of admin/images has no filter.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testDisableFilter()
     {
         $this->markTestIncomplete(
@@ -21,6 +32,13 @@ class ImageUploadTest extends TestCase
         );
     }
 
+    /**
+     * The create page shows the image upload fields.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testImageUploadPage()
     {
         $this->markTestIncomplete(
@@ -28,6 +46,11 @@ class ImageUploadTest extends TestCase
         );
     }
 
+    /**
+     * Submit the create form of admin/images with tests/assets/test.jpg attached to each of image1 to image6.
+     *
+     * @return $this
+     */
     protected function uploadImages()
     {
         return $this->visit('admin/images/create')
@@ -40,6 +63,13 @@ class ImageUploadTest extends TestCase
             ->press('Submit');
     }
 
+    /**
+     * Uploaded images are stored and their paths are saved.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testUploadImage()
     {
         $this->markTestIncomplete(
@@ -47,6 +77,13 @@ class ImageUploadTest extends TestCase
         );
     }
 
+    /**
+     * Removing an image from a record deletes the file.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testRemoveImage()
     {
         $this->markTestIncomplete(
@@ -54,6 +91,13 @@ class ImageUploadTest extends TestCase
         );
     }
 
+    /**
+     * Replacing the image of an existing record.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testUpdateImage()
     {
         $this->markTestIncomplete(
@@ -61,6 +105,13 @@ class ImageUploadTest extends TestCase
         );
     }
 
+    /**
+     * Deleting a record also deletes its images.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testDeleteImages()
     {
         $this->markTestIncomplete(
@@ -68,6 +119,13 @@ class ImageUploadTest extends TestCase
         );
     }
 
+    /**
+     * Deleting several records at once.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testBatchDelete()
     {
         $this->markTestIncomplete(
@@ -75,6 +133,13 @@ class ImageUploadTest extends TestCase
         );
     }
 
+    /**
+     * Uploading several images to a multiple image field.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testUploadMultipleImage()
     {
         $this->markTestIncomplete(
@@ -82,6 +147,13 @@ class ImageUploadTest extends TestCase
         );
     }
 
+    /**
+     * Removing images from a multiple image field.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testRemoveMultipleFiles()
     {
         $this->markTestIncomplete(
@@ -89,6 +161,11 @@ class ImageUploadTest extends TestCase
         );
     }
 
+    /**
+     * Count the files in a directory under public/ (default: uploads/images).
+     *
+     * @return int
+     */
     protected function fileCountInImageDir($dir = 'uploads/images')
     {
         $file = new FilesystemIterator(public_path($dir), FilesystemIterator::SKIP_DOTS);

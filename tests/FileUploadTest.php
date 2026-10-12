@@ -2,6 +2,10 @@
 
 use Encore\Admin\Auth\Database\Administrator;
 
+/**
+ * Tests for the file upload field, using the test resource admin/files
+ * (Tests\Controllers\FileController), logged in as the admin user.
+ */
 class FileUploadTest extends TestCase
 {
     public function setUp(): void
@@ -11,6 +15,13 @@ class FileUploadTest extends TestCase
         $this->be(Administrator::first(), 'admin');
     }
 
+    /**
+     * The create page shows the file upload fields.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testFileUploadPage()
     {
         $this->markTestIncomplete(
@@ -18,6 +29,11 @@ class FileUploadTest extends TestCase
         );
     }
 
+    /**
+     * Submit the create form of admin/files with a file attached to each of file1 to file6.
+     *
+     * @return $this
+     */
     protected function uploadFiles()
     {
         return $this->visit('admin/files/create')
@@ -30,6 +46,13 @@ class FileUploadTest extends TestCase
             ->press('Submit');
     }
 
+    /**
+     * Uploaded files are stored and their paths are saved.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testUploadFile()
     {
         $this->markTestIncomplete(
@@ -37,6 +60,13 @@ class FileUploadTest extends TestCase
         );
     }
 
+    /**
+     * Replacing the files of an existing record.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testUpdateFile()
     {
         $this->markTestIncomplete(
@@ -44,6 +74,13 @@ class FileUploadTest extends TestCase
         );
     }
 
+    /**
+     * Deleting a record also deletes its files.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testDeleteFiles()
     {
         $this->markTestIncomplete(
@@ -51,6 +88,13 @@ class FileUploadTest extends TestCase
         );
     }
 
+    /**
+     * Deleting several records at once.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testBatchDelete()
     {
         $this->markTestIncomplete(

@@ -4,6 +4,10 @@ use Encore\Admin\Auth\Database\Administrator;
 use Tests\Models\Profile as ProfileModel;
 use Tests\Models\User as UserModel;
 
+/**
+ * Tests for the grid of the test resource admin/users (Tests\Controllers\UserController),
+ * logged in as the admin user. The grid shows 20 rows per page by default.
+ */
 class UserGridTest extends TestCase
 {
     public function setUp(): void
@@ -13,6 +17,13 @@ class UserGridTest extends TestCase
         $this->be(Administrator::first(), 'admin');
     }
 
+    /**
+     * The grid page shows the columns, filters and tools.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testIndexPage()
     {
         $this->markTestIncomplete(
@@ -20,6 +31,11 @@ class UserGridTest extends TestCase
         );
     }
 
+    /**
+     * Create test users, each with a profile and 5 tags.
+     *
+     * @return void
+     */
     protected function seedsTable($count = 100)
     {
         UserModel::factory()
@@ -29,6 +45,11 @@ class UserGridTest extends TestCase
             ->create();
     }
 
+    /**
+     * The grid page opens with 100 users, and each user has a profile.
+     *
+     * @return void
+     */
     public function testGridWithData()
     {
         $this->seedsTable();
@@ -40,6 +61,12 @@ class UserGridTest extends TestCase
         $this->assertCount(100, ProfileModel::all());
     }
 
+    /**
+     * With 65 users, pages 2 and 3 show 20 rows and page 4 shows the remaining 5.
+     * The page link "1" goes back to the first page.
+     *
+     * @return void
+     */
     public function testGridPagination()
     {
         $this->seedsTable(65);
@@ -60,6 +87,13 @@ class UserGridTest extends TestCase
         $this->assertCount(20, $this->crawler()->filter('td a i[class*=fa-edit]'));
     }
 
+    /**
+     * Filter the grid with an equal filter.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testEqualFilter()
     {
         $this->markTestIncomplete(
@@ -67,6 +101,11 @@ class UserGridTest extends TestCase
         );
     }
 
+    /**
+     * The like filter on username shows exactly the users whose username contains "mi".
+     *
+     * @return void
+     */
     public function testLikeFilter()
     {
         $this->seedsTable(50);
@@ -88,6 +127,13 @@ class UserGridTest extends TestCase
         }
     }
 
+    /**
+     * Filter the grid by a column of a related model.
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testFilterRelation()
     {
         $this->markTestIncomplete(
@@ -95,6 +141,12 @@ class UserGridTest extends TestCase
         );
     }
 
+    /**
+     * Columns that are not in the table are shown with their display() callbacks, which
+     * build the value from the user and the profile.
+     *
+     * @return void
+     */
     public function testDisplayCallback()
     {
         $this->seedsTable(1);
@@ -108,6 +160,13 @@ class UserGridTest extends TestCase
             ->seeInElement('td', "{$user->email}#{$user->profile->color}");
     }
 
+    /**
+     * The grid shows the values of a has-many relation (tags).
+     *
+     * Disabled: marked incomplete because the test is no longer maintained.
+     *
+     * @return void
+     */
     public function testHasManyRelation()
     {
         $this->markTestIncomplete(
@@ -115,6 +174,11 @@ class UserGridTest extends TestCase
         );
     }
 
+    /**
+     * Each row has an edit and a delete action.
+     *
+     * @return void
+     */
     public function testGridActions()
     {
         $this->seedsTable(15);
@@ -125,6 +189,12 @@ class UserGridTest extends TestCase
         $this->assertCount(15, $this->crawler()->filter('td a i[class*=fa-trash]'));
     }
 
+    /**
+     * The custom "detail" button added in actions() is shown only for users with an even id
+     * (5 of 10 users).
+     *
+     * @return void
+     */
     public function testGridRows()
     {
         $this->seedsTable(10);
@@ -135,6 +205,12 @@ class UserGridTest extends TestCase
         $this->assertCount(5, $this->crawler()->filter('td a[class*=btn]'));
     }
 
+    /**
+     * The per-page selector offers 10, 20, 30, 50 and 100 with 20 selected, and the
+     * per_page query parameter changes the number of rows shown.
+     *
+     * @return void
+     */
     public function testGridPerPage()
     {
         $this->seedsTable(98);
