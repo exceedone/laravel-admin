@@ -119,6 +119,20 @@ class Grid
     protected $view = 'admin::grid.table';
 
     /**
+     * Whether to defer grid row rendering until the browser requests them.
+     *
+     * @var bool
+     */
+    protected $lazyLoad = false;
+
+    /**
+     * Whether row selector and action columns have been added.
+     *
+     * @var bool
+     */
+    protected $columnsPrepared = false;
+
+    /**
      * Per-page options.
      *
      * @var array<int>
@@ -307,7 +321,7 @@ class Grid
         $this->model()->usePaginate(false);
 
         if ($this->builder) {
-            call_user_func($this->builder, $this);
+            $this->applyBuilder();
 
             $this->getExporter($scope)->export();
         }
@@ -522,6 +536,41 @@ class Grid
     }
 
     /**
+     * Defer row rendering for the initial grid response.
+     *
+     * @param bool $enable
+     * @return $this
+     */
+    public function lazyLoad($enable = true)
+    {
+        $this->lazyLoad = $enable;
+
+        return $this;
+    }
+
+    /**
+     * Whether this grid defers rows on its initial response.
+     *
+     * @return bool
+     */
+    public function isLazyLoad()
+    {
+        return $this->lazyLoad;
+    }
+
+    /**
+     * Whether the current request asks for the deferred row fragment.
+     *
+     * @return bool
+     */
+    public function isLazyLoadRequest()
+    {
+        $this->applyBuilder();
+
+        return $this->lazyLoad && request()->boolean('lazy_grid_rows');
+    }
+
+    /**
      * Get the grid paginator.
      *
      * @return mixed
@@ -650,12 +699,12 @@ class Grid
             return;
         }
 
+        $this->applyBuilder();
         $this->applyQuickSearch();
 
         $collection = $this->applyFilter(false);
 
-        $this->prependRowSelectorColumn();
-        $this->appendActionsColumn();
+        $this->prepareColumns();
 
         Column::setOriginalGridModels($collection);
 
@@ -664,6 +713,7 @@ class Grid
 
         $this->callGetDataCallbacks();
 
+        $this->columnNames = [];
         $this->columns->map(function (Column $column) use (&$data) {
             $data = $column->fill($data);
 
@@ -673,6 +723,46 @@ class Grid
         $this->buildRows($data);
 
         $this->builded = true;
+    }
+
+    protected function applyBuilder()
+    {
+        if ($this->builder) {
+            $builder = $this->builder;
+            $this->builder = null;
+            call_user_func($builder, $this);
+        }
+    }
+
+    /**
+     * Add columns that do not require row data.
+     *
+     * @return void
+     */
+    protected function prepareColumns()
+    {
+        if ($this->columnsPrepared) {
+            return;
+        }
+
+        $this->prependRowSelectorColumn();
+        $this->appendActionsColumn();
+        $this->columnNames = $this->columns->map(function (Column $column) {
+            return $column->getName();
+        })->all();
+
+        $this->columnsPrepared = true;
+    }
+
+    /**
+     * Initialize pagination for the shell response without formatting rows.
+     *
+     * @return void
+     */
+    protected function preparePaginator()
+    {
+        $this->applyQuickSearch();
+        $this->applyFilter(false);
     }
 
     /**
@@ -1100,7 +1190,23 @@ class Grid
         $this->handleExportRequest(true);
 
         try {
-            $this->build();
+            $this->applyBuilder();
+
+            if ($this->isLazyLoadRequest()) {
+                $scriptCount = count(Admin::$script);
+                $this->build();
+
+                return view('admin::grid.lazy-rows', array_merge($this->variables(), [
+                    'script' => array_unique(array_slice(Admin::$script, $scriptCount)),
+                ]))->render();
+            }
+
+            if ($this->isLazyLoad()) {
+                $this->preparePaginator();
+                $this->prepareColumns();
+            } else {
+                $this->build();
+            }
         } catch (\Exception $e) {
             return Handler::renderException($e);
         }

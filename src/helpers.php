@@ -224,7 +224,22 @@ if (!function_exists('admin_asset')) {
      */
     function admin_asset($path)
     {
-        return (config('admin.https') || config('admin.secure')) ? secure_asset($path) : asset($path);
+        $url = (config('admin.https') || config('admin.secure')) ? secure_asset($path) : asset($path);
+        if (app('url')->isValidUrl($path)) {
+            return $url;
+        }
+
+        $assetPath = public_path(substr($path, 0, strcspn($path, '?#')));
+
+        if (is_file($assetPath)) {
+            $parts = explode('#', $url, 2);
+            $url = $parts[0].(strpos($parts[0], '?') === false ? '?' : '&').'v='.filemtime($assetPath);
+            if (isset($parts[1])) {
+                $url .= '#'.$parts[1];
+            }
+        }
+
+        return $url;
     }
 }
 

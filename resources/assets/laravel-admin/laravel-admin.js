@@ -68,6 +68,110 @@ $(document).on('pjax:complete', function (xhr) {
     $.admin.grid.selects = {};
 });
 
+/**
+ * Marks a grid placeholder as failed, displays its localized error and enables retry.
+ * Failed grids are skipped by the automatic queue until a manual retry is requested.
+ *
+ * @param {JQuery} $placeholder Placeholder row containing the loading and retry controls.
+ * @returns {void}
+ */
+function failLazyGridRows($placeholder) {
+    $placeholder.data('lazy-grid-failed', true);
+    $placeholder.find('.lazy-grid-loading').hide();
+    $placeholder.find('.lazy-grid-error').text($placeholder.data('lazy-grid-error')).show();
+    $placeholder.find('.lazy-grid-retry').prop('disabled', false).show();
+}
+
+/**
+ * Loads one grid's row fragment, serializing pending grids on the current page.
+ *
+ * When no placeholder is supplied, selects the next pending grid that has not failed.
+ * Validates the fragment, ignores detached grids and runs row initialization scripts.
+ * Restores the original tbody children if initialization fails and exposes retry.
+ * Request completion advances the queue to the next pending grid.
+ *
+ * @param {JQuery} [$placeholder] Placeholder row to load; omitted to advance the queue.
+ * @returns {void}
+ */
+function loadLazyGridRows($placeholder) {
+    var $pending = $('[data-lazy-grid-rows-url]');
+    if ($pending.filter(function () { return $(this).data('lazy-grid-loading'); }).length) {
+        return;
+    }
+
+    $placeholder = $placeholder || $pending.filter(function () {
+        return !$(this).data('lazy-grid-loading') && !$(this).data('lazy-grid-failed');
+    }).first();
+    var url = $placeholder.data('lazy-grid-rows-url');
+
+    if (!url || $placeholder.data('lazy-grid-loading')) {
+        return;
+    }
+
+    $placeholder.data('lazy-grid-loading', true).data('lazy-grid-failed', false);
+    $placeholder.find('.lazy-grid-loading').show();
+    $placeholder.find('.lazy-grid-error').hide();
+    $placeholder.find('.lazy-grid-retry').prop('disabled', true).hide();
+    $.get(url).done(function (rows) {
+        var $tbody = $placeholder.closest('tbody');
+        if (!$.contains(document, $tbody[0])) {
+            return;
+        }
+
+        var $originalRows;
+        try {
+            var $fragment = $($.parseHTML(rows, document, true));
+            var $marker = $fragment.filter('template[data-lazy-grid-fragment]');
+            var $scripts = $fragment.filter('script');
+            var $rows = $fragment.not('template[data-lazy-grid-fragment]').not('script');
+            if ($marker.length !== 1 || $rows.filter(function () {
+                return this.nodeType === 1 && this.tagName.toLowerCase() !== 'tr';
+            }).length) {
+                throw new Error('Invalid lazy-grid fragment.');
+            }
+
+            $originalRows = $tbody.children().detach();
+            $tbody.append($rows);
+            $scripts.each(function () {
+                $.globalEval(this.text || this.textContent || this.innerHTML || '');
+            });
+        } catch (error) {
+            if ($originalRows) {
+                $tbody.empty().append($originalRows);
+            }
+            failLazyGridRows($placeholder);
+            console.error('Unable to initialize lazy-grid rows.', error);
+        }
+    }).fail(function () {
+        failLazyGridRows($placeholder);
+    }).always(function () {
+        $placeholder.data('lazy-grid-loading', false);
+        loadLazyGridRows();
+    });
+}
+
+/**
+ * Schedules lazy rows after initial page display or PJAX navigation.
+ * Uses an idle callback with a 1000 ms timeout, or a 500 ms timer fallback.
+ *
+ * @returns {void}
+ */
+function scheduleLazyGridRows() {
+    if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(function () { loadLazyGridRows(); }, { timeout: 1000 });
+    } else {
+        setTimeout(loadLazyGridRows, 500);
+    }
+}
+
+$(document).on('pjax:end', scheduleLazyGridRows);
+$(scheduleLazyGridRows);
+$(document).on('click', '.lazy-grid-retry', function (event) {
+    event.preventDefault();
+    $(this).closest('[data-lazy-grid-rows-url]').data('lazy-grid-failed', false);
+    loadLazyGridRows();
+});
+
 $(document).click(function () {
     $('.sidebar-form .dropdown-menu').hide();
 });

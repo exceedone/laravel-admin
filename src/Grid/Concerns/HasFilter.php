@@ -58,9 +58,7 @@ trait HasFilter
      */
     public function applyFilter($toArray = true)
     {
-        if ($this->builder) {
-            call_user_func($this->builder, $this);
-        }
+        $this->applyBuilder();
 
         return $this->filter->execute($toArray);
     }

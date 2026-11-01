@@ -34,15 +34,17 @@
             </thead>
 
             <tbody>
-                @foreach($grid->rows() as $row)
-                <tr {!! $row->getRowAttributes() !!}>
-                    @foreach($grid->visibleColumnNames() as $name)
-                    <td {!! $row->getColumnAttributes($name) !!} class="{!! $row->getColumnClasses($name) !!}">
-                        {!! $row->column($name) !!}
+                @if($grid->isLazyLoad())
+                <tr class="lazy-grid-placeholder">
+                    <td colspan="{{ count($grid->visibleColumnNames()) }}" data-lazy-grid-rows-url="{{ request()->fullUrlWithQuery(['lazy_grid_rows' => 1]) }}" data-lazy-grid-error="{{ trans('admin.failed') }}">
+                        <i class="fa fa-spinner fa-spin lazy-grid-loading"></i>
+                        <span class="lazy-grid-error text-danger" role="alert" style="display:none"></span>
+                        <button type="button" class="btn btn-default btn-sm lazy-grid-retry" style="display:none"><i class="fa fa-refresh"></i> {{ trans('admin.refresh') }}</button>
                     </td>
-                    @endforeach
                 </tr>
-                @endforeach
+                @else
+                    @include('admin::grid.rows')
+                @endif
             </tbody>
 
             {!! $grid->renderTotalRow() !!}

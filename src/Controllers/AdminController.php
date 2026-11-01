@@ -2,6 +2,7 @@
 
 namespace Encore\Admin\Controllers;
 
+use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Illuminate\Routing\Controller;
 
@@ -48,14 +49,19 @@ class AdminController extends Controller
      *
      * @param Content $content
      *
-     * @return Content
+     * @return Content|\Illuminate\Http\Response
      */
     public function index(Content $content)
     {
+        $grid = $this->grid();
+        if ($grid instanceof Grid && $grid->isLazyLoadRequest()) {
+            return response($grid->render());
+        }
+
         return $content
             ->title($this->title())
             ->description($this->description['index'] ?? trans('admin.list'))
-            ->body($this->grid());
+            ->body($grid);
     }
 
     /**
